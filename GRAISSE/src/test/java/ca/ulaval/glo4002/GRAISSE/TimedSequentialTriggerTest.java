@@ -12,7 +12,7 @@ public class TimedSequentialTriggerTest {
 	private static final long A_NUMBER= 5;
 	private static final long A_LITTLE_NUMBER = 1;
 
-	TimedSequentialTrigger trigger;
+	private TimedSequentialTrigger trigger;
 
 	@Before
 	public void setUp() {
@@ -42,10 +42,9 @@ public class TimedSequentialTriggerTest {
 
 	}
 	
-
 	
 	@Test
-	public void triggerShouldActivate() {
+	public void triggerShouldActivate() throws InterruptedException{
 		
 		trigger.setFrequency(A_LITTLE_NUMBER);
 		

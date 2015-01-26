@@ -6,7 +6,8 @@ public class TimedSequentialTrigger extends Trigger{
 
 	
 	private static final long DEFAULT_FREQUENCY= 10;
-	
+	private static final long MINUTES_TO_MS= 60000;
+
 	private long timeFrequencyInMs;
 	private long lastActivationInMs;
 	
@@ -14,7 +15,7 @@ public class TimedSequentialTrigger extends Trigger{
 	public TimedSequentialTrigger()
 	{
 		lastActivationInMs=System.currentTimeMillis();
-		timeFrequencyInMs = DEFAULT_FREQUENCY*60000;
+		timeFrequencyInMs = DEFAULT_FREQUENCY*MINUTES_TO_MS;
 	}
 	
 	public boolean checkActivation()
@@ -31,7 +32,7 @@ public class TimedSequentialTrigger extends Trigger{
 	
 	public void setFrequency(long frequency)
 	{
-		timeFrequencyInMs = frequency*60000;
+		timeFrequencyInMs = frequency*MINUTES_TO_MS;
 
 	}
 	
@@ -39,13 +40,13 @@ public class TimedSequentialTrigger extends Trigger{
 	
 	public long getFrequency()
 	{
-		return timeFrequencyInMs/60000;
+		return timeFrequencyInMs/MINUTES_TO_MS;
 	}
 	
 	
 	public long getLastActivation()
 	{
-		return lastActivationInMs/60000;
+		return lastActivationInMs/MINUTES_TO_MS;
 	}
 	
 
