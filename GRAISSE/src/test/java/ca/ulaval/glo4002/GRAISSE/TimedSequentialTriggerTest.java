@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.GRAISSE;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.Before;
 
 
 public class TimedSequentialTriggerTest {
@@ -13,7 +14,7 @@ public class TimedSequentialTriggerTest {
 
 	TimedSequentialTrigger trigger;
 
-
+	@Before
 	public void setUp() {
 		trigger = new TimedSequentialTrigger();
 	}
@@ -21,7 +22,6 @@ public class TimedSequentialTriggerTest {
 	@Test
 	public void WhenCreatingNewObjectShouldHaveDefaultFrequency() {
 		
-		setUp();
 		assertTrue(trigger.getFrequency()>0);
 
 	}
@@ -29,7 +29,6 @@ public class TimedSequentialTriggerTest {
 	@Test
 	public void lastActivationShouldBePositive() {
 		
-		setUp();
 		assertTrue(trigger.getLastActivation()>0);
 
 	}
@@ -37,7 +36,6 @@ public class TimedSequentialTriggerTest {
 	@Test
 	public void areSetAndGetFrequencyWorking() {
 		
-		setUp();
 		trigger.setFrequency(A_NUMBER);
 		
 		assertTrue(trigger.getFrequency() == A_NUMBER);
@@ -49,7 +47,6 @@ public class TimedSequentialTriggerTest {
 	@Test
 	public void triggerShouldActivate() {
 		
-		setUp();
 		trigger.setFrequency(A_LITTLE_NUMBER);
 		
 		try{
