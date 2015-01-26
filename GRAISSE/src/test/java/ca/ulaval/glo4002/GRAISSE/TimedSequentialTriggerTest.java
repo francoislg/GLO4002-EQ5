@@ -1,14 +1,62 @@
 package ca.ulaval.glo4002.GRAISSE;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.Before;
 
 
 public class TimedSequentialTriggerTest {
 	
-	@Test
-	public void test() {
-		fail("Not yet implemented");
+	
+	private static final long A_NUMBER= 5;
+	private static final long A_LITTLE_NUMBER = 1;
+
+	private TimedSequentialTrigger trigger;
+
+	@Before
+	public void setUp() {
+		trigger = new TimedSequentialTrigger();
 	}
+
+	@Test
+	public void WhenCreatingNewObjectShouldHaveDefaultFrequency() {
+		
+		assertTrue(trigger.getFrequency()>0);
+
+	}
+	
+	@Test
+	public void lastActivationShouldBePositive() {
+		
+		assertTrue(trigger.getLastActivation()>0);
+
+	}
+	
+	@Test
+	public void areSetAndGetFrequencyWorking() {
+		
+		trigger.setFrequency(A_NUMBER);
+		
+		assertTrue(trigger.getFrequency() == A_NUMBER);
+
+	}
+	
+	
+	@Test
+	public void triggerShouldActivate() throws InterruptedException{
+		
+		trigger.setFrequency(A_LITTLE_NUMBER);
+		
+		try{
+			
+		    Thread.sleep(A_LITTLE_NUMBER*60000);
+		    
+		}catch(InterruptedException e){}
+
+		assertTrue(trigger.checkActivation());
+		
+	}
+	
+	
 }
