@@ -6,13 +6,19 @@ public class Booker {
 	private BookingStrategiesFactory bookingStrategiesFactory;
 	private Boardrooms boardrooms;
 
-	public Booker() {
-		bookings = new Bookings();
-		bookingStrategiesFactory = new BookingStrategiesFactory();
+	public Booker(BookingStrategiesFactory bookingStrategiesFactory,
+			Bookings bookings, Boardrooms boardrooms) {
+		this.bookings = bookings;
+		this.bookingStrategiesFactory = bookingStrategiesFactory;
 		bookingStrategy = bookingStrategiesFactory
 				.setForBasicStrategy(boardrooms);
 
-		boardrooms = new Boardrooms();
+		this.boardrooms = boardrooms;
+	}
+
+	public void setStrategyForBasic() {
+		bookingStrategy = bookingStrategiesFactory
+				.setForBasicStrategy(boardrooms);
 	}
 
 	public void assignBooking() {
