@@ -22,9 +22,8 @@ public class BookingStrategiesFactoryTest extends TestCase {
 	}
 
 	@Test
-	public void setForBasicStrategyShouldReturnBookingStrategyBasic() {
-		BookingStrategy bookingStrategy = bookingStrategiesFactory
-				.setForBasicStrategy(boardrooms);
+	public void createBasicStrategyShouldReturnBookingStrategyBasic() {
+		BookingStrategy bookingStrategy = bookingStrategiesFactory.createBasicStrategy(boardrooms);
 		assertEquals(BookingStrategyBasic.class, bookingStrategy.getClass());
 
 	}
