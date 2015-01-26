@@ -7,52 +7,58 @@ import org.junit.Test;
 
 public class TimedSequentialTriggerTest {
 	
+	
+	private static final long A_NUMBER= 5;
+	private static final long A_LITTLE_NUMBER = 1;
 
+	TimedSequentialTrigger trigger;
+
+
+	public void setUp() {
+		trigger = new TimedSequentialTrigger();
+	}
 
 	@Test
-	public void defaultFrequencyIsPositive() {
+	public void WhenCreatingNewObjectShouldHaveDefaultFrequency() {
 		
-		TimedSequentialTrigger objectToTest = new TimedSequentialTrigger();
-		assertTrue(objectToTest.getFrequencyInMinutes()>0);
+		setUp();
+		assertTrue(trigger.getFrequency()>0);
 
 	}
 	
 	@Test
-	public void lastActivationIsPositive() {
+	public void lastActivationShouldBePositive() {
 		
-		TimedSequentialTrigger objectToTest = new TimedSequentialTrigger();
-		assertTrue(objectToTest.lastActivationInMs>0);
+		setUp();
+		assertTrue(trigger.getLastActivation()>0);
 
 	}
 	
 	@Test
-	public void isSetAndGetFrequencyWorking() {
+	public void areSetAndGetFrequencyWorking() {
 		
-		long aNumber = 5 ;
-		TimedSequentialTrigger objectToTest = new TimedSequentialTrigger();
-		objectToTest.setFrequency(aNumber,true);
+		setUp();
+		trigger.setFrequency(A_NUMBER);
 		
-		assertTrue(objectToTest.getFrequencyInMinutes()==aNumber);
+		assertTrue(trigger.getFrequency() == A_NUMBER);
 
 	}
 	
 
 	
 	@Test
-	public void triggerCanActivate() {
+	public void triggerShouldActivate() {
 		
-		long littleFrequencyInMs =  2;
-		
-		TimedSequentialTrigger objectToTest = new TimedSequentialTrigger();
-		objectToTest.setFrequency(littleFrequencyInMs,false);
+		setUp();
+		trigger.setFrequency(A_LITTLE_NUMBER);
 		
 		try{
-		    Thread.sleep(littleFrequencyInMs);
-		}catch(InterruptedException e){
-		    System.out.println("got interrupted!");
-		}
+			
+		    Thread.sleep(A_LITTLE_NUMBER*60000);
+		    
+		}catch(InterruptedException e){}
 
-		assertTrue(objectToTest.checkActivation());
+		assertTrue(trigger.checkActivation());
 		
 	}
 	

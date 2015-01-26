@@ -1,26 +1,28 @@
 package ca.ulaval.glo4002.GRAISSE;
 
 
+
 public class TimedSequentialTrigger extends Trigger{
 
 	
-	private static final long DEFAULT_FREQUENCY_MINUTES = 10;
+	private static final long DEFAULT_FREQUENCY= 10;
 	
 	private long timeFrequencyInMs;
-	public long lastActivationInMs;
+	private long lastActivationInMs;
 	
-	TimedSequentialTrigger()
+	
+	public TimedSequentialTrigger()
 	{
 		lastActivationInMs=System.currentTimeMillis();
-		timeFrequencyInMs = DEFAULT_FREQUENCY_MINUTES*60000;
+		timeFrequencyInMs = DEFAULT_FREQUENCY*60000;
 	}
 	
 	public boolean checkActivation()
 	{
-		long actualTime = System.currentTimeMillis();
-		if( (actualTime - lastActivationInMs)>= timeFrequencyInMs )
+		long actualTimeInMs = System.currentTimeMillis();
+		if( (actualTimeInMs - lastActivationInMs)>= timeFrequencyInMs )
 		{
-			lastActivationInMs=actualTime;
+			lastActivationInMs=actualTimeInMs;
 			return true;
 			
 		}
@@ -29,18 +31,22 @@ public class TimedSequentialTrigger extends Trigger{
 	
 	public void setFrequency(long frequency)
 	{
-		timeFrequencyInMs = frequency*60*1000;
+		timeFrequencyInMs = frequency*60000;
 
 	}
 	
 
+	
 	public long getFrequency()
 	{
 		return timeFrequencyInMs/60000;
 	}
 	
 	
-
+	public long getLastActivation()
+	{
+		return lastActivationInMs/60000;
+	}
 	
 
 	
