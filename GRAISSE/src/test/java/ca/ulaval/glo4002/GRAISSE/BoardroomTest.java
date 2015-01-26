@@ -18,8 +18,6 @@ public class BoardroomTest {
 	private static final String NAMENOTEQUALTONAMEOFBOARDROOM1 = "Boardroom1Different";
 
 	private static final int NUMBEROFSEATSINBOARDROOM = 10;
-	private static final int NUMBEROFSEATSBIGGERTHANAVAILABLE = 11;
-	private static final int NUMBEROFSEATSSMALLERTHANAVALAIBLE = 9;
 
 	Boardroom boardroom;
 
