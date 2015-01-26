@@ -1,15 +1,62 @@
 package ca.ulaval.glo4002.GRAISSE;
 
-import static org.junit.Assert.fail;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class BookerTest {
-	
+
+	Booker booker;
+
+	@Mock
+	Bookings bookings;
+
+	@Mock
+	BookingStrategy bookingStrategy;
+
+	@Mock
+	BookingStrategiesFactory bookingStrategiesFactory;
+
+	@Mock
+	Boardrooms boardrooms;
+
+	@Mock
+	Booking booking;
+
+	@Before
+	public void setUp() {
+		when(bookingStrategiesFactory.createBasicStrategy(boardrooms)).thenReturn(bookingStrategy);
+		booker = new Booker(bookingStrategiesFactory, bookings, boardrooms);
+	}
+
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void assignBookingShouldcallassignBookingsOnbookingStrategy() {
+		booker.assignBooking();
+		verify(bookingStrategy, times(1)).assignBookings(bookings);
+	}
+
+	@Test
+	public void addBookingShouldaddABoookingToBookings() {
+		booker.addBooking(booking);
+		verify(bookings, times(1)).addBooking(booking);
+	}
+
+	@Test
+	public void onCreationTheBookerShouldBeSetWithABookingStrategyBasic() {
+		verify(bookingStrategiesFactory, times(1)).createBasicStrategy(boardrooms);
+	}
+
+	@Test
+	public void setStrategyToBasicShouldUseTheFactoryToGetABookingStrategyBasicObject() {
+		booker.setStrategyToBasic();
+		verify(bookingStrategiesFactory, times(2)).createBasicStrategy(boardrooms);
 	}
 
 }
