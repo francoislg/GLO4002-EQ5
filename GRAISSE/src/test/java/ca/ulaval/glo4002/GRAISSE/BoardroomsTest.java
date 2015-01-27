@@ -19,8 +19,6 @@ public class BoardroomsTest {
 
 	private static final String NAMEOFBOARDROOMTHATDOESNOTEXIST = "BoardroomThatDoesNotExist";
 
-	private static final int NUMBEROFSEATSINBOARDROOM = 10;
-
 	Boardrooms boardrooms;
 
 	@Mock
