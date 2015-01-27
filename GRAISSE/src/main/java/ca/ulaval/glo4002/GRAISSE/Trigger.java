@@ -3,35 +3,45 @@ package ca.ulaval.glo4002.GRAISSE;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Trigger implements Observer{
+public class Trigger implements Observer {
 
 	protected Worker worker;
-	
+
 	public Trigger(Worker worker) {
 		this.worker = worker;
 	}
-	
-	public Worker getWorker() {
-		return worker;
-	}
-	
-	public void trigg() {
-		getWorker().doWork();
+
+	public void setOff() {
+		worker.doWork();
 		reset();
 	}
 
 	public void update(Observable o, Object arg) {
-		if(o == worker) {
+		if (observableIsTheWorker(o)) {
 			doUpdatedByWorker();
 		}
 	}
-	
+
+	protected boolean observableIsTheWorker(Observable o) {
+		return o == worker;
+	}
+
 	protected void doUpdatedByWorker() {
-		if(worker.numberOfJobsToDo() == 0) {
-			reset();
+		if (worker.hasWorkToDO()) {
+			doUpdatedByWorkerWithWorkToDo();
+		} else {
+			doUpdatedByWorkerWithNoWOrkToDo();
 		}
 	}
-	
+
+	protected void doUpdatedByWorkerWithWorkToDo() {
+
+	}
+
+	protected void doUpdatedByWorkerWithNoWOrkToDo() {
+		reset();
+	}
+
 	protected void reset() {
 	}
 

@@ -12,5 +12,7 @@ public class Booker extends Observable implements Worker{
 		return 0;
 	}
 
-	
+	public boolean hasWorkToDO() {
+		return false;
+	}
 }

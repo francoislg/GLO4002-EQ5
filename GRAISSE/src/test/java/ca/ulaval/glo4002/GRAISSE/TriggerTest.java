@@ -1,57 +1,53 @@
 package ca.ulaval.glo4002.GRAISSE;
 
-import static org.junit.Assert.*;
+import java.util.Observable;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-
-
 public class TriggerTest {
-	
-	final Worker INITIALISATION_TARGET = new Booker();
-	final Class<Booker> A_WORKER_IMPLEMENTATION = Booker.class;
+
+	private Worker mockedWorker;
 	private Trigger trigger;
-	final int ZERO = 0;
-	
+	private static final boolean HAS_NO_WORK_TO_DO = false;
+	private static final boolean OBSERVABLE_IS_THE_WORKER = true;
+
 	@Before
 	public void setUp() {
-		trigger = new Trigger(INITIALISATION_TARGET);
-	}
-	
-	@Test
-	public void newTriggerReturnTheSameTargetThatWasPassInBuilder() {
-		Worker triggerTarget = trigger.getWorker();
-		assertEquals(INITIALISATION_TARGET, triggerTarget);
-	}
-	
-	@Test 
-	public void whenTriggerTriggTheTargetDoWorkShouldGetCalled() {
-		Worker mockedWorker = Mockito.mock(A_WORKER_IMPLEMENTATION);
+		mockedWorker = Mockito.mock(Worker.class);
 		trigger = new Trigger(mockedWorker);
-		trigger.trigg();
+	}
+
+	@Test
+	public void whenTriggerTriggTheTargetDoWorkShouldGetCalled() {
+		trigger.setOff();
 		Mockito.verify(mockedWorker).doWork();
 	}
-	
-	@Test 
-	public void whenTriggerTriggTheResetMethodShouldBeCalled() {
-		Worker mockedWorker = Mockito.mock(A_WORKER_IMPLEMENTATION);
-		trigger = Mockito.spy(new Trigger(mockedWorker));
-		trigger.trigg();
-		Mockito.verify(trigger, Mockito.times(1)).reset();
-	}
-	
+
 	@Test
-	public void whenTriggerGetUpdatedByWorkerAndTheWorkerNumberOfJobsToDoIsEqualToZeroTheResetMethodShouldBeCalled() {
-		Worker mockedWorker = Mockito.mock(A_WORKER_IMPLEMENTATION);
-		Mockito.when(mockedWorker.numberOfJobsToDo()).thenReturn(ZERO);
-		
-		trigger = Mockito.spy(new Trigger(mockedWorker));
-		
-		trigger.update((Booker)mockedWorker, null);
+	public void whenTriggerTriggTheResetMethodShouldBeCalled() {
+		initTriggerHasSpyWithMockedWorker();
+		trigger.setOff();
 		Mockito.verify(trigger, Mockito.times(1)).reset();
 	}
-	
+
+	@Test
+	public void whenTriggerGetUpdatedByWorkerAndTheWorkerHasNoWorkToDoThenTheResetMethodShouldBeCalled() {
+		Mockito.when(mockedWorker.hasWorkToDO()).thenReturn(HAS_NO_WORK_TO_DO);
+
+		initTriggerHasSpyWithMockedWorker();
+		Observable anObservable = new Observable();
+
+		Mockito.when(trigger.observableIsTheWorker(anObservable)).thenReturn(
+				OBSERVABLE_IS_THE_WORKER);
+		trigger.update(anObservable, null);
+
+		Mockito.verify(trigger, Mockito.times(1)).reset();
+	}
+
+	private void initTriggerHasSpyWithMockedWorker() {
+		trigger = Mockito.spy(new Trigger(mockedWorker));
+	}
 
 }
