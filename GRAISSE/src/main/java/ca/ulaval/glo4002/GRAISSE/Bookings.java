@@ -22,7 +22,7 @@ public class Bookings {
 		return bookingList;
 	}
 
-	public void assign(Boardrooms boardrooms) {
+	public void assignBookingToBoardrom(Boardrooms boardrooms) {
 		for (Booking booking : bookingList) {
 			if (boardrooms.assignToBoardroom(booking)) {
 				removeBooking(booking);
