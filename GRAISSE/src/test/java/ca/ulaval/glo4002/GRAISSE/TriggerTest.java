@@ -9,6 +9,6 @@ public class TriggerTest {
 	
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+	
 	}
 }

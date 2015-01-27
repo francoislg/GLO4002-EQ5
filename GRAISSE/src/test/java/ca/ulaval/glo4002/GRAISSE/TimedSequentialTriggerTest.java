@@ -44,7 +44,7 @@ public class TimedSequentialTriggerTest {
 	public void triggerShouldActivate() throws InterruptedException {
 
 		trigger.setFrequency(A_LITTLE_NUMBER);
-
+		
 		try {
 
 			Thread.sleep(A_LITTLE_NUMBER);

@@ -8,6 +8,5 @@ public class ReservationTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
 	}
 }
