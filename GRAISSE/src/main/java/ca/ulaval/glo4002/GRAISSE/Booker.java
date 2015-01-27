@@ -27,11 +27,16 @@ public class Booker {
 		boardrooms = new Boardrooms();
 	}
 
+
 	public void assignBooking() {
 		bookingStrategy.assignBookings(bookings);
 	}
 
 	public void addBooking(Booking bookingToAdd) {
 		bookings.addBooking(bookingToAdd);
+
+	public boolean hasWorkToDO() {
+		return false;
+
 	}
 }
