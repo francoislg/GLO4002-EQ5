@@ -23,6 +23,10 @@ public class Bookings {
 		return bookingList.isEmpty();
 	}
 
+	public int getBookingsSize() {
+		return bookingList.size();
+	}
+
 	public void assignBookingToBoardrom(Boardrooms boardrooms) {
 		for (Iterator<Booking> bookingIter = bookingList.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();

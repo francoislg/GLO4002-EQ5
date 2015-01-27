@@ -29,7 +29,7 @@ public class Booker extends Observable implements Worker {
 	}
 
 	public boolean hasWorkToDO() {
-		return 0 < bookings.getAllBooking().size();
+		return bookings.isEmpty();
 
 	}
 
@@ -38,6 +38,6 @@ public class Booker extends Observable implements Worker {
 	}
 
 	public int numberOfJobsToDo() {
-		return bookings.getAllBooking().size();
+		return bookings.getBookingsSize();
 	}
 }
