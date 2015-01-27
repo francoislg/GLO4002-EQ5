@@ -2,15 +2,19 @@ package ca.ulaval.glo4002.GRAISSE;
 
 public class Booking {
 	private int numberOfSeatsNeeded;
-	private boolean isAssign;
+	private boolean assigned;
 
 	public Booking(int numberOfSeatsNeeded) {
-		isAssign = false;
+		assigned = false;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 	}
 
 	public void assign() {
-		isAssign = true;
+		assigned = true;
+	}
+
+	public boolean isAssign() {
+		return assigned;
 	}
 
 	public boolean verifyNumberOfSeats(int numberOfSeats) {
