@@ -2,12 +2,13 @@ package ca.ulaval.glo4002.GRAISSE;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 public class Bookings {
 	private Collection<Booking> bookingList;
 
 	public Bookings() {
-		bookingList = new ArrayList();
+		bookingList = new ArrayList<Booking>();
 	}
 
 	public void addBooking(Booking booking) {
@@ -18,16 +19,16 @@ public class Bookings {
 		bookingList.remove(booking);
 	}
 
-	public Collection<Booking> getAllBooking() {
-		return bookingList;
+	public boolean isEmpty() {
+		return bookingList.isEmpty();
 	}
 
 	public void assignBookingToBoardrom(Boardrooms boardrooms) {
-		for (Booking booking : bookingList) {
+		for (Iterator<Booking> bookingIter = bookingList.iterator(); bookingIter.hasNext();) {
+			Booking booking = bookingIter.next();
 			if (boardrooms.assignToBoardroom(booking)) {
-				removeBooking(booking);
+				bookingIter.remove();
 			}
 		}
-
 	}
 }

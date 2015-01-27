@@ -8,12 +8,16 @@ public class Booker extends Observable implements Worker {
 	private BookingStrategiesFactory bookingStrategiesFactory;
 	private Boardrooms boardrooms;
 
-	public Booker() {
-		bookings = new Bookings();
-		bookingStrategiesFactory = new BookingStrategiesFactory();
-		bookingStrategy = bookingStrategiesFactory.setForBasicStrategy(boardrooms);
+	public Booker(BookingStrategiesFactory bookingStrategiesFactory, Bookings bookings, Boardrooms boardrooms) {
+		this.bookings = bookings;
+		this.bookingStrategiesFactory = bookingStrategiesFactory;
+		this.boardrooms = boardrooms;
 
-		boardrooms = new Boardrooms();
+		setStrategyToBasic();
+	}
+
+	public void setStrategyToBasic() {
+		bookingStrategy = bookingStrategiesFactory.createBasicStrategy(boardrooms);
 	}
 
 	public void assignBookings() {
