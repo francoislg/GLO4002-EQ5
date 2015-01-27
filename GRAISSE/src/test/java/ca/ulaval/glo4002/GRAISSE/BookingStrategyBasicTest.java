@@ -29,6 +29,6 @@ public class BookingStrategyBasicTest {
 	@Test
 	public void assignBookingsShouldCallAssignOnBookingsObject() {
 		bookingStrategyBasicTest.assignBookings(bookings);
-		verify(bookings, times(1)).assign(boardrooms);
+		verify(bookings, times(1)).assignBookingToBoardrom(boardrooms);
 	}
 }

@@ -38,7 +38,7 @@ public class BookerTest {
 
 	@Test
 	public void assignBookingShouldcallassignBookingsOnbookingStrategy() {
-		booker.assignBooking();
+		booker.assignBookings();
 		verify(bookingStrategy, times(1)).assignBookings(bookings);
 	}
 
@@ -58,5 +58,4 @@ public class BookerTest {
 		booker.setStrategyToBasic();
 		verify(bookingStrategiesFactory, times(2)).createBasicStrategy(boardrooms);
 	}
-
 }

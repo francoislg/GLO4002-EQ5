@@ -23,7 +23,7 @@ public class Bookings {
 		return bookingList.isEmpty();
 	}
 
-	public void assign(Boardrooms boardrooms) {
+	public void assignBookingToBoardrom(Boardrooms boardrooms) {
 		for (Iterator<Booking> bookingIter = bookingList.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();
 			if (boardrooms.assignToBoardroom(booking)) {
