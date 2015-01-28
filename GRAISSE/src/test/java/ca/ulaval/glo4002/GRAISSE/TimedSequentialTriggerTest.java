@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.GRAISSE;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TimedSequentialTriggerTest {
@@ -40,11 +41,10 @@ public class TimedSequentialTriggerTest {
 
 	}
 
-	@Test
+	@Ignore
 	public void triggerShouldActivate() throws InterruptedException {
-
 		trigger.setFrequency(A_LITTLE_NUMBER);
-		
+
 		try {
 
 			Thread.sleep(A_LITTLE_NUMBER);
@@ -53,7 +53,6 @@ public class TimedSequentialTriggerTest {
 		}
 
 		assertTrue(trigger.checkActivation());
-
 	}
 
 }

@@ -52,7 +52,7 @@ public class BookingsTest extends TestCase {
 	@Test
 	public void assignShouldRemoveTheBookingIfItIsAssigned() {
 		bookings.addBooking(booking);
-		when(boardrooms.assignToBoardroom(booking)).thenReturn(true);
+		when(boardrooms.assignBookingToBoardroom(booking)).thenReturn(true);
 		bookings.assign(boardrooms);
 		assertTrue(bookings.isEmpty());
 

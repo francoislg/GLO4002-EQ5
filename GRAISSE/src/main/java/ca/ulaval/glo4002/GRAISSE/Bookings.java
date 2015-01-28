@@ -26,7 +26,7 @@ public class Bookings {
 	public void assign(Boardrooms boardrooms) {
 		for (Iterator<Booking> bookingIter = bookingList.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();
-			if (boardrooms.assignToBoardroom(booking)) {
+			if (boardrooms.assignBookingToBoardroom(booking)) {
 				bookingIter.remove();
 			}
 		}

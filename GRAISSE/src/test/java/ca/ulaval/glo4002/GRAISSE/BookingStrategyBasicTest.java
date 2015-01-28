@@ -11,7 +11,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingStrategyBasicTest {
-	private static final int NUMBEROFSEATSSMALLERTHANAVALAIBLE = 9;
 
 	BookingStrategyBasic bookingStrategyBasicTest;
 
