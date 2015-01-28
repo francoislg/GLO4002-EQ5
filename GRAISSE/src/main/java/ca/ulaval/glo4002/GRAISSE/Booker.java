@@ -13,13 +13,6 @@ public class Booker extends Observable implements Worker {
 		this.bookings = bookings;
 		this.bookingStrategiesFactory = bookingStrategiesFactory;
 		this.boardrooms = boardrooms;
-	}
-	
-	public Booker() {
-		bookings = new Bookings();
-		bookingStrategiesFactory = new BookingStrategiesFactory();
-		bookingStrategy = bookingStrategiesFactory.createBasicStrategy(boardrooms);
-
 
 		setStrategyToBasic();
 	}
@@ -46,6 +39,7 @@ public class Booker extends Observable implements Worker {
 	}
 
 	public int numberOfJobsToDo() {
-		return 0;
+		return bookings.getBookingsSize();
+
 	}
 }
