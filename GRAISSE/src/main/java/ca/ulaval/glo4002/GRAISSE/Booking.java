@@ -5,19 +5,19 @@ public class Booking {
 	private boolean assigned;
 	private int priority;
 
-	public Booking(int numberOfSeatsNeeded) {
-		assigned = false;
-		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
-	}
-
 	public Booking(int numberOfSeatsNeeded, int priorityValue) throws invalidPriorityValue {
 		assigned = false;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		validatePriorityValue(priorityValue);
+		this.priority = priorityValue;
 	}
 
 	public void assign() {
 		assigned = true;
+	}
+
+	public int getPriorityValue() {
+		return this.priority;
 	}
 
 	public boolean isAssign() {

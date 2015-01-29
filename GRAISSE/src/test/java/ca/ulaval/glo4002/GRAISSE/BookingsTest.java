@@ -74,4 +74,20 @@ public class BookingsTest {
 		assertFalse(bookings.isEmpty());
 	}
 
+	@Test
+	public void priorityAssignShouldNotRemoveTheBookingIfItIsNotAssigned() {
+		bookings.addBooking(booking);
+		when(boardrooms.assignBookingToBoardroom(booking)).thenReturn(false);
+		bookings.priorityAssign(boardrooms);
+		assertFalse(bookings.isEmpty());
+	}
+
+	@Test
+	public void priorityAssignShouldRemoveTheBookingIfItIsAssigned() {
+		bookings.addBooking(booking);
+		when(boardrooms.assignBookingToBoardroom(booking)).thenReturn(true);
+		bookings.priorityAssign(boardrooms);
+		assertFalse(bookings.isEmpty());
+	}
+
 }

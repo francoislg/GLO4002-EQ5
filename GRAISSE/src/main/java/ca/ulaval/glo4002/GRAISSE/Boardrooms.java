@@ -7,22 +7,22 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class Boardrooms {
-	private List<Boardroom> boardrooms = new ArrayList<Boardroom>();
+	private List<Boardroom> boardroomsList = new ArrayList<Boardroom>();
 
 	public Boardrooms() {
 
 	}
 
 	public void addBoardroom(Boardroom boardroom) {
-		boardrooms.add(boardroom);
+		boardroomsList.add(boardroom);
 	}
 
 	public boolean isEmpty() {
-		return boardrooms.isEmpty();
+		return boardroomsList.isEmpty();
 	}
 
 	public Boardroom findBoardroomWithName(String boardroomName) throws BoardroomNotFoundExeption {
-		for (Boardroom boardroom : boardrooms) {
+		for (Boardroom boardroom : boardroomsList) {
 			if (boardroom.isMyName(boardroomName)) {
 				return boardroom;
 			}
@@ -31,7 +31,7 @@ public class Boardrooms {
 	}
 
 	public boolean assignBookingToBoardroom(Booking bookingToAssign) {
-		for (Boardroom boardroom : boardrooms) {
+		for (Boardroom boardroom : boardroomsList) {
 			if (boardroom.assign(bookingToAssign)) {
 				return true;
 			}
@@ -53,6 +53,6 @@ public class Boardrooms {
 
 	private Stream<Boardroom> getStreamSortByNumberOfSeats() {
 		Comparator<Boardroom> byNumberOfSeats = (e1, e2) -> Integer.compare(e1.getNumberOfSeats(), e2.getNumberOfSeats());
-		return boardrooms.stream().sorted(byNumberOfSeats);
+		return boardroomsList.stream().sorted(byNumberOfSeats);
 	}
 }
