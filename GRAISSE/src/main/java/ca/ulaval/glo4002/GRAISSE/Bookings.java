@@ -35,9 +35,13 @@ public class Bookings {
 	public void maximiseAssign(Boardrooms boardrooms) {
 		for (Iterator<Booking> bookingIter = bookingList.iterator(); bookingIter.hasNext();) {
 			Booking bookingToAssign = bookingIter.next();
-			if (boardrooms.assignToMaxSeatsBoardroom(bookingToAssign)) {
+			if (boardrooms.assignBookingToMinSeatsBoardroom(bookingToAssign)) {
 				bookingIter.remove();
 			}
 		}
+	}
+
+	public void priorityAssign(Boardrooms boardrooms) {
+
 	}
 }

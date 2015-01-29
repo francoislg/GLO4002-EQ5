@@ -61,7 +61,7 @@ public class BookingsTest {
 	@Test
 	public void maximiseAssignShouldRemoveTheBookingIfItIsAssigned() {
 		bookings.addBooking(booking);
-		when(boardrooms.assignToMaxSeatsBoardroom(booking)).thenReturn(true);
+		when(boardrooms.assignBookingToMinSeatsBoardroom(booking)).thenReturn(true);
 		bookings.maximiseAssign(boardrooms);
 		assertTrue(bookings.isEmpty());
 	}
@@ -69,7 +69,7 @@ public class BookingsTest {
 	@Test
 	public void maximiseAssignShouldNotRemoveTheBookingIfItIsNotAssigned() {
 		bookings.addBooking(booking);
-		when(boardrooms.assignToMaxSeatsBoardroom(booking)).thenReturn(false);
+		when(boardrooms.assignBookingToMinSeatsBoardroom(booking)).thenReturn(false);
 		bookings.maximiseAssign(boardrooms);
 		assertFalse(bookings.isEmpty());
 	}
