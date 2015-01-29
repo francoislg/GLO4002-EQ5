@@ -14,6 +14,8 @@ public class BookingTest {
 
 	private static final int PRIORITYVALUEOFBOOKING = 2;
 
+	private static final int INVALIDPRIORITYVALUEOFBOOKING = 6;
+
 	private static final int NUMBEROFSEATSINBOOKING = 10;
 
 	private static final int ANUMBEROFSEATSTHATISMALLERTHANTHEBOOKING = 9;
@@ -27,6 +29,11 @@ public class BookingTest {
 	@Before
 	public void setUp() throws InvalidPriorityValue {
 		booking = new Booking(NUMBEROFSEATSINBOOKING, PRIORITYVALUEOFBOOKING);
+	}
+
+	@Test(expected = InvalidPriorityValue.class)
+	public void withInvalidPriorityValueConstructorShouldThrowInvalidPriorityValue() throws InvalidPriorityValue {
+		booking = new Booking(NUMBEROFSEATSINBOOKING, INVALIDPRIORITYVALUEOFBOOKING);
 	}
 
 	@Test
@@ -54,4 +61,5 @@ public class BookingTest {
 	public void withABiggerNumberOfSeatsVerifyNumberOfSeatsShouldReturnTrue() {
 		assertTrue(booking.verifyNumberOfSeats(ANUMBEROFSEATSTHATISBIGGERTHANTHEBOOKING));
 	}
+
 }

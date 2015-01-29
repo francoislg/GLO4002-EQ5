@@ -28,8 +28,8 @@ public class Booking {
 		return this.numberOfSeatsNeeded <= numberOfSeats;
 	}
 
-	private void validatePriorityValue(int PriorityValueToValidate) throws InvalidPriorityValue {
-		if (PriorityValueToValidate < 1 || PriorityValueToValidate > 5) {
+	private void validatePriorityValue(int priorityValueToValidate) throws InvalidPriorityValue {
+		if (priorityValueToValidate < 1 || priorityValueToValidate > 5) {
 			throw new InvalidPriorityValue();
 		}
 	}
