@@ -27,4 +27,9 @@ public class BookerStrategiesFactoryTest {
 		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
 	}
 
+	@Test
+	public void createMaximiseStrategyShouldReturnBookingStrategyBasic() {
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.createMaximiseStrategy();
+		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
+	}
 }
