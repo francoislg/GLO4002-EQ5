@@ -34,7 +34,7 @@ public class Booking {
 		}
 	}
 
-	public int compareNumberOfSeatsToBooking(Booking bookingToCompare) {
-		return Integer.compare(this.numberOfSeatsNeeded, bookingToCompare.numberOfSeatsNeeded);
+	public int comparePriorityToBooking(Booking bookingToCompare) {
+		return Integer.compare(this.priority, bookingToCompare.priority);
 	}
 }

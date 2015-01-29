@@ -23,10 +23,6 @@ public class Bookings {
 		return bookingList.isEmpty();
 	}
 
-	public Collection<Booking> findAll() {
-		return bookingList;
-	}
-
 	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsStrategy bookingsStrategy, BoardroomsStrategy boardroomsStrategy) {
 		Collection<Booking> formatedBookingList = bookingsStrategy.format(bookingList);
 		for (Iterator<Booking> bookingIter = formatedBookingList.iterator(); bookingIter.hasNext();) {

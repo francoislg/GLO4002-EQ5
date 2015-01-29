@@ -18,9 +18,20 @@ public class BoardroomTest {
 
 	private static final String NAMENOTEQUALTONAMEOFBOARDROOM1 = "Boardroom1Different";
 
+	private static final int BIGGER = 1;
+	private static final int SMALLER = -1;
+
 	private static final int NUMBEROFSEATSINBOARDROOM = 10;
 
+	private static final int NUMBEROFSEATSSMALLER = 8;
+
+	private static final int NUMBEROFSEATSBIGGER = 11;
+
 	Boardroom boardroom;
+
+	Boardroom boardroomWithMoreSeats;
+
+	Boardroom boardroomWithLessSeats;
 
 	@Mock
 	Booking booking;
@@ -28,6 +39,8 @@ public class BoardroomTest {
 	@Before
 	public void setUp() {
 		boardroom = new Boardroom(NAMEOFBOARDROOM1, NUMBEROFSEATSINBOARDROOM);
+		boardroomWithMoreSeats = new Boardroom(NAMEOFBOARDROOM1, NUMBEROFSEATSBIGGER);
+		boardroomWithLessSeats = new Boardroom(NAMEOFBOARDROOM1, NUMBEROFSEATSSMALLER);
 	}
 
 	@Test
@@ -75,6 +88,18 @@ public class BoardroomTest {
 	public void IfVerifyFailassignToBoardroomShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBEROFSEATSINBOARDROOM)).thenReturn(false);
 		assertFalse(boardroom.assign(booking));
+	}
+
+	@Test
+	public void WithSmallerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+		int result = boardroom.compareNumberOfSeatsToBoardroom(boardroomWithLessSeats);
+		assertEquals(BIGGER, result);
+	}
+
+	@Test
+	public void WithBiggerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+		int result = boardroom.compareNumberOfSeatsToBoardroom(boardroomWithMoreSeats);
+		assertEquals(SMALLER, result);
 	}
 
 }
