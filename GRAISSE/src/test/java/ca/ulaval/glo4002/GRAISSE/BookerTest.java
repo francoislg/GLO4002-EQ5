@@ -19,10 +19,10 @@ public class BookerTest {
 	Bookings bookings;
 
 	@Mock
-	BookingStrategy bookingStrategy;
+	BookerStrategy bookingStrategy;
 
 	@Mock
-	BookingStrategiesFactory bookingStrategiesFactory;
+	BookerStrategiesFactory bookingStrategiesFactory;
 
 	@Mock
 	Boardrooms boardrooms;
@@ -32,14 +32,14 @@ public class BookerTest {
 
 	@Before
 	public void setUp() {
-		when(bookingStrategiesFactory.createBasicStrategy(boardrooms)).thenReturn(bookingStrategy);
+		when(bookingStrategiesFactory.createBasicStrategy()).thenReturn(bookingStrategy);
 		booker = new Booker(bookingStrategiesFactory, bookings, boardrooms);
 	}
 
 	@Test
 	public void assignBookingShouldcallassignBookingsOnbookingStrategy() {
 		booker.assignBooking();
-		verify(bookingStrategy, times(1)).assignBookings(bookings);
+		verify(bookingStrategy, times(1)).assignBookings(boardrooms, bookings);
 	}
 
 	@Test
@@ -50,13 +50,13 @@ public class BookerTest {
 
 	@Test
 	public void onCreationTheBookerShouldBeSetWithABookingStrategyBasic() {
-		verify(bookingStrategiesFactory, times(1)).createBasicStrategy(boardrooms);
+		verify(bookingStrategiesFactory, times(1)).createBasicStrategy();
 	}
 
 	@Test
 	public void setStrategyToBasicShouldUseTheFactoryToGetABookingStrategyBasicObject() {
 		booker.setStrategyToBasic();
-		verify(bookingStrategiesFactory, times(2)).createBasicStrategy(boardrooms);
+		verify(bookingStrategiesFactory, times(2)).createBasicStrategy();
 	}
 
 }

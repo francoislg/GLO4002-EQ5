@@ -1,13 +1,14 @@
 package ca.ulaval.glo4002.GRAISSE;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Bookings {
-	private List<Booking> bookingList;
+	private Collection<Booking> bookingList;
 
 	public Bookings() {
 		bookingList = new ArrayList<Booking>();
@@ -44,7 +45,8 @@ public class Bookings {
 	}
 
 	public void priorityAssign(Boardrooms boardrooms) {
-		Stream<Booking> bookings = getStreamSortByPriorityValue();
+		Collection<Booking> bookings = getStreamSortByPriorityValue().collect(Collectors.toList());
+
 		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
 			Booking bookingToAssign = bookingIter.next();
 			if (boardrooms.assignBookingToBoardroom(bookingToAssign)) {
