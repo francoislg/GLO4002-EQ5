@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -11,8 +10,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingTest {
-
-	private static final int PRIORITYVALUEOFBOOKING = 2;
 
 	private static final int NUMBEROFSEATSINBOOKING = 10;
 
@@ -26,18 +23,13 @@ public class BookingTest {
 
 	@Before
 	public void setUp() throws invalidPriorityValue {
-		booking = new Booking(NUMBEROFSEATSINBOOKING, PRIORITYVALUEOFBOOKING);
+		booking = new Booking(NUMBEROFSEATSINBOOKING);
 	}
 
 	@Test
 	public void assignShouldAssignTheBooking() {
 		booking.assign();
 		assertTrue(booking.isAssign());
-	}
-
-	@Test
-	public void getPriorityValueShouldReturnThePriorityValue() {
-		assertEquals(PRIORITYVALUEOFBOOKING, booking.getPriorityValue());
 	}
 
 	@Test
