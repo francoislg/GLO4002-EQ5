@@ -95,12 +95,21 @@ public class BoardroomsTest {
 	}
 
 	@Test
-	public void withABoardroomThatCanBeAssignToTheBookingassignToBoardroomShouldReturnFalse() {
+	public void withABoardroomThatCanBeAssignToTheBookingassignToMinSizeBoardroomShouldReturnTrue() {
+		addThreeBoardroomtoBoardrooms();
+		when(boardroom1.assign(booking)).thenReturn(false);
+		when(boardroom2.assign(booking)).thenReturn(false);
+		when(boardroom1.assign(booking)).thenReturn(true);
+		assertTrue(boardrooms.assignBookingToMinSeatsBoardroom(booking));
+	}
+
+	@Test
+	public void withNoBoardroomThatCanBeAssignToTheBookingassignToMinSizeBoardroomShouldReturnFalse() {
 		addThreeBoardroomtoBoardrooms();
 		when(boardroom1.assign(booking)).thenReturn(false);
 		when(boardroom2.assign(booking)).thenReturn(false);
 		when(boardroom1.assign(booking)).thenReturn(false);
-		assertFalse(boardrooms.assignBookingToBoardroom(booking));
+		assertFalse(boardrooms.assignBookingToMinSeatsBoardroom(booking));
 	}
 
 	private void addThreeBoardroomtoBoardrooms() {

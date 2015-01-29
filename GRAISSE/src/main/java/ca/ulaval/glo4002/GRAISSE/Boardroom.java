@@ -23,6 +23,10 @@ public class Boardroom {
 		return bookingToVerify.verifyNumberOfSeats(numberOfSeats);
 	}
 
+	public int getNumberOfSeats() {
+		return this.numberOfSeats;
+	}
+
 	public boolean assign(Booking bookingToAssign) {
 		if (!verifyNumberOfSeats(bookingToAssign)) {
 			return false;

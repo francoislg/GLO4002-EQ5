@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
@@ -30,16 +31,20 @@ public class BoardroomTest {
 	}
 
 	@Test
+	public void getNumberOfSeatsShouldReturnTheNumberOfSeats() {
+
+		assertEquals(boardroom.getNumberOfSeats(), NUMBEROFSEATSINBOARDROOM);
+	}
+
+	@Test
 	public void IfNotEnoughtSeatsVerifyNumberOfSeatsReturnFalse() {
-		when(booking.verifyNumberOfSeats(NUMBEROFSEATSINBOARDROOM)).thenReturn(
-				false);
+		when(booking.verifyNumberOfSeats(NUMBEROFSEATSINBOARDROOM)).thenReturn(false);
 		assertFalse(boardroom.verifyNumberOfSeats(booking));
 	}
 
 	@Test
 	public void IfEnoughtSeatsVerifyNumberOfSeatsReturnTrue() {
-		when(booking.verifyNumberOfSeats(NUMBEROFSEATSINBOARDROOM)).thenReturn(
-				true);
+		when(booking.verifyNumberOfSeats(NUMBEROFSEATSINBOARDROOM)).thenReturn(true);
 		assertTrue(boardroom.verifyNumberOfSeats(booking));
 	}
 
@@ -55,23 +60,20 @@ public class BoardroomTest {
 
 	@Test
 	public void firstAssignShouldReturnTrue() {
-		when(booking.verifyNumberOfSeats(NUMBEROFSEATSINBOARDROOM)).thenReturn(
-				true);
+		when(booking.verifyNumberOfSeats(NUMBEROFSEATSINBOARDROOM)).thenReturn(true);
 		assertTrue(boardroom.assign(booking));
 	}
 
 	@Test
 	public void secondAssignShouldReturnFalse() {
-		when(booking.verifyNumberOfSeats(NUMBEROFSEATSINBOARDROOM)).thenReturn(
-				true);
+		when(booking.verifyNumberOfSeats(NUMBEROFSEATSINBOARDROOM)).thenReturn(true);
 		boardroom.assign(booking);
 		assertFalse(boardroom.assign(booking));
 	}
 
 	@Test
 	public void IfVerifyFailassignToBoardroomShouldReturnFalse() {
-		when(booking.verifyNumberOfSeats(NUMBEROFSEATSINBOARDROOM)).thenReturn(
-				false);
+		when(booking.verifyNumberOfSeats(NUMBEROFSEATSINBOARDROOM)).thenReturn(false);
 		assertFalse(boardroom.assign(booking));
 	}
 
