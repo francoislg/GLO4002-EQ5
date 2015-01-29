@@ -67,7 +67,7 @@ public class BookingsTest {
 		when(boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy)).thenReturn(true);
 		when(bookingsStrategy.format(any())).thenReturn(formatedList);
 
-		bookings.assign(boardrooms, bookingsStrategy, boardroomsStrategy);
+		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
 
 		assertTrue(bookings.isEmpty());
 	}

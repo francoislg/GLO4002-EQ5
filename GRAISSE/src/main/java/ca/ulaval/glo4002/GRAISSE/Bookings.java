@@ -27,7 +27,7 @@ public class Bookings {
 		return bookingList;
 	}
 
-	public void assign(Boardrooms boardrooms, BookingsStrategy bookingsStrategy, BoardroomsStrategy boardroomsStrategy) {
+	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsStrategy bookingsStrategy, BoardroomsStrategy boardroomsStrategy) {
 		Collection<Booking> formatedBookingList = bookingsStrategy.format(bookingList);
 		for (Iterator<Booking> bookingIter = formatedBookingList.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();
