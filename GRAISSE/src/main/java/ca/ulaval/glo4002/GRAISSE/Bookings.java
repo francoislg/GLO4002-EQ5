@@ -23,10 +23,19 @@ public class Bookings {
 		return bookingList.isEmpty();
 	}
 
-	public void assign(Boardrooms boardrooms) {
+	public void basicAssign(Boardrooms boardrooms) {
 		for (Iterator<Booking> bookingIter = bookingList.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();
 			if (boardrooms.assignBookingToBoardroom(booking)) {
+				bookingIter.remove();
+			}
+		}
+	}
+
+	public void maximiseAssign(Boardrooms boardrooms) {
+		for (Iterator<Booking> bookingIter = bookingList.iterator(); bookingIter.hasNext();) {
+			Booking bookingToAssign = bookingIter.next();
+			if (boardrooms.assignToMaxSeatsBoardroom(bookingToAssign)) {
 				bookingIter.remove();
 			}
 		}

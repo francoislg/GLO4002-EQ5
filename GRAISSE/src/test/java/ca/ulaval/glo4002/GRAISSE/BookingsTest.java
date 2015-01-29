@@ -51,11 +51,19 @@ public class BookingsTest {
 	}
 
 	@Test
-	public void assignShouldRemoveTheBookingIfItIsAssigned() {
+	public void basicAssignShouldRemoveTheBookingIfItIsAssigned() {
 		bookings.addBooking(booking);
 		when(boardrooms.assignBookingToBoardroom(booking)).thenReturn(true);
-		bookings.assign(boardrooms);
+		bookings.basicAssign(boardrooms);
 		assertTrue(bookings.isEmpty());
-
 	}
+
+	@Test
+	public void maximiseAssignShouldRemoveTheBookingIfItIsAssigned() {
+		bookings.addBooking(booking);
+		when(boardrooms.assignBookingToBoardroom(booking)).thenReturn(true);
+		bookings.basicAssign(boardrooms);
+		assertTrue(bookings.isEmpty());
+	}
+
 }
