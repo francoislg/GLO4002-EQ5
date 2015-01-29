@@ -2,7 +2,12 @@ package ca.ulaval.glo4002.GRAISSE;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +25,12 @@ public class BookingsTest {
 
 	@Mock
 	Boardrooms boardrooms;
+
+	@Mock
+	BookingsStrategy bookingsStrategy;
+
+	@Mock
+	BoardroomsStrategy boardroomsStrategy;
 
 	@Before
 	public void setUp() {
@@ -51,43 +62,13 @@ public class BookingsTest {
 	}
 
 	@Test
-	public void basicAssignShouldRemoveTheBookingIfItIsAssigned() {
-		bookings.addBooking(booking);
-		when(boardrooms.assignBookingToBoardroom(booking)).thenReturn(true);
-		bookings.basicAssign(boardrooms);
+	public void assignShouldRemoveTheBookingIfItIsAssigned() {
+		List<Booking> formatedList = new ArrayList<Booking>(Arrays.asList(booking));
+		when(boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy)).thenReturn(true);
+		when(bookingsStrategy.format(any())).thenReturn(formatedList);
+
+		bookings.assign(boardrooms, bookingsStrategy, boardroomsStrategy);
+
 		assertTrue(bookings.isEmpty());
 	}
-
-	@Test
-	public void maximiseAssignShouldRemoveTheBookingIfItIsAssigned() {
-		bookings.addBooking(booking);
-		when(boardrooms.assignBookingToMinSeatsBoardroom(booking)).thenReturn(true);
-		bookings.maximiseAssign(boardrooms);
-		assertTrue(bookings.isEmpty());
-	}
-
-	@Test
-	public void maximiseAssignShouldNotRemoveTheBookingIfItIsNotAssigned() {
-		bookings.addBooking(booking);
-		when(boardrooms.assignBookingToMinSeatsBoardroom(booking)).thenReturn(false);
-		bookings.maximiseAssign(boardrooms);
-		assertFalse(bookings.isEmpty());
-	}
-
-	@Test
-	public void priorityAssignShouldNotRemoveTheBookingIfItIsNotAssigned() {
-		bookings.addBooking(booking);
-		when(boardrooms.assignBookingToBoardroom(booking)).thenReturn(false);
-		bookings.priorityAssign(boardrooms);
-		assertFalse(bookings.isEmpty());
-	}
-
-	@Test
-	public void priorityAssignShouldRemoveTheBookingIfItIsAssigned() {
-		bookings.addBooking(booking);
-		when(boardrooms.assignBookingToBoardroom(booking)).thenReturn(true);
-		bookings.priorityAssign(boardrooms);
-		assertFalse(bookings.isEmpty());
-	}
-
 }

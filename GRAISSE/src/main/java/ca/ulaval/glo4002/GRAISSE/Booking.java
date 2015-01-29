@@ -33,4 +33,8 @@ public class Booking {
 			throw new InvalidPriorityValue();
 		}
 	}
+
+	public int compareNumberOfSeatsToBooking(Booking bookingToCompare) {
+		return Integer.compare(this.numberOfSeatsNeeded, bookingToCompare.numberOfSeatsNeeded);
+	}
 }

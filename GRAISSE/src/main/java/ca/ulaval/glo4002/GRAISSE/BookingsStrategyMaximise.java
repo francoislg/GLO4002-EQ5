@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class BookingsStrategyMaximise implements BookingsStrategy {
 
 	public Collection<Booking> format(Collection<Booking> bookings) {
-		Comparator<Booking> byPriorityValue = (e1, e2) -> Integer.compare(e1.getPriorityValue(), e2.getPriorityValue());
-		return bookings.stream().sorted(byPriorityValue).collect(Collectors.toList());
+		Comparator<Booking> byNumberOfSeats = (booking1, booking2) -> booking1.compareNumberOfSeatsToBooking(booking2);
+		return bookings.stream().sorted(byNumberOfSeats).collect(Collectors.toList());
 	}
 }
