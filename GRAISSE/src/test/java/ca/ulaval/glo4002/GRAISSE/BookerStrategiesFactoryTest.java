@@ -9,27 +9,27 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookingStrategiesFactoryTest {
+public class BookerStrategiesFactoryTest {
 
-	BookingStrategiesFactory bookingStrategiesFactory;
+	BookerStrategiesFactory bookingStrategiesFactory;
 
 	@Mock
 	private Boardrooms boardrooms;
 
 	@Before
 	public void setUp() {
-		bookingStrategiesFactory = new BookingStrategiesFactory();
+		bookingStrategiesFactory = new BookerStrategiesFactory();
 	}
 
 	@Test
 	public void createBasicStrategyShouldReturnBookingStrategyBasic() {
-		BookingStrategy bookingStrategy = bookingStrategiesFactory.createBasicStrategy(boardrooms);
-		assertEquals(BookingStrategyBasic.class, bookingStrategy.getClass());
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.createBasicStrategy();
+		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
 	}
 
 	@Test
 	public void createMaximiseStrategyShouldReturnBookingStrategyMaximise() {
-		BookingStrategy bookingStrategy = bookingStrategiesFactory.createMaximiseStrategy(boardrooms);
-		assertEquals(BookingStrategyMaximise.class, bookingStrategy.getClass());
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.createMaximiseStrategy();
+		assertEquals(BookerStrategyMaximise.class, bookingStrategy.getClass());
 	}
 }

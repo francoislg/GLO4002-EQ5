@@ -10,9 +10,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookingStrategyBasicTest {
+public class BookerStrategyBasicTest {
 
-	BookingStrategyBasic bookingStrategyBasicTest;
+	BookerStrategyBasic bookingStrategyBasicTest;
 
 	@Mock
 	Boardrooms boardrooms;
@@ -22,12 +22,12 @@ public class BookingStrategyBasicTest {
 
 	@Before
 	public void setUp() {
-		bookingStrategyBasicTest = new BookingStrategyBasic(boardrooms);
+		bookingStrategyBasicTest = new BookerStrategyBasic();
 	}
 
 	@Test
 	public void assignBookingsShouldCallAssignOnBookingsObject() {
-		bookingStrategyBasicTest.assignBookings(bookings);
+		bookingStrategyBasicTest.assignBookings(boardrooms, bookings);
 		verify(bookings, times(1)).basicAssign(boardrooms);
 	}
 }

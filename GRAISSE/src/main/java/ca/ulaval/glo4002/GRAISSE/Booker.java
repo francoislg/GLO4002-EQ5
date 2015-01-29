@@ -2,11 +2,11 @@ package ca.ulaval.glo4002.GRAISSE;
 
 public class Booker {
 	private Bookings bookings;
-	private BookingStrategy bookingStrategy;
-	private BookingStrategiesFactory bookingStrategiesFactory;
+	private BookerStrategy bookingStrategy;
+	private BookerStrategiesFactory bookingStrategiesFactory;
 	private Boardrooms boardrooms;
 
-	public Booker(BookingStrategiesFactory bookingStrategiesFactory, Bookings bookings, Boardrooms boardrooms) {
+	public Booker(BookerStrategiesFactory bookingStrategiesFactory, Bookings bookings, Boardrooms boardrooms) {
 		this.bookings = bookings;
 		this.bookingStrategiesFactory = bookingStrategiesFactory;
 		this.boardrooms = boardrooms;
@@ -15,11 +15,11 @@ public class Booker {
 	}
 
 	public void setStrategyToBasic() {
-		bookingStrategy = bookingStrategiesFactory.createBasicStrategy(boardrooms);
+		bookingStrategy = bookingStrategiesFactory.createBasicStrategy();
 	}
 
 	public void assignBooking() {
-		bookingStrategy.assignBookings(bookings);
+		bookingStrategy.assignBookings(boardrooms, bookings);
 	}
 
 	public void addBooking(Booking bookingToAdd) {
