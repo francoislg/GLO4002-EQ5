@@ -25,7 +25,7 @@ public class BookingTest {
 	Booking booking;
 
 	@Before
-	public void setUp() throws invalidPriorityValue {
+	public void setUp() throws InvalidPriorityValue {
 		booking = new Booking(NUMBEROFSEATSINBOOKING, PRIORITYVALUEOFBOOKING);
 	}
 

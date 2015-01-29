@@ -5,7 +5,7 @@ public class Booking {
 	private boolean assigned;
 	private int priority;
 
-	public Booking(int numberOfSeatsNeeded, int priorityValue) throws invalidPriorityValue {
+	public Booking(int numberOfSeatsNeeded, int priorityValue) throws InvalidPriorityValue {
 		assigned = false;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		validatePriorityValue(priorityValue);
@@ -28,9 +28,9 @@ public class Booking {
 		return this.numberOfSeatsNeeded <= numberOfSeats;
 	}
 
-	private void validatePriorityValue(int PriorityValueToValidate) throws invalidPriorityValue {
+	private void validatePriorityValue(int PriorityValueToValidate) throws InvalidPriorityValue {
 		if (PriorityValueToValidate < 1 || PriorityValueToValidate > 5) {
-			throw new invalidPriorityValue();
+			throw new InvalidPriorityValue();
 		}
 	}
 }

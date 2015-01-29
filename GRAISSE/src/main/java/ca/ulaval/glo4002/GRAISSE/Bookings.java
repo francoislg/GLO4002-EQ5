@@ -2,9 +2,7 @@ package ca.ulaval.glo4002.GRAISSE;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Iterator;
-import java.util.stream.Collectors;
 
 public class Bookings {
 	private Collection<Booking> bookingList;
@@ -30,17 +28,12 @@ public class Bookings {
 	}
 
 	public void assign(Boardrooms boardrooms, BookingsStrategy bookingsStrategy, BoardroomsStrategy boardroomsStrategy) {
-		Collection<Booking> ordered = bookingsStrategy.format(bookingList);
-		for (Iterator<Booking> bookingIter = ordered.iterator(); bookingIter.hasNext();) {
+		Collection<Booking> formatedBookingList = bookingsStrategy.format(bookingList);
+		for (Iterator<Booking> bookingIter = formatedBookingList.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();
 			if (boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy)) {
 				bookingIter.remove();
 			}
 		}
-	}
-
-	private Collection<Booking> getCollectionSortByPriorityValue() {
-		Comparator<Booking> byPriorityValue = (e1, e2) -> Integer.compare(e1.getPriorityValue(), e2.getPriorityValue());
-		return bookingList.stream().sorted(byPriorityValue).collect(Collectors.toList());
 	}
 }
