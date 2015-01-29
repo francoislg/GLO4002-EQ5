@@ -38,4 +38,8 @@ public class Boardroom {
 		}
 		return false;
 	}
+
+	public int compareNumberOfSeatsToBoardroom(Boardroom boardrooomToCompare) {
+		return Integer.compare(this.numberOfSeats, boardrooomToCompare.numberOfSeats);
+	}
 }
