@@ -30,8 +30,9 @@ public class Boardrooms {
 		throw new BoardroomNotFoundExeption();
 	}
 
-	public boolean assignBookingToBoardroom(Collection<Boardroom> boardroomsCollection, Booking bookingToAssign) {
-		for (Boardroom boardroom : boardroomsCollection) {
+	public boolean assignBookingToBoardroom(Booking bookingToAssign, BoardroomsStrategy boardroomsStrategy) {
+		Collection<Boardroom> formatedBoardroomList = boardroomsStrategy.format(boardrooms);
+		for (Boardroom boardroom : formatedBoardroomList) {
 			if (boardroom.assign(bookingToAssign)) {
 				return true;
 			}

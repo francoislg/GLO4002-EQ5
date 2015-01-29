@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE;
 
-public abstract class BookerStrategy {
+public interface BookerStrategy {
 
-	public abstract void assignBookings(Boardrooms boardrooms, Bookings bookings);
+	public void assignBookings(Boardrooms boardrooms, Bookings bookings);
 
 }

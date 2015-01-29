@@ -1,13 +1,14 @@
 package ca.ulaval.glo4002.GRAISSE;
 
-public class BoardroomsStrategyBasic extends BoardroomsStrategy {
+import java.util.Collection;
+
+public class BoardroomsStrategyBasic implements BoardroomsStrategy {
 
 	public BoardroomsStrategyBasic() {
 
 	}
 
-	public boolean assignBookingToBoardroom(Boardrooms boardrooms, Booking bookingToAssign) {
-
+	public Collection<Boardroom> format(Collection<Boardroom> boardrooms) {
+		return boardrooms;
 	}
-
 }

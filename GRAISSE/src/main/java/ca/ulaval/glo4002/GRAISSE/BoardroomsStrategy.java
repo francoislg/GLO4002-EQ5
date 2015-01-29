@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE;
 
-public abstract class BoardroomsStrategy {
+import java.util.Collection;
 
-	public abstract void assignBookingToBoardroom(Boardrooms boadrooms, CollectionBooking bookingToAssign);
+public interface BoardroomsStrategy {
+	public Collection<Boardroom> format(Collection<Boardroom> boardrooms);
 }
