@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE;
 
+import java.util.TimerTask;
+
 import javax.management.InvalidAttributeValueException;
 
 public class TimedSequentialTrigger extends Trigger {
@@ -8,7 +10,7 @@ public class TimedSequentialTrigger extends Trigger {
 	protected boolean intervalHasBeenSet = false;
 	protected boolean isRunning = false;
 
-	public TimedSequentialTrigger(Worker target) {
+	public TimedSequentialTrigger(Worker target, TimerTask timerTask) {
 		super(target);
 	}
 
