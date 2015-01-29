@@ -7,6 +7,6 @@ public class BookerStrategiesFactory {
 	}
 
 	public BookerStrategy createMaximiseStrategy() {
-		return new BookerStrategyMaximise();
+		return new BookerStrategyBasic(new BookingsStrategyBasic(), new BoardroomsStrategyMaximise());
 	}
 }
