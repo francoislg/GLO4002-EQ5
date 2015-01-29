@@ -1,28 +1,28 @@
 package ca.ulaval.glo4002.GRAISSE;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 import java.util.stream.Stream;
 
 public class Boardrooms {
-	private List<Boardroom> boardroomsList = new ArrayList<Boardroom>();
+	private Collection<Boardroom> boardrooms = new ArrayList<Boardroom>();
 
 	public Boardrooms() {
 
 	}
 
 	public void addBoardroom(Boardroom boardroom) {
-		boardroomsList.add(boardroom);
+		boardrooms.add(boardroom);
 	}
 
 	public boolean isEmpty() {
-		return boardroomsList.isEmpty();
+		return boardrooms.isEmpty();
 	}
 
 	public Boardroom findBoardroomWithName(String boardroomName) throws BoardroomNotFoundExeption {
-		for (Boardroom boardroom : boardroomsList) {
+		for (Boardroom boardroom : boardrooms) {
 			if (boardroom.isMyName(boardroomName)) {
 				return boardroom;
 			}
@@ -30,8 +30,8 @@ public class Boardrooms {
 		throw new BoardroomNotFoundExeption();
 	}
 
-	public boolean assignBookingToBoardroom(Booking bookingToAssign) {
-		for (Boardroom boardroom : boardroomsList) {
+	public boolean assignBookingToBoardroom(Collection<Boardroom> boardroomsCollection, Booking bookingToAssign) {
+		for (Boardroom boardroom : boardroomsCollection) {
 			if (boardroom.assign(bookingToAssign)) {
 				return true;
 			}
@@ -51,8 +51,12 @@ public class Boardrooms {
 		return false;
 	}
 
+	public Collection<Boardroom> findAll() {
+		return boardrooms;
+	}
+
 	private Stream<Boardroom> getStreamSortByNumberOfSeats() {
 		Comparator<Boardroom> byNumberOfSeats = (e1, e2) -> Integer.compare(e1.getNumberOfSeats(), e2.getNumberOfSeats());
-		return boardroomsList.stream().sorted(byNumberOfSeats);
+		return boardrooms.stream().sorted(byNumberOfSeats);
 	}
 }

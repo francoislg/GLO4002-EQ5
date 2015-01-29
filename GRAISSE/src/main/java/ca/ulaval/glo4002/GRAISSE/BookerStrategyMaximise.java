@@ -2,11 +2,13 @@ package ca.ulaval.glo4002.GRAISSE;
 
 public class BookerStrategyMaximise extends BookerStrategy {
 
-	public BookerStrategyMaximise() {
+	private BookingsStrategy bookingsStrategy;
 
+	public BookerStrategyMaximise() {
+		bookingsStrategy = new BookingsStrategyBasic();
 	}
 
 	public void assignBookings(Boardrooms boardrooms, Bookings bookings) {
-		bookings.maximiseAssign(boardrooms);
+		bookingsStrategy.assignBookingsToBoardrooms(this, boardrooms, bookings);
 	}
 }

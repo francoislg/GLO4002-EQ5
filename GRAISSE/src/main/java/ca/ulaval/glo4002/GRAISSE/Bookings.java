@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Bookings {
 	private Collection<Booking> bookingList;
@@ -26,10 +25,15 @@ public class Bookings {
 		return bookingList.isEmpty();
 	}
 
-	public void basicAssign(Boardrooms boardrooms) {
-		for (Iterator<Booking> bookingIter = bookingList.iterator(); bookingIter.hasNext();) {
+	public Collection<Booking> findAll() {
+		return bookingList;
+	}
+
+	public void assign(Boardrooms boardrooms, BookingsStrategy bookingsStrategy, BoardroomStrategy boardroomStrategy) {
+		Collection<Booking> ordered = bookingsStrategy.format(bookingList);
+		for (Iterator<Booking> bookingIter = ordered.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();
-			if (boardrooms.assignBookingToBoardroom(booking)) {
+			if (boardrooms.assignBookingToBoardroom(booking, boardroomstrat)) {
 				bookingIter.remove();
 			}
 		}
@@ -44,19 +48,17 @@ public class Bookings {
 		}
 	}
 
-	public void priorityAssign(Boardrooms boardrooms) {
-		Collection<Booking> bookings = getStreamSortByPriorityValue().collect(Collectors.toList());
+	/*
+	 * public void priorityAssign(Boardrooms boardrooms) { Collection<Booking>
+	 * bookings = getStreamSortByPriorityValue().collect(Collectors.toList());
+	 * for (Iterator<Booking> bookingIter = bookings.iterator();
+	 * bookingIter.hasNext();) { Booking bookingToAssign = bookingIter.next();
+	 * if (boardrooms.assignBookingToBoardroom(bookingToAssign)) {
+	 * bookingIter.remove(); } } }
+	 */
 
-		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
-			Booking bookingToAssign = bookingIter.next();
-			if (boardrooms.assignBookingToBoardroom(bookingToAssign)) {
-				bookingIter.remove();
-			}
-		}
-	}
-
-	private Stream<Booking> getStreamSortByPriorityValue() {
+	private Collection<Booking> getCollectionSortByPriorityValue() {
 		Comparator<Booking> byPriorityValue = (e1, e2) -> Integer.compare(e1.getPriorityValue(), e2.getPriorityValue());
-		return bookingList.stream().sorted(byPriorityValue);
+		return bookingList.stream().sorted(byPriorityValue).collect(Collectors.toList());
 	}
 }
