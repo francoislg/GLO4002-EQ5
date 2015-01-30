@@ -1,55 +1,46 @@
 package ca.ulaval.glo4002.GRAISSE;
 
+import javax.management.InvalidAttributeValueException;
 
+public class TimedSequentialTrigger extends Trigger {
 
-public class TimedSequentialTrigger extends Trigger{
+	protected int minutesInterval = 0;
+	protected boolean intervalHasBeenSet = false;
+	protected boolean isRunning = false;
 
-	
-	private static final long DEFAULT_FREQUENCY= 10;
-	private static final long MINUTES_TO_MS= 60000;
-
-	private long timeFrequencyInMs;
-	private long lastActivationInMs;
-	
-	
-	public TimedSequentialTrigger()
-	{
-		lastActivationInMs=System.currentTimeMillis();
-		timeFrequencyInMs = DEFAULT_FREQUENCY*MINUTES_TO_MS;
+	public TimedSequentialTrigger(Worker target) {
+		super(target);
 	}
-	
-	public boolean checkActivation()
-	{
-		long actualTimeInMs = System.currentTimeMillis();
-		if( (actualTimeInMs - lastActivationInMs)>= timeFrequencyInMs )
-		{
-			lastActivationInMs=actualTimeInMs;
-			return true;
-			
+
+	public boolean isRunning() {
+		return isRunning;
+	}
+
+	public void setInterval(int minutes) throws InvalidAttributeValueException {
+		if (minutes <= 0) {
+			throw new InvalidAttributeValueException("Invalid interval value.");
 		}
-		return false;
+		minutesInterval = minutes;
+		intervalHasBeenSet = true;
 	}
-	
-	public void setFrequency(long frequency)
-	{
-		timeFrequencyInMs = frequency*MINUTES_TO_MS;
 
+	public int getInterval() {
+		if (intervalHasBeenSet) {
+			return minutesInterval;
+		}
+		throw new IllegalStateException("The interval has not been set.");
 	}
-	
 
-	
-	public long getFrequency()
-	{
-		return timeFrequencyInMs/MINUTES_TO_MS;
+	protected void doUpdatedByWorkerWithWorkToDo() {
+		startTimer();
 	}
-	
-	
-	public long getLastActivation()
-	{
-		return lastActivationInMs/MINUTES_TO_MS;
-	}
-	
 
-	
-	
+	protected void startTimer() {
+		isRunning = true;
+	}
+
+	protected void reset() {
+		isRunning = false;
+	}
+
 }

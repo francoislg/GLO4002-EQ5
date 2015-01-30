@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.GRAISSE;
 
-public class Booker {
+import java.util.Observable;
+
+public class Booker extends Observable implements Worker {
 	private Bookings bookings;
 	private BookerStrategy bookingStrategy;
 	private BookerStrategiesFactory bookingStrategiesFactory;
@@ -18,11 +20,25 @@ public class Booker {
 		bookingStrategy = bookingStrategiesFactory.createBasicStrategy();
 	}
 
-	public void assignBooking() {
+	public void assignBookings() {
 		bookingStrategy.assignBookings(boardrooms, bookings);
 	}
 
 	public void addBooking(Booking bookingToAdd) {
 		bookings.addBooking(bookingToAdd);
+	}
+
+	public boolean hasWorkToDO() {
+		return bookings.isEmpty();
+
+	}
+
+	public void doWork() {
+		assignBookings();
+	}
+
+	public int numberOfJobsToDo() {
+		return bookings.getBookingsSize();
+
 	}
 }

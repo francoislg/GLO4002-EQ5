@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.GRAISSE;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookerTest {
+public class BookerTest extends TestCase {
 
 	Booker booker;
 
@@ -38,7 +39,7 @@ public class BookerTest {
 
 	@Test
 	public void assignBookingShouldcallassignBookingsOnbookingStrategy() {
-		booker.assignBooking();
+		booker.assignBookings();
 		verify(bookingStrategy, times(1)).assignBookings(boardrooms, bookings);
 	}
 
@@ -54,9 +55,18 @@ public class BookerTest {
 	}
 
 	@Test
+	public void onCreationTheBookerShouldNotHasWorkToDo() {
+		assertFalse(booker.hasWorkToDO());
+	}
+
+	@Test
+	public void onCreationTheBookerShouldHaveZeroJobsToDo() {
+		assertEquals(0, booker.numberOfJobsToDo());
+	}
+
+	@Test
 	public void setStrategyToBasicShouldUseTheFactoryToGetABookingStrategyBasicObject() {
 		booker.setStrategyToBasic();
 		verify(bookingStrategiesFactory, times(2)).createBasicStrategy();
 	}
-
 }
