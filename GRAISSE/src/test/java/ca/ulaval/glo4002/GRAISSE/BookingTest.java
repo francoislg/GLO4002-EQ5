@@ -37,25 +37,24 @@ public class BookingTest {
 
 	@Before
 	public void setUp() throws InvalidPriorityValue {
-		booking = new Booking(NUMBEROFSEATSINBOOKING, PRIORITYVALUEOFBOOKING);
-		bookingWithBiggerPriority = new Booking(NUMBEROFSEATSINBOOKING, PRIORITYVALUEOFBOOKINGBIGGER);
-		bookingWithSmallerPriority = new Booking(NUMBEROFSEATSINBOOKING, PRIORITYVALUEOFBOOKINGSMALLER);
+		booking = new Booking(NUMBEROFSEATSINBOOKING);
+		booking.setPriority(PRIORITYVALUEOFBOOKING);
+		bookingWithBiggerPriority = new Booking(NUMBEROFSEATSINBOOKING);
+		bookingWithBiggerPriority.setPriority(PRIORITYVALUEOFBOOKINGBIGGER);
+		bookingWithSmallerPriority = new Booking(NUMBEROFSEATSINBOOKING);
+		bookingWithSmallerPriority.setPriority(PRIORITYVALUEOFBOOKINGSMALLER);
 	}
 
 	@Test(expected = InvalidPriorityValue.class)
 	public void withInvalidPriorityValueConstructorShouldThrowInvalidPriorityValue() throws InvalidPriorityValue {
-		booking = new Booking(NUMBEROFSEATSINBOOKING, INVALIDPRIORITYVALUEOFBOOKING);
+		booking = new Booking(NUMBEROFSEATSINBOOKING);
+		booking.setPriority(INVALIDPRIORITYVALUEOFBOOKING);
 	}
 
 	@Test
 	public void assignShouldAssignTheBooking() {
 		booking.assign();
-		assertTrue(booking.isAssign());
-	}
-
-	@Test
-	public void getPriorityValueShouldReturnThePriorityValue() {
-		assertEquals(PRIORITYVALUEOFBOOKING, booking.getPriorityValue());
+		assertTrue(booking.isAssigned());
 	}
 
 	@Test
