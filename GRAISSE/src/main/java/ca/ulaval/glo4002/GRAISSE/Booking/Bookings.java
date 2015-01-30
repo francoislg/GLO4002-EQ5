@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategy;
+import ca.ulaval.glo4002.GRAISSE.Boardroom.BookingAssignable;
 
 public class Bookings {
 	private Collection<Booking> bookingList;
@@ -18,7 +19,7 @@ public class Bookings {
 		bookingList.add(booking);
 	}
 
-	public void removeBooking(Booking booking) {
+	public void removeBooking(BookingAssignable booking) {
 		bookingList.remove(booking);
 	}
 
@@ -29,7 +30,7 @@ public class Bookings {
 	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsStrategy bookingsStrategy, BoardroomsStrategy boardroomsStrategy) {
 		Collection<Booking> formatedBookingList = bookingsStrategy.format(bookingList);
 		for (Iterator<Booking> bookingIter = formatedBookingList.iterator(); bookingIter.hasNext();) {
-			Booking booking = bookingIter.next();
+			BookingAssignable booking = bookingIter.next();
 			if (boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy)) {
 				bookingIter.remove();
 			}

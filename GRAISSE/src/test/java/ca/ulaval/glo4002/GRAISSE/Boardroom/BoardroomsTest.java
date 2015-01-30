@@ -18,7 +18,6 @@ import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomNotFoundExeption;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategy;
-import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomsTest {
@@ -31,7 +30,7 @@ public class BoardroomsTest {
 	Boardrooms boardrooms;
 
 	@Mock
-	Booking booking;
+	BookingAssignable booking;
 
 	@Mock
 	Boardroom boardroom1;

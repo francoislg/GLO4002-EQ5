@@ -1,7 +1,9 @@
 package ca.ulaval.glo4002.GRAISSE.Booking;
 
+import ca.ulaval.glo4002.GRAISSE.Boardroom.BookingAssignable;
 
-public class Booking {
+
+public class Booking implements BookingAssignable {
 	private final int DEFAULT_PRIORITY = 3;
 	private int numberOfSeatsNeeded;
 	private boolean assigned;
@@ -18,6 +20,7 @@ public class Booking {
 		this.priority = priority;
 	}
 
+	@Override
 	public void assign() {
 		assigned = true;
 	}
@@ -26,6 +29,7 @@ public class Booking {
 		return assigned;
 	}
 
+	@Override
 	public boolean verifyNumberOfSeats(int numberOfSeats) {
 		return this.numberOfSeatsNeeded <= numberOfSeats;
 	}

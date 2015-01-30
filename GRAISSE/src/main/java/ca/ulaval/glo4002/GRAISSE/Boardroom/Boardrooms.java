@@ -3,8 +3,6 @@ package ca.ulaval.glo4002.GRAISSE.Boardroom;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
-
 public class Boardrooms {
 	private Collection<Boardroom> boardrooms = new ArrayList<Boardroom>();
 
@@ -29,7 +27,7 @@ public class Boardrooms {
 		throw new BoardroomNotFoundExeption();
 	}
 
-	public boolean assignBookingToBoardroom(Booking bookingToAssign, BoardroomsStrategy boardroomsStrategy) {
+	public boolean assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsStrategy boardroomsStrategy) {
 		Collection<Boardroom> formatedBoardroomList = boardroomsStrategy.format(boardrooms);
 		for (Boardroom boardroom : formatedBoardroomList) {
 			if (boardroom.assign(bookingToAssign)) {

@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardroom;
-import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomTest {
@@ -37,7 +36,7 @@ public class BoardroomTest {
 	Boardroom boardroomWithLessSeats;
 
 	@Mock
-	Booking booking;
+	BookingAssignable booking;
 
 	@Before
 	public void setUp() {

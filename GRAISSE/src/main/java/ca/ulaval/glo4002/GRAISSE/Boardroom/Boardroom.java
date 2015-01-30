@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE.Boardroom;
 
-import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
 
 public class Boardroom {
 	private int numberOfSeats;
@@ -21,7 +20,7 @@ public class Boardroom {
 		return this.nameOfBoardroom == name;
 	}
 
-	public boolean verifyNumberOfSeats(Booking bookingToVerify) {
+	public boolean verifyNumberOfSeats(BookingAssignable bookingToVerify) {
 		return bookingToVerify.verifyNumberOfSeats(numberOfSeats);
 	}
 
@@ -29,7 +28,7 @@ public class Boardroom {
 		return this.numberOfSeats;
 	}
 
-	public boolean assign(Booking bookingToAssign) {
+	public boolean assign(BookingAssignable bookingToAssign) {
 		if (!verifyNumberOfSeats(bookingToAssign)) {
 			return false;
 		}
