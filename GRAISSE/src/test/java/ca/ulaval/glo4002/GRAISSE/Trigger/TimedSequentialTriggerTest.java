@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.GRAISSE.Trigger;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 import java.util.Observable;
 
@@ -12,7 +13,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.Trigger.TimedSequentialTrigger;
@@ -25,14 +26,16 @@ public class TimedSequentialTriggerTest {
 	private static final int VALID_NUMBER_OF_MINUTES = 1;
 	private static final boolean HAS_JOB_TO_DO = true;
 	private static final boolean OBSERVABLE_IS_THE_WORKER = true;
+	
+	@Mock
 	private Worker mockedWorker;
+	
 	private TimedSequentialTrigger timedSequentialTrigger;
 	private Observable anObservable = new Observable();
 
 	@Before
 	public void setUp() {
-		mockedWorker = Mockito.mock(Worker.class);
-		timedSequentialTrigger = Mockito.spy(new TimedSequentialTrigger(
+		timedSequentialTrigger = spy(new TimedSequentialTrigger(
 				mockedWorker));
 	}
 
@@ -67,12 +70,12 @@ public class TimedSequentialTriggerTest {
 			throws InvalidAttributeValueException {
 		timedSequentialTrigger.setInterval(VALID_NUMBER_OF_MINUTES);
 
-		Mockito.when(mockedWorker.hasWorkToDO()).thenReturn(HAS_JOB_TO_DO);
-		Mockito.when(timedSequentialTrigger.observableIsTheWorker(anObservable))
+		when(mockedWorker.hasWorkToDO()).thenReturn(HAS_JOB_TO_DO);
+		when(timedSequentialTrigger.observableIsTheWorker(anObservable))
 				.thenReturn(OBSERVABLE_IS_THE_WORKER);
 		timedSequentialTrigger.update(anObservable, null);
 
-		Mockito.verify(timedSequentialTrigger, Mockito.times(1)).startTimer();
+		verify(timedSequentialTrigger, times(1)).startTimer();
 	}
 
 	@Test
