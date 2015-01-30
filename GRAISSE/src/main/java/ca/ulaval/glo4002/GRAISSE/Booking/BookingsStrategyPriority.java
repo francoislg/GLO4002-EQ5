@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-public class BookingsStrategyPriority extends BookingsStrategyBasic {
+public class BookingsStrategyPriority implements BookingsStrategy {
 	public BookingsStrategyPriority() {
 
 	}
