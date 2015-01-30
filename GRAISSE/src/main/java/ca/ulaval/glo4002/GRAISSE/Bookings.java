@@ -32,4 +32,8 @@ public class Bookings {
 			}
 		}
 	}
+
+	public int getBookingsSize() {
+		return bookingList.size();
+	}
 }

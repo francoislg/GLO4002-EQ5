@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.GRAISSE;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookerTest extends TestCase {
+public class BookerTest {
 
 	Booker booker;
 

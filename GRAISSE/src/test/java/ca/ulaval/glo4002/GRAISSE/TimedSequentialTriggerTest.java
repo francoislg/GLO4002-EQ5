@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -79,7 +80,7 @@ public class TimedSequentialTriggerTest {
 	}
 
 	@Ignore
-	}
+	@Test
 	public void startedTimedSequentialTriggerShouldNotBeRunningAfterReset() {
 		timedSequentialTrigger.startTimer();
 		timedSequentialTrigger.reset();
