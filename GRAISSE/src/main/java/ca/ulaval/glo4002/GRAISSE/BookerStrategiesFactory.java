@@ -9,4 +9,8 @@ public class BookerStrategiesFactory {
 	public BookerStrategy createMaximiseStrategy() {
 		return new BookerStrategyBasic(new BookingsStrategyBasic(), new BoardroomsStrategyMaximise());
 	}
+
+	public BookerStrategy createPriorityStrategy() {
+		return new BookerStrategyBasic(new BookingsStrategyPriority(), new BoardroomsStrategyMaximise());
+	}
 }
