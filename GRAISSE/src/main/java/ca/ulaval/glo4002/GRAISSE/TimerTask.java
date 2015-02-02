@@ -7,4 +7,6 @@ public interface TimerTask {
 	public long scheduledExecutionTime();
 
 	public abstract void run();
+
+	public void setWorker(Worker worker);
 }

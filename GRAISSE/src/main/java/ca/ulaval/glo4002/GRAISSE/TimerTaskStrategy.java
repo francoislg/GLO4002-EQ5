@@ -6,12 +6,15 @@ public class TimerTaskStrategy extends TimerTask implements ca.ulaval.glo4002.GR
 
 	private Worker worker;
 
-	public TimerTaskStrategy(Worker worker) {
+	public void setWorker(Worker worker) {
 		this.worker = worker;
 	}
 
 	@Override
 	public void run() {
+		if (worker == null) {
+			throw new IllegalStateException("Worker was not initialise.");
+		}
 		worker.doWork();
 	}
 
