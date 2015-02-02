@@ -22,10 +22,12 @@ public class Booker extends Observable implements Worker {
 
 	public void assignBookings() {
 		bookingStrategy.assignBookings(bookings);
+		notifyObserversThatBookerHasChanged();
 	}
 
 	public void addBooking(Booking bookingToAdd) {
 		bookings.addBooking(bookingToAdd);
+		notifyObserversThatBookerHasChanged();
 	}
 
 	public boolean hasWorkToDO() {
@@ -39,5 +41,11 @@ public class Booker extends Observable implements Worker {
 
 	public int numberOfJobsToDo() {
 		return bookings.getBookingsSize();
+	}
+
+	protected void notifyObserversThatBookerHasChanged() {
+		setChanged();
+		notifyObservers();
+		clearChanged();
 	}
 }

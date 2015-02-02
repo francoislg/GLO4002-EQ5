@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -34,7 +35,7 @@ public class BookerTest extends TestCase {
 	@Before
 	public void setUp() {
 		when(bookingStrategiesFactory.createBasicStrategy(boardrooms)).thenReturn(bookingStrategy);
-		booker = new Booker(bookingStrategiesFactory, bookings, boardrooms);
+		booker = Mockito.spy(new Booker(bookingStrategiesFactory, bookings, boardrooms));
 	}
 
 	@Test
@@ -70,4 +71,27 @@ public class BookerTest extends TestCase {
 		verify(bookingStrategiesFactory, times(2)).createBasicStrategy(boardrooms);
 	}
 
+	@Test
+	public void theBookerShouldAssigneBookingsWhenTheDoWorkMethodIsCalled() {
+		booker.doWork();
+		verify(booker, times(1)).assignBookings();
+	}
+
+	@Test
+	public void theBookerShouldCallNotifyObserversThatBookerHasChangedAfterAssigningBookings() {
+		booker.assignBookings();
+		verify(booker, times(1)).notifyObserversThatBookerHasChanged();
+	}
+
+	@Test
+	public void theBookerShouldCallNotifyObserversThatBookerHasChangedAfterAddingANewBooking() {
+		booker.addBooking(booking);
+		verify(booker, times(1)).notifyObserversThatBookerHasChanged();
+	}
+
+	@Test
+	public void theBookerShouldNotifyObserversAfterAssigningBookings() {
+		booker.assignBookings();
+		verify(booker, times(1)).notifyObservers();
+	}
 }
