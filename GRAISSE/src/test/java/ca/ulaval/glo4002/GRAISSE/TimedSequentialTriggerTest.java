@@ -148,6 +148,12 @@ public class TimedSequentialTriggerTest {
 	}
 
 	@Test
+	public void timedSequentialTriggerShouldNotCallSetTimerWhenTheResetMethodIsCalledAndTheTimerIsNotRunning() {
+		timedSequentialTrigger.reset();
+		Mockito.verify(timedSequentialTrigger, Mockito.never()).setTimer(Mockito.any(TimerStrategy.class));
+	}
+
+	@Test
 	public void timedSequentialTriggerShouldNotCallGetTimerWhenStartTimerMethodIsCalledAndTheTimerIsAllreadyRunning() throws InvalidAttributeValueException {
 		startMockedTimer();
 		timedSequentialTrigger.startTimer();
@@ -159,6 +165,13 @@ public class TimedSequentialTriggerTest {
 		startMockedTimer();
 		timedSequentialTrigger.reset();
 		Mockito.verify(mockedTimer, Mockito.times(1)).cancel();
+	}
+
+	@Test
+	public void timedSequentialTriggerShouldCallSetTimerToNullWhenResetingAndTheTimerWasRunning() throws InvalidAttributeValueException {
+		startMockedTimer();
+		timedSequentialTrigger.reset();
+		Mockito.verify(timedSequentialTrigger, Mockito.times(1)).setTimer(null);
 	}
 
 	private void startMockedTimer() throws InvalidAttributeValueException {

@@ -55,6 +55,7 @@ public class TimedSequentialTrigger extends Trigger {
 	protected void reset() {
 		if (isRunning) {
 			getTimer().cancel();
+			setTimer(null);
 			isRunning = false;
 		}
 	}
@@ -68,6 +69,11 @@ public class TimedSequentialTrigger extends Trigger {
 			initTimer();
 		}
 		return timer;
+	}
+
+	protected TimedSequentialTrigger setTimer(TimerStrategy timer) {
+		this.timer = timer;
+		return this;
 	}
 
 }
