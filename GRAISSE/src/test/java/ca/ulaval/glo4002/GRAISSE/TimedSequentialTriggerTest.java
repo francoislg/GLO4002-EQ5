@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Observable;
-import java.util.TimerTask;
 
 import javax.management.InvalidAttributeValueException;
 
@@ -16,10 +15,14 @@ import org.mockito.Mockito;
 
 public class TimedSequentialTriggerTest {
 
-	private static final int INVALID_NUMBER_OF_MINUTES = 0;
-	private static final int VALID_NUMBER_OF_MINUTES = 1;
+	private static final long INVALID_NUMBER_OF_MINUTES = 0;
+	private static final long VALID_NUMBER_OF_MINUTES = 1;
+	private static final long A_MINUTE = 1;
+	private static final long A_MINUTE_IN_MILLISECOND = 60000;
 	private static final boolean HAS_JOB_TO_DO = true;
 	private static final boolean OBSERVABLE_IS_THE_WORKER = true;
+	private static final int ONCE_PLUS_ANOTHER_ONE_FOR_MOCKITO_CALL = 2;
+	private static final int TWICE_PLUS_ANOTHER_ONE_FOR_MOCKITO_CALL = 3;
 
 	@Mock
 	private Worker mockedWorker;
@@ -31,11 +34,18 @@ public class TimedSequentialTriggerTest {
 	private Observable anObservable;
 
 	@Mock
-	private TimerTask mockedTimerTask;
+	private ca.ulaval.glo4002.GRAISSE.TimerTask mockedTimerTask;
+
+	@Mock
+	private ca.ulaval.glo4002.GRAISSE.Timer mockedTimer;
 
 	@Before
 	public void setUp() {
 		mockedWorker = Mockito.mock(Worker.class);
+
+		mockedTimer = Mockito.mock(Timer.class);
+		Mockito.doNothing().when(mockedTimer).schedule(mockedTimerTask, A_MINUTE_IN_MILLISECOND);
+
 		timedSequentialTrigger = Mockito.spy(new TimedSequentialTrigger(mockedWorker, mockedTimerTask));
 	}
 
@@ -58,13 +68,15 @@ public class TimedSequentialTriggerTest {
 	@Test
 	public void newTimedSequentialTriggerShouldReturnSameIntervalThatWasSetBeforeWith() throws InvalidAttributeValueException {
 		timedSequentialTrigger.setInterval(VALID_NUMBER_OF_MINUTES);
-		int triggerInterval = timedSequentialTrigger.getInterval();
+		long triggerInterval = timedSequentialTrigger.getInterval();
 		assertEquals(VALID_NUMBER_OF_MINUTES, triggerInterval);
 
 	}
 
 	@Test
 	public void timedSequentialTriggerShouldStartTimerWhenUpdateMethodIsCalledAndNWorkerHasJobToDo() throws InvalidAttributeValueException {
+		Mockito.when(timedSequentialTrigger.getTimer()).thenReturn(mockedTimer);
+
 		timedSequentialTrigger.setInterval(VALID_NUMBER_OF_MINUTES);
 
 		Mockito.when(mockedWorker.hasWorkToDO()).thenReturn(HAS_JOB_TO_DO);
@@ -75,18 +87,85 @@ public class TimedSequentialTriggerTest {
 	}
 
 	@Test
-	public void timedSequentialTriggerShouldBeRunningAfterStartTimerHasBeenCalled() {
-		timedSequentialTrigger.startTimer();
+	public void timedSequentialTriggerShouldBeRunningAfterStartTimerHasBeenCalled() throws InvalidAttributeValueException {
+		startMockedTimer();
+
 		boolean isRunning = timedSequentialTrigger.isRunning();
 		assertTrue(isRunning);
 	}
 
 	@Test
-	public void startedTimedSequentialTriggerShouldNotBeRunningAfterReset() {
-		timedSequentialTrigger.startTimer();
+	public void startedTimedSequentialTriggerShouldNotBeRunningAfterReset() throws InvalidAttributeValueException {
+		startMockedTimer();
+
 		timedSequentialTrigger.reset();
 		boolean isRunning = timedSequentialTrigger.isRunning();
 		assertFalse(isRunning);
+	}
+
+	@Test
+	public void timedSequentialTriggerShouldCallInitTimerWhenFirstTimeGetTimerIsCalled() throws InvalidAttributeValueException {
+		timedSequentialTrigger.getTimer();
+		Mockito.verify(timedSequentialTrigger, Mockito.times(1)).initTimer();
+	}
+
+	@Test
+	public void timedSequentialTriggerShouldCallGetTimerOnceWhenStartTimeIsCalled() throws InvalidAttributeValueException {
+		startMockedTimer();
+		Mockito.verify(timedSequentialTrigger, Mockito.times(ONCE_PLUS_ANOTHER_ONE_FOR_MOCKITO_CALL)).getTimer();
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void timedSequentialTriggerShouldThrowIllegalStateExceptionWhenGetMilliSecondIntervalIsCalledAndTheIntervalHasNotBeenSet() {
+		timedSequentialTrigger.getMilliSecondInterval();
+	}
+
+	@Test
+	public void timedSequentialTriggerShouldReturnTheGoodMilliSecondIntervalAfterTheMinuteIntervalHasBeenSet() throws InvalidAttributeValueException {
+		timedSequentialTrigger.setInterval(A_MINUTE);
+		long result = timedSequentialTrigger.getMilliSecondInterval();
+		assertEquals(A_MINUTE_IN_MILLISECOND, result);
+	}
+
+	@Test
+	public void timedSequentialTriggerShouldCalledScheduleOfTheTimerOnlyOnceWithTheGoodTimerTaskAndDelay() throws InvalidAttributeValueException {
+		startMockedTimer();
+
+		Mockito.verify(mockedTimer, Mockito.times(1)).schedule(mockedTimerTask, A_MINUTE_IN_MILLISECOND);
+	}
+
+	@Test
+	public void timedSequentialTriggerShouldCalledGetTimerTwiceWhenTheResetMethodIsCAlledAndTheTimerIsRunning() throws InvalidAttributeValueException {
+		startMockedTimer();
+		timedSequentialTrigger.reset();
+		Mockito.verify(timedSequentialTrigger, Mockito.times(TWICE_PLUS_ANOTHER_ONE_FOR_MOCKITO_CALL)).getTimer();
+	}
+
+	@Test
+	public void timedSequentialTriggerShouldNotCallGetTimerWhenTheResetMethodIsCalledAndTheTimerIsNotRunning() {
+		timedSequentialTrigger.reset();
+		Mockito.verify(timedSequentialTrigger, Mockito.never()).getTimer();
+	}
+
+	@Test
+	public void timedSequentialTriggerShouldNotCallGetTimerWhenStartTimerMethodIsCalledAndTheTimerIsAllreadyRunning() throws InvalidAttributeValueException {
+		startMockedTimer();
+		timedSequentialTrigger.startTimer();
+		Mockito.verify(timedSequentialTrigger, Mockito.times(ONCE_PLUS_ANOTHER_ONE_FOR_MOCKITO_CALL)).getTimer();
+	}
+
+	@Test
+	public void timedSequentialTriggerShouldCallTimerCancelMethodWhenReseting() throws InvalidAttributeValueException {
+		startMockedTimer();
+		timedSequentialTrigger.reset();
+		Mockito.verify(mockedTimer, Mockito.times(1)).cancel();
+	}
+
+	private void startMockedTimer() throws InvalidAttributeValueException {
+		Mockito.when(timedSequentialTrigger.getTimer()).thenReturn(mockedTimer);
+
+		timedSequentialTrigger.setInterval(A_MINUTE);
+		timedSequentialTrigger.startTimer();
 	}
 
 }
