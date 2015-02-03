@@ -9,7 +9,7 @@ public class Booking implements BookingAssignable {
 	private boolean assigned;
 	private int priority;
 
-	public Booking(int numberOfSeatsNeeded) throws InvalidPriorityException {
+	public Booking(int numberOfSeatsNeeded) {
 		assigned = false;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		priority = DEFAULT_PRIORITY;
