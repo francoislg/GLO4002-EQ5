@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -30,8 +31,6 @@ public class TimedSequentialTriggerTest {
 	private static final long A_MINUTE_IN_MILLISECOND = 60000;
 	private static final boolean HAS_JOB_TO_DO = true;
 	private static final boolean OBSERVABLE_IS_THE_WORKER = true;
-	private static final int ONCE_PLUS_ANOTHER_ONE_FOR_MOCKITO_CALL = 2;
-	private static final int TWICE_PLUS_ANOTHER_ONE_FOR_MOCKITO_CALL = 3;
 
 	@Mock
 	private Worker mockedWorker;
@@ -121,7 +120,7 @@ public class TimedSequentialTriggerTest {
 	@Test
 	public void timedSequentialTriggerShouldCallGetTimerOnceWhenStartTimeIsCalled() throws InvalidAttributeValueException {
 		startMockedTimer();
-		verify(timedSequentialTrigger, times(ONCE_PLUS_ANOTHER_ONE_FOR_MOCKITO_CALL)).getTimer();
+		verify(timedSequentialTrigger, times(1)).getTimer();
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -147,7 +146,7 @@ public class TimedSequentialTriggerTest {
 	public void timedSequentialTriggerShouldCalledGetTimerTwiceWhenTheResetMethodIsCAlledAndTheTimerIsRunning() throws InvalidAttributeValueException {
 		startMockedTimer();
 		timedSequentialTrigger.reset();
-		verify(timedSequentialTrigger, times(TWICE_PLUS_ANOTHER_ONE_FOR_MOCKITO_CALL)).getTimer();
+		verify(timedSequentialTrigger, times(2)).getTimer();
 	}
 
 	@Test
@@ -166,7 +165,7 @@ public class TimedSequentialTriggerTest {
 	public void timedSequentialTriggerShouldNotCallGetTimerWhenStartTimerMethodIsCalledAndTheTimerIsAllreadyRunning() throws InvalidAttributeValueException {
 		startMockedTimer();
 		timedSequentialTrigger.startTimer();
-		verify(timedSequentialTrigger, times(ONCE_PLUS_ANOTHER_ONE_FOR_MOCKITO_CALL)).getTimer();
+		verify(timedSequentialTrigger, times(1)).getTimer();
 	}
 
 	@Test
@@ -183,8 +182,13 @@ public class TimedSequentialTriggerTest {
 		verify(timedSequentialTrigger, times(1)).setTimer(null);
 	}
 
+	@Test
+	public void timedSequentialTriggerShouldCallSetWorkerOfTimerTaskAtInitialisation() {
+		verify(mockedTimerTask, times(1)).setWorker(mockedWorker);
+	}
+
 	private void startMockedTimer() throws InvalidAttributeValueException {
-		when(timedSequentialTrigger.getTimer()).thenReturn(mockedTimer);
+		doReturn(mockedTimer).when(timedSequentialTrigger).getTimer();
 
 		timedSequentialTrigger.setInterval(A_MINUTE);
 		timedSequentialTrigger.startTimer();

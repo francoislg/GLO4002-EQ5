@@ -16,6 +16,7 @@ public class TimedSequentialTrigger extends Trigger {
 	public TimedSequentialTrigger(Worker target, TriggerTimerTask timerTask) {
 		super(target);
 		this.timerTask = timerTask;
+		this.timerTask.setWorker(target);
 	}
 
 	public boolean isRunning() {
