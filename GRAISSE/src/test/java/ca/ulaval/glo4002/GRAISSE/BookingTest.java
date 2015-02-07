@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookingTest extends TestCase {
+public class BookingTest {
 
 	private static final int NUMBEROFSEATSINBOOKING = 10;
 

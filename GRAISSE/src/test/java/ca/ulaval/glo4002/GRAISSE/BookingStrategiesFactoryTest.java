@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookingStrategiesFactoryTest extends TestCase {
+public class BookingStrategiesFactoryTest {
 
 	BookingStrategiesFactory bookingStrategiesFactory;
 
@@ -25,6 +25,11 @@ public class BookingStrategiesFactoryTest extends TestCase {
 	public void createBasicStrategyShouldReturnBookingStrategyBasic() {
 		BookingStrategy bookingStrategy = bookingStrategiesFactory.createBasicStrategy(boardrooms);
 		assertEquals(BookingStrategyBasic.class, bookingStrategy.getClass());
+	}
 
+	@Test
+	public void createMaximiseStrategyShouldReturnBookingStrategyMaximise() {
+		BookingStrategy bookingStrategy = bookingStrategiesFactory.createMaximiseStrategy(boardrooms);
+		assertEquals(BookingStrategyMaximise.class, bookingStrategy.getClass());
 	}
 }

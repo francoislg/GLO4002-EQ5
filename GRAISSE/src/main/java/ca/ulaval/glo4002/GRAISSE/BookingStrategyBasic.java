@@ -8,6 +8,6 @@ public class BookingStrategyBasic extends BookingStrategy {
 	}
 
 	public void assignBookings(Bookings bookings) {
-		bookings.assignBookingToBoardrom(boardrooms);
+		bookings.basicAssign(boardrooms);
 	}
 }

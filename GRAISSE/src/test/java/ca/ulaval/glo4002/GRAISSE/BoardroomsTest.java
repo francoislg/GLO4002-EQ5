@@ -50,23 +50,19 @@ public class BoardroomsTest {
 	}
 
 	@Test
-	public void afterAddingOneBoardRoomfindBoardroomWithNameReturnTheBoardroom()
-			throws BoardroomNotFoundExeption {
+	public void afterAddingOneBoardRoomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundExeption {
 		addOneBoardroomtoBoardrooms();
 
-		Boardroom boardroom = boardrooms
-				.findBoardroomWithName(NAMEOFBOARDROOM1);
+		Boardroom boardroom = boardrooms.findBoardroomWithName(NAMEOFBOARDROOM1);
 		assertTrue(boardroom.isMyName(NAMEOFBOARDROOM1));
 
 	}
 
 	@Test
-	public void afterAddingMultipleBoardroomfindBoardroomWithNameReturnTheBoardroom()
-			throws BoardroomNotFoundExeption {
+	public void afterAddingMultipleBoardroomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundExeption {
 		addThreeBoardroomtoBoardrooms();
 
-		Boardroom boardroom = boardrooms
-				.findBoardroomWithName(NAMEOFBOARDROOM2);
+		Boardroom boardroom = boardrooms.findBoardroomWithName(NAMEOFBOARDROOM2);
 		assertTrue(boardroom.isMyName(NAMEOFBOARDROOM2));
 		boardroom = boardrooms.findBoardroomWithName(NAMEOFBOARDROOM3);
 		assertTrue(boardroom.isMyName(NAMEOFBOARDROOM3));
@@ -75,8 +71,7 @@ public class BoardroomsTest {
 	}
 
 	@Test(expected = BoardroomNotFoundExeption.class)
-	public void withNoExistingBoardroomWithNamefindBoardroomWithNameThrowBoardroomNotFoundExeption()
-			throws BoardroomNotFoundExeption {
+	public void withNoExistingBoardroomWithNamefindBoardroomWithNameThrowBoardroomNotFoundExeption() throws BoardroomNotFoundExeption {
 		addThreeBoardroomtoBoardrooms();
 		boardrooms.findBoardroomWithName(NAMEOFBOARDROOMTHATDOESNOTEXIST);
 	}
@@ -87,7 +82,7 @@ public class BoardroomsTest {
 		when(boardroom1.assign(booking)).thenReturn(false);
 		when(boardroom2.assign(booking)).thenReturn(false);
 		when(boardroom3.assign(booking)).thenReturn(false);
-		assertFalse(boardrooms.assignToBoardroom(booking));
+		assertFalse(boardrooms.assignBookingToBoardroom(booking));
 	}
 
 	@Test
@@ -96,7 +91,7 @@ public class BoardroomsTest {
 		when(boardroom1.assign(booking)).thenReturn(false);
 		when(boardroom2.assign(booking)).thenReturn(false);
 		when(boardroom3.assign(booking)).thenReturn(true);
-		assertTrue(boardrooms.assignToBoardroom(booking));
+		assertTrue(boardrooms.assignBookingToBoardroom(booking));
 	}
 
 	@Test
@@ -105,7 +100,7 @@ public class BoardroomsTest {
 		when(boardroom1.assign(booking)).thenReturn(false);
 		when(boardroom2.assign(booking)).thenReturn(false);
 		when(boardroom1.assign(booking)).thenReturn(false);
-		assertFalse(boardrooms.assignToBoardroom(booking));
+		assertFalse(boardrooms.assignBookingToBoardroom(booking));
 	}
 
 	private void addThreeBoardroomtoBoardrooms() {

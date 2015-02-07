@@ -6,4 +6,7 @@ public class BookingStrategiesFactory {
 		return new BookingStrategyBasic(boardrooms);
 	}
 
+	public BookingStrategy createMaximiseStrategy(Boardrooms boardrooms) {
+		return new BookingStrategyMaximise(boardrooms);
+	}
 }

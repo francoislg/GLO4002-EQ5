@@ -40,3 +40,6 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+#git merge file
+*.orig
