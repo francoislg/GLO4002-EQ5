@@ -4,14 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class TimerTaskStrategyTest {
+public class TriggerTimerTaskStrategyTest {
 
 	private Worker worker;
-	private TimerTaskStrategy timerTaskStrategy;
+	private TriggerTimerTaskStrategy timerTaskStrategy;
 
 	@Before
 	public void setUp() {
-		timerTaskStrategy = new TimerTaskStrategy();
+		timerTaskStrategy = new TriggerTimerTaskStrategy();
 	}
 
 	@Test(expected = IllegalStateException.class)

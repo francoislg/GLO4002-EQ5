@@ -34,16 +34,16 @@ public class TimedSequentialTriggerTest {
 	private Observable anObservable;
 
 	@Mock
-	private ca.ulaval.glo4002.GRAISSE.TimerTask mockedTimerTask;
+	private TriggerTimerTask mockedTimerTask;
 
 	@Mock
-	private ca.ulaval.glo4002.GRAISSE.Timer mockedTimer;
+	private TriggerTimer mockedTimer;
 
 	@Before
 	public void setUp() {
 		mockedWorker = Mockito.mock(Worker.class);
 
-		mockedTimer = Mockito.mock(Timer.class);
+		mockedTimer = Mockito.mock(TriggerTimer.class);
 		Mockito.doNothing().when(mockedTimer).schedule(mockedTimerTask, A_MINUTE_IN_MILLISECOND);
 
 		timedSequentialTrigger = Mockito.spy(new TimedSequentialTrigger(mockedWorker, mockedTimerTask));
@@ -150,7 +150,7 @@ public class TimedSequentialTriggerTest {
 	@Test
 	public void timedSequentialTriggerShouldNotCallSetTimerWhenTheResetMethodIsCalledAndTheTimerIsNotRunning() {
 		timedSequentialTrigger.reset();
-		Mockito.verify(timedSequentialTrigger, Mockito.never()).setTimer(Mockito.any(TimerStrategy.class));
+		Mockito.verify(timedSequentialTrigger, Mockito.never()).setTimer(Mockito.any(TriggerTimerStrategy.class));
 	}
 
 	@Test

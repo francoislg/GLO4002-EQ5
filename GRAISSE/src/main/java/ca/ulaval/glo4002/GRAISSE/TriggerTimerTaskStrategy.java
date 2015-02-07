@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.GRAISSE;
 
 import java.util.TimerTask;
 
-public class TimerTaskStrategy extends TimerTask implements ca.ulaval.glo4002.GRAISSE.TimerTask {
+public class TriggerTimerTaskStrategy extends TimerTask implements TriggerTimerTask {
 
 	private Worker worker;
 

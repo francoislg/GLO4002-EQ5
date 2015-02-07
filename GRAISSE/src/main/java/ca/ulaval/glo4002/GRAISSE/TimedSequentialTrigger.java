@@ -7,13 +7,13 @@ public class TimedSequentialTrigger extends Trigger {
 	protected long minutesInterval = 0;
 	protected boolean intervalHasBeenSet = false;
 	protected boolean isRunning = false;
-	protected Timer timer;
-	protected TimerTask timerTask;
+	protected TriggerTimer timer;
+	protected TriggerTimerTask timerTask;
 
 	protected final long NB_OF_SECOND_IN_A_MINUTE = 60;
 	protected final long NB_OF_MILLISECOND_IN_A_SECOND = 1000;
 
-	public TimedSequentialTrigger(Worker target, ca.ulaval.glo4002.GRAISSE.TimerTask timerTask) {
+	public TimedSequentialTrigger(Worker target, TriggerTimerTask timerTask) {
 		super(target);
 		this.timerTask = timerTask;
 	}
@@ -61,17 +61,17 @@ public class TimedSequentialTrigger extends Trigger {
 	}
 
 	protected void initTimer() {
-		timer = new TimerStrategy();
+		timer = new TriggerTimerStrategy();
 	}
 
-	protected Timer getTimer() {
+	protected TriggerTimer getTimer() {
 		if (timer == null) {
 			initTimer();
 		}
 		return timer;
 	}
 
-	protected TimedSequentialTrigger setTimer(TimerStrategy timer) {
+	protected TimedSequentialTrigger setTimer(TriggerTimerStrategy timer) {
 		this.timer = timer;
 		return this;
 	}
