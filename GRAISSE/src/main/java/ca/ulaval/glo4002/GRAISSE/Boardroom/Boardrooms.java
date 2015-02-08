@@ -18,13 +18,13 @@ public class Boardrooms {
 		return boardrooms.isEmpty();
 	}
 
-	public Boardroom findBoardroomWithName(String boardroomName) throws BoardroomNotFoundExeption {
+	public Boardroom findBoardroomWithName(String boardroomName) throws BoardroomNotFoundException {
 		for (Boardroom boardroom : boardrooms) {
 			if (boardroom.isMyName(boardroomName)) {
 				return boardroom;
 			}
 		}
-		throw new BoardroomNotFoundExeption();
+		throw new BoardroomNotFoundException();
 	}
 
 	public boolean assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsStrategy boardroomsStrategy) {

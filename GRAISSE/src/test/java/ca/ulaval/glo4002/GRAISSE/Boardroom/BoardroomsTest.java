@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardroom;
-import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomNotFoundExeption;
+import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomNotFoundException;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategy;
 
@@ -61,7 +61,7 @@ public class BoardroomsTest {
 	}
 
 	@Test
-	public void afterAddingOneBoardRoomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundExeption {
+	public void afterAddingOneBoardRoomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundException {
 		addOneBoardroomtoBoardrooms();
 
 		Boardroom boardroom = boardrooms.findBoardroomWithName(NAMEOFBOARDROOM1);
@@ -70,7 +70,7 @@ public class BoardroomsTest {
 	}
 
 	@Test
-	public void afterAddingMultipleBoardroomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundExeption {
+	public void afterAddingMultipleBoardroomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundException {
 		addThreeBoardroomtoBoardrooms();
 
 		Boardroom boardroom = boardrooms.findBoardroomWithName(NAMEOFBOARDROOM2);
@@ -81,8 +81,8 @@ public class BoardroomsTest {
 		assertTrue(boardroom.isMyName(NAMEOFBOARDROOM1));
 	}
 
-	@Test(expected = BoardroomNotFoundExeption.class)
-	public void withNoExistingBoardroomWithNamefindBoardroomWithNameThrowBoardroomNotFoundExeption() throws BoardroomNotFoundExeption {
+	@Test(expected = BoardroomNotFoundException.class)
+	public void withNoExistingBoardroomWithNamefindBoardroomWithNameThrowBoardroomNotFoundExeption() throws BoardroomNotFoundException {
 		addThreeBoardroomtoBoardrooms();
 		boardrooms.findBoardroomWithName(NAMEOFBOARDROOMTHATDOESNOTEXIST);
 	}
