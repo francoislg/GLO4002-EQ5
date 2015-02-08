@@ -1,8 +1,9 @@
-package ca.ulaval.glo4002.GRAISSE;
+package ca.ulaval.glo4002.GRAISSE.Trigger;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+<<<<<<< HEAD:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/TimedSequentialTriggerTest.java
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -11,6 +12,9 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+=======
+import static org.mockito.Mockito.*;
+>>>>>>> origin/story4:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/Trigger/TimedSequentialTriggerTest.java
 
 import java.util.Observable;
 
@@ -22,6 +26,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+<<<<<<< HEAD:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/TimedSequentialTriggerTest.java
+=======
+import ca.ulaval.glo4002.GRAISSE.Trigger.TimedSequentialTrigger;
+import ca.ulaval.glo4002.GRAISSE.Trigger.Worker;
+
+>>>>>>> origin/story4:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/Trigger/TimedSequentialTriggerTest.java
 @RunWith(MockitoJUnitRunner.class)
 public class TimedSequentialTriggerTest {
 
@@ -31,11 +41,18 @@ public class TimedSequentialTriggerTest {
 	private static final long A_MINUTE_IN_MILLISECOND = 60000;
 	private static final boolean HAS_JOB_TO_DO = true;
 	private static final boolean OBSERVABLE_IS_THE_WORKER = true;
+<<<<<<< HEAD:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/TimedSequentialTriggerTest.java
 
 	@Mock
 	private Worker mockedWorker;
 
 	@Mock
+=======
+	
+	@Mock
+	private Worker mockedWorker;
+	
+>>>>>>> origin/story4:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/Trigger/TimedSequentialTriggerTest.java
 	private TimedSequentialTrigger timedSequentialTrigger;
 
 	@Mock
@@ -49,12 +66,17 @@ public class TimedSequentialTriggerTest {
 
 	@Before
 	public void setUp() {
+<<<<<<< HEAD:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/TimedSequentialTriggerTest.java
 		ensureThatMockedTimerDoesNotStartANewThread();
 		timedSequentialTrigger = spy(new TimedSequentialTrigger(mockedWorker, mockedTimerTask));
 	}
 
 	private void ensureThatMockedTimerDoesNotStartANewThread() {
 		doNothing().when(mockedTimer).schedule(mockedTimerTask, A_MINUTE_IN_MILLISECOND);
+=======
+		timedSequentialTrigger = spy(new TimedSequentialTrigger(
+				mockedWorker));
+>>>>>>> origin/story4:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/Trigger/TimedSequentialTriggerTest.java
 	}
 
 	@Test
@@ -88,7 +110,12 @@ public class TimedSequentialTriggerTest {
 		timedSequentialTrigger.setInterval(VALID_NUMBER_OF_MINUTES);
 
 		when(mockedWorker.hasWorkToDO()).thenReturn(HAS_JOB_TO_DO);
+<<<<<<< HEAD:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/TimedSequentialTriggerTest.java
 		when(timedSequentialTrigger.observableIsTheWorker(anObservable)).thenReturn(OBSERVABLE_IS_THE_WORKER);
+=======
+		when(timedSequentialTrigger.observableIsTheWorker(anObservable))
+				.thenReturn(OBSERVABLE_IS_THE_WORKER);
+>>>>>>> origin/story4:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/Trigger/TimedSequentialTriggerTest.java
 		timedSequentialTrigger.update(anObservable, null);
 
 		verify(timedSequentialTrigger, times(1)).startTimer();
@@ -102,6 +129,7 @@ public class TimedSequentialTriggerTest {
 		assertTrue(isRunning);
 	}
 
+	@Ignore
 	@Test
 	public void startedTimedSequentialTriggerShouldNotBeRunningAfterReset() throws InvalidAttributeValueException {
 		startMockedTimer();
@@ -109,6 +137,7 @@ public class TimedSequentialTriggerTest {
 		timedSequentialTrigger.reset();
 		boolean isRunning = timedSequentialTrigger.isRunning();
 		assertFalse(isRunning);
+<<<<<<< HEAD:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/TimedSequentialTriggerTest.java
 	}
 
 	@Test
@@ -193,4 +222,8 @@ public class TimedSequentialTriggerTest {
 		timedSequentialTrigger.setInterval(A_MINUTE);
 		timedSequentialTrigger.startTimer();
 	}
+=======
+	}
+
+>>>>>>> origin/story4:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/Trigger/TimedSequentialTriggerTest.java
 }

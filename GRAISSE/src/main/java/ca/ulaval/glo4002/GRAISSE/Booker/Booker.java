@@ -1,14 +1,19 @@
-package ca.ulaval.glo4002.GRAISSE;
+package ca.ulaval.glo4002.GRAISSE.Booker;
 
 import java.util.Observable;
 
+import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
+import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
+import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
+import ca.ulaval.glo4002.GRAISSE.Trigger.Worker;
+
 public class Booker extends Observable implements Worker {
 	private Bookings bookings;
-	private BookingStrategy bookingStrategy;
-	private BookingStrategiesFactory bookingStrategiesFactory;
+	private BookerStrategy bookingStrategy;
+	private BookerStrategiesFactory bookingStrategiesFactory;
 	private Boardrooms boardrooms;
 
-	public Booker(BookingStrategiesFactory bookingStrategiesFactory, Bookings bookings, Boardrooms boardrooms) {
+	public Booker(BookerStrategiesFactory bookingStrategiesFactory, Bookings bookings, Boardrooms boardrooms) {
 		this.bookings = bookings;
 		this.bookingStrategiesFactory = bookingStrategiesFactory;
 		this.boardrooms = boardrooms;
@@ -17,11 +22,11 @@ public class Booker extends Observable implements Worker {
 	}
 
 	public void setStrategyToBasic() {
-		bookingStrategy = bookingStrategiesFactory.createBasicStrategy(boardrooms);
+		bookingStrategy = bookingStrategiesFactory.createBasicStrategy();
 	}
 
 	public void assignBookings() {
-		bookingStrategy.assignBookings(bookings);
+		bookingStrategy.assignBookings(boardrooms, bookings);
 		notifyObserversThatBookerHasChanged();
 	}
 
@@ -41,6 +46,7 @@ public class Booker extends Observable implements Worker {
 
 	public int numberOfJobsToDo() {
 		return bookings.getBookingsSize();
+
 	}
 
 	protected void notifyObserversThatBookerHasChanged() {

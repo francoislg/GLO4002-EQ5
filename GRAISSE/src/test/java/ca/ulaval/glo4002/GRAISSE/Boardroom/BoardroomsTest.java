@@ -1,15 +1,23 @@
-package ca.ulaval.glo4002.GRAISSE;
+package ca.ulaval.glo4002.GRAISSE.Boardroom;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardroom;
+import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomNotFoundException;
+import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
+import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomsTest {
@@ -22,7 +30,7 @@ public class BoardroomsTest {
 	Boardrooms boardrooms;
 
 	@Mock
-	Booking booking;
+	BookingAssignable booking;
 
 	@Mock
 	Boardroom boardroom1;
@@ -32,6 +40,9 @@ public class BoardroomsTest {
 
 	@Mock
 	Boardroom boardroom3;
+
+	@Mock
+	BoardroomsStrategy boardroomsStrategy;
 
 	@Before
 	public void setUp() {
@@ -50,7 +61,7 @@ public class BoardroomsTest {
 	}
 
 	@Test
-	public void afterAddingOneBoardRoomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundExeption {
+	public void afterAddingOneBoardRoomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundException {
 		addOneBoardroomtoBoardrooms();
 
 		Boardroom boardroom = boardrooms.findBoardroomWithName(NAMEOFBOARDROOM1);
@@ -59,7 +70,7 @@ public class BoardroomsTest {
 	}
 
 	@Test
-	public void afterAddingMultipleBoardroomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundExeption {
+	public void afterAddingMultipleBoardroomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundException {
 		addThreeBoardroomtoBoardrooms();
 
 		Boardroom boardroom = boardrooms.findBoardroomWithName(NAMEOFBOARDROOM2);
@@ -70,8 +81,8 @@ public class BoardroomsTest {
 		assertTrue(boardroom.isMyName(NAMEOFBOARDROOM1));
 	}
 
-	@Test(expected = BoardroomNotFoundExeption.class)
-	public void withNoExistingBoardroomWithNamefindBoardroomWithNameThrowBoardroomNotFoundExeption() throws BoardroomNotFoundExeption {
+	@Test(expected = BoardroomNotFoundException.class)
+	public void withNoExistingBoardroomWithNamefindBoardroomWithNameThrowBoardroomNotFoundExeption() throws BoardroomNotFoundException {
 		addThreeBoardroomtoBoardrooms();
 		boardrooms.findBoardroomWithName(NAMEOFBOARDROOMTHATDOESNOTEXIST);
 	}
@@ -82,7 +93,7 @@ public class BoardroomsTest {
 		when(boardroom1.assign(booking)).thenReturn(false);
 		when(boardroom2.assign(booking)).thenReturn(false);
 		when(boardroom3.assign(booking)).thenReturn(false);
-		assertFalse(boardrooms.assignBookingToBoardroom(booking));
+		assertFalse(boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy));
 	}
 
 	@Test
@@ -91,27 +102,18 @@ public class BoardroomsTest {
 		when(boardroom1.assign(booking)).thenReturn(false);
 		when(boardroom2.assign(booking)).thenReturn(false);
 		when(boardroom3.assign(booking)).thenReturn(true);
-		assertTrue(boardrooms.assignBookingToBoardroom(booking));
-	}
-
-	@Test
-	public void withABoardroomThatCanBeAssignToTheBookingassignToBoardroomShouldReturnFalse() {
-		addThreeBoardroomtoBoardrooms();
-		when(boardroom1.assign(booking)).thenReturn(false);
-		when(boardroom2.assign(booking)).thenReturn(false);
-		when(boardroom1.assign(booking)).thenReturn(false);
-		assertFalse(boardrooms.assignBookingToBoardroom(booking));
+		assertTrue(boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy));
 	}
 
 	private void addThreeBoardroomtoBoardrooms() {
-
+		List<Boardroom> formatedList = Arrays.asList(boardroom1, boardroom2, boardroom3);
 		setIsMyNameForBoardroomMock(boardroom1, NAMEOFBOARDROOM1);
 		setIsMyNameForBoardroomMock(boardroom2, NAMEOFBOARDROOM2);
 		setIsMyNameForBoardroomMock(boardroom3, NAMEOFBOARDROOM3);
 		boardrooms.addBoardroom(boardroom1);
 		boardrooms.addBoardroom(boardroom2);
 		boardrooms.addBoardroom(boardroom3);
-
+		when(boardroomsStrategy.format(any())).thenReturn(formatedList);
 	}
 
 	private void setIsMyNameForBoardroomMock(Boardroom boardroom, String name) {

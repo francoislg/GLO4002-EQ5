@@ -1,9 +1,9 @@
-package ca.ulaval.glo4002.GRAISSE;
+package ca.ulaval.glo4002.GRAISSE.Booker;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,8 +12,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
+import ca.ulaval.glo4002.GRAISSE.Booker.Booker;
+import ca.ulaval.glo4002.GRAISSE.Booker.BookerStrategiesFactory;
+import ca.ulaval.glo4002.GRAISSE.Booker.BookerStrategy;
+import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
+import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
+
 @RunWith(MockitoJUnitRunner.class)
-public class BookerTest extends TestCase {
+public class BookerTest {
 
 	Booker booker;
 
@@ -21,10 +28,10 @@ public class BookerTest extends TestCase {
 	Bookings bookings;
 
 	@Mock
-	BookingStrategy bookingStrategy;
+	BookerStrategy bookingStrategy;
 
 	@Mock
-	BookingStrategiesFactory bookingStrategiesFactory;
+	BookerStrategiesFactory bookingStrategiesFactory;
 
 	@Mock
 	Boardrooms boardrooms;
@@ -34,14 +41,19 @@ public class BookerTest extends TestCase {
 
 	@Before
 	public void setUp() {
+<<<<<<< HEAD:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/BookerTest.java
 		when(bookingStrategiesFactory.createBasicStrategy(boardrooms)).thenReturn(bookingStrategy);
 		booker = Mockito.spy(new Booker(bookingStrategiesFactory, bookings, boardrooms));
+=======
+		when(bookingStrategiesFactory.createBasicStrategy()).thenReturn(bookingStrategy);
+		booker = new Booker(bookingStrategiesFactory, bookings, boardrooms);
+>>>>>>> origin/story4:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/Booker/BookerTest.java
 	}
 
 	@Test
 	public void assignBookingShouldcallassignBookingsOnbookingStrategy() {
 		booker.assignBookings();
-		verify(bookingStrategy, times(1)).assignBookings(bookings);
+		verify(bookingStrategy, times(1)).assignBookings(boardrooms, bookings);
 	}
 
 	@Test
@@ -52,7 +64,7 @@ public class BookerTest extends TestCase {
 
 	@Test
 	public void onCreationTheBookerShouldBeSetWithABookingStrategyBasic() {
-		verify(bookingStrategiesFactory, times(1)).createBasicStrategy(boardrooms);
+		verify(bookingStrategiesFactory, times(1)).createBasicStrategy();
 	}
 
 	@Test
@@ -68,8 +80,9 @@ public class BookerTest extends TestCase {
 	@Test
 	public void setStrategyToBasicShouldUseTheFactoryToGetABookingStrategyBasicObject() {
 		booker.setStrategyToBasic();
-		verify(bookingStrategiesFactory, times(2)).createBasicStrategy(boardrooms);
+		verify(bookingStrategiesFactory, times(2)).createBasicStrategy();
 	}
+<<<<<<< HEAD:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/BookerTest.java
 
 	@Test
 	public void theBookerShouldAssigneBookingsWhenTheDoWorkMethodIsCalled() {
@@ -95,3 +108,6 @@ public class BookerTest extends TestCase {
 		verify(booker, times(1)).notifyObservers();
 	}
 }
+=======
+}
+>>>>>>> origin/story4:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/Booker/BookerTest.java
