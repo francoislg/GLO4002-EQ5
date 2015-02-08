@@ -48,11 +48,11 @@ public class BoardroomsStrategyMaximiseTest {
 
 	@Test
 	public void withUnorderedListformatShouldAnOrderByNumberOfSeats() {
-		Collection<Boardroom> BoardroomList = new ArrayList<Boardroom>(Arrays.asList(BoardroomBiggestNumberOfSeatsNeeded, BoardroomSecondSmallestNumberOfSeatsNeeded,
+		Collection<Boardroom> boardroomList = new ArrayList<Boardroom>(Arrays.asList(BoardroomBiggestNumberOfSeatsNeeded, BoardroomSecondSmallestNumberOfSeatsNeeded,
 				BoardroomSmallestNumberOfSeatsNeeded));
 		Collection<Boardroom> expectedBoardroomList = new ArrayList<Boardroom>(Arrays.asList(BoardroomSmallestNumberOfSeatsNeeded,
 				BoardroomSecondSmallestNumberOfSeatsNeeded, BoardroomBiggestNumberOfSeatsNeeded));
-		Collection<Boardroom> result = BoardroomsStrategyMaximise.format(BoardroomList);
+		Collection<Boardroom> result = BoardroomsStrategyMaximise.format(boardroomList);
 		assertEquals(expectedBoardroomList, result);
 	}
 }
