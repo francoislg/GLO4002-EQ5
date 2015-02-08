@@ -94,13 +94,13 @@ public class BoardroomTest {
 
 	@Test
 	public void WithSmallerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
-		int result = boardroom.compareNumberOfSeatsToBoardroom(boardroomWithLessSeats);
+		int result = boardroom.compareNumberOfSeatsToBoardroomNumberOfSeats(boardroomWithLessSeats);
 		assertEquals(BIGGER, result);
 	}
 
 	@Test
 	public void WithBiggerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
-		int result = boardroom.compareNumberOfSeatsToBoardroom(boardroomWithMoreSeats);
+		int result = boardroom.compareNumberOfSeatsToBoardroomNumberOfSeats(boardroomWithMoreSeats);
 		assertEquals(SMALLER, result);
 	}
 
