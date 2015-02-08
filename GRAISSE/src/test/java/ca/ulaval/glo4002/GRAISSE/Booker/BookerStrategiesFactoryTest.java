@@ -9,9 +9,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.Booker.BookerStrategiesFactory;
-import ca.ulaval.glo4002.GRAISSE.Booker.BookerStrategy;
-import ca.ulaval.glo4002.GRAISSE.Booker.BookerStrategyBasic;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookerStrategiesFactoryTest {
@@ -33,8 +30,14 @@ public class BookerStrategiesFactoryTest {
 	}
 
 	@Test
-	public void createMaximiseStrategyShouldReturnBookingStrategyBasic() {
+	public void createMaximiseStrategyShouldReturnBookingStrategyMaximise() {
 		BookerStrategy bookingStrategy = bookingStrategiesFactory.createMaximiseStrategy();
+		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
+	}
+
+	@Test
+	public void createPriorityStrategyShouldReturnBookingStrategyPriority() {
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.createPriorityStrategy();
 		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
 	}
 }
