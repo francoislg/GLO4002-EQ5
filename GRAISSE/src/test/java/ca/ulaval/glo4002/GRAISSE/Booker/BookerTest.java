@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.GRAISSE.Booker;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,13 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.Booker.Booker;
-import ca.ulaval.glo4002.GRAISSE.Booker.BookerStrategiesFactory;
-import ca.ulaval.glo4002.GRAISSE.Booker.BookerStrategy;
 import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
 
@@ -41,13 +39,8 @@ public class BookerTest {
 
 	@Before
 	public void setUp() {
-<<<<<<< HEAD:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/BookerTest.java
-		when(bookingStrategiesFactory.createBasicStrategy(boardrooms)).thenReturn(bookingStrategy);
-		booker = Mockito.spy(new Booker(bookingStrategiesFactory, bookings, boardrooms));
-=======
 		when(bookingStrategiesFactory.createBasicStrategy()).thenReturn(bookingStrategy);
-		booker = new Booker(bookingStrategiesFactory, bookings, boardrooms);
->>>>>>> origin/story4:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/Booker/BookerTest.java
+		booker = spy(new Booker(bookingStrategiesFactory, bookings, boardrooms));
 	}
 
 	@Test
@@ -82,7 +75,6 @@ public class BookerTest {
 		booker.setStrategyToBasic();
 		verify(bookingStrategiesFactory, times(2)).createBasicStrategy();
 	}
-<<<<<<< HEAD:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/BookerTest.java
 
 	@Test
 	public void theBookerShouldAssigneBookingsWhenTheDoWorkMethodIsCalled() {
@@ -107,7 +99,5 @@ public class BookerTest {
 		booker.assignBookings();
 		verify(booker, times(1)).notifyObservers();
 	}
+
 }
-=======
-}
->>>>>>> origin/story4:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/Booker/BookerTest.java

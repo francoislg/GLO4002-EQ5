@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE;
+package ca.ulaval.glo4002.GRAISSE.Trigger;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import ca.ulaval.glo4002.GRAISSE.Trigger.TriggerTimerTaskStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TriggerTimerTaskStrategyTest {

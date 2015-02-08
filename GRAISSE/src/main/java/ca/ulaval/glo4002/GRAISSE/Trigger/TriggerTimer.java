@@ -1,4 +1,5 @@
-package ca.ulaval.glo4002.GRAISSE;
+package ca.ulaval.glo4002.GRAISSE.Trigger;
+
 
 public interface TriggerTimer {
 

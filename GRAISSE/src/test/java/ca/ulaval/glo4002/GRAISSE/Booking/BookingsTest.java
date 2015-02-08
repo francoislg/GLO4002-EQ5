@@ -17,9 +17,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategy;
-import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
-import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.Booking.BookingsStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
@@ -68,22 +65,14 @@ public class BookingsTest {
 	}
 
 	@Test
-<<<<<<< HEAD:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/BookingsTest.java
-	public void basicAssignShouldRemoveTheBookingIfItIsAssigned() {
-		bookings.addBooking(booking);
-		when(boardrooms.assignBookingToBoardroom(booking)).thenReturn(true);
-		bookings.basicAssign(boardrooms);
-		assertTrue(bookings.isEmpty());
-	}
-=======
 	public void assignShouldRemoveTheBookingIfItIsAssigned() {
 		List<Booking> formatedList = new ArrayList<Booking>(Arrays.asList(booking));
 		when(boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy)).thenReturn(true);
 		when(bookingsStrategy.format(any())).thenReturn(formatedList);
->>>>>>> origin/story4:GRAISSE/src/test/java/ca/ulaval/glo4002/GRAISSE/Booking/BookingsTest.java
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
 
 		assertTrue(bookings.isEmpty());
 	}
+
 }
