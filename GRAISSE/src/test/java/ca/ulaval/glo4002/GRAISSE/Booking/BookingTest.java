@@ -9,9 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
-import ca.ulaval.glo4002.GRAISSE.Booking.InvalidPriorityException;
-
 @RunWith(MockitoJUnitRunner.class)
 public class BookingTest {
 
@@ -22,7 +19,8 @@ public class BookingTest {
 	private static final int PRIORITYVALUEOFBOOKINGBIGGER = 3;
 	private static final int PRIORITYVALUEOFBOOKINGSMALLER = 1;
 
-	private static final int INVALIDPRIORITYVALUEOFBOOKING = 6;
+	private static final int INVALIDPRIORITYVALUEOFBOOKINGBECAUSEITISTOLOW = 0;
+	private static final int INVALIDPRIORITYVALUEOFBOOKINGBECAUSEITISTOHIGH = 6;
 
 	private static final int NUMBEROFSEATSINBOOKING = 10;
 
@@ -49,9 +47,21 @@ public class BookingTest {
 	}
 
 	@Test(expected = InvalidPriorityException.class)
-	public void withInvalidPriorityValueConstructorShouldThrowInvalidPriorityValue() throws InvalidPriorityException {
+	public void withInvalidBecauseItIsToHighPriorityValueConstructorShouldThrowInvalidPriorityValue() throws InvalidPriorityException {
 		booking = new Booking(NUMBEROFSEATSINBOOKING);
-		booking.setPriority(INVALIDPRIORITYVALUEOFBOOKING);
+		booking.setPriority(INVALIDPRIORITYVALUEOFBOOKINGBECAUSEITISTOHIGH);
+	}
+
+	@Test(expected = InvalidPriorityException.class)
+	public void withInvalidBecauseItIsToLowPriorityValueConstructorShouldThrowInvalidPriorityValue() throws InvalidPriorityException {
+		booking = new Booking(NUMBEROFSEATSINBOOKING);
+		booking.setPriority(INVALIDPRIORITYVALUEOFBOOKINGBECAUSEITISTOLOW);
+	}
+
+	@Test
+	public void withValidPriorityValueConstructorShouldNotThrowInvalidPriorityValue() throws InvalidPriorityException {
+		booking = new Booking(NUMBEROFSEATSINBOOKING);
+		booking.setPriority(PRIORITYVALUEOFBOOKING);
 	}
 
 	@Test
