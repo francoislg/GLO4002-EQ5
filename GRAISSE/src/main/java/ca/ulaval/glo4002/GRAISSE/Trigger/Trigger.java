@@ -30,7 +30,7 @@ public class Trigger implements Observer {
 		if (worker.hasWorkToDO()) {
 			doUpdatedByWorkerWithWorkToDo();
 		} else {
-			doUpdatedByWorkerWithNoWOrkToDo();
+			doUpdatedByWorkerWithNoWorkToDo();
 		}
 	}
 
@@ -38,7 +38,7 @@ public class Trigger implements Observer {
 
 	}
 
-	protected void doUpdatedByWorkerWithNoWOrkToDo() {
+	protected void doUpdatedByWorkerWithNoWorkToDo() {
 		reset();
 	}
 

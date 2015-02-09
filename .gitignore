@@ -43,3 +43,6 @@ local.properties
 
 #git merge file
 *.orig
+
+# DS_Store File (OS X)
+.DS_Store
