@@ -20,13 +20,13 @@ public class ThresholdTriggerTest {
 
 	private ThresholdTrigger threshold;
 
-	private final int A_VALID_THRESHOLD = 1;
-	private final int THRESHOLD_EQUAL_TO_ZERO = 0;
-	private final int THRESHOLD_LESSER_THAN_ZERO = -1;
+	private static final int A_VALID_THRESHOLD = 1;
+	private static final int THRESHOLD_EQUAL_TO_ZERO = 0;
+	private static final int THRESHOLD_LESSER_THAN_ZERO = -1;
 
-	private final int THE_SAME_NUMBER_OF_JOB_AS_THRESHOLD = 1;
-	private final int A_BIGGER_NUMBER_OF_JOBS_THAN_THRESHOLD = 2;
-	private final int A_LESSER_NUMBER_OF_JOBS_THAN_THRESHOLD = -10;
+	private static final int THE_SAME_NUMBER_OF_JOB_AS_THRESHOLD = 1;
+	private static final int A_BIGGER_NUMBER_OF_JOBS_THAN_THRESHOLD = 2;
+	private static final int A_LESSER_NUMBER_OF_JOBS_THAN_THRESHOLD = -10;
 
 	@Test(expected = IllegalArgumentException.class)
 	public void thresholdTriggerShouldThrowExceptionWhenTresholdIsLesserThanZero() {

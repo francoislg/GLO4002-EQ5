@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.GRAISSE.Trigger;
 
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.util.Observable;
 
@@ -46,12 +46,12 @@ public class TriggerTest {
 
 	@Test
 	public void whenTriggerGetUpdatedByWorkerAndTheWorkerHasNoWorkToDoThenTheResetMethodShouldBeCalled() {
-		when(mockedWorker.hasWorkToDO()).thenReturn(HAS_NO_WORK_TO_DO);
+		doReturn(HAS_NO_WORK_TO_DO).when(mockedWorker).hasWorkToDO();
 
 		initTriggerHasSpyWithMockedWorker();
 		Observable anObservable = new Observable();
 
-		when(trigger.observableIsTheWorker(anObservable)).thenReturn(OBSERVABLE_IS_THE_WORKER);
+		doReturn(OBSERVABLE_IS_THE_WORKER).when(trigger).observableIsTheWorker(anObservable);
 		trigger.update(anObservable, null);
 
 		verify(trigger, times(1)).reset();
