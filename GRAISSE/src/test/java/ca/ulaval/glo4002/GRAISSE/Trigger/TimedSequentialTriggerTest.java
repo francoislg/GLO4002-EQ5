@@ -17,7 +17,6 @@ import java.util.Observable;
 import javax.management.InvalidAttributeValueException;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -27,9 +26,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class TimedSequentialTriggerTest {
 
 	private static final long INVALID_NUMBER_OF_MINUTES = 0;
-	private static final long VALID_NUMBER_OF_MINUTES = 1;
-	private static final long A_MINUTE = 1;
-	private static final long A_MINUTE_IN_MILLISECOND = 60000;
+	private static final long THE_DEFAULT_INTERVAL_IN_MINUTES = 10;
+	private static final long THE_DEFAULT_INTERVAL_IN_MILLISECONDS = 600000;
 	private static final boolean HAS_JOB_TO_DO = true;
 	private static final boolean OBSERVABLE_IS_THE_WORKER = true;
 
@@ -48,16 +46,14 @@ public class TimedSequentialTriggerTest {
 	private TriggerTimer triggerTimer;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws InvalidAttributeValueException {
 
 		ensureThatMockedTimerDoesNotStartANewThread();
 		timedSequentialTrigger = spy(new TimedSequentialTrigger(mockedWorker, triggerTimerTask));
 	}
 
 	private void ensureThatMockedTimerDoesNotStartANewThread() {
-		doNothing().when(triggerTimer).schedule(triggerTimerTask, A_MINUTE_IN_MILLISECOND);
-
-		timedSequentialTrigger = spy(new TimedSequentialTrigger(mockedWorker, triggerTimerTask));
+		doNothing().when(triggerTimer).schedule(triggerTimerTask, THE_DEFAULT_INTERVAL_IN_MILLISECONDS);
 	}
 
 	@Test
@@ -68,27 +64,19 @@ public class TimedSequentialTriggerTest {
 
 	@Test(expected = InvalidAttributeValueException.class)
 	public void newTimedSequentialTriggerThrowExceptionWhenSettingInvalidMinutesInterval() throws InvalidAttributeValueException {
-		timedSequentialTrigger.setInterval(INVALID_NUMBER_OF_MINUTES);
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void newTimedSequentialTriggerShouldThrowExceptionWHenCallingUnsettedInterval() {
-		timedSequentialTrigger.getInterval();
+		timedSequentialTrigger = new TimedSequentialTrigger(mockedWorker, triggerTimerTask, INVALID_NUMBER_OF_MINUTES);
 	}
 
 	@Test
 	public void newTimedSequentialTriggerShouldReturnSameIntervalThatWasSetBeforeWith() throws InvalidAttributeValueException {
-		timedSequentialTrigger.setInterval(VALID_NUMBER_OF_MINUTES);
 		long triggerInterval = timedSequentialTrigger.getInterval();
-		assertEquals(VALID_NUMBER_OF_MINUTES, triggerInterval);
+		assertEquals(THE_DEFAULT_INTERVAL_IN_MINUTES, triggerInterval);
 
 	}
 
 	@Test
 	public void timedSequentialTriggerShouldStartTimerWhenUpdateMethodIsCalledAndNWorkerHasJobToDo() throws InvalidAttributeValueException {
 		when(timedSequentialTrigger.getTimer()).thenReturn(triggerTimer);
-
-		timedSequentialTrigger.setInterval(VALID_NUMBER_OF_MINUTES);
 
 		when(mockedWorker.hasWorkToDO()).thenReturn(HAS_JOB_TO_DO);
 		when(timedSequentialTrigger.observableIsTheWorker(anObservable)).thenReturn(OBSERVABLE_IS_THE_WORKER);
@@ -105,7 +93,6 @@ public class TimedSequentialTriggerTest {
 		assertTrue(isRunning);
 	}
 
-	@Ignore
 	@Test
 	public void startedTimedSequentialTriggerShouldNotBeRunningAfterReset() throws InvalidAttributeValueException {
 		startMockedTimer();
@@ -127,23 +114,17 @@ public class TimedSequentialTriggerTest {
 		verify(timedSequentialTrigger, times(1)).getTimer();
 	}
 
-	@Test(expected = IllegalStateException.class)
-	public void timedSequentialTriggerShouldThrowIllegalStateExceptionWhenGetMilliSecondIntervalIsCalledAndTheIntervalHasNotBeenSet() {
-		timedSequentialTrigger.getMilliSecondInterval();
-	}
-
 	@Test
 	public void timedSequentialTriggerShouldReturnTheGoodMilliSecondIntervalAfterTheMinuteIntervalHasBeenSet() throws InvalidAttributeValueException {
-		timedSequentialTrigger.setInterval(A_MINUTE);
 		long result = timedSequentialTrigger.getMilliSecondInterval();
-		assertEquals(A_MINUTE_IN_MILLISECOND, result);
+		assertEquals(THE_DEFAULT_INTERVAL_IN_MILLISECONDS, result);
 	}
 
 	@Test
 	public void timedSequentialTriggerShouldCalledScheduleOfTheTimerOnlyOnceWithTheGoodTimerTaskAndDelay() throws InvalidAttributeValueException {
 		startMockedTimer();
 
-		verify(triggerTimer, times(1)).schedule(triggerTimerTask, A_MINUTE_IN_MILLISECOND);
+		verify(triggerTimer, times(1)).schedule(triggerTimerTask, THE_DEFAULT_INTERVAL_IN_MILLISECONDS);
 	}
 
 	@Test
@@ -194,7 +175,6 @@ public class TimedSequentialTriggerTest {
 	private void startMockedTimer() throws InvalidAttributeValueException {
 		doReturn(triggerTimer).when(timedSequentialTrigger).getTimer();
 
-		timedSequentialTrigger.setInterval(A_MINUTE);
 		timedSequentialTrigger.startTimer();
 	}
 

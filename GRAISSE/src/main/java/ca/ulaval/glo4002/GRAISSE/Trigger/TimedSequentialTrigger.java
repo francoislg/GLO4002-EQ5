@@ -12,34 +12,46 @@ public class TimedSequentialTrigger extends Trigger {
 
 	protected final long NB_OF_SECOND_IN_A_MINUTE = 60;
 	protected final long NB_OF_MILLISECOND_IN_A_SECOND = 1000;
+	protected final int MIN_VALID_NB_OF_MINUTES_INTERVAL = 1;
+	protected final long DEFAULT_INTERVAL = 10;
 
-	public TimedSequentialTrigger(Worker target, TriggerTimerTask timerTask) {
+	public TimedSequentialTrigger(Worker target, TriggerTimerTask timerTask) throws InvalidAttributeValueException {
 		super(target);
+		init(target, timerTask, DEFAULT_INTERVAL);
+	}
+	
+	public TimedSequentialTrigger(Worker target, TriggerTimerTask timerTask, long intervalInMinutes) throws InvalidAttributeValueException {
+		super(target);
+		init(target, timerTask, intervalInMinutes);
+	}
+	
+	protected void init(Worker target, TriggerTimerTask timerTask, long intervalInMinutes) throws InvalidAttributeValueException {
+		setInterval(intervalInMinutes);
 		this.timerTask = timerTask;
 		this.timerTask.setWorker(target);
 	}
-
-	public boolean isRunning() {
-		return isRunning;
-	}
-
-	public void setInterval(long minutes) throws InvalidAttributeValueException {
-		if (minutes <= 0) {
+	
+	protected void setInterval(long minutes) throws InvalidAttributeValueException {
+		if (minutes < MIN_VALID_NB_OF_MINUTES_INTERVAL) {
 			throw new InvalidAttributeValueException("Invalid interval value.");
 		}
 		minutesInterval = minutes;
 		intervalHasBeenSet = true;
 	}
 
-	public long getInterval() {
+	protected long getInterval() {
 		if (!intervalHasBeenSet) {
 			throw new IllegalStateException("The interval has not been set.");
 		}
 		return minutesInterval;
 	}
-
-	public long getMilliSecondInterval() {
+	
+	protected long getMilliSecondInterval() {
 		return getInterval() * NB_OF_SECOND_IN_A_MINUTE * NB_OF_MILLISECOND_IN_A_SECOND;
+	}
+
+	public boolean isRunning() {
+		return isRunning;
 	}
 
 	protected void doUpdatedByWorkerWithWorkToDo() {
