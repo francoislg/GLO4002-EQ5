@@ -11,5 +11,4 @@ public class BookingsStrategyBasic implements BookingsStrategy {
 	public Collection<Booking> format(Collection<Booking> bookings) {
 		return bookings;
 	}
-
 }

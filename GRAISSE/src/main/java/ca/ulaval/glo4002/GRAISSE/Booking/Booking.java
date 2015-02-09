@@ -2,7 +2,6 @@ package ca.ulaval.glo4002.GRAISSE.Booking;
 
 import ca.ulaval.glo4002.GRAISSE.Boardroom.BookingAssignable;
 
-
 public class Booking implements BookingAssignable {
 	private final int DEFAULT_PRIORITY = 3;
 	private int numberOfSeatsNeeded;

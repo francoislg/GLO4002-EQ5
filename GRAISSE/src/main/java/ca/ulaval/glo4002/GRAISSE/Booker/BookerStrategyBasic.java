@@ -18,5 +18,4 @@ public class BookerStrategyBasic implements BookerStrategy {
 	public void assignBookings(Boardrooms boardrooms, Bookings bookings) {
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
 	}
-
 }

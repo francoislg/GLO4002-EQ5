@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class BookingsStrategyPriority implements BookingsStrategy {
+	
 	public BookingsStrategyPriority() {
 
 	}
