@@ -34,7 +34,7 @@ public class Booker extends Observable {
 		notifyObserversThatBookerHasChanged();
 	}
 
-	public boolean hasWorkToDO() {
+	public boolean hasBookingsToAssign() {
 		return bookings.isEmpty();
 	}
 

@@ -62,7 +62,7 @@ public class BookerTest {
 
 	@Test
 	public void onCreationTheBookerShouldNotHasWorkToDo() {
-		assertFalse(booker.hasWorkToDO());
+		assertFalse(booker.hasBookingsToAssign());
 	}
 
 	@Test

@@ -29,7 +29,7 @@ public abstract class Trigger implements Observer {
 	}
 
 	protected void doUpdatedByWorker() {
-		if (booker.hasWorkToDO()) {
+		if (booker.hasBookingsToAssign()) {
 			doUpdatedByWorkerWithWorkToDo();
 		} else {
 			doUpdatedByWorkerWithNoWorkToDo();
