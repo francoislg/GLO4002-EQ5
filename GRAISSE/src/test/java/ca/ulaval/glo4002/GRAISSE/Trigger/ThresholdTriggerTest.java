@@ -44,7 +44,7 @@ public class ThresholdTriggerTest {
 
 		initValidThresholdTrigger();
 
-		verify(mockedBooker, times(1)).doWork();
+		verify(mockedBooker, times(1)).assignBookings();
 	}
 
 	@Test
@@ -53,7 +53,7 @@ public class ThresholdTriggerTest {
 
 		initValidThresholdTrigger();
 
-		verify(mockedBooker, times(1)).doWork();
+		verify(mockedBooker, times(1)).assignBookings();
 	}
 
 	@Test
@@ -62,7 +62,7 @@ public class ThresholdTriggerTest {
 
 		initValidThresholdTrigger();
 
-		verify(mockedBooker, never()).doWork();
+		verify(mockedBooker, never()).assignBookings();
 	}
 	
 	@Test
@@ -71,7 +71,7 @@ public class ThresholdTriggerTest {
 		
 		threshold.setOff();
 
-		verify(mockedBooker).doWork();
+		verify(mockedBooker).assignBookings();
 	}
 
 	private void initValidThresholdTrigger() {

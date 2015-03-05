@@ -85,7 +85,7 @@ public class TimedSequentialTriggerTest {
 	public void whenTriggerTriggTheTargetDoWorkShouldGetCalled() {
 		timedSequentialTrigger.setOff();
 
-		verify(mockedBooker).doWork();
+		verify(mockedBooker).assignBookings();
 	}
 
 	@Test

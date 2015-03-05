@@ -38,10 +38,6 @@ public class Booker extends Observable {
 		return bookings.isEmpty();
 	}
 
-	public void doWork() {
-		assignBookings();
-	}
-
 	public int numberOfJobsToDo() {
 		return bookings.getBookingsSize();
 	}

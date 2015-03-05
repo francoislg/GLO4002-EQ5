@@ -33,7 +33,7 @@ public class TriggerTimerTaskStrategyTest {
 		timerTaskStrategy.setBooker(booker);
 		timerTaskStrategy.run();
 
-		verify(booker, times(1)).doWork();
+		verify(booker, times(1)).assignBookings();
 	}
 
 }

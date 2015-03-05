@@ -40,7 +40,7 @@ public class BookerTest {
 	@Before
 	public void setUp() {
 		when(bookingStrategiesFactory.createBasicStrategy()).thenReturn(bookingStrategy);
-		booker = spy(new Booker(bookingStrategiesFactory, bookings, boardrooms));
+		booker = new Booker(bookingStrategiesFactory, bookings, boardrooms);
 	}
 
 	@Test
@@ -74,12 +74,6 @@ public class BookerTest {
 	public void setStrategyToBasicShouldUseTheFactoryToGetABookingStrategyBasicObject() {
 		booker.setStrategyToBasic();
 		verify(bookingStrategiesFactory, times(2)).createBasicStrategy();
-	}
-
-	@Test
-	public void theBookerShouldAssigneBookingsWhenTheDoWorkMethodIsCalled() {
-		booker.doWork();
-		verify(booker, times(1)).assignBookings();
 	}
 
 	@Test

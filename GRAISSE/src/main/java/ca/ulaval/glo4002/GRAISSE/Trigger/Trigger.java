@@ -14,7 +14,7 @@ public abstract class Trigger implements Observer {
 	}
 
 	public void setOff() {
-		booker.doWork();
+		booker.assignBookings();
 		reset();
 	}
 

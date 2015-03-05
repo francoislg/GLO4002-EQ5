@@ -18,7 +18,7 @@ public class TriggerTimerTaskStrategy extends TimerTask implements TriggerTimerT
 		if (booker == null) {
 			throw new IllegalStateException("Worker was not initialise.");
 		}
-		booker.doWork();
+		booker.assignBookings();
 	}
 
 }
