@@ -1,11 +1,13 @@
 package ca.ulaval.glo4002.GRAISSE.Trigger;
 
+import ca.ulaval.glo4002.GRAISSE.Booker.Booker;
+
 public class ThresholdTrigger extends Trigger {
 
 	private static final int MINIMUM_THRESHOLD_VALUE = 1;
 	private int threshold;
 
-	public ThresholdTrigger(Worker target, int threshold) {
+	public ThresholdTrigger(Booker target, int threshold) {
 		super(target);
 
 		if (threshold < MINIMUM_THRESHOLD_VALUE) {
@@ -15,8 +17,8 @@ public class ThresholdTrigger extends Trigger {
 	}
 
 	protected void doUpdatedByWorkerWithWorkToDo() {
-		if (worker.numberOfJobsToDo() >= threshold) {
-			worker.doWork();
+		if (booker.numberOfJobsToDo() >= threshold) {
+			booker.doWork();
 		}
 	}
 

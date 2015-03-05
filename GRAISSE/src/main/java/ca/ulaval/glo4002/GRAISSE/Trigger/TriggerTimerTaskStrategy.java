@@ -2,20 +2,23 @@ package ca.ulaval.glo4002.GRAISSE.Trigger;
 
 import java.util.TimerTask;
 
+import ca.ulaval.glo4002.GRAISSE.Booker.Booker;
+
 public class TriggerTimerTaskStrategy extends TimerTask implements TriggerTimerTask {
 
-	private Worker worker;
-
-	public void setWorker(Worker worker) {
-		this.worker = worker;
-	}
+	private Booker booker;
 
 	@Override
+	public void setBooker(Booker booker) {
+		this.booker = booker;
+	}
+	
+	@Override
 	public void run() {
-		if (worker == null) {
+		if (booker == null) {
 			throw new IllegalStateException("Worker was not initialise.");
 		}
-		worker.doWork();
+		booker.doWork();
 	}
 
 }

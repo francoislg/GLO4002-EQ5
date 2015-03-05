@@ -3,16 +3,18 @@ package ca.ulaval.glo4002.GRAISSE.Trigger;
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ulaval.glo4002.GRAISSE.Booker.Booker;
+
 public abstract class Trigger implements Observer {
 
-	protected Worker worker;
+	protected Booker booker;
 
-	public Trigger(Worker worker) {
-		this.worker = worker;
+	public Trigger(Booker worker) {
+		this.booker = worker;
 	}
 
 	public void setOff() {
-		worker.doWork();
+		booker.doWork();
 		reset();
 	}
 
@@ -23,11 +25,11 @@ public abstract class Trigger implements Observer {
 	}
 
 	protected boolean observableIsTheWorker(Observable o) {
-		return o == worker;
+		return o == booker;
 	}
 
 	protected void doUpdatedByWorker() {
-		if (worker.hasWorkToDO()) {
+		if (booker.hasWorkToDO()) {
 			doUpdatedByWorkerWithWorkToDo();
 		} else {
 			doUpdatedByWorkerWithNoWorkToDo();

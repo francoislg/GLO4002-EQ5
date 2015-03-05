@@ -5,9 +5,8 @@ import java.util.Observable;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.Trigger.Worker;
 
-public class Booker extends Observable implements Worker {
+public class Booker extends Observable {
 	private Bookings bookings;
 	private BookerStrategy bookingStrategy;
 	private BookerStrategiesFactory bookingStrategiesFactory;

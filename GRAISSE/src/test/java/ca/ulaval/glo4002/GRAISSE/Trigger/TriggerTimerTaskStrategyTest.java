@@ -9,13 +9,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.Trigger.TriggerTimerTaskStrategy;
+import ca.ulaval.glo4002.GRAISSE.Booker.Booker;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TriggerTimerTaskStrategyTest {
 
 	@Mock
-	private Worker worker;
+	private Booker booker;
 	private TriggerTimerTaskStrategy timerTaskStrategy;
 
 	@Before
@@ -30,10 +30,10 @@ public class TriggerTimerTaskStrategyTest {
 
 	@Test
 	public void timerTaskStrategyShouldCalledWorkerDoWorkWhenRunisCalled() {
-		timerTaskStrategy.setWorker(worker);
+		timerTaskStrategy.setBooker(booker);
 		timerTaskStrategy.run();
 
-		verify(worker, times(1)).doWork();
+		verify(booker, times(1)).doWork();
 	}
 
 }

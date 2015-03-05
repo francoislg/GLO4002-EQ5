@@ -17,6 +17,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ca.ulaval.glo4002.GRAISSE.Booker.Booker;
+
 @RunWith(MockitoJUnitRunner.class)
 public class TimedSequentialTriggerTest {
 
@@ -26,7 +28,7 @@ public class TimedSequentialTriggerTest {
 	private TimedSequentialTrigger timedSequentialTrigger;
 	
 	@Mock
-	private Worker mockedWorker;	
+	private Booker mockedBooker;	
 
 	@Mock
 	private Observable anObservable;
@@ -44,7 +46,7 @@ public class TimedSequentialTriggerTest {
 	public void setUp() throws InvalidAttributeValueException {
 
 		ensureThatMockedTimerDoesNotStartANewThread();
-		timedSequentialTrigger = new TimedSequentialTrigger(mockedWorker, triggerTimerTask, triggerTimerStrategyFactory);
+		timedSequentialTrigger = new TimedSequentialTrigger(mockedBooker, triggerTimerTask, triggerTimerStrategyFactory);
 	}
 
 	private void ensureThatMockedTimerDoesNotStartANewThread() {
@@ -59,7 +61,7 @@ public class TimedSequentialTriggerTest {
 
 	@Test(expected = InvalidAttributeValueException.class)
 	public void newTimedSequentialTriggerThrowExceptionWhenSettingInvalidMinutesInterval() throws InvalidAttributeValueException {
-		timedSequentialTrigger = new TimedSequentialTrigger(mockedWorker, triggerTimerTask, INVALID_NUMBER_OF_MINUTES);
+		timedSequentialTrigger = new TimedSequentialTrigger(mockedBooker, triggerTimerTask, INVALID_NUMBER_OF_MINUTES);
 	}
 
 	@Test
@@ -83,7 +85,7 @@ public class TimedSequentialTriggerTest {
 	public void whenTriggerTriggTheTargetDoWorkShouldGetCalled() {
 		timedSequentialTrigger.setOff();
 
-		verify(mockedWorker).doWork();
+		verify(mockedBooker).doWork();
 	}
 
 	@Test
@@ -102,7 +104,7 @@ public class TimedSequentialTriggerTest {
 
 	@Test
 	public void timedSequentialTriggerShouldCallSetWorkerOfTimerTaskAtInitialisation() {
-		verify(triggerTimerTask, times(1)).setWorker(mockedWorker);
+		verify(triggerTimerTask, times(1)).setBooker(mockedBooker);
 	}
 
 	private void startMockedTimer() throws InvalidAttributeValueException {
