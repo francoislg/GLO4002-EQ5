@@ -40,7 +40,7 @@ public class ThresholdTriggerTest {
 
 	@Test
 	public void tresholdTriggerShouldCallWorkerDoJobsWhenNumberOfJobsToDoIsEqualToThreshold() {
-		doReturn(THE_SAME_NUMBER_OF_JOB_AS_THRESHOLD).when(mockedBooker).numberOfJobsToDo();
+		doReturn(THE_SAME_NUMBER_OF_JOB_AS_THRESHOLD).when(mockedBooker).numberOfBookingsToAssign();
 
 		initValidThresholdTrigger();
 
@@ -49,7 +49,7 @@ public class ThresholdTriggerTest {
 
 	@Test
 	public void tresholdTriggerShouldCallWorkerDoJobsWhenNumberOfJobsToDoIsGreatherThanThreshold() {
-		doReturn(A_BIGGER_NUMBER_OF_JOBS_THAN_THRESHOLD).when(mockedBooker).numberOfJobsToDo();
+		doReturn(A_BIGGER_NUMBER_OF_JOBS_THAN_THRESHOLD).when(mockedBooker).numberOfBookingsToAssign();
 
 		initValidThresholdTrigger();
 
@@ -58,7 +58,7 @@ public class ThresholdTriggerTest {
 
 	@Test
 	public void tresholdTriggerShouldNotCallWorkerDoJobsWhenNumberOfJobsToDoIsLesserThanThreshold() {
-		doReturn(A_LESSER_NUMBER_OF_JOBS_THAN_THRESHOLD).when(mockedBooker).numberOfJobsToDo();
+		doReturn(A_LESSER_NUMBER_OF_JOBS_THAN_THRESHOLD).when(mockedBooker).numberOfBookingsToAssign();
 
 		initValidThresholdTrigger();
 

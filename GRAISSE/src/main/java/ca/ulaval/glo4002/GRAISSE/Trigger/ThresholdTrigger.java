@@ -17,7 +17,7 @@ public class ThresholdTrigger extends Trigger {
 	}
 
 	protected void doUpdatedByWorkerWithWorkToDo() {
-		if (booker.numberOfJobsToDo() >= threshold) {
+		if (booker.numberOfBookingsToAssign() >= threshold) {
 			booker.assignBookings();
 		}
 	}

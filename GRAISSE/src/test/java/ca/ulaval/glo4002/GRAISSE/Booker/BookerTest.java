@@ -67,7 +67,7 @@ public class BookerTest {
 
 	@Test
 	public void onCreationTheBookerShouldHaveZeroJobsToDo() {
-		assertEquals(0, booker.numberOfJobsToDo());
+		assertEquals(0, booker.numberOfBookingsToAssign());
 	}
 
 	@Test
