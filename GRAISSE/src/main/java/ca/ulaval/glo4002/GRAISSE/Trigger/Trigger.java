@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.GRAISSE.Trigger;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Trigger implements Observer {
+public abstract class Trigger implements Observer {
 
 	protected Worker worker;
 
@@ -34,15 +34,12 @@ public class Trigger implements Observer {
 		}
 	}
 
-	protected void doUpdatedByWorkerWithWorkToDo() {
-
-	}
+	protected abstract void doUpdatedByWorkerWithWorkToDo();
 
 	protected void doUpdatedByWorkerWithNoWorkToDo() {
 		reset();
 	}
 
-	protected void reset() {
-	}
+	protected abstract void reset();
 
 }

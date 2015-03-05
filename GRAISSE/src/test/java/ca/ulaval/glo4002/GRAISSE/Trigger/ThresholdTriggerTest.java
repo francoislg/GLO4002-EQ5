@@ -64,6 +64,15 @@ public class ThresholdTriggerTest {
 
 		verify(mockedWorker, never()).doWork();
 	}
+	
+	@Test
+	public void whenTriggerTriggTheTargetDoWorkShouldGetCalled() {
+		initValidThresholdTrigger(); 
+		
+		threshold.setOff();
+
+		verify(mockedWorker).doWork();
+	}
 
 	private void initValidThresholdTrigger() {
 		threshold = new ThresholdTrigger(mockedWorker, A_VALID_THRESHOLD);

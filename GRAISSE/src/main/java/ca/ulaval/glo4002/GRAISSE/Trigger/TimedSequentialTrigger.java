@@ -4,50 +4,55 @@ import javax.management.InvalidAttributeValueException;
 
 public class TimedSequentialTrigger extends Trigger {
 
-	protected long minutesInterval = 0;
-	protected boolean intervalHasBeenSet = false;
-	protected boolean isRunning = false;
-	protected TriggerTimer timer;
-	protected TriggerTimerTask timerTask;
+	private static final long NB_OF_SECOND_IN_A_MINUTE = 60;
+	private static final long NB_OF_MILLISECOND_IN_A_SECOND = 1000;
+	private static final int MIN_VALID_NB_OF_MINUTES_INTERVAL = 1;
+	private static final long DEFAULT_INTERVAL = 10;
+	
+	private long minutesInterval = 0;
+	private boolean isRunning = false;
+	private TriggerTimer timer;
+	private TriggerTimerTask timerTask;
+	private TriggerTimerStrategyFactory triggerTimerStrategyFactory;
 
-	protected final long NB_OF_SECOND_IN_A_MINUTE = 60;
-	protected final long NB_OF_MILLISECOND_IN_A_SECOND = 1000;
-	protected final int MIN_VALID_NB_OF_MINUTES_INTERVAL = 1;
-	protected final long DEFAULT_INTERVAL = 10;
+
 
 	public TimedSequentialTrigger(Worker target, TriggerTimerTask timerTask) throws InvalidAttributeValueException {
 		super(target);
-		init(target, timerTask, DEFAULT_INTERVAL);
+		init(target, timerTask, DEFAULT_INTERVAL, new TriggerTimerStrategyFactory());
+	}
+	
+	public TimedSequentialTrigger(Worker target, TriggerTimerTask timerTask, TriggerTimerStrategyFactory triggerTimerStrategyFactory) throws InvalidAttributeValueException {
+		super(target);
+		init(target, timerTask, DEFAULT_INTERVAL, triggerTimerStrategyFactory);
 	}
 	
 	public TimedSequentialTrigger(Worker target, TriggerTimerTask timerTask, long intervalInMinutes) throws InvalidAttributeValueException {
 		super(target);
-		init(target, timerTask, intervalInMinutes);
+		init(target, timerTask, intervalInMinutes, new TriggerTimerStrategyFactory());
 	}
 	
-	protected void init(Worker target, TriggerTimerTask timerTask, long intervalInMinutes) throws InvalidAttributeValueException {
+	public TimedSequentialTrigger(Worker target, TriggerTimerTask timerTask, long intervalInMinutes, TriggerTimerStrategyFactory triggerTimerStrategyFactory) throws InvalidAttributeValueException {
+		super(target);
+		init(target, timerTask, intervalInMinutes, triggerTimerStrategyFactory);
+	}
+	
+	private void init(Worker target, TriggerTimerTask timerTask, long intervalInMinutes, TriggerTimerStrategyFactory triggerTimerStrategyFactory) throws InvalidAttributeValueException {
 		setInterval(intervalInMinutes);
 		this.timerTask = timerTask;
 		this.timerTask.setWorker(target);
+		this.triggerTimerStrategyFactory = triggerTimerStrategyFactory;
 	}
 	
-	protected void setInterval(long minutes) throws InvalidAttributeValueException {
+	private void setInterval(long minutes) throws InvalidAttributeValueException {
 		if (minutes < MIN_VALID_NB_OF_MINUTES_INTERVAL) {
 			throw new InvalidAttributeValueException("Invalid interval value.");
 		}
 		minutesInterval = minutes;
-		intervalHasBeenSet = true;
-	}
-
-	protected long getInterval() {
-		if (!intervalHasBeenSet) {
-			throw new IllegalStateException("The interval has not been set.");
-		}
-		return minutesInterval;
 	}
 	
-	protected long getMilliSecondInterval() {
-		return getInterval() * NB_OF_SECOND_IN_A_MINUTE * NB_OF_MILLISECOND_IN_A_SECOND;
+	private long getMilliSecondInterval() {
+		return minutesInterval * NB_OF_SECOND_IN_A_MINUTE * NB_OF_MILLISECOND_IN_A_SECOND;
 	}
 
 	public boolean isRunning() {
@@ -58,35 +63,18 @@ public class TimedSequentialTrigger extends Trigger {
 		startTimer();
 	}
 
-	protected void startTimer() {
+	private void startTimer() {
 		if (!isRunning) {
-			getTimer().schedule(timerTask, getMilliSecondInterval());
+			timer = triggerTimerStrategyFactory.createTimer();
+			timer.schedule(timerTask, getMilliSecondInterval());
 			isRunning = true;
 		}
 	}
 
 	protected void reset() {
 		if (isRunning) {
-			getTimer().cancel();
-			setTimer(null);
+			timer.cancel();
 			isRunning = false;
 		}
 	}
-
-	protected void initTimer() {
-		timer = new TriggerTimerStrategy();
-	}
-
-	protected TriggerTimer getTimer() {
-		if (timer == null) {
-			initTimer();
-		}
-		return timer;
-	}
-
-	protected TimedSequentialTrigger setTimer(TriggerTimerStrategy timer) {
-		this.timer = timer;
-		return this;
-	}
-
 }

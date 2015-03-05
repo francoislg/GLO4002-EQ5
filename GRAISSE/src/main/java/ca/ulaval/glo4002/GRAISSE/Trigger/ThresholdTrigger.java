@@ -2,13 +2,13 @@ package ca.ulaval.glo4002.GRAISSE.Trigger;
 
 public class ThresholdTrigger extends Trigger {
 
-	private final int MINIMUM_THRESHOLD_VALUE = 1;
+	private static final int MINIMUM_THRESHOLD_VALUE = 1;
 	private int threshold;
 
 	public ThresholdTrigger(Worker target, int threshold) {
 		super(target);
 
-		if (!(threshold >= MINIMUM_THRESHOLD_VALUE)) {
+		if (threshold < MINIMUM_THRESHOLD_VALUE) {
 			throw new IllegalArgumentException("The treshold should be greater than zero.");
 		}
 		this.threshold = threshold;
@@ -18,5 +18,11 @@ public class ThresholdTrigger extends Trigger {
 		if (worker.numberOfJobsToDo() >= threshold) {
 			worker.doWork();
 		}
+	}
+
+	@Override
+	protected void reset() {
+		//nothing to do
+		//Subject to change in issue #26
 	}
 }
