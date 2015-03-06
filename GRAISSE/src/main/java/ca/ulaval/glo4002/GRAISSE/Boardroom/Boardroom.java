@@ -17,7 +17,7 @@ public class Boardroom {
 	}
 
 	public boolean hasName(String name) {
-		return this.name == name;
+		return this.name.equals(name);
 	}
 
 	public boolean verifyNumberOfSeats(BookingAssignable bookingToVerify) {

@@ -31,7 +31,7 @@ public class Booking implements BookingAssignable {
 
 	@Override
 	public boolean verifyNumberOfSeats(int numberOfSeats) {
-		return this.numberOfSeatsNeeded <= numberOfSeats;
+		return numberOfSeatsNeeded <= numberOfSeats;
 	}
 
 	private void validatePriorityValue(int priorityValueToValidate) throws InvalidPriorityException {
