@@ -30,8 +30,8 @@ public class BookerStrategiesFactoryTest {
 	}
 
 	@Test
-	public void createMaximiseStrategyShouldReturnBookingStrategyMaximise() {
-		BookerStrategy bookingStrategy = bookingStrategiesFactory.createMaximiseStrategy();
+	public void createMaximiseStrategyShouldReturnBookingStrategyOptimize() {
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.createOptimizeStrategy();
 		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
 	}
 

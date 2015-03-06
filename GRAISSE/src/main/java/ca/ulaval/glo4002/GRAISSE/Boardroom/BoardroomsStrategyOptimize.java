@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-public class BoardroomsStrategyMaximise implements BoardroomsStrategy {
+public class BoardroomsStrategyOptimize implements BoardroomsStrategy {
 
 	public Collection<Boardroom> sort(Collection<Boardroom> boardrooms) {
 		Comparator<Boardroom> byNumberOfSeats = (boardroom1, boardroom2) -> boardroom1.compareNumberOfSeatsToBoardroomNumberOfSeats(boardroom2);

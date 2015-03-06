@@ -16,14 +16,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategyMaximise;
+import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategyOptimize;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BoardroomsStrategyMaximiseTest {
+public class BoardroomsStrategyOptimizeTest {
 	private static final int BIGGER = 1;
 	private static final int SMALLER = -1;
 
-	BoardroomsStrategyMaximise BoardroomsStrategyMaximise;
+	BoardroomsStrategyOptimize boardroomsStrategyOptimize;
 
 	@Mock
 	private Boardrooms boardrooms;
@@ -39,7 +39,7 @@ public class BoardroomsStrategyMaximiseTest {
 
 	@Before
 	public void setUp() {
-		BoardroomsStrategyMaximise = new BoardroomsStrategyMaximise();
+		boardroomsStrategyOptimize = new BoardroomsStrategyOptimize();
 		when(BoardroomSmallestNumberOfSeatsNeeded.compareNumberOfSeatsToBoardroomNumberOfSeats(any())).thenReturn(SMALLER);
 		when(BoardroomSecondSmallestNumberOfSeatsNeeded.compareNumberOfSeatsToBoardroomNumberOfSeats(BoardroomSmallestNumberOfSeatsNeeded)).thenReturn(BIGGER);
 		when(BoardroomSecondSmallestNumberOfSeatsNeeded.compareNumberOfSeatsToBoardroomNumberOfSeats(BoardroomBiggestNumberOfSeatsNeeded)).thenReturn(SMALLER);
@@ -52,7 +52,7 @@ public class BoardroomsStrategyMaximiseTest {
 				BoardroomSmallestNumberOfSeatsNeeded));
 		Collection<Boardroom> expectedBoardroomList = new ArrayList<Boardroom>(Arrays.asList(BoardroomSmallestNumberOfSeatsNeeded,
 				BoardroomSecondSmallestNumberOfSeatsNeeded, BoardroomBiggestNumberOfSeatsNeeded));
-		Collection<Boardroom> result = BoardroomsStrategyMaximise.sort(boardroomList);
+		Collection<Boardroom> result = boardroomsStrategyOptimize.sort(boardroomList);
 		assertEquals(expectedBoardroomList, result);
 	}
 }
