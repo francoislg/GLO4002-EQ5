@@ -52,7 +52,7 @@ public class BookerTest {
 	@Test
 	public void addBookingShouldaddABoookingToBookings() {
 		booker.addBooking(booking);
-		verify(bookings, times(1)).addBooking(booking);
+		verify(bookings, times(1)).add(booking);
 	}
 
 	@Test

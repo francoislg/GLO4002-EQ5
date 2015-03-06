@@ -15,11 +15,11 @@ public class Bookings {
 		bookingList = new ArrayList<Booking>();
 	}
 
-	public void addBooking(Booking booking) {
+	public void add(Booking booking) {
 		bookingList.add(booking);
 	}
 
-	public void removeBooking(BookingAssignable booking) {
+	public void remove(BookingAssignable booking) {
 		bookingList.remove(booking);
 	}
 

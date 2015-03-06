@@ -47,20 +47,20 @@ public class BookingsTest {
 
 	@Test
 	public void isEmptyShouldReturnFalseIfNotEmpty() {
-		bookings.addBooking(booking);
+		bookings.add(booking);
 		assertFalse(bookings.isEmpty());
 	}
 
 	@Test
 	public void addBookingShouldAddTheBooking() {
-		bookings.addBooking(booking);
+		bookings.add(booking);
 		assertFalse(bookings.isEmpty());
 	}
 
 	@Test
 	public void removeBookingShouldRemoveTheBooking() {
-		bookings.addBooking(booking);
-		bookings.removeBooking(booking);
+		bookings.add(booking);
+		bookings.remove(booking);
 		assertTrue(bookings.isEmpty());
 	}
 

@@ -31,7 +31,7 @@ public class Booker extends Observable implements Worker {
 	}
 
 	public void addBooking(Booking bookingToAdd) {
-		bookings.addBooking(bookingToAdd);
+		bookings.add(bookingToAdd);
 		notifyObserversThatBookerHasChanged();
 	}
 
