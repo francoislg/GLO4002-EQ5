@@ -56,7 +56,7 @@ public class BoardroomsTest {
 
 	@Test
 	public void afterAddingBoardRoomisEmptyShouldReturnFalse() {
-		boardrooms.addBoardroom(boardroom1);
+		boardrooms.add(boardroom1);
 		assertFalse(boardrooms.isEmpty());
 	}
 
@@ -110,9 +110,9 @@ public class BoardroomsTest {
 		setIsMyNameForBoardroomMock(boardroom1, NAME_OF_BOARDROOM_1);
 		setIsMyNameForBoardroomMock(boardroom2, NAME_OF_BOARDROOM_2);
 		setIsMyNameForBoardroomMock(boardroom3, NAME_OF_BOARDROOM_3);
-		boardrooms.addBoardroom(boardroom1);
-		boardrooms.addBoardroom(boardroom2);
-		boardrooms.addBoardroom(boardroom3);
+		boardrooms.add(boardroom1);
+		boardrooms.add(boardroom2);
+		boardrooms.add(boardroom3);
 		when(boardroomsStrategy.sort(any())).thenReturn(formatedList);
 	}
 
@@ -125,6 +125,6 @@ public class BoardroomsTest {
 
 		when(boardroom1.hasName(any(String.class))).thenReturn(false);
 		when(boardroom1.hasName(NAME_OF_BOARDROOM_1)).thenReturn(true);
-		boardrooms.addBoardroom(boardroom1);
+		boardrooms.add(boardroom1);
 	}
 }

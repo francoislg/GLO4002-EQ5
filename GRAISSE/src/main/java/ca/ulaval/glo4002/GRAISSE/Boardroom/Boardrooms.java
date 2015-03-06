@@ -10,7 +10,7 @@ public class Boardrooms {
 
 	}
 
-	public void addBoardroom(Boardroom boardroom) {
+	public void add(Boardroom boardroom) {
 		boardrooms.add(boardroom);
 	}
 
