@@ -65,12 +65,12 @@ public class BoardroomTest {
 
 	@Test
 	public void IfSameNameIsMyNameReturnTrue() {
-		assertTrue(boardroom.isMyName(NAME_OF_BOARDROOM_1));
+		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 	}
 
 	@Test
 	public void IfNotSameNameIsMyNameReturnFalse() {
-		assertFalse(boardroom.isMyName(NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1));
+		assertFalse(boardroom.hasName(NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1));
 	}
 
 	@Test

@@ -16,7 +16,7 @@ public class Boardroom {
 		return this.available;
 	}
 
-	public boolean isMyName(String name) {
+	public boolean hasName(String name) {
 		return this.nameOfBoardroom == name;
 	}
 

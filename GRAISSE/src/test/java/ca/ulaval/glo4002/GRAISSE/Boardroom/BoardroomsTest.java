@@ -65,7 +65,7 @@ public class BoardroomsTest {
 		addOneBoardroomtoBoardrooms();
 
 		Boardroom boardroom = boardrooms.findBoardroomWithName(NAME_OF_BOARDROOM_1);
-		assertTrue(boardroom.isMyName(NAME_OF_BOARDROOM_1));
+		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 
 	}
 
@@ -74,11 +74,11 @@ public class BoardroomsTest {
 		addThreeBoardroomtoBoardrooms();
 
 		Boardroom boardroom = boardrooms.findBoardroomWithName(NAME_OF_BOARDROOM_2);
-		assertTrue(boardroom.isMyName(NAME_OF_BOARDROOM_2));
+		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_2));
 		boardroom = boardrooms.findBoardroomWithName(NAME_OF_BOARDROOM_3);
-		assertTrue(boardroom.isMyName(NAME_OF_BOARDROOM_3));
+		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_3));
 		boardroom = boardrooms.findBoardroomWithName(NAME_OF_BOARDROOM_1);
-		assertTrue(boardroom.isMyName(NAME_OF_BOARDROOM_1));
+		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 	}
 
 	@Test(expected = BoardroomNotFoundException.class)
@@ -117,14 +117,14 @@ public class BoardroomsTest {
 	}
 
 	private void setIsMyNameForBoardroomMock(Boardroom boardroom, String name) {
-		when(boardroom.isMyName(any(String.class))).thenReturn(false);
-		when(boardroom.isMyName(name)).thenReturn(true);
+		when(boardroom.hasName(any(String.class))).thenReturn(false);
+		when(boardroom.hasName(name)).thenReturn(true);
 	}
 
 	private void addOneBoardroomtoBoardrooms() {
 
-		when(boardroom1.isMyName(any(String.class))).thenReturn(false);
-		when(boardroom1.isMyName(NAME_OF_BOARDROOM_1)).thenReturn(true);
+		when(boardroom1.hasName(any(String.class))).thenReturn(false);
+		when(boardroom1.hasName(NAME_OF_BOARDROOM_1)).thenReturn(true);
 		boardrooms.addBoardroom(boardroom1);
 	}
 }

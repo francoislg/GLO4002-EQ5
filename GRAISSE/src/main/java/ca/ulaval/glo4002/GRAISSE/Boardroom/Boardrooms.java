@@ -20,7 +20,7 @@ public class Boardrooms {
 
 	public Boardroom findBoardroomWithName(String boardroomName) throws BoardroomNotFoundException {
 		for (Boardroom boardroom : boardrooms) {
-			if (boardroom.isMyName(boardroomName)) {
+			if (boardroom.hasName(boardroomName)) {
 				return boardroom;
 			}
 		}
