@@ -27,7 +27,7 @@ public class BookingsStrategyBasicTest {
 	}
 
 	@Test
-	public void withBookingCollectionformatShouldReturnTheSameBoardroomCollection() {
+	public void withBookingCollectionSortShouldReturnTheSameBoardroomCollection() {
 		assertEquals(bookingCollection, bookingsStrategyBasic.sort(bookingCollection));
 	}
 

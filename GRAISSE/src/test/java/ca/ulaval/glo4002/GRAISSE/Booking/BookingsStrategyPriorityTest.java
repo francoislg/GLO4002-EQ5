@@ -43,7 +43,7 @@ public class BookingsStrategyPriorityTest {
 	}
 
 	@Test
-	public void withBookingCollectionformatShouldReturnTheSameBoardroomCollection() {
+	public void withBookingCollectionSortShouldReturnTheSameBoardroomCollection() {
 		Collection<Booking> bookingList = new ArrayList<Booking>(Arrays.asList(BookingWithHighPriority, BookingWithMediumPriority, BookingWithSmallPriority));
 		Collection<Booking> expectedBookingList = new ArrayList<Booking>(Arrays.asList(BookingWithSmallPriority, BookingWithMediumPriority,
 				BookingWithHighPriority));

@@ -121,14 +121,14 @@ public class TimedSequentialTriggerTest {
 	}
 
 	@Test
-	public void timedSequentialTriggerShouldCalledScheduleOfTheTimerOnlyOnceWithTheGoodTimerTaskAndDelay() throws InvalidAttributeValueException {
+	public void timedSequentialTriggerShouldCallScheduleOfTheTimerOnlyOnceWithTheGoodTimerTaskAndDelay() throws InvalidAttributeValueException {
 		startMockedTimer();
 
 		verify(triggerTimer, times(1)).schedule(triggerTimerTask, THE_DEFAULT_INTERVAL_IN_MILLISECONDS);
 	}
 
 	@Test
-	public void timedSequentialTriggerShouldCalledGetTimerTwiceWhenTheResetMethodIsCAlledAndTheTimerIsRunning() throws InvalidAttributeValueException {
+	public void timedSequentialTriggerShouldCallGetTimerTwiceWhenTheResetMethodIsCAlledAndTheTimerIsRunning() throws InvalidAttributeValueException {
 		startMockedTimer();
 		timedSequentialTrigger.reset();
 		verify(timedSequentialTrigger, times(2)).getTimer();

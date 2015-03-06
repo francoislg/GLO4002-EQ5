@@ -86,13 +86,13 @@ public class BookingTest {
 	}
 
 	@Test
-	public void WithSmallerPriorityBoookingcomparePriorityToBookingShouldReturnAPossitiveNumber() {
+	public void withSmallerPriorityBoookingComparePriorityToBookingShouldReturnAPositiveNumber() {
 		int result = booking.comparePriorityToBooking(bookingWithSmallerPriority);
 		assertEquals(BIGGER, result);
 	}
 
 	@Test
-	public void WithBiggerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+	public void withBiggerNumberOfSeatsBoardroomCompareNumberOfSeatsToBoardroomShouldReturnAPositiveNumber() {
 		int result = booking.comparePriorityToBooking(bookingWithBiggerPriority);
 		assertEquals(SMALLER, result);
 	}

@@ -44,13 +44,13 @@ public class BookerTest {
 	}
 
 	@Test
-	public void assignBookingShouldcallassignBookingsOnbookingStrategy() {
+	public void assignBookingShouldCallAssignBookingsOnBookingStrategy() {
 		booker.assignBookings();
 		verify(bookingStrategy, times(1)).assignBookings(boardrooms, bookings);
 	}
 
 	@Test
-	public void addBookingShouldaddABoookingToBookings() {
+	public void addBookingShouldAddABookingToBookings() {
 		booker.addBooking(booking);
 		verify(bookings, times(1)).add(booking);
 	}
