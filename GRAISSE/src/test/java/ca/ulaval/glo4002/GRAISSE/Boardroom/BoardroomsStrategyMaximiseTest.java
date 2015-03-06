@@ -52,7 +52,7 @@ public class BoardroomsStrategyMaximiseTest {
 				BoardroomSmallestNumberOfSeatsNeeded));
 		Collection<Boardroom> expectedBoardroomList = new ArrayList<Boardroom>(Arrays.asList(BoardroomSmallestNumberOfSeatsNeeded,
 				BoardroomSecondSmallestNumberOfSeatsNeeded, BoardroomBiggestNumberOfSeatsNeeded));
-		Collection<Boardroom> result = BoardroomsStrategyMaximise.format(boardroomList);
+		Collection<Boardroom> result = BoardroomsStrategyMaximise.sort(boardroomList);
 		assertEquals(expectedBoardroomList, result);
 	}
 }

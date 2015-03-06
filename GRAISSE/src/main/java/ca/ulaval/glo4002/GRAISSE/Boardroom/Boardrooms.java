@@ -28,7 +28,7 @@ public class Boardrooms {
 	}
 
 	public boolean assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsStrategy boardroomsStrategy) {
-		Collection<Boardroom> formatedBoardroomList = boardroomsStrategy.format(boardrooms);
+		Collection<Boardroom> formatedBoardroomList = boardroomsStrategy.sort(boardrooms);
 		for (Boardroom boardroom : formatedBoardroomList) {
 			if (boardroom.assign(bookingToAssign)) {
 				return true;

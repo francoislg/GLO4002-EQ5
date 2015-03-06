@@ -8,7 +8,7 @@ public class BoardroomsStrategyBasic implements BoardroomsStrategy {
 
 	}
 
-	public Collection<Boardroom> format(Collection<Boardroom> boardrooms) {
+	public Collection<Boardroom> sort(Collection<Boardroom> boardrooms) {
 		return boardrooms;
 	}
 }

@@ -113,7 +113,7 @@ public class BoardroomsTest {
 		boardrooms.addBoardroom(boardroom1);
 		boardrooms.addBoardroom(boardroom2);
 		boardrooms.addBoardroom(boardroom3);
-		when(boardroomsStrategy.format(any())).thenReturn(formatedList);
+		when(boardroomsStrategy.sort(any())).thenReturn(formatedList);
 	}
 
 	private void setIsMyNameForBoardroomMock(Boardroom boardroom, String name) {
