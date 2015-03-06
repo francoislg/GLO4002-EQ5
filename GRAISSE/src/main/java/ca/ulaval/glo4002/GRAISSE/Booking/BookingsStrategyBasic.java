@@ -8,7 +8,7 @@ public class BookingsStrategyBasic implements BookingsStrategy {
 
 	}
 
-	public Collection<Booking> format(Collection<Booking> bookings) {
+	public Collection<Booking> sort(Collection<Booking> bookings) {
 		return bookings;
 	}
 }

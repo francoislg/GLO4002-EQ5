@@ -10,7 +10,7 @@ public class BookingsStrategyPriority implements BookingsStrategy {
 
 	}
 
-	public Collection<Booking> format(Collection<Booking> bookings) {
+	public Collection<Booking> sort(Collection<Booking> bookings) {
 		Comparator<Booking> byPriorityValue = (booking1, booking2) -> booking1.comparePriorityToBooking(booking2);
 		return bookings.stream().sorted(byPriorityValue).collect(Collectors.toList());
 	}

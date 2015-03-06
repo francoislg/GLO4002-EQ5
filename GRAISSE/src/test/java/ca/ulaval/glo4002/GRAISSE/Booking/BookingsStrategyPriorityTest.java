@@ -47,7 +47,7 @@ public class BookingsStrategyPriorityTest {
 		Collection<Booking> bookingList = new ArrayList<Booking>(Arrays.asList(BookingWithHighPriority, BookingWithMediumPriority, BookingWithSmallPriority));
 		Collection<Booking> expectedBookingList = new ArrayList<Booking>(Arrays.asList(BookingWithSmallPriority, BookingWithMediumPriority,
 				BookingWithHighPriority));
-		Collection<Booking> result = bookingsStrategyPriority.format(bookingList);
+		Collection<Booking> result = bookingsStrategyPriority.sort(bookingList);
 		assertEquals(expectedBookingList, result);
 	}
 

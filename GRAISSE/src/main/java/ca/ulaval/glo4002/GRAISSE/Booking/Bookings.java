@@ -28,7 +28,7 @@ public class Bookings {
 	}
 
 	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsStrategy bookingsStrategy, BoardroomsStrategy boardroomsStrategy) {
-		Collection<Booking> formatedBookingList = bookingsStrategy.format(bookingList);
+		Collection<Booking> formatedBookingList = bookingsStrategy.sort(bookingList);
 		for (Iterator<Booking> bookingIter = formatedBookingList.iterator(); bookingIter.hasNext();) {
 			BookingAssignable booking = bookingIter.next();
 			if (boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy)) {
