@@ -17,5 +17,4 @@ public class TriggerTimerTaskStrategy extends TimerTask implements TriggerTimerT
 		}
 		worker.doWork();
 	}
-
 }

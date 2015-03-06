@@ -9,6 +9,7 @@ import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategy;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.BookingAssignable;
 
 public class Bookings {
+	
 	private Collection<Booking> bookingList;
 
 	public Bookings() {

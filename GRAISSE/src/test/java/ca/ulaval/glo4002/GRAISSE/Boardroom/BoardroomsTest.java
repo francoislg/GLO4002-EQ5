@@ -21,10 +21,11 @@ import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomsTest {
+	
 	private static final String NAME_OF_BOARDROOM_1 = "Boardroom1";
 	private static final String NAME_OF_BOARDROOM_2 = "Boardroom2";
 	private static final String NAME_OF_BOARDROOM_3 = "Boardroom3";
-
+	
 	private static final String NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST = "BoardroomThatDoesNotExist";
 
 	Boardrooms boardrooms;
@@ -122,7 +123,6 @@ public class BoardroomsTest {
 	}
 
 	private void addOneBoardroomtoBoardrooms() {
-
 		when(boardroom1.hasName(any(String.class))).thenReturn(false);
 		when(boardroom1.hasName(NAME_OF_BOARDROOM_1)).thenReturn(true);
 		boardrooms.add(boardroom1);

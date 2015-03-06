@@ -30,5 +30,4 @@ public class BookingsStrategyBasicTest {
 	public void withBookingCollectionSortShouldReturnTheSameBoardroomCollection() {
 		assertEquals(bookingCollection, bookingsStrategyBasic.sort(bookingCollection));
 	}
-
 }

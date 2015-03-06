@@ -47,7 +47,6 @@ public class TimedSequentialTriggerTest {
 
 	@Before
 	public void setUp() throws InvalidAttributeValueException {
-
 		ensureThatMockedTimerDoesNotStartANewThread();
 		timedSequentialTrigger = spy(new TimedSequentialTrigger(mockedWorker, triggerTimerTask));
 	}
@@ -71,7 +70,6 @@ public class TimedSequentialTriggerTest {
 	public void newTimedSequentialTriggerShouldReturnSameIntervalThatWasSetBeforeWith() throws InvalidAttributeValueException {
 		long triggerInterval = timedSequentialTrigger.getInterval();
 		assertEquals(THE_DEFAULT_INTERVAL_IN_MINUTES, triggerInterval);
-
 	}
 
 	@Test
@@ -177,5 +175,4 @@ public class TimedSequentialTriggerTest {
 
 		timedSequentialTrigger.startTimer();
 	}
-
 }

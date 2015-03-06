@@ -44,5 +44,4 @@ public class Trigger implements Observer {
 
 	protected void reset() {
 	}
-
 }

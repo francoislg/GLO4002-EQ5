@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Boardrooms {
+	
 	private Collection<Boardroom> boardrooms = new ArrayList<Boardroom>();
-
-	public Boardrooms() {
-
-	}
 
 	public void add(Boardroom boardroom) {
 		boardrooms.add(boardroom);

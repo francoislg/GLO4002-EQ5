@@ -1,23 +1,23 @@
 package ca.ulaval.glo4002.GRAISSE.Boardroom;
 
-
 public class Boardroom {
+	
 	private int numberOfSeats;
-	private String nameOfBoardroom;
+	private String name;
 	private boolean available;
 
 	public Boardroom(String name, int numberOfSeats) {
-		this.nameOfBoardroom = name;
+		this.name = name;
 		this.numberOfSeats = numberOfSeats;
 		this.available = true;
 	}
 
 	private boolean isAvailable() {
-		return this.available;
+		return available;
 	}
 
 	public boolean hasName(String name) {
-		return this.nameOfBoardroom == name;
+		return this.name == name;
 	}
 
 	public boolean verifyNumberOfSeats(BookingAssignable bookingToVerify) {
@@ -25,7 +25,7 @@ public class Boardroom {
 	}
 
 	public int getNumberOfSeats() {
-		return this.numberOfSeats;
+		return numberOfSeats;
 	}
 
 	public boolean assign(BookingAssignable bookingToAssign) {

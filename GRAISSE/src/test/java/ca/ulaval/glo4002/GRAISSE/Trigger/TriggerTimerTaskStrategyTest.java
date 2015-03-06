@@ -35,5 +35,4 @@ public class TriggerTimerTaskStrategyTest {
 
 		verify(worker, times(1)).doWork();
 	}
-
 }

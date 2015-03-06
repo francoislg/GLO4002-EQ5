@@ -30,5 +30,4 @@ public class BoardroomsStrategyBasicTest {
 	public void withBoardroomCollectionformatShouldReturnTheSameBoardroomCollection() {
 		assertEquals(boardroomCollection, boardroomsStrategyBasic.sort(boardroomCollection));
 	}
-
 }

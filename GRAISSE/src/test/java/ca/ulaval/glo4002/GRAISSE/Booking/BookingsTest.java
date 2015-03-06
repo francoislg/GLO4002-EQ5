@@ -71,8 +71,6 @@ public class BookingsTest {
 		when(bookingsStrategy.sort(any())).thenReturn(formatedList);
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
-
 		assertTrue(bookings.isEmpty());
 	}
-
 }

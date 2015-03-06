@@ -17,22 +17,16 @@ import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardroom;
 public class BoardroomTest {
 
 	private static final String NAME_OF_BOARDROOM_1 = "Boardroom1";
-
 	private static final String NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1 = "Boardroom1Different";
 
 	private static final int BIGGER = 1;
 	private static final int SMALLER = -1;
-
 	private static final int NUMBER_OF_SEATS_IN_BOARDROOM = 10;
-
 	private static final int NUMBER_OF_SEATS_SMALLER = 8;
-
 	private static final int NUMBER_OF_SEATS_BIGGER = 11;
 
 	Boardroom boardroom;
-
 	Boardroom boardroomWithMoreSeats;
-
 	Boardroom boardroomWithLessSeats;
 
 	@Mock
@@ -47,7 +41,6 @@ public class BoardroomTest {
 
 	@Test
 	public void getNumberOfSeatsShouldReturnTheNumberOfSeats() {
-
 		assertEquals(boardroom.getNumberOfSeats(), NUMBER_OF_SEATS_IN_BOARDROOM);
 	}
 
@@ -103,5 +96,4 @@ public class BoardroomTest {
 		int result = boardroom.compareNumberOfSeatsToBoardroomNumberOfSeats(boardroomWithMoreSeats);
 		assertEquals(SMALLER, result);
 	}
-
 }

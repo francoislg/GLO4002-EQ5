@@ -5,5 +5,4 @@ public interface BookingAssignable {
 	public abstract void assign();
 
 	public abstract boolean verifyNumberOfSeats(int numberOfSeats);
-
 }

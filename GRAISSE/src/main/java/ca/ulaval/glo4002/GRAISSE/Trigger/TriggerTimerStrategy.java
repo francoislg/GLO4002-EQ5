@@ -7,5 +7,4 @@ public class TriggerTimerStrategy extends Timer implements TriggerTimer {
 	public void schedule(TriggerTimerTask task, long delay) {
 		super.schedule((java.util.TimerTask) task, delay);
 	}
-
 }

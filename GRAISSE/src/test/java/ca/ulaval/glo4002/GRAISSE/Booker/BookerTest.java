@@ -99,5 +99,4 @@ public class BookerTest {
 		booker.assignBookings();
 		verify(booker, times(1)).notifyObservers();
 	}
-
 }

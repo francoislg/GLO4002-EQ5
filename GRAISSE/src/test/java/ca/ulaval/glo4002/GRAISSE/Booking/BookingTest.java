@@ -25,15 +25,11 @@ public class BookingTest {
 	private static final int NUMBER_OF_SEATS_IN_BOOKING = 10;
 
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_SMALLER_THAN_THE_BOOKING = 9;
-
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_EQUAL_TO_THE_BOOKING = 10;
-
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_BIGGER_THAN_THE_BOOKING = 11;
 
 	Booking booking;
-
 	Booking bookingWithBiggerPriority;
-
 	Booking bookingWithSmallerPriority;
 
 	@Before
@@ -96,5 +92,4 @@ public class BookingTest {
 		int result = booking.comparePriorityToBooking(bookingWithBiggerPriority);
 		assertEquals(SMALLER, result);
 	}
-
 }

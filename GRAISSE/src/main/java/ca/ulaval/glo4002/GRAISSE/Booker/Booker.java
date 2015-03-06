@@ -8,6 +8,7 @@ import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.Trigger.Worker;
 
 public class Booker extends Observable implements Worker {
+	
 	private Bookings bookings;
 	private BookerStrategy bookingStrategy;
 	private BookerStrategiesFactory bookingStrategiesFactory;

@@ -16,6 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsStrategyPriorityTest {
+	
 	private static final int BIGGER = 1;
 	private static final int SMALLER = -1;
 
@@ -50,5 +51,4 @@ public class BookingsStrategyPriorityTest {
 		Collection<Booking> result = bookingsStrategyPriority.sort(bookingList);
 		assertEquals(expectedBookingList, result);
 	}
-
 }

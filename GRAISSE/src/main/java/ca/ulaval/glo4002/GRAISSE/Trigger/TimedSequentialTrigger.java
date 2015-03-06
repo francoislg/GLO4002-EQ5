@@ -88,5 +88,4 @@ public class TimedSequentialTrigger extends Trigger {
 		this.timer = timer;
 		return this;
 	}
-
 }
