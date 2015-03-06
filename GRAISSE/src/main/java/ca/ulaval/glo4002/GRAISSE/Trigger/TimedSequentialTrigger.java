@@ -1,5 +1,8 @@
 package ca.ulaval.glo4002.GRAISSE.Trigger;
 
+import java.util.HashMap;
+import java.util.Timer;
+
 import javax.management.InvalidAttributeValueException;
 
 import ca.ulaval.glo4002.GRAISSE.Booker.Booker;
@@ -9,41 +12,18 @@ public class TimedSequentialTrigger extends Trigger {
 	private static final long NB_OF_SECOND_IN_A_MINUTE = 60;
 	private static final long NB_OF_MILLISECOND_IN_A_SECOND = 1000;
 	private static final int MIN_VALID_NB_OF_MINUTES_INTERVAL = 1;
-	private static final long DEFAULT_INTERVAL = 10;
 	
 	private long minutesInterval = 0;
-	private boolean isRunning = false;
-	private TriggerTimer timer;
-	private TriggerTimerTask timerTask;
-	private TriggerTimerStrategyFactory triggerTimerStrategyFactory;
+	private HashMap<Booker, Timer> scheduledBookers;
+	private TimerFactory timerFactory;
+	private BookerTimerTaskFactory bookerTimerTaskFactory;
 
-
-
-	public TimedSequentialTrigger(Booker target, TriggerTimerTask timerTask) throws InvalidAttributeValueException {
-		super(target);
-		init(target, timerTask, DEFAULT_INTERVAL, new TriggerTimerStrategyFactory());
-	}
-	
-	public TimedSequentialTrigger(Booker target, TriggerTimerTask timerTask, TriggerTimerStrategyFactory triggerTimerStrategyFactory) throws InvalidAttributeValueException {
-		super(target);
-		init(target, timerTask, DEFAULT_INTERVAL, triggerTimerStrategyFactory);
-	}
-	
-	public TimedSequentialTrigger(Booker target, TriggerTimerTask timerTask, long intervalInMinutes) throws InvalidAttributeValueException {
-		super(target);
-		init(target, timerTask, intervalInMinutes, new TriggerTimerStrategyFactory());
-	}
-	
-	public TimedSequentialTrigger(Booker target, TriggerTimerTask timerTask, long intervalInMinutes, TriggerTimerStrategyFactory triggerTimerStrategyFactory) throws InvalidAttributeValueException {
-		super(target);
-		init(target, timerTask, intervalInMinutes, triggerTimerStrategyFactory);
-	}
-	
-	private void init(Booker target, TriggerTimerTask timerTask, long intervalInMinutes, TriggerTimerStrategyFactory triggerTimerStrategyFactory) throws InvalidAttributeValueException {
-		setInterval(intervalInMinutes);
-		this.timerTask = timerTask;
-		this.timerTask.setBooker(target);
-		this.triggerTimerStrategyFactory = triggerTimerStrategyFactory;
+	public TimedSequentialTrigger(long intervalInMinutes, TimerFactory timerFactory,
+			BookerTimerTaskFactory bookerTimerTaskFactory) throws InvalidAttributeValueException {
+		this.setInterval(intervalInMinutes);
+		this.timerFactory = timerFactory;
+		this.bookerTimerTaskFactory = bookerTimerTaskFactory;
+		scheduledBookers = new HashMap<Booker, Timer>();
 	}
 	
 	private void setInterval(long minutes) throws InvalidAttributeValueException {
@@ -52,31 +32,31 @@ public class TimedSequentialTrigger extends Trigger {
 		}
 		minutesInterval = minutes;
 	}
+
+	@Override
+	public void update(Booker booker) {
+		if(booker.hasBookingsToAssign() && !bookerIsAlreadySchedule(booker)) {
+			scheduledBookers.put(booker, createScheduleTimer(booker));
+		}
+		else if(!booker.hasBookingsToAssign() && bookerIsAlreadySchedule(booker)) {
+			Timer timer = scheduledBookers.remove(booker);
+			timer.cancel();
+		}
+	}
+	
+	private Boolean bookerIsAlreadySchedule(Booker booker) {
+		return scheduledBookers.containsKey(booker);
+	}
+	
+	private Timer createScheduleTimer(Booker booker) {
+		BookerTimerTask bookerTimerTask = bookerTimerTaskFactory.createBookerTimerTask(booker);
+		Timer timer = timerFactory.createTimer();
+		
+		timer.schedule(bookerTimerTask, getMilliSecondInterval());
+		return timer;
+	}
 	
 	private long getMilliSecondInterval() {
 		return minutesInterval * NB_OF_SECOND_IN_A_MINUTE * NB_OF_MILLISECOND_IN_A_SECOND;
-	}
-
-	public boolean isRunning() {
-		return isRunning;
-	}
-
-	protected void doUpdatedByWorkerWithWorkToDo() {
-		startTimer();
-	}
-
-	private void startTimer() {
-		if (!isRunning) {
-			timer = triggerTimerStrategyFactory.createTimer();
-			timer.schedule(timerTask, getMilliSecondInterval());
-			isRunning = true;
-		}
-	}
-
-	protected void reset() {
-		if (isRunning) {
-			timer.cancel();
-			isRunning = false;
-		}
 	}
 }

@@ -1,13 +1,12 @@
 package ca.ulaval.glo4002.GRAISSE.Trigger;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.Observable;
+import java.util.Timer;
 
 import javax.management.InvalidAttributeValueException;
 
@@ -21,95 +20,116 @@ import ca.ulaval.glo4002.GRAISSE.Booker.Booker;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TimedSequentialTriggerTest {
-
+	
 	private static final long INVALID_NUMBER_OF_MINUTES = 0;
-	private static final long THE_DEFAULT_INTERVAL_IN_MILLISECONDS = 600000;
+	private static final long A_VALID_INTERVAL_IN_MINUTES = 10;
+	private static final long THE_VALID_INTERVAL_IN_MILLISECONDS = 600000;
+	private static final Boolean HAS_BOOKINGS_TO_ASSIGN = true;
+	private static final Boolean HAS_NO_BOOKINGS_TO_ASSIGN = false;
+	private static final Boolean BOOKERS_ARE_NOT_EQUALS = false;
 
 	private TimedSequentialTrigger timedSequentialTrigger;
 	
 	@Mock
-	private Booker mockedBooker;	
-
-	@Mock
-	private Observable anObservable;
-
-	@Mock
-	private TriggerTimerTask triggerTimerTask;
-
-	@Mock
-	private TriggerTimer triggerTimer;
+	private Booker booker;	
 	
 	@Mock
-	private TriggerTimerStrategyFactory triggerTimerStrategyFactory;
+	private Booker secondBooker;
+
+	@Mock
+	private BookerTimerTask bookerTimerTask;
+	
+	@Mock
+	private BookerTimerTask secondBookerTimerTask;
+	
+	@Mock
+	private BookerTimerTaskFactory bookerTimerTaskFactory;
+
+	@Mock
+	private Timer timer;
+	
+	@Mock
+	private TimerFactory timerFactory;
 
 	@Before
 	public void setUp() throws InvalidAttributeValueException {
-
+		doReturn(bookerTimerTask).when(bookerTimerTaskFactory).createBookerTimerTask(booker);
+		doReturn(secondBookerTimerTask).when(bookerTimerTaskFactory).createBookerTimerTask(secondBooker);
+		doReturn(timer).when(timerFactory).createTimer();
+		
 		ensureThatMockedTimerDoesNotStartANewThread();
-		timedSequentialTrigger = new TimedSequentialTrigger(mockedBooker, triggerTimerTask, triggerTimerStrategyFactory);
+		
+		timedSequentialTrigger = new TimedSequentialTrigger(A_VALID_INTERVAL_IN_MINUTES,
+			timerFactory, bookerTimerTaskFactory);
 	}
 
 	private void ensureThatMockedTimerDoesNotStartANewThread() {
-		doNothing().when(triggerTimer).schedule(triggerTimerTask, THE_DEFAULT_INTERVAL_IN_MILLISECONDS);
-	}
-
-	@Test
-	public void newTimedSequentialTriggerIsNotRunning() {
-		boolean isRunning = timedSequentialTrigger.isRunning();
-		assertFalse(isRunning);
+		doNothing().when(timer).schedule(bookerTimerTask, THE_VALID_INTERVAL_IN_MILLISECONDS);
 	}
 
 	@Test(expected = InvalidAttributeValueException.class)
 	public void newTimedSequentialTriggerThrowExceptionWhenSettingInvalidMinutesInterval() throws InvalidAttributeValueException {
-		timedSequentialTrigger = new TimedSequentialTrigger(mockedBooker, triggerTimerTask, INVALID_NUMBER_OF_MINUTES);
+		timedSequentialTrigger = new TimedSequentialTrigger(INVALID_NUMBER_OF_MINUTES,
+			timerFactory, bookerTimerTaskFactory);
 	}
-
+	
 	@Test
-	public void timedSequentialTriggerShouldBeRunningAfterStartTimerHasBeenCalled() throws InvalidAttributeValueException {
-		startMockedTimer();
-
-		boolean isRunning = timedSequentialTrigger.isRunning();
-		assertTrue(isRunning);
+	public void timedSequentialTriggerShouldScheduleATimerWithTheMillisecondIntervalThatHeWasInitialiseWithAndTheNewlyCreatedBookerTimerTaskWhenTheBookerHasBookingsToAssignAndHisNotScheduleYet() {
+		doReturn(HAS_BOOKINGS_TO_ASSIGN).when(booker).hasBookingsToAssign();
+		
+		timedSequentialTrigger.update(booker);
+		
+		verify(timer).schedule(bookerTimerTask, THE_VALID_INTERVAL_IN_MILLISECONDS);
+		verify(timer, never()).cancel();
 	}
-
+	
 	@Test
-	public void startedTimedSequentialTriggerShouldNotBeRunningAfterReset() throws InvalidAttributeValueException {
-		startMockedTimer();
-
-		timedSequentialTrigger.reset();
-		boolean isRunning = timedSequentialTrigger.isRunning();
-		assertFalse(isRunning);
+	public void timedSequentialTriggerShouldCancelTheTimerWhenScheduledBookerHasNoMoreBookingsToAssign() {
+		doReturn(HAS_BOOKINGS_TO_ASSIGN).doReturn(HAS_NO_BOOKINGS_TO_ASSIGN).when(booker).hasBookingsToAssign();
+		
+		timedSequentialTrigger.update(booker); //schedule the booker
+		timedSequentialTrigger.update(booker);
+		
+		verify(timer).schedule(bookerTimerTask, THE_VALID_INTERVAL_IN_MILLISECONDS);
+		verify(timer).cancel();
 	}
-
+	
 	@Test
-	public void whenTriggerTriggTheTargetDoWorkShouldGetCalled() {
-		timedSequentialTrigger.setOff();
-
-		verify(mockedBooker).assignBookings();
+	public void timedSequentialTriggerShouldDoNothingWhenUnscheduledBookerWithNoBookingsToAssignAskForUpdate() {
+		doReturn(HAS_NO_BOOKINGS_TO_ASSIGN).when(booker).hasBookingsToAssign();
+		
+		timedSequentialTrigger.update(booker);
+		
+		verify(timer, never()).schedule(bookerTimerTask, THE_VALID_INTERVAL_IN_MILLISECONDS);
+		verify(timer, never()).cancel();
 	}
-
+	
 	@Test
-	public void timedSequentialTriggerShouldCalledScheduleOfTheTimerOnlyOnceWithTheGoodTimerTaskAndDelay() throws InvalidAttributeValueException {
-		startMockedTimer();
-
-		verify(triggerTimer, times(1)).schedule(triggerTimerTask, THE_DEFAULT_INTERVAL_IN_MILLISECONDS);
+	public void timedSequentialTriggerShouldOnlyScheduleOneTimerWhenBookerIsScheduleAndTheBookerAsBookingsToAssign() {
+		doReturn(HAS_BOOKINGS_TO_ASSIGN).when(booker).hasBookingsToAssign();
+		
+		timedSequentialTrigger.update(booker);
+		timedSequentialTrigger.update(booker);
+		
+		verify(timer).schedule(bookerTimerTask, THE_VALID_INTERVAL_IN_MILLISECONDS);
+		verify(timer, never()).cancel();
 	}
-
+	
 	@Test
-	public void timedSequentialTriggerShouldCallTimerCancelMethodWhenReseting() throws InvalidAttributeValueException {
-		startMockedTimer();
-		timedSequentialTrigger.reset();
-		verify(triggerTimer, times(1)).cancel();
+	public void timedSequentialTriggerShouldScheduleASecondTimerWhenGivenTwoDifferentBooker() {
+		doReturn(HAS_BOOKINGS_TO_ASSIGN).when(booker).hasBookingsToAssign();
+		doReturn(HAS_BOOKINGS_TO_ASSIGN).when(secondBooker).hasBookingsToAssign();
+		
+		doReturn(BOOKERS_ARE_NOT_EQUALS).when(booker).equals(secondBooker);
+		
+		timedSequentialTrigger.update(booker);
+		timedSequentialTrigger.update(secondBooker);
+		
+		verify(timer, times(1)).schedule(secondBookerTimerTask, THE_VALID_INTERVAL_IN_MILLISECONDS);
+		verify(timer, never()).cancel();
 	}
+	
 
-	@Test
-	public void timedSequentialTriggerShouldCallSetWorkerOfTimerTaskAtInitialisation() {
-		verify(triggerTimerTask, times(1)).setBooker(mockedBooker);
-	}
-
-	private void startMockedTimer() throws InvalidAttributeValueException {
-		doReturn(triggerTimer).when(triggerTimerStrategyFactory).createTimer();
-		timedSequentialTrigger.doUpdatedByWorkerWithWorkToDo();
-	}
-
+	
+	
 }

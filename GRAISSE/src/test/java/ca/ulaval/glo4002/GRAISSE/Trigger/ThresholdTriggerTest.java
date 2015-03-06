@@ -30,12 +30,12 @@ public class ThresholdTriggerTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void thresholdTriggerShouldThrowExceptionWhenTresholdIsLesserThanZero() {
-		threshold = new ThresholdTrigger(mockedBooker, THRESHOLD_LESSER_THAN_ZERO);
+		threshold = new ThresholdTrigger(THRESHOLD_LESSER_THAN_ZERO);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void thresholdTriggerShouldThrowExceptionWhenTresholdIsEqualToZero() {
-		threshold = new ThresholdTrigger(mockedBooker, THRESHOLD_EQUAL_TO_ZERO);
+		threshold = new ThresholdTrigger(THRESHOLD_EQUAL_TO_ZERO);
 	}
 
 	@Test
@@ -65,17 +65,9 @@ public class ThresholdTriggerTest {
 		verify(mockedBooker, never()).assignBookings();
 	}
 	
-	@Test
-	public void whenTriggerTriggTheTargetDoWorkShouldGetCalled() {
-		initValidThresholdTrigger(); 
-		
-		threshold.setOff();
-
-		verify(mockedBooker).assignBookings();
-	}
 
 	private void initValidThresholdTrigger() {
-		threshold = new ThresholdTrigger(mockedBooker, A_VALID_THRESHOLD);
-		threshold.doUpdatedByWorkerWithWorkToDo();
+		threshold = new ThresholdTrigger(A_VALID_THRESHOLD);
+		threshold.update(mockedBooker);
 	}
 }

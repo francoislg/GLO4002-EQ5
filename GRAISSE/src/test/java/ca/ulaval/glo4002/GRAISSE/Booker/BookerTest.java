@@ -2,7 +2,8 @@ package ca.ulaval.glo4002.GRAISSE.Booker;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.spy;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,6 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
+import ca.ulaval.glo4002.GRAISSE.Trigger.Trigger;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookerTest {
@@ -36,6 +38,12 @@ public class BookerTest {
 
 	@Mock
 	Booking booking;
+	
+	@Mock
+	Trigger trigger;
+	
+	@Mock
+	Trigger secondTrigger;
 
 	@Before
 	public void setUp() {
@@ -61,8 +69,18 @@ public class BookerTest {
 	}
 
 	@Test
-	public void onCreationTheBookerShouldNotHasWorkToDo() {
+	public void whenBookingsIsEmptyTheBookerShouldNotHasBookingsToAssign() {
+		doReturn(true).when(bookings).isEmpty();
+		
 		assertFalse(booker.hasBookingsToAssign());
+	}
+	
+	
+	@Test
+	public void afterAddingABookingTheBookerShouldHasBookingsToAssign() {
+		doReturn(false).when(bookings).isEmpty();
+		
+		assertTrue(booker.hasBookingsToAssign());
 	}
 
 	@Test
@@ -77,21 +95,45 @@ public class BookerTest {
 	}
 
 	@Test
-	public void theBookerShouldCallNotifyObserversThatBookerHasChangedAfterAssigningBookings() {
-		booker.assignBookings();
-		verify(booker, times(1)).notifyObserversThatBookerHasChanged();
-	}
-
-	@Test
-	public void theBookerShouldCallNotifyObserversThatBookerHasChangedAfterAddingANewBooking() {
+	public void theBookerAfterAddingANewBookingShouldUpdateRegistredTriggers() {
+		booker.registerTrigger(trigger);
+		booker.registerTrigger(secondTrigger);
+		
 		booker.addBooking(booking);
-		verify(booker, times(1)).notifyObserversThatBookerHasChanged();
+		
+		verify(trigger).update(booker);
+		verify(secondTrigger).update(booker);
 	}
-
+	
 	@Test
-	public void theBookerShouldNotifyObserversAfterAssigningBookings() {
-		booker.assignBookings();
-		verify(booker, times(1)).notifyObservers();
+	public void theBookerAfterRegistringTheSameTriggerTwiceOnlyUpdateTheTriggerOnceWhenAddingBooking() {
+		booker.registerTrigger(trigger);
+		booker.registerTrigger(trigger);
+		
+		booker.addBooking(booking);
+		
+		verify(trigger).update(booker);
 	}
-
+	
+	@Test
+	public void theBookerAfterRegistringTheSameTriggerTwiceOnlyUpdateTheTriggerOnceWhenAssigningBookings() {
+		booker.registerTrigger(trigger);
+		booker.registerTrigger(trigger);
+		
+		booker.assignBookings();
+		
+		verify(trigger).update(booker);
+	}
+	
+	@Test
+	public void theBookerWithBookingToAssignShouldUpdateRegistredTriggersWhenAssigningBookings() {
+		booker.registerTrigger(trigger);
+		booker.registerTrigger(secondTrigger);
+		
+		booker.addBooking(booking);
+		booker.assignBookings();
+		
+		verify(trigger, times(2)).update(booker);
+		verify(secondTrigger, times(2)).update(booker);
+	}
 }
