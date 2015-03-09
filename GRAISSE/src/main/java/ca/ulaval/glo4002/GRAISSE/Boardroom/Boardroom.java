@@ -29,10 +29,7 @@ public class Boardroom {
 	}
 
 	public boolean assign(BookingAssignable bookingToAssign) {
-		if (!verifyNumberOfSeats(bookingToAssign)) {
-			return false;
-		}
-		if (isAvailable()) {
+		if (isAvailable() && verifyNumberOfSeats(bookingToAssign)) {
 			bookingToAssign.assign();
 			available = false;
 			return true;

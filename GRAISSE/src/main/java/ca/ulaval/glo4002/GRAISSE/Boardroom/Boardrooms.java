@@ -15,7 +15,7 @@ public class Boardrooms {
 		return boardrooms.isEmpty();
 	}
 
-	public Boardroom findBoardroomWithName(String boardroomName) throws BoardroomNotFoundException {
+	public Boardroom findBoardroomWithName(String boardroomName) {
 		for (Boardroom boardroom : boardrooms) {
 			if (boardroom.hasName(boardroomName)) {
 				return boardroom;
@@ -24,13 +24,13 @@ public class Boardrooms {
 		throw new BoardroomNotFoundException();
 	}
 
-	public boolean assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsStrategy boardroomsStrategy) {
+	public void assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsStrategy boardroomsStrategy) {
 		Collection<Boardroom> formatedBoardroomList = boardroomsStrategy.sort(boardrooms);
 		for (Boardroom boardroom : formatedBoardroomList) {
 			if (boardroom.assign(bookingToAssign)) {
-				return true;
+				return;
 			}
 		}
-		return false;
+		throw new UnableToAssignBookingException();
 	}
 }

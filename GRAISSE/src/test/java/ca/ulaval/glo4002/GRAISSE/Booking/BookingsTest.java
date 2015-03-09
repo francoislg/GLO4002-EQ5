@@ -67,7 +67,6 @@ public class BookingsTest {
 	@Test
 	public void assignShouldRemoveTheBookingIfItIsAssigned() {
 		List<Booking> formatedList = new ArrayList<Booking>(Arrays.asList(booking));
-		when(boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy)).thenReturn(true);
 		when(bookingsStrategy.sort(any())).thenReturn(formatedList);
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);

@@ -32,9 +32,8 @@ public class Bookings {
 		Collection<Booking> formatedBookingList = bookingsStrategy.sort(bookingList);
 		for (Iterator<Booking> bookingIter = formatedBookingList.iterator(); bookingIter.hasNext();) {
 			BookingAssignable booking = bookingIter.next();
-			if (boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy)) {
-				bookingIter.remove();
-			}
+			boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy);
+			bookingIter.remove();
 		}
 	}
 

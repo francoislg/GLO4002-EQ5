@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.boardroom;
 
-public class BoardroomNotFoundException extends Exception {
+public class BoardroomNotFoundException extends RuntimeException {
 
-	private static final long SERIAL_VERSION_UID = 1226126547705576300L;
-
+	private static final long serialVersionUID = 1226126547705576300L;
 }

@@ -28,13 +28,13 @@ public class ThresholdTriggerTest {
 	private static final int A_BIGGER_NUMBER_OF_JOBS_THAN_THRESHOLD = 2;
 	private static final int A_LESSER_NUMBER_OF_JOBS_THAN_THRESHOLD = -10;
 
-	@Test(expected = IllegalArgumentException.class)
-	public void thresholdTriggerShouldThrowExceptionWhenTresholdIsLesserThanZero() {
+	@Test(expected = InvalidThresholdException.class)
+	public void thresholdTriggerShouldThrowInvalidThresholdExceptionWhenThresholdIsLesserThanZero() {
 		threshold = new ThresholdTrigger(THRESHOLD_LESSER_THAN_ZERO);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void thresholdTriggerShouldThrowExceptionWhenTresholdIsEqualToZero() {
+	@Test(expected = InvalidThresholdException.class)
+	public void thresholdTriggerShouldThrowInvalidThresholdExceptionWhenThresholdIsEqualToZero() {
 		threshold = new ThresholdTrigger(THRESHOLD_EQUAL_TO_ZERO);
 	}
 

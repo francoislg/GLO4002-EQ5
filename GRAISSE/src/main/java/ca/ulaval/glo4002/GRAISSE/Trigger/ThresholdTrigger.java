@@ -9,7 +9,7 @@ public class ThresholdTrigger extends Trigger {
 
 	public ThresholdTrigger(int threshold) {
 		if (threshold < MINIMUM_THRESHOLD_VALUE) {
-			throw new IllegalArgumentException("The treshold should be greater than zero.");
+			throw new InvalidThresholdException();
 		}
 		this.threshold = threshold;
 	}

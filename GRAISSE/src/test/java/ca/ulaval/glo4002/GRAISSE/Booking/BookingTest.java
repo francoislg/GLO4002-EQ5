@@ -33,7 +33,7 @@ public class BookingTest {
 	Booking bookingWithSmallerPriority;
 
 	@Before
-	public void setUp() throws InvalidPriorityException {
+	public void setUp() {
 		booking = new Booking(NUMBER_OF_SEATS_IN_BOOKING);
 		booking.setPriority(PRIORITY_VALUE_OF_BOOKING);
 		bookingWithBiggerPriority = new Booking(NUMBER_OF_SEATS_IN_BOOKING);
@@ -43,19 +43,19 @@ public class BookingTest {
 	}
 
 	@Test(expected = InvalidPriorityException.class)
-	public void withInvalidBecauseItIsToHighPriorityValueConstructorShouldThrowInvalidPriorityValue() throws InvalidPriorityException {
+	public void withInvalidBecauseItIsToHighPriorityValueConstructorShouldThrowInvalidPriorityValue() {
 		booking = new Booking(NUMBER_OF_SEATS_IN_BOOKING);
 		booking.setPriority(INVALID_PRIORITY_VALUE_OF_BOOKING_BECAUSE_IT_IS_TO_HIGH);
 	}
 
 	@Test(expected = InvalidPriorityException.class)
-	public void withInvalidBecauseItIsToLowPriorityValueConstructorShouldThrowInvalidPriorityValue() throws InvalidPriorityException {
+	public void withInvalidBecauseItIsToLowPriorityValueConstructorShouldThrowInvalidPriorityValue() {
 		booking = new Booking(NUMBER_OF_SEATS_IN_BOOKING);
 		booking.setPriority(INVALID_PRIORITY_VALUE_OF_BOOKING_BECAUSE_IT_IS_TO_LOW);
 	}
 
 	@Test
-	public void withValidPriorityValueConstructorShouldNotThrowInvalidPriorityValue() throws InvalidPriorityException {
+	public void withValidPriorityValueConstructorShouldNotThrowInvalidPriorityValue() {
 		booking = new Booking(NUMBER_OF_SEATS_IN_BOOKING);
 		booking.setPriority(PRIORITY_VALUE_OF_BOOKING);
 	}

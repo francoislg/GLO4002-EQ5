@@ -15,7 +15,7 @@ public class Booking implements BookingAssignable {
 		priority = DEFAULT_PRIORITY;
 	}
 	
-	public void setPriority(int priority) throws InvalidPriorityException{
+	public void setPriority(int priority) {
 		validatePriorityValue(priority);
 		this.priority = priority;
 	}
@@ -34,7 +34,7 @@ public class Booking implements BookingAssignable {
 		return numberOfSeatsNeeded <= numberOfSeats;
 	}
 
-	private void validatePriorityValue(int priorityValueToValidate) throws InvalidPriorityException {
+	private void validatePriorityValue(int priorityValueToValidate) {
 		if (priorityValueToValidate < 1 || priorityValueToValidate > 5) {
 			throw new InvalidPriorityException();
 		}
