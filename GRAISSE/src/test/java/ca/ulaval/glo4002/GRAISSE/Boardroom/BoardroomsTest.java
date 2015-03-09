@@ -19,6 +19,7 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomNotFoundException;
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategy;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
+import ca.ulaval.glo4002.GRAISSE.boardroom.UnableToAssignBookingException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomsTest {
@@ -63,7 +64,7 @@ public class BoardroomsTest {
 	}
 
 	@Test
-	public void afterAddingOneBoardRoomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundException {
+	public void afterAddingOneBoardRoomfindBoardroomWithNameReturnTheBoardroom() {
 		addOneBoardroomtoBoardrooms();
 
 		Boardroom boardroom = boardrooms.findBoardroomWithName(NAME_OF_BOARDROOM_1);
@@ -72,7 +73,7 @@ public class BoardroomsTest {
 	}
 
 	@Test
-	public void afterAddingMultipleBoardroomfindBoardroomWithNameReturnTheBoardroom() throws BoardroomNotFoundException {
+	public void afterAddingMultipleBoardroomfindBoardroomWithNameReturnTheBoardroom() {
 		addThreeBoardroomtoBoardrooms();
 
 		Boardroom boardroom = boardrooms.findBoardroomWithName(NAME_OF_BOARDROOM_2);
@@ -84,27 +85,27 @@ public class BoardroomsTest {
 	}
 
 	@Test(expected = BoardroomNotFoundException.class)
-	public void withNoExistingBoardroomWithNamefindBoardroomWithNameThrowBoardroomNotFoundExeption() throws BoardroomNotFoundException {
+	public void withNoExistingBoardroomWithNamefindBoardroomWithNameThrowBoardroomNotFoundExeption() {
 		addThreeBoardroomtoBoardrooms();
 		boardrooms.findBoardroomWithName(NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST);
 	}
 
-	@Test
-	public void withNoBoardroomThatCanBeAssignToTheBookingassignToBoardroomShouldReturnFalse() {
+	@Test(expected = UnableToAssignBookingException.class)
+	public void withNoBoardroomThatCanBeAssignToTheBookingassignToBoardroomShouldThrowUnableToAssignBookingException() {
 		addThreeBoardroomtoBoardrooms();
 		when(boardroom1.assign(booking)).thenReturn(false);
 		when(boardroom2.assign(booking)).thenReturn(false);
 		when(boardroom3.assign(booking)).thenReturn(false);
-		assertFalse(boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy));
+		boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy);
 	}
 
 	@Test
-	public void withABoardroomThatCanBeAssignToTheBookingassignToBoardroomShouldReturnTrue() {
+	public void withABoardroomThatCanBeAssignToTheBookingassignToBoardroomShouldDoNothing() {
 		addThreeBoardroomtoBoardrooms();
 		when(boardroom1.assign(booking)).thenReturn(false);
 		when(boardroom2.assign(booking)).thenReturn(false);
 		when(boardroom3.assign(booking)).thenReturn(true);
-		assertTrue(boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy));
+		boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy);
 	}
 
 	private void addThreeBoardroomtoBoardrooms() {

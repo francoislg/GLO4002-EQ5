@@ -3,8 +3,6 @@ package ca.ulaval.glo4002.GRAISSE.Trigger;
 import java.util.HashMap;
 import java.util.Timer;
 
-import javax.management.InvalidAttributeValueException;
-
 import ca.ulaval.glo4002.GRAISSE.Booker.Booker;
 
 public class TimedSequentialTrigger extends Trigger {
@@ -19,16 +17,16 @@ public class TimedSequentialTrigger extends Trigger {
 	private BookerTimerTaskFactory bookerTimerTaskFactory;
 
 	public TimedSequentialTrigger(long intervalInMinutes, TimerFactory timerFactory,
-			BookerTimerTaskFactory bookerTimerTaskFactory) throws InvalidAttributeValueException {
+			BookerTimerTaskFactory bookerTimerTaskFactory) {
 		setInterval(intervalInMinutes);
 		this.timerFactory = timerFactory;
 		this.bookerTimerTaskFactory = bookerTimerTaskFactory;
 		scheduledBookers = new HashMap<Booker, Timer>();
 	}
 	
-	private void setInterval(long minutes) throws InvalidAttributeValueException {
+	private void setInterval(long minutes) {
 		if (minutes < MIN_VALID_NB_OF_MINUTES_INTERVAL) {
-			throw new InvalidAttributeValueException("Invalid interval value.");
+			throw new InvalidIntervalException();
 		}
 		minutesInterval = minutes;
 	}

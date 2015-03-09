@@ -8,8 +8,6 @@ import static org.mockito.Mockito.verify;
 
 import java.util.Timer;
 
-import javax.management.InvalidAttributeValueException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +50,7 @@ public class TimedSequentialTriggerTest {
 	private TimerFactory timerFactory;
 
 	@Before
-	public void setUp() throws InvalidAttributeValueException {
+	public void setUp() {
 		doReturn(bookerTimerTask).when(bookerTimerTaskFactory).createBookerTimerTask(booker);
 		doReturn(secondBookerTimerTask).when(bookerTimerTaskFactory).createBookerTimerTask(secondBooker);
 		doReturn(timer).when(timerFactory).createTimer();
@@ -67,8 +65,8 @@ public class TimedSequentialTriggerTest {
 		doNothing().when(timer).schedule(bookerTimerTask, THE_VALID_INTERVAL_IN_MILLISECONDS);
 	}
 
-	@Test(expected = InvalidAttributeValueException.class)
-	public void newTimedSequentialTriggerThrowExceptionWhenSettingInvalidMinutesInterval() throws InvalidAttributeValueException {
+	@Test(expected = InvalidIntervalException.class)
+	public void newTimedSequentialTriggerThrowInvalidIntervalExceptionWhenSettingInvalidMinutesInterval() {
 		timedSequentialTrigger = new TimedSequentialTrigger(INVALID_NUMBER_OF_MINUTES,
 			timerFactory, bookerTimerTaskFactory);
 	}
