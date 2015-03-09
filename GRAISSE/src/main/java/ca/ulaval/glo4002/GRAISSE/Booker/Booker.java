@@ -9,28 +9,20 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 
 public class Booker {
 	
-	
 	private Bookings bookings;
-	private BookerStrategy bookingStrategy;
-	private BookerStrategiesFactory bookingStrategiesFactory;
+	private BookerStrategy bookerStrategy;
 	private Boardrooms boardrooms;
 	private ArrayList<Trigger> triggers;
 
-	public Booker(BookerStrategiesFactory bookingStrategiesFactory, Bookings bookings, Boardrooms boardrooms) {
+	public Booker(BookerStrategy bookerStrategy, Bookings bookings, Boardrooms boardrooms) {
 		this.bookings = bookings;
-		this.bookingStrategiesFactory = bookingStrategiesFactory;
+		this.bookerStrategy = bookerStrategy;
 		this.boardrooms = boardrooms;
 		triggers = new ArrayList<Trigger>();
-
-		setStrategyToBasic();
-	}
-
-	public void setStrategyToBasic() {
-		bookingStrategy = bookingStrategiesFactory.createBasicStrategy();
 	}
 
 	public void assignBookings() {
-		bookingStrategy.assignBookings(boardrooms, bookings);
+		bookerStrategy.assignBookings(boardrooms, bookings);
 		notifyTriggers();
 	}
 
