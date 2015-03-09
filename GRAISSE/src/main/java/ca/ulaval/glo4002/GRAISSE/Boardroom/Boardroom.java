@@ -41,6 +41,6 @@ public class Boardroom {
 	}
 
 	public int compareNumberOfSeatsToBoardroomNumberOfSeats(Boardroom boardrooomToCompare) {
-		return Integer.compare(this.numberOfSeats, boardrooomToCompare.numberOfSeats);
+		return Integer.compare(numberOfSeats, boardrooomToCompare.numberOfSeats);
 	}
 }

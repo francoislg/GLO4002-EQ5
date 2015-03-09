@@ -20,7 +20,7 @@ public class TimedSequentialTrigger extends Trigger {
 
 	public TimedSequentialTrigger(long intervalInMinutes, TimerFactory timerFactory,
 			BookerTimerTaskFactory bookerTimerTaskFactory) throws InvalidAttributeValueException {
-		this.setInterval(intervalInMinutes);
+		setInterval(intervalInMinutes);
 		this.timerFactory = timerFactory;
 		this.bookerTimerTaskFactory = bookerTimerTaskFactory;
 		scheduledBookers = new HashMap<Booker, Timer>();
