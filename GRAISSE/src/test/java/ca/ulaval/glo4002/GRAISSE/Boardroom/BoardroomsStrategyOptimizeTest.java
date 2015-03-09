@@ -40,10 +40,10 @@ public class BoardroomsStrategyOptimizeTest {
 	@Before
 	public void setUp() {
 		boardroomsStrategyOptimize = new BoardroomsStrategyOptimize();
-		when(BoardroomSmallestNumberOfSeatsNeeded.compareNumberOfSeatsToBoardroomNumberOfSeats(any())).thenReturn(SMALLER);
-		when(BoardroomSecondSmallestNumberOfSeatsNeeded.compareNumberOfSeatsToBoardroomNumberOfSeats(BoardroomSmallestNumberOfSeatsNeeded)).thenReturn(BIGGER);
-		when(BoardroomSecondSmallestNumberOfSeatsNeeded.compareNumberOfSeatsToBoardroomNumberOfSeats(BoardroomBiggestNumberOfSeatsNeeded)).thenReturn(SMALLER);
-		when(BoardroomBiggestNumberOfSeatsNeeded.compareNumberOfSeatsToBoardroomNumberOfSeats(any())).thenReturn(BIGGER);
+		when(BoardroomSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(any())).thenReturn(SMALLER);
+		when(BoardroomSecondSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(BoardroomSmallestNumberOfSeatsNeeded)).thenReturn(BIGGER);
+		when(BoardroomSecondSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(BoardroomBiggestNumberOfSeatsNeeded)).thenReturn(SMALLER);
+		when(BoardroomBiggestNumberOfSeatsNeeded.compareByNumberOfSeats(any())).thenReturn(BIGGER);
 	}
 
 	@Test
