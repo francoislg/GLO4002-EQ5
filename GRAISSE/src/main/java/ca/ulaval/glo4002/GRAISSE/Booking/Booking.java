@@ -1,8 +1,9 @@
 package ca.ulaval.glo4002.GRAISSE.Booking;
 
-import ca.ulaval.glo4002.GRAISSE.Boardroom.BookingAssignable;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
 
 public class Booking implements BookingAssignable {
+	
 	private final int DEFAULT_PRIORITY = 3;
 	private int numberOfSeatsNeeded;
 	private boolean assigned;
@@ -30,7 +31,7 @@ public class Booking implements BookingAssignable {
 
 	@Override
 	public boolean verifyNumberOfSeats(int numberOfSeats) {
-		return this.numberOfSeatsNeeded <= numberOfSeats;
+		return numberOfSeatsNeeded <= numberOfSeats;
 	}
 
 	private void validatePriorityValue(int priorityValueToValidate) throws InvalidPriorityException {

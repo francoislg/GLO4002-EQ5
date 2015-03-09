@@ -15,8 +15,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategy;
+import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
@@ -47,20 +47,20 @@ public class BookingsTest {
 
 	@Test
 	public void isEmptyShouldReturnFalseIfNotEmpty() {
-		bookings.addBooking(booking);
+		bookings.add(booking);
 		assertFalse(bookings.isEmpty());
 	}
 
 	@Test
 	public void addBookingShouldAddTheBooking() {
-		bookings.addBooking(booking);
+		bookings.add(booking);
 		assertFalse(bookings.isEmpty());
 	}
 
 	@Test
 	public void removeBookingShouldRemoveTheBooking() {
-		bookings.addBooking(booking);
-		bookings.removeBooking(booking);
+		bookings.add(booking);
+		bookings.remove(booking);
 		assertTrue(bookings.isEmpty());
 	}
 
@@ -68,11 +68,9 @@ public class BookingsTest {
 	public void assignShouldRemoveTheBookingIfItIsAssigned() {
 		List<Booking> formatedList = new ArrayList<Booking>(Arrays.asList(booking));
 		when(boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy)).thenReturn(true);
-		when(bookingsStrategy.format(any())).thenReturn(formatedList);
+		when(bookingsStrategy.sort(any())).thenReturn(formatedList);
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
-
 		assertTrue(bookings.isEmpty());
 	}
-
 }

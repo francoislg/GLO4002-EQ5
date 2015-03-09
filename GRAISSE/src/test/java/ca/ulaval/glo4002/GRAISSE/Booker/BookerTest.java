@@ -14,10 +14,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.Trigger.Trigger;
+import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookerTest {
@@ -52,15 +52,15 @@ public class BookerTest {
 	}
 
 	@Test
-	public void assignBookingShouldcallassignBookingsOnbookingStrategy() {
+	public void assignBookingShouldCallAssignBookingsOnBookingStrategy() {
 		booker.assignBookings();
 		verify(bookingStrategy, times(1)).assignBookings(boardrooms, bookings);
 	}
 
 	@Test
-	public void addBookingShouldaddABoookingToBookings() {
+	public void addBookingShouldAddABookingToBookings() {
 		booker.addBooking(booking);
-		verify(bookings, times(1)).addBooking(booking);
+		verify(bookings, times(1)).add(booking);
 	}
 
 	@Test

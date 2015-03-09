@@ -2,12 +2,13 @@ package ca.ulaval.glo4002.GRAISSE.Booker;
 
 import java.util.ArrayList;
 
-import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.Trigger.Trigger;
+import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 
 public class Booker {
+	
 	
 	private Bookings bookings;
 	private BookerStrategy bookingStrategy;
@@ -34,7 +35,7 @@ public class Booker {
 	}
 
 	public void addBooking(Booking bookingToAdd) {
-		bookings.addBooking(bookingToAdd);
+		bookings.add(bookingToAdd);
 		notifyTriggers();
 	}
 

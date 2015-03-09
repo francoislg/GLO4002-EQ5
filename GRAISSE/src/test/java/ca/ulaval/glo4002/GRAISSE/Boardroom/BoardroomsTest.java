@@ -14,17 +14,19 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardroom;
-import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomNotFoundException;
-import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategy;
+import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomNotFoundException;
+import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategy;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomsTest {
+	
 	private static final String NAME_OF_BOARDROOM_1 = "Boardroom1";
 	private static final String NAME_OF_BOARDROOM_2 = "Boardroom2";
 	private static final String NAME_OF_BOARDROOM_3 = "Boardroom3";
-
+	
 	private static final String NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST = "BoardroomThatDoesNotExist";
 
 	Boardrooms boardrooms;
@@ -56,7 +58,7 @@ public class BoardroomsTest {
 
 	@Test
 	public void afterAddingBoardRoomisEmptyShouldReturnFalse() {
-		boardrooms.addBoardroom(boardroom1);
+		boardrooms.add(boardroom1);
 		assertFalse(boardrooms.isEmpty());
 	}
 
@@ -65,7 +67,7 @@ public class BoardroomsTest {
 		addOneBoardroomtoBoardrooms();
 
 		Boardroom boardroom = boardrooms.findBoardroomWithName(NAME_OF_BOARDROOM_1);
-		assertTrue(boardroom.isMyName(NAME_OF_BOARDROOM_1));
+		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 
 	}
 
@@ -74,11 +76,11 @@ public class BoardroomsTest {
 		addThreeBoardroomtoBoardrooms();
 
 		Boardroom boardroom = boardrooms.findBoardroomWithName(NAME_OF_BOARDROOM_2);
-		assertTrue(boardroom.isMyName(NAME_OF_BOARDROOM_2));
+		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_2));
 		boardroom = boardrooms.findBoardroomWithName(NAME_OF_BOARDROOM_3);
-		assertTrue(boardroom.isMyName(NAME_OF_BOARDROOM_3));
+		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_3));
 		boardroom = boardrooms.findBoardroomWithName(NAME_OF_BOARDROOM_1);
-		assertTrue(boardroom.isMyName(NAME_OF_BOARDROOM_1));
+		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 	}
 
 	@Test(expected = BoardroomNotFoundException.class)
@@ -110,21 +112,20 @@ public class BoardroomsTest {
 		setIsMyNameForBoardroomMock(boardroom1, NAME_OF_BOARDROOM_1);
 		setIsMyNameForBoardroomMock(boardroom2, NAME_OF_BOARDROOM_2);
 		setIsMyNameForBoardroomMock(boardroom3, NAME_OF_BOARDROOM_3);
-		boardrooms.addBoardroom(boardroom1);
-		boardrooms.addBoardroom(boardroom2);
-		boardrooms.addBoardroom(boardroom3);
-		when(boardroomsStrategy.format(any())).thenReturn(formatedList);
+		boardrooms.add(boardroom1);
+		boardrooms.add(boardroom2);
+		boardrooms.add(boardroom3);
+		when(boardroomsStrategy.sort(any())).thenReturn(formatedList);
 	}
 
 	private void setIsMyNameForBoardroomMock(Boardroom boardroom, String name) {
-		when(boardroom.isMyName(any(String.class))).thenReturn(false);
-		when(boardroom.isMyName(name)).thenReturn(true);
+		when(boardroom.hasName(any(String.class))).thenReturn(false);
+		when(boardroom.hasName(name)).thenReturn(true);
 	}
 
 	private void addOneBoardroomtoBoardrooms() {
-
-		when(boardroom1.isMyName(any(String.class))).thenReturn(false);
-		when(boardroom1.isMyName(NAME_OF_BOARDROOM_1)).thenReturn(true);
-		boardrooms.addBoardroom(boardroom1);
+		when(boardroom1.hasName(any(String.class))).thenReturn(false);
+		when(boardroom1.hasName(NAME_OF_BOARDROOM_1)).thenReturn(true);
+		boardrooms.add(boardroom1);
 	}
 }

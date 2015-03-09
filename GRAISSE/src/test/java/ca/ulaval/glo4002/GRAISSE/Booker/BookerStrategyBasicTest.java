@@ -9,11 +9,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategy;
-import ca.ulaval.glo4002.GRAISSE.Booker.BookerStrategyBasic;
 import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.Booking.BookingsStrategy;
+import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookerStrategyBasicTest {
@@ -38,7 +37,7 @@ public class BookerStrategyBasicTest {
 	}
 
 	@Test
-	public void assignBookingsShouldCallassignBookingsToBoardrooms() {
+	public void assignBookingsShouldCallAssignBookingsToBoardrooms() {
 		bookerStrategyBasic.assignBookings(boardrooms, bookings);
 		verify(bookings, times(1)).assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
 	}
