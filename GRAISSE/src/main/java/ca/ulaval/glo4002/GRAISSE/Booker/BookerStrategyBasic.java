@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.GRAISSE.Booker;
 
-import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategy;
 import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.Booking.BookingsStrategy;
+import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategy;
 
 public class BookerStrategyBasic implements BookerStrategy {
 

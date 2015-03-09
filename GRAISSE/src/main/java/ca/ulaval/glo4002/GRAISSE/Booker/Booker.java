@@ -1,22 +1,26 @@
 package ca.ulaval.glo4002.GRAISSE.Booker;
 
-import java.util.Observable;
+import java.util.ArrayList;
 
-import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.Booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.Booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.Trigger.Worker;
+import ca.ulaval.glo4002.GRAISSE.Trigger.Trigger;
+import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 
-public class Booker extends Observable implements Worker {
+public class Booker {
+	
+	
 	private Bookings bookings;
 	private BookerStrategy bookingStrategy;
 	private BookerStrategiesFactory bookingStrategiesFactory;
 	private Boardrooms boardrooms;
+	private ArrayList<Trigger> triggers;
 
 	public Booker(BookerStrategiesFactory bookingStrategiesFactory, Bookings bookings, Boardrooms boardrooms) {
 		this.bookings = bookings;
 		this.bookingStrategiesFactory = bookingStrategiesFactory;
 		this.boardrooms = boardrooms;
+		triggers = new ArrayList<Trigger>();
 
 		setStrategyToBasic();
 	}
@@ -27,29 +31,31 @@ public class Booker extends Observable implements Worker {
 
 	public void assignBookings() {
 		bookingStrategy.assignBookings(boardrooms, bookings);
-		notifyObserversThatBookerHasChanged();
+		notifyTriggers();
 	}
 
 	public void addBooking(Booking bookingToAdd) {
-		bookings.addBooking(bookingToAdd);
-		notifyObserversThatBookerHasChanged();
+		bookings.add(bookingToAdd);
+		notifyTriggers();
 	}
 
-	public boolean hasWorkToDO() {
-		return bookings.isEmpty();
+	public boolean hasBookingsToAssign() {
+		return !bookings.isEmpty();
 	}
 
-	public void doWork() {
-		assignBookings();
+	public int numberOfBookingsToAssign() {
+		return bookings.getSize();
 	}
 
-	public int numberOfJobsToDo() {
-		return bookings.getBookingsSize();
+	private void notifyTriggers() {
+		for(Trigger trigger : triggers) {
+			trigger.update(this);
+		}
 	}
-
-	protected void notifyObserversThatBookerHasChanged() {
-		setChanged();
-		notifyObservers();
-		clearChanged();
+	
+	public void registerTrigger(Trigger trigger) {
+		if(!triggers.contains(trigger)) {
+			triggers.add(trigger);
+		}
 	}
 }

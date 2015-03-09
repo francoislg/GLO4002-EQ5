@@ -10,8 +10,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardroom;
-import ca.ulaval.glo4002.GRAISSE.Boardroom.BoardroomsStrategyBasic;
+import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategyBasic;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomsStrategyBasicTest {
@@ -28,7 +28,6 @@ public class BoardroomsStrategyBasicTest {
 
 	@Test
 	public void withBoardroomCollectionformatShouldReturnTheSameBoardroomCollection() {
-		assertEquals(boardroomCollection, boardroomsStrategyBasic.format(boardroomCollection));
+		assertEquals(boardroomCollection, boardroomsStrategyBasic.sort(boardroomCollection));
 	}
-
 }

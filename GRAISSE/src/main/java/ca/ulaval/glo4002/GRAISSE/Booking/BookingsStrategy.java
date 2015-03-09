@@ -4,5 +4,5 @@ import java.util.Collection;
 
 public interface BookingsStrategy {
 
-	public Collection<Booking> format(Collection<Booking> bookings);
+	public Collection<Booking> sort(Collection<Booking> bookings);
 }

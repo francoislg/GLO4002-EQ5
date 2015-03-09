@@ -10,13 +10,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.Trigger.ThresholdTrigger;
+import ca.ulaval.glo4002.GRAISSE.Booker.Booker;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ThresholdTriggerTest {
 
 	@Mock
-	private Worker mockedWorker;
+	private Booker mockedBooker;
 
 	private ThresholdTrigger threshold;
 
@@ -30,43 +30,44 @@ public class ThresholdTriggerTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void thresholdTriggerShouldThrowExceptionWhenTresholdIsLesserThanZero() {
-		threshold = new ThresholdTrigger(mockedWorker, THRESHOLD_LESSER_THAN_ZERO);
+		threshold = new ThresholdTrigger(THRESHOLD_LESSER_THAN_ZERO);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void thresholdTriggerShouldThrowExceptionWhenTresholdIsEqualToZero() {
-		threshold = new ThresholdTrigger(mockedWorker, THRESHOLD_EQUAL_TO_ZERO);
+		threshold = new ThresholdTrigger(THRESHOLD_EQUAL_TO_ZERO);
 	}
 
 	@Test
-	public void tresholdTriggerShouldCallWorkerDoJobsWhenNumberOfJobsToDoIsEqualToThreshold() {
-		doReturn(THE_SAME_NUMBER_OF_JOB_AS_THRESHOLD).when(mockedWorker).numberOfJobsToDo();
+	public void thresholdTriggerShouldCallWorkerDoJobsWhenNumberOfJobsToDoIsEqualToThreshold() {
+		doReturn(THE_SAME_NUMBER_OF_JOB_AS_THRESHOLD).when(mockedBooker).numberOfBookingsToAssign();
 
 		initValidThresholdTrigger();
 
-		verify(mockedWorker, times(1)).doWork();
+		verify(mockedBooker, times(1)).assignBookings();
 	}
 
 	@Test
-	public void tresholdTriggerShouldCallWorkerDoJobsWhenNumberOfJobsToDoIsGreatherThanThreshold() {
-		doReturn(A_BIGGER_NUMBER_OF_JOBS_THAN_THRESHOLD).when(mockedWorker).numberOfJobsToDo();
+	public void thresholdTriggerShouldCallWorkerDoJobsWhenNumberOfJobsToDoIsGreatherThanThreshold() {
+		doReturn(A_BIGGER_NUMBER_OF_JOBS_THAN_THRESHOLD).when(mockedBooker).numberOfBookingsToAssign();
 
 		initValidThresholdTrigger();
 
-		verify(mockedWorker, times(1)).doWork();
+		verify(mockedBooker, times(1)).assignBookings();
 	}
 
 	@Test
-	public void tresholdTriggerShouldNotCallWorkerDoJobsWhenNumberOfJobsToDoIsLesserThanThreshold() {
-		doReturn(A_LESSER_NUMBER_OF_JOBS_THAN_THRESHOLD).when(mockedWorker).numberOfJobsToDo();
+	public void thresholdTriggerShouldNotCallWorkerDoJobsWhenNumberOfJobsToDoIsLesserThanThreshold() {
+		doReturn(A_LESSER_NUMBER_OF_JOBS_THAN_THRESHOLD).when(mockedBooker).numberOfBookingsToAssign();
 
 		initValidThresholdTrigger();
 
-		verify(mockedWorker, never()).doWork();
+		verify(mockedBooker, never()).assignBookings();
 	}
+	
 
 	private void initValidThresholdTrigger() {
-		threshold = new ThresholdTrigger(mockedWorker, A_VALID_THRESHOLD);
-		threshold.doUpdatedByWorkerWithWorkToDo();
+		threshold = new ThresholdTrigger(A_VALID_THRESHOLD);
+		threshold.update(mockedBooker);
 	}
 }

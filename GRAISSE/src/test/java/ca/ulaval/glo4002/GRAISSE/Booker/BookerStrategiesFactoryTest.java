@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.Boardroom.Boardrooms;
+import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookerStrategiesFactoryTest {
@@ -30,8 +30,8 @@ public class BookerStrategiesFactoryTest {
 	}
 
 	@Test
-	public void createMaximiseStrategyShouldReturnBookingStrategyMaximise() {
-		BookerStrategy bookingStrategy = bookingStrategiesFactory.createMaximiseStrategy();
+	public void createMaximiseStrategyShouldReturnBookingStrategyOptimize() {
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.createOptimizeStrategy();
 		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
 	}
 
