@@ -38,7 +38,7 @@ public class Bookings {
 		}
 	}
 
-	public int getBookingsSize() {
+	public int getSize() {
 		return bookingList.size();
 	}
 }

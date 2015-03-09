@@ -44,7 +44,7 @@ public class Booker {
 	}
 
 	public int numberOfBookingsToAssign() {
-		return bookings.getBookingsSize();
+		return bookings.getSize();
 	}
 
 	private void notifyTriggers() {
