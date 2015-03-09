@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,10 +27,7 @@ public class BookerTest {
 	Bookings bookings;
 
 	@Mock
-	BookerStrategy bookingStrategy;
-
-	@Mock
-	BookerStrategiesFactory bookingStrategiesFactory;
+	BookerStrategy bookerStrategy;
 
 	@Mock
 	Boardrooms boardrooms;
@@ -47,25 +43,19 @@ public class BookerTest {
 
 	@Before
 	public void setUp() {
-		when(bookingStrategiesFactory.createBasicStrategy()).thenReturn(bookingStrategy);
-		booker = new Booker(bookingStrategiesFactory, bookings, boardrooms);
+		booker = new Booker(bookerStrategy, bookings, boardrooms);
 	}
 
 	@Test
 	public void assignBookingShouldCallAssignBookingsOnBookingStrategy() {
 		booker.assignBookings();
-		verify(bookingStrategy, times(1)).assignBookings(boardrooms, bookings);
+		verify(bookerStrategy, times(1)).assignBookings(boardrooms, bookings);
 	}
 
 	@Test
 	public void addBookingShouldAddABookingToBookings() {
 		booker.addBooking(booking);
 		verify(bookings, times(1)).add(booking);
-	}
-
-	@Test
-	public void onCreationTheBookerShouldBeSetWithABookingStrategyBasic() {
-		verify(bookingStrategiesFactory, times(1)).createBasicStrategy();
 	}
 
 	@Test
@@ -86,12 +76,6 @@ public class BookerTest {
 	@Test
 	public void onCreationTheBookerShouldHaveZeroJobsToDo() {
 		assertEquals(0, booker.numberOfBookingsToAssign());
-	}
-
-	@Test
-	public void setStrategyToBasicShouldUseTheFactoryToGetABookingStrategyBasicObject() {
-		booker.setStrategyToBasic();
-		verify(bookingStrategiesFactory, times(2)).createBasicStrategy();
 	}
 
 	@Test
