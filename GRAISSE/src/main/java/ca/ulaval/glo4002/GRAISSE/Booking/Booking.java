@@ -13,7 +13,6 @@ public class Booking implements BookingAssignable {
 						  }
 	
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
-	private static final int A_POSITIVE_NUMBER =1;
 
 	private int numberOfSeatsNeeded;
 	private boolean assigned;
@@ -46,36 +45,10 @@ public class Booking implements BookingAssignable {
 
 	public int comparePriorityToBooking(Booking bookingToCompare) {
 		
-		int comparisonValue=0; 
+		int actualValue= priority.ordinal(); 
+		int valueToCompare= bookingToCompare.priority.ordinal();  
 		
-		if(priority == bookingToCompare.priority) return 0;
-		
-		switch(bookingToCompare.priority)
-		{
-			case VERY_LOW :
-				if(priority == Priority.LOW) comparisonValue= A_POSITIVE_NUMBER;
-				else comparisonValue= -A_POSITIVE_NUMBER;
-			break;
-			
-			case LOW :
-				if(priority == Priority.VERY_LOW) comparisonValue= -A_POSITIVE_NUMBER;
-				else comparisonValue= A_POSITIVE_NUMBER;
-			break;
-			
-			case MEDIUM :
-				if((priority == Priority.VERY_LOW)|| (priority == Priority.LOW) ) comparisonValue= -A_POSITIVE_NUMBER;
-				else comparisonValue= A_POSITIVE_NUMBER;
-			break;
-			
-			case HIGH :
-				if(priority == Priority.VERY_HIGH) comparisonValue= A_POSITIVE_NUMBER;
-				else comparisonValue= -A_POSITIVE_NUMBER;
-			break;
-			
-			case VERY_HIGH :comparisonValue= -A_POSITIVE_NUMBER;;
-			break;
-		}
-		
-		return comparisonValue;
+		return  Integer.compare(actualValue, valueToCompare);
+
 	}
 }
