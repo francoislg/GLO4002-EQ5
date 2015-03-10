@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE.Booking;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -11,9 +10,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingTest {
-
-	private static final int BIGGER = 1;
-	private static final int SMALLER = -1;
 
 	private static final Booking.Priority PRIORITY_VALUE_OF_BOOKING = Booking.Priority.LOW;
 	private static final Booking.Priority PRIORITY_VALUE_OF_BOOKING_BIGGER =Booking.Priority.HIGH;
@@ -73,15 +69,15 @@ public class BookingTest {
 	}
 
 	@Test
-	public void WithSmallerPriorityBoookingcomparePriorityToBookingShouldReturnAPossitiveNumber() {
+	public void WithSmallerPriorityBookingcomparePriorityToBookingShouldReturnAPositiveNumber() {
 		int result = booking.comparePriorityToBooking(bookingWithSmallerPriority);
-		assertEquals(BIGGER, result);
+		assertTrue( result > 0);
 	}
 
 	@Test
-	public void WithBiggerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+	public void WithBiggerPriorityBookingcomparePriorityToBookingShouldReturnANegativeNumber() {
 		int result = booking.comparePriorityToBooking(bookingWithBiggerPriority);
-		assertEquals(SMALLER, result);
+		assertTrue( result < 0);
 	}
 
 }
