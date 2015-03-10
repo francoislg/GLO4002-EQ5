@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE.boardroom;
+package ca.ulaval.glo4002.GRAISSE.boardroomExceptions;
 
 public class UnableToAssignBookingException extends RuntimeException{
 

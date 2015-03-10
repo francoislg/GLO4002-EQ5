@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE.booking;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
+import ca.ulaval.glo4002.GRAISSE.bookingExceptions.InvalidPriorityException;
 
 public class Booking implements BookingAssignable {
 	

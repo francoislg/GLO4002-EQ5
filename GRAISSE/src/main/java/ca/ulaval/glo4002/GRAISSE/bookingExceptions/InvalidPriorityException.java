@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE.booking;
+package ca.ulaval.glo4002.GRAISSE.bookingExceptions;
 
 public class InvalidPriorityException extends RuntimeException {
 

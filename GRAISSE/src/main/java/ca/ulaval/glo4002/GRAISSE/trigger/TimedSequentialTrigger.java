@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Timer;
 
 import ca.ulaval.glo4002.GRAISSE.booker.Booker;
+import ca.ulaval.glo4002.GRAISSE.triggerExceptions.InvalidIntervalException;
 
 public class TimedSequentialTrigger extends Trigger {
 

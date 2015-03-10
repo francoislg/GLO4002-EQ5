@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE.trigger;
+package ca.ulaval.glo4002.GRAISSE.triggerExceptions;
 
 public class InvalidThresholdException extends RuntimeException{
 

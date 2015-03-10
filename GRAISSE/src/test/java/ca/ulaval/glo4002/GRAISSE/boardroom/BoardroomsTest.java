@@ -15,11 +15,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
-import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomNotFoundException;
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategy;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
-import ca.ulaval.glo4002.GRAISSE.boardroom.UnableToAssignBookingException;
+import ca.ulaval.glo4002.GRAISSE.boardroomExceptions.BoardroomNotFoundException;
+import ca.ulaval.glo4002.GRAISSE.boardroomExceptions.UnableToAssignBookingException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomsTest {
