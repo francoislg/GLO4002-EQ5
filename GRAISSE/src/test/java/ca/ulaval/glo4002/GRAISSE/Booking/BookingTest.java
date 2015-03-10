@@ -15,12 +15,10 @@ public class BookingTest {
 	private static final int BIGGER = 1;
 	private static final int SMALLER = -1;
 
-	private static final int PRIORITY_VALUE_OF_BOOKING = 2;
-	private static final int PRIORITY_VALUE_OF_BOOKING_BIGGER = 3;
-	private static final int PRIORITY_VALUE_OF_BOOKING_SMALLER = 1;
+	private static final Booking.Priority PRIORITY_VALUE_OF_BOOKING = Booking.Priority.LOW;
+	private static final Booking.Priority PRIORITY_VALUE_OF_BOOKING_BIGGER =Booking.Priority.HIGH;
+	private static final Booking.Priority PRIORITY_VALUE_OF_BOOKING_SMALLER = Booking.Priority.VERY_LOW;
 
-	private static final int INVALID_PRIORITY_VALUE_OF_BOOKING_BECAUSE_IT_IS_TO_LOW = 0;
-	private static final int INVALID_PRIORITY_VALUE_OF_BOOKING_BECAUSE_IT_IS_TO_HIGH = 6;
 
 	private static final int NUMBER_OF_SEATS_IN_BOOKING = 10;
 
@@ -46,17 +44,6 @@ public class BookingTest {
 		bookingWithSmallerPriority.setPriority(PRIORITY_VALUE_OF_BOOKING_SMALLER);
 	}
 
-	@Test(expected = InvalidPriorityException.class)
-	public void withInvalidBecauseItIsToHighPriorityValueConstructorShouldThrowInvalidPriorityValue() throws InvalidPriorityException {
-		booking = new Booking(NUMBER_OF_SEATS_IN_BOOKING);
-		booking.setPriority(INVALID_PRIORITY_VALUE_OF_BOOKING_BECAUSE_IT_IS_TO_HIGH);
-	}
-
-	@Test(expected = InvalidPriorityException.class)
-	public void withInvalidBecauseItIsToLowPriorityValueConstructorShouldThrowInvalidPriorityValue() throws InvalidPriorityException {
-		booking = new Booking(NUMBER_OF_SEATS_IN_BOOKING);
-		booking.setPriority(INVALID_PRIORITY_VALUE_OF_BOOKING_BECAUSE_IT_IS_TO_LOW);
-	}
 
 	@Test
 	public void withValidPriorityValueConstructorShouldNotThrowInvalidPriorityValue() throws InvalidPriorityException {

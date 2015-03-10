@@ -3,10 +3,21 @@ package ca.ulaval.glo4002.GRAISSE.Booking;
 import ca.ulaval.glo4002.GRAISSE.Boardroom.BookingAssignable;
 
 public class Booking implements BookingAssignable {
-	private final int DEFAULT_PRIORITY = 3;
+	
+	public enum Priority {
+							VERY_LOW,
+							LOW,
+							MEDIUM,
+							HIGH,
+							VERY_HIGH
+						  }
+	
+	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
+	private static final int A_POSITIVE_NUMBER =1;
+
 	private int numberOfSeatsNeeded;
 	private boolean assigned;
-	private int priority;
+	private Priority priority;
 
 	public Booking(int numberOfSeatsNeeded) {
 		assigned = false;
@@ -14,8 +25,7 @@ public class Booking implements BookingAssignable {
 		priority = DEFAULT_PRIORITY;
 	}
 	
-	public void setPriority(int priority) throws InvalidPriorityException{
-		validatePriorityValue(priority);
+	public void setPriority(Priority priority) throws InvalidPriorityException{
 		this.priority = priority;
 	}
 
@@ -33,13 +43,39 @@ public class Booking implements BookingAssignable {
 		return this.numberOfSeatsNeeded <= numberOfSeats;
 	}
 
-	private void validatePriorityValue(int priorityValueToValidate) throws InvalidPriorityException {
-		if (priorityValueToValidate < 1 || priorityValueToValidate > 5) {
-			throw new InvalidPriorityException();
-		}
-	}
 
 	public int comparePriorityToBooking(Booking bookingToCompare) {
-		return Integer.compare(this.priority, bookingToCompare.priority);
+		
+		int comparisonValue=0; 
+		
+		if(priority == bookingToCompare.priority) return 0;
+		
+		switch(bookingToCompare.priority)
+		{
+			case VERY_LOW :
+				if(priority == Priority.LOW) comparisonValue= A_POSITIVE_NUMBER;
+				else comparisonValue= -A_POSITIVE_NUMBER;
+			break;
+			
+			case LOW :
+				if(priority == Priority.VERY_LOW) comparisonValue= -A_POSITIVE_NUMBER;
+				else comparisonValue= A_POSITIVE_NUMBER;
+			break;
+			
+			case MEDIUM :
+				if((priority == Priority.VERY_LOW)|| (priority == Priority.LOW) ) comparisonValue= -A_POSITIVE_NUMBER;
+				else comparisonValue= A_POSITIVE_NUMBER;
+			break;
+			
+			case HIGH :
+				if(priority == Priority.VERY_HIGH) comparisonValue= A_POSITIVE_NUMBER;
+				else comparisonValue= -A_POSITIVE_NUMBER;
+			break;
+			
+			case VERY_HIGH :comparisonValue= -A_POSITIVE_NUMBER;;
+			break;
+		}
+		
+		return comparisonValue;
 	}
 }
