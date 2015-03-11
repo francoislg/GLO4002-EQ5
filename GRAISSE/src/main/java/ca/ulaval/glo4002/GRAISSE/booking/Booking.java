@@ -1,17 +1,26 @@
 package ca.ulaval.glo4002.GRAISSE.booking;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
-import ca.ulaval.glo4002.GRAISSE.bookingExceptions.InvalidPriorityException;
 
 public class Booking implements BookingAssignable {
 	
 	public enum Priority {
-							VERY_LOW,
-							LOW,
-							MEDIUM,
-							HIGH,
-							VERY_HIGH
-						  }
+		VERY_LOW(0),
+		LOW(1),
+		MEDIUM(2),
+		HIGH(3),
+		VERY_HIGH(4);
+		
+		private final int value;
+		
+		private Priority(int value) {
+			this.value = value;
+		}
+		
+		public int compare(Priority priorityToCompare) {
+			return  Integer.compare(value, priorityToCompare.value);
+		}
+	}
 	
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
 
@@ -25,7 +34,7 @@ public class Booking implements BookingAssignable {
 		priority = DEFAULT_PRIORITY;
 	}
 	
-	public void setPriority(Priority priority) throws InvalidPriorityException{
+	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}
 
@@ -41,13 +50,7 @@ public class Booking implements BookingAssignable {
 		return numberOfSeatsNeeded <= numberOfSeats;
 	}
 
-
 	public int comparePriorityToBooking(Booking bookingToCompare) {
-		
-		int actualValue= priority.ordinal(); 
-		int valueToCompare= bookingToCompare.priority.ordinal();  
-		
-		return  Integer.compare(actualValue, valueToCompare);
-
+		return priority.compare(bookingToCompare.priority);
 	}
 }

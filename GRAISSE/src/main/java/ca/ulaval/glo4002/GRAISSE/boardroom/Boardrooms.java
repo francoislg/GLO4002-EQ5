@@ -3,9 +3,6 @@ package ca.ulaval.glo4002.GRAISSE.boardroom;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import ca.ulaval.glo4002.GRAISSE.boardroomExceptions.BoardroomNotFoundException;
-import ca.ulaval.glo4002.GRAISSE.boardroomExceptions.UnableToAssignBookingException;
-
 public class Boardrooms {
 	
 	private Collection<Boardroom> boardrooms = new ArrayList<Boardroom>();

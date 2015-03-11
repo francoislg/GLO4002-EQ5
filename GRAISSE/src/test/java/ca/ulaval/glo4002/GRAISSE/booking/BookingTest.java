@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.booking.Booking;
-import ca.ulaval.glo4002.GRAISSE.bookingExceptions.InvalidPriorityException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingTest {

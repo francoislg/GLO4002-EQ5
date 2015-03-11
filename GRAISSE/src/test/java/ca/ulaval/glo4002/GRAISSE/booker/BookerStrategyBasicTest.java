@@ -11,7 +11,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategy;
-import ca.ulaval.glo4002.GRAISSE.booker.BookerStrategyBasic;
 import ca.ulaval.glo4002.GRAISSE.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.booking.BookingsStrategy;
 
