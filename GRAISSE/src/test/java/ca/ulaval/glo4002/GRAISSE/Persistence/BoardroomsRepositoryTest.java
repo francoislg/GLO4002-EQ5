@@ -20,7 +20,7 @@ public class BoardroomsRepositoryTest {
 	private static final String NAME_OF_BOARDROOM_1 = "Boardroom1";
 	private static final String NAME_OF_BOARDROOM_2 = "Boardroom2";
 	private static final String NAME_OF_BOARDROOM_3 = "Boardroom3";
-	private BoardroomsRepository repoBoardrooms;
+	private BoardroomsInMemoryRepository repoBoardrooms;
 	private static final String NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST = "BoardroomThatDoesNotExist";
 
 	@Mock
@@ -34,7 +34,7 @@ public class BoardroomsRepositoryTest {
 
 	@Before
 	public void setUp() {
-		repoBoardrooms = new BoardroomsRepository();
+		repoBoardrooms = new BoardroomsInMemoryRepository();
 	}
 
 	@Test
