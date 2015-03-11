@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.GRAISSE.boardroom;
 
 import java.util.Collection;
 
+import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.UnableToAssignBookingException;
+
 public class Boardrooms {
 
 	private BoardroomsRepository boardroomsRepository;

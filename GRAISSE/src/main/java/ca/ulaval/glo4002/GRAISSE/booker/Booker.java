@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.trigger.Trigger;
 
 public class Booker {
 	

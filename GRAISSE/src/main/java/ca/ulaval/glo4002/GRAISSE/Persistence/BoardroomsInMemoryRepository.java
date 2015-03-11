@@ -1,11 +1,11 @@
-package ca.ulaval.glo4002.GRAISSE.Persistence;
+package ca.ulaval.glo4002.GRAISSE.persistence;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
-import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomNotFoundException;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsRepository;
+import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.BoardroomNotFoundException;
 
 public class BoardroomsInMemoryRepository implements BoardroomsRepository {
 
