@@ -40,3 +40,9 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+#git merge file
+*.orig
+
+# DS_Store File (OS X)
+.DS_Store
