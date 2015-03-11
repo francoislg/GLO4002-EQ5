@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE.boardroom;
 
 public class Boardroom {
-	
+
 	private int numberOfSeats;
 	private String name;
 	private boolean available;
@@ -26,6 +26,10 @@ public class Boardroom {
 
 	public int getNumberOfSeats() {
 		return numberOfSeats;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public boolean assign(BookingAssignable bookingToAssign) {

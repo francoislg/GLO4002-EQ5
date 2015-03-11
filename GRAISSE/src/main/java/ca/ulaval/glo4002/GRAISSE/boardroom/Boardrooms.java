@@ -1,33 +1,22 @@
 package ca.ulaval.glo4002.GRAISSE.boardroom;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
+import ca.ulaval.glo4002.GRAISSE.Persistence.BoardroomsRepository;
+
 public class Boardrooms {
-	
-	private Collection<Boardroom> boardrooms = new ArrayList<Boardroom>();
 
-	public void add(Boardroom boardroom) {
-		boardrooms.add(boardroom);
-	}
+	private RepoBoardroom boardroomsRepo;
 
-	public boolean isEmpty() {
-		return boardrooms.isEmpty();
-	}
-
-	public Boardroom findBoardroomWithName(String boardroomName) {
-		for (Boardroom boardroom : boardrooms) {
-			if (boardroom.hasName(boardroomName)) {
-				return boardroom;
-			}
-		}
-		throw new BoardroomNotFoundException();
+	public Boardrooms() {
+		boardroomsRepo = new BoardroomsRepository();
 	}
 
 	public void assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsStrategy boardroomsStrategy) {
-		Collection<Boardroom> formatedBoardroomList = boardroomsStrategy.sort(boardrooms);
+		Collection<Boardroom> formatedBoardroomList = boardroomsStrategy.sort(boardroomsRepo.getAllBoardroom());
 		for (Boardroom boardroom : formatedBoardroomList) {
 			if (boardroom.assign(bookingToAssign)) {
+				boardroomsRepo.saveBoardroomModification(boardroom);
 				return;
 			}
 		}
