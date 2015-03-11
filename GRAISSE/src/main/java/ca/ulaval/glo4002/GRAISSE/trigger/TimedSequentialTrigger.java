@@ -33,17 +33,33 @@ public class TimedSequentialTrigger extends Trigger {
 
 	@Override
 	public void update(Booker booker) {
-		if(booker.hasBookingsToAssign() && !bookerIsAlreadySchedule(booker)) {
+		if(booker.hasBookingsToAssign()) {
+			scheduleBooker(booker);
+		}
+		else {
+			cancelScheduledBooker(booker);
+		}
+	}
+	
+	private void scheduleBooker(Booker booker) {
+		if(bookerIsNotScheduled(booker)) {
 			scheduledBookers.put(booker, createScheduleTimer(booker));
 		}
-		else if(!booker.hasBookingsToAssign() && bookerIsAlreadySchedule(booker)) {
+	}
+	
+	private void cancelScheduledBooker(Booker booker) {
+		if(bookerIsScheduled(booker)) {
 			Timer timer = scheduledBookers.remove(booker);
 			timer.cancel();
 		}
 	}
 	
-	private Boolean bookerIsAlreadySchedule(Booker booker) {
+	private Boolean bookerIsScheduled(Booker booker) {
 		return scheduledBookers.containsKey(booker);
+	}
+	
+	private Boolean bookerIsNotScheduled(Booker booker) {
+		return !bookerIsScheduled(booker);
 	}
 	
 	private Timer createScheduleTimer(Booker booker) {

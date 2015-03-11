@@ -100,16 +100,6 @@ public class BookerTest {
 	}
 	
 	@Test
-	public void theBookerAfterRegistringTheSameTriggerTwiceOnlyUpdateTheTriggerOnceWhenAssigningBookings() {
-		booker.registerTrigger(trigger);
-		booker.registerTrigger(trigger);
-		
-		booker.assignBookings();
-		
-		verify(trigger).update(booker);
-	}
-	
-	@Test
 	public void theBookerWithBookingToAssignShouldUpdateRegistredTriggersWhenAssigningBookings() {
 		booker.registerTrigger(trigger);
 		booker.registerTrigger(secondTrigger);
