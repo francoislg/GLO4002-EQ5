@@ -7,15 +7,26 @@ import ca.ulaval.glo4002.GRAISSE.booking.BookingsStrategyPriority;
 
 public class BookerStrategiesFactory {
 
-	public BookerStrategy createBasicStrategy() {
-		return new BookerStrategyBasic(new BookingsStrategyBasic(), new BoardroomsStrategyBasic());
+	public enum StrategyType {
+		BASIC, OPTIMIZE, PRIORITY
 	}
 
-	public BookerStrategy createOptimizeStrategy() {
-		return new BookerStrategyBasic(new BookingsStrategyBasic(), new BoardroomsStrategyOptimize());
-	}
+	private BookerStrategy bookerStrategy;
 
-	public BookerStrategy createPriorityStrategy() {
-		return new BookerStrategyBasic(new BookingsStrategyPriority(), new BoardroomsStrategyOptimize());
+	public BookerStrategy create(StrategyType strategyType) {
+		switch (strategyType) {
+			case OPTIMIZE:
+				bookerStrategy = new BookerStrategyBasic(new BookingsStrategyBasic(), new BoardroomsStrategyOptimize());
+				break;
+			case PRIORITY:
+				bookerStrategy = new BookerStrategyBasic(new BookingsStrategyPriority(), new BoardroomsStrategyOptimize());
+				break;
+			case BASIC:
+			default:
+				bookerStrategy = new BookerStrategyBasic(new BookingsStrategyBasic(), new BoardroomsStrategyBasic());
+				break;
+		}
+
+		return bookerStrategy;
 	}
 }
