@@ -6,17 +6,17 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.UnableToAssignBookingExcep
 
 public class Boardrooms {
 
-	private BoardroomsRepository boardroomsRepository;
+	private BoardroomRepository boardroomsRepository;
 
-	public Boardrooms(BoardroomsRepository boardroomsRepo) {
+	public Boardrooms(BoardroomRepository boardroomsRepo) {
 		this.boardroomsRepository = boardroomsRepo;
 	}
 
 	public void assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsStrategy boardroomsStrategy) {
-		Collection<Boardroom> formatedBoardroomList = boardroomsStrategy.sort(boardroomsRepository.getAllBoardroom());
+		Collection<Boardroom> formatedBoardroomList = boardroomsStrategy.sort(boardroomsRepository.retrieveAll());
 		for (Boardroom boardroom : formatedBoardroomList) {
 			if (boardroom.assign(bookingToAssign)) {
-				boardroomsRepository.saveBoardroomModification(boardroom);
+				boardroomsRepository.persist(boardroom);
 				return;
 			}
 		}
