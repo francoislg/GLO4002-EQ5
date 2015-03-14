@@ -10,6 +10,11 @@ public class SimpleMail implements Mail {
 		this.title = title;
 		this.message = message;
 	}
+
+	@Override
+	public String getDestinationString() {
+		return destination.getValue();
+	}
 	
 	@Override
 	public Email getDestination(){
