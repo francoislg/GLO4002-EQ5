@@ -4,22 +4,28 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import ca.ulaval.glo4002.GRAISSE.services.Email;
 import ca.ulaval.glo4002.GRAISSE.user.User;
 
+@RunWith(MockitoJUnitRunner.class)
 public class UserTest {
-	private static final String VALID_USER_EMAIL = "omg@lol.ca";
-	
 	User user;
+	
+	@Mock
+	Email email;
 	
 	@Before
 	public void setUp() {
-		user = new User(VALID_USER_EMAIL);
+		user = new User(email);
 	}
 
 	@Test
 	public void userHasEmailWhenGivingSameEmailShouldReturnTrue() {
-		boolean result = user.hasEmail(VALID_USER_EMAIL);
+		boolean result = user.hasEmail(email);
 		assertTrue(result);
 	}
 }
