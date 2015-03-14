@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.booker.Booker;
+import ca.ulaval.glo4002.GRAISSE.trigger.exceptions.InvalidIntervalException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TimedSequentialTriggerTest {

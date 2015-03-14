@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Timer;
 
 import ca.ulaval.glo4002.GRAISSE.booker.Booker;
+import ca.ulaval.glo4002.GRAISSE.booker.Trigger;
+import ca.ulaval.glo4002.GRAISSE.trigger.exceptions.InvalidIntervalException;
 
-public class TimedSequentialTrigger extends Trigger {
+public class TimedSequentialTrigger implements Trigger {
 
 	private static final long NB_OF_SECOND_IN_A_MINUTE = 60;
 	private static final long NB_OF_MILLISECOND_IN_A_SECOND = 1000;

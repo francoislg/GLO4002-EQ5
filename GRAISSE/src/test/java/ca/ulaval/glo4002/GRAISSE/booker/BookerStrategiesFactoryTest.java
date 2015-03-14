@@ -28,19 +28,19 @@ public class BookerStrategiesFactoryTest {
 
 	@Test
 	public void createBasicStrategyShouldReturnBookingStrategyBasic() {
-		BookerStrategy bookingStrategy = bookingStrategiesFactory.createBasicStrategy();
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.create(BookerStrategiesFactory.StrategyType.BASIC);
 		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
 	}
 
 	@Test
 	public void createMaximiseStrategyShouldReturnBookingStrategyOptimize() {
-		BookerStrategy bookingStrategy = bookingStrategiesFactory.createOptimizeStrategy();
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.create(BookerStrategiesFactory.StrategyType.OPTIMIZE);
 		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
 	}
 
 	@Test
 	public void createPriorityStrategyShouldReturnBookingStrategyPriority() {
-		BookerStrategy bookingStrategy = bookingStrategiesFactory.createPriorityStrategy();
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.create(BookerStrategiesFactory.StrategyType.PRIORITY);
 		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
 	}
 }

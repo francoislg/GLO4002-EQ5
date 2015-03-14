@@ -16,7 +16,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.trigger.Trigger;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookerTest {
