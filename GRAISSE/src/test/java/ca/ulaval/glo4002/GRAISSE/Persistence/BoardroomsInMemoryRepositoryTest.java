@@ -16,7 +16,7 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.BoardroomNotFoundException
 import ca.ulaval.glo4002.GRAISSE.persistence.BoardroomsInMemoryRepository;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BoardroomsRepositoryTest {
+public class BoardroomsInMemoryRepositoryTest {
 
 	private static final String NAME_OF_BOARDROOM_1 = "Boardroom1";
 	private static final String NAME_OF_BOARDROOM_2 = "Boardroom2";
