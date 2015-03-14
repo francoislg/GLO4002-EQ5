@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.BoardroomNotFoundException
 public class BoardroomsInMemoryRepository implements BoardroomsRepository {
 
 	private Collection<Boardroom> boardrooms = new ArrayList<Boardroom>();
-	private static final String BOARDROOMS_NOT_FOUND = "la salle n'est existe pas";
+	private static final String BOARDROOMS_NOT_FOUND = "la salle n'existe pas";
 
 	public void add(Boardroom boardroom) {
 		boardrooms.add(boardroom);
