@@ -11,9 +11,9 @@ public class BookerStrategiesFactory {
 		BASIC, OPTIMIZE, PRIORITY
 	}
 
-	private BookerStrategy bookerStrategy;
-
 	public BookerStrategy create(StrategyType strategyType) {
+		BookerStrategy bookerStrategy;
+		
 		switch (strategyType) {
 			case OPTIMIZE:
 				bookerStrategy = new BookerStrategyBasic(new BookingsStrategyBasic(), new BoardroomsStrategyOptimize());
