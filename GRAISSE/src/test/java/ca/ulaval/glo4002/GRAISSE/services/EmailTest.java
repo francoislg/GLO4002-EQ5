@@ -19,6 +19,13 @@ public class EmailTest {
 		assertEquals(VALID_EMAIL, email.getValue());
 	}
 	
+	@Test
+	public void validEmailShouldBeEqualToSameEmail() {
+		Email email = new Email(VALID_EMAIL);
+		Email sameEmail = new Email(VALID_EMAIL);
+		assertTrue(email.equals(sameEmail));
+	}
+	
 	@Test(expected=InvalidEmailException.class)
 	public void invalidEmailShouldThrowInvalidEmailException() {
 		Email email = new Email(INVALID_EMAIL);
