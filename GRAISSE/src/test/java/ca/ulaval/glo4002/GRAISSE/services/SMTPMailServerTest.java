@@ -3,9 +3,13 @@ package ca.ulaval.glo4002.GRAISSE.services;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.util.Arrays;
+
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
+import javax.mail.Transport;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,10 +17,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotSendMailException;
+
 @RunWith(MockitoJUnitRunner.class)
-public class SMTPMailServerTest {	
+public class SMTPMailServerTest {
 	@Mock
-	JavaMailMailSender mailSender;
+	Address aRecipient;
+	
+	@Mock
+	Transport transport;
 	
 	@Mock
 	SMTPMailServerConfig stmpMailServerConfig;
@@ -32,19 +41,28 @@ public class SMTPMailServerTest {
 	@Mock
 	Mail mail;
 	
+	@Mock
+	Mail invalidMail;
+	
 	SMTPMailServer smtpMailServer;
 	
 	@Before
 	public void setUp() throws Exception {
 		setUpSMTPMailServerConfigMock();
 		setUpMessageFactoryMock();
-		smtpMailServer = new SMTPMailServer(stmpMailServerConfig, mailSender, messageFactory);
+		setUpMessageMock();
+		smtpMailServer = new SMTPMailServer(stmpMailServerConfig, transport, messageFactory);
 	}
 
 	@Test
 	public void testSendMailShouldSendMail() throws MessagingException {
 		smtpMailServer.sendMail(mail);
-		verify(mailSender).send(any(Message.class));
+		verify(transport).sendMessage(message, message.getAllRecipients());
+	}
+	
+	@Test(expected=CouldNotSendMailException.class)
+	public void testSendInvalidMailShouldThrowAnException() throws MessagingException {
+		smtpMailServer.sendMail(invalidMail);
 	}
 	
 	private void setUpSMTPMailServerConfigMock(){
@@ -53,5 +71,10 @@ public class SMTPMailServerTest {
 	
 	private void setUpMessageFactoryMock() throws MessagingException{
 		when(messageFactory.create(mail, session)).thenReturn(message);
+		when(messageFactory.create(invalidMail, session)).thenThrow(new MessagingException());
+	}
+	
+	private void setUpMessageMock() throws MessagingException{
+		when(message.getAllRecipients()).thenReturn(new Address[]{aRecipient});
 	}
 }
