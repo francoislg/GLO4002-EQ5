@@ -11,7 +11,7 @@ François Lachance-Guillemette  |
 Jean-Philippe Giroux           |111 088 846
 Kouamé Ange Martial Konan      |
 Marie-Christine Noreau         |
-Xavier Bourgeois-Vézina        |
+Xavier Bourgeois-Vézina        |111 102 056
 
 
 <b>Avancement :</b>
