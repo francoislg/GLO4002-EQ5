@@ -5,12 +5,12 @@
 
 Nom                            | matricule
 -------------------------------|-----------------------------------
-Alex Gagnon                    |
+Alex Gagnon                    |111 044 926
 Clotioloman Yeo                |909 272 477
-François Lachance-Guillemette  |
+François Lachance-Guillemette  |111 080 517
 Jean-Philippe Giroux           |111 088 846
-Kouamé Ange Martial Konan      |111 080 517
-Marie-Christine Noreau         |
+Kouamé Ange Martial Konan      |
+Marie-Christine Noreau         |910 049 538
 Xavier Bourgeois-Vézina        |111 102 056
 
 
@@ -44,7 +44,7 @@ Boardrooms boardrooms = new Boardrooms(new BoardroomInMemoryRepository());
 Booker booker = new Booker(bookerStrategy, bookings, boardrooms);
 ```
 
-Ensuite, enregistrer des triggers pour déclencher l'assignation des bookings selon différent critères.
+Ensuite, enregistrer des triggers pour déclencher l'assignation des bookings selon différents critères.
 Voici un exemple utilisant un ThresholdTrigger:
 
 ```java
@@ -54,18 +54,17 @@ booker.registerTrigger(thresholdTrigger);
 
 Dans cet exemple, le trigger sera déclenché lorsque le booker atteindra 3 bookings à assigner.
 
-Fianlement, ajouter des bookings pour déclencher l'assignation. Pour créer un booking vous devez lui fournir le nombre de siège minimum nécessaire pour le client:
+Finalement, ajouter des bookings pour déclencher l'assignation. Pour créer un booking vous devez lui fournir le nombre de siège minimum nécessaire pour le client:
 
 ```java
+User bookingOwner = userRepository.retrieve(email);
 int aNumberOfSeatsNeeded = 10;
 
-Booking booking1 = new Booking(aNumberOfSeatsNeeded);
-Booking booking2 = new Booking(aNumberOfSeatsNeeded);
-Booking booking3 = new Booking(aNumberOfSeatsNeeded);
+Booking booking1 = new Booking(bookingOwner, aNumberOfSeatsNeeded);
+Booking booking2 = new Booking(bookingOwner, aNumberOfSeatsNeeded);
+Booking booking3 = new Booking(bookingOwner, aNumberOfSeatsNeeded);
 
 booker.addBooking(booking1);
 booker.addBooking(booking2);
 booker.addBooking(booking3);
 ```
-
-
