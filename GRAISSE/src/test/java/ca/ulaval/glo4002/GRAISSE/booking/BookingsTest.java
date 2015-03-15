@@ -17,7 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategy;
-import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignedTrigger;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BookingTrigger;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
@@ -55,10 +55,10 @@ public class BookingsTest {
 	BoardroomsStrategy boardroomsStrategy;
 	
 	@Mock
-	BookingAssignedTrigger trigger;
+	BookingTrigger trigger;
 	
 	@Mock
-	BookingAssignedTrigger secondTrigger;
+	BookingTrigger secondTrigger;
 	
 	@Mock
 	BookingRepository bookingRepository;

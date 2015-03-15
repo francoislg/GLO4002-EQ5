@@ -1,13 +1,13 @@
 package ca.ulaval.glo4002.GRAISSE.booking;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
-import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignedTrigger;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BookingTrigger;
 import ca.ulaval.glo4002.GRAISSE.services.Mail;
 import ca.ulaval.glo4002.GRAISSE.services.MailServer;
 import ca.ulaval.glo4002.GRAISSE.services.SimpleMail;
 import ca.ulaval.glo4002.GRAISSE.user.User;
 
-public class BookingAssignedSendMailTrigger implements BookingAssignedTrigger {
+public class BookingAssignedSendMailTrigger implements BookingTrigger {
 	private final static String mailSubject = "Update on your booking";
 	private final static String bookingIsAssignedMessage = "Congratulations ! Assignation succeeded !";
 	private final static String bookingIsNotAssignedMessage = "Assignation failed !";
