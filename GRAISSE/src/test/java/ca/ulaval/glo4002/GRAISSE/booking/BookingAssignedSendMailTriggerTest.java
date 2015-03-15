@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ca.ulaval.glo4002.GRAISSE.booking.Booking;
+import ca.ulaval.glo4002.GRAISSE.booking.BookingAssignedSendMailTrigger;
 import ca.ulaval.glo4002.GRAISSE.services.Email;
 import ca.ulaval.glo4002.GRAISSE.services.Mail;
 import ca.ulaval.glo4002.GRAISSE.services.MailServer;

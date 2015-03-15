@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.UnableToAssignBookingException;
-import ca.ulaval.glo4002.GRAISSE.booking.BookingAssignedTrigger;
 import ca.ulaval.glo4002.GRAISSE.booking.BookingsStrategy;
 
 @RunWith(MockitoJUnitRunner.class)

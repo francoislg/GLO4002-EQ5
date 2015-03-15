@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.UnableToAssignBookingException;
-import ca.ulaval.glo4002.GRAISSE.booking.BookingAssignedTrigger;
 
 public class Boardrooms {
 
