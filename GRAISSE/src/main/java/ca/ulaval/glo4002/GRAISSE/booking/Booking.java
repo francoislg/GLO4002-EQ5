@@ -55,8 +55,6 @@ public class Booking implements BookingAssignable {
 	}
 	
 	public void registerBookingAssignedTrigger(BookingAssignedTrigger trigger) {
-		if(!triggers.contains(trigger)) {
-			triggers.add(trigger);
-		}
+		triggers.add(trigger);
 	}
 }

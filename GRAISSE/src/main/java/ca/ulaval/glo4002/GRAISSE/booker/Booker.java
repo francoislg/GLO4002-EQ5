@@ -7,7 +7,6 @@ import ca.ulaval.glo4002.GRAISSE.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.booking.Bookings;
 
 public class Booker {
-	
 	private Bookings bookings;
 	private BookerStrategy bookerStrategy;
 	private Boardrooms boardrooms;
