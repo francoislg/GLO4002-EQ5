@@ -9,4 +9,6 @@ public interface BookingAssignable {
 	public boolean verifyNumberOfSeats(int numberOfSeats);
 
 	public boolean hasCreator(User user);
+
+	public boolean isAssigned();
 }
