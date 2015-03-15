@@ -16,9 +16,9 @@ import ca.ulaval.glo4002.GRAISSE.user.User;
 @RunWith(MockitoJUnitRunner.class)
 public class BookingTest {
 
-	private static final Booking.Priority PRIORITY_VALUE_OF_BOOKING = Booking.Priority.LOW;
-	private static final Booking.Priority PRIORITY_VALUE_OF_BOOKING_BIGGER =Booking.Priority.HIGH;
-	private static final Booking.Priority PRIORITY_VALUE_OF_BOOKING_SMALLER = Booking.Priority.VERY_LOW;
+	private static final Priority PRIORITY_VALUE_OF_BOOKING = Priority.LOW;
+	private static final Priority PRIORITY_VALUE_OF_BOOKING_BIGGER = Priority.HIGH;
+	private static final Priority PRIORITY_VALUE_OF_BOOKING_SMALLER = Priority.VERY_LOW;
 
 
 	private static final int NUMBER_OF_SEATS_IN_BOOKING = 10;

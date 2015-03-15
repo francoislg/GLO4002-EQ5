@@ -1,40 +1,26 @@
 package ca.ulaval.glo4002.GRAISSE.booking;
 
+import java.util.ArrayList;
+
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
+import ca.ulaval.glo4002.GRAISSE.booker.BookerFinishedAssigningTrigger;
 import ca.ulaval.glo4002.GRAISSE.user.User;
 
-public class Booking implements BookingAssignable {
-	
-	public enum Priority {
-		VERY_LOW(0),
-		LOW(1),
-		MEDIUM(2),
-		HIGH(3),
-		VERY_HIGH(4);
-		
-		private final int value;
-		
-		private Priority(int value) {
-			this.value = value;
-		}
-		
-		public int compare(Priority priorityToCompare) {
-			return  Integer.compare(value, priorityToCompare.value);
-		}
-	}
-	
+public class Booking implements BookingAssignable {	
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
 
 	private int numberOfSeatsNeeded;
 	private boolean assigned;
 	private Priority priority;
 	private User creator;
+	private ArrayList<BookingAssignedTrigger> triggers;
 
 	public Booking(User creator, int numberOfSeatsNeeded) {
 		this.creator = creator;
-		assigned = false;
+		this.assigned = false;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
-		priority = DEFAULT_PRIORITY;
+		this.priority = DEFAULT_PRIORITY;
+		this.triggers = new ArrayList<BookingAssignedTrigger>();
 	}
 	
 	public void setPriority(Priority priority) {
@@ -43,6 +29,7 @@ public class Booking implements BookingAssignable {
 
 	public void assign() {
 		assigned = true;
+		notifyTriggers();
 	}
 	
 	public boolean isAssigned() {
@@ -59,5 +46,17 @@ public class Booking implements BookingAssignable {
 
 	public int comparePriorityToBooking(Booking bookingToCompare) {
 		return priority.compare(bookingToCompare.priority);
+	}
+	
+	public void notifyTriggers(){
+		for(BookingAssignedTrigger trigger : triggers) {
+			trigger.update(this);
+		}
+	}
+	
+	public void registerBookingAssignedTrigger(BookingAssignedTrigger trigger) {
+		if(!triggers.contains(trigger)) {
+			triggers.add(trigger);
+		}
 	}
 }
