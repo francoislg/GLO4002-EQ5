@@ -2,6 +2,9 @@ package ca.ulaval.glo4002.GRAISSE.booking;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
@@ -62,9 +64,9 @@ public class BookingsTest {
 		bookingsWithOneUnassignedBookings = new ArrayList<Booking>();
 		bookingsWithOnlyAssignedBookings = new ArrayList<Booking>();
 		
-		Mockito.doReturn(ASSIGNED).when(assignedBooking1).isAssigned();
-		Mockito.doReturn(ASSIGNED).when(assignedBooking2).isAssigned();
-		Mockito.doReturn(NOT_ASSIGNED).when(unassignedBooking).isAssigned();
+		doReturn(ASSIGNED).when(assignedBooking1).isAssigned();
+		doReturn(ASSIGNED).when(assignedBooking2).isAssigned();
+		doReturn(NOT_ASSIGNED).when(unassignedBooking).isAssigned();
 		
 		bookingsWithOneUnassignedBookings.add(assignedBooking1);
 		bookingsWithOneUnassignedBookings.add(assignedBooking2);
@@ -78,49 +80,49 @@ public class BookingsTest {
 	public void whenAddingABookingBookingsShouldTellRepositoryToPersistIt() {
 		bookings.add(booking);
 		
-		Mockito.verify(bookingRepository).persist(booking);
+		verify(bookingRepository).persist(booking);
 	}
 
 	@Test
 	public void bookingsShouldNotHaveUnassignedBookingsIfTheRepositoryIsEmpty() {
-		Mockito.doReturn(emptyBookingCollection).when(bookingRepository).retrieveAll();
+		doReturn(emptyBookingCollection).when(bookingRepository).retrieveAll();
 		
 		assertFalse(bookings.hasUnassignedBookings());
 	}
 	
 	@Test
 	public void bookingsShouldHaveUnassignedBookingsIfTheRepositoryContainOneUnassignedBooking() {
-		Mockito.doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
+		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
 		
 		assertTrue(bookings.hasUnassignedBookings());
 	}
 	
 	@Test 
 	public void bookingsShouldNotHaveUnassignedBookingsIfTheRepositoryContainOnlyAssignedBooking() {
-		Mockito.doReturn(bookingsWithOnlyAssignedBookings).when(bookingRepository).retrieveAll();
+		doReturn(bookingsWithOnlyAssignedBookings).when(bookingRepository).retrieveAll();
 		
 		assertFalse(bookings.hasUnassignedBookings());
 	}
 	
 	@Test
 	public void assigningBookingsShouldOnlyBeAttemptedWithUnassignedBookings() {
-		Mockito.doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
-		Mockito.doReturn(bookingsWithOneUnassignedBookings).when(bookingsStrategy).sort(bookingsWithOneUnassignedBookings);
+		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
+		doReturn(bookingsWithOneUnassignedBookings).when(bookingsStrategy).sort(bookingsWithOneUnassignedBookings);
 		
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
 		
-		Mockito.verify(boardrooms).assignBookingToBoardroom(unassignedBooking, boardroomsStrategy);
-		Mockito.verify(boardrooms, Mockito.never()).assignBookingToBoardroom(assignedBooking1, boardroomsStrategy);
-		Mockito.verify(boardrooms, Mockito.never()).assignBookingToBoardroom(assignedBooking2, boardroomsStrategy);
+		verify(boardrooms).assignBookingToBoardroom(unassignedBooking, boardroomsStrategy);
+		verify(boardrooms, never()).assignBookingToBoardroom(assignedBooking1, boardroomsStrategy);
+		verify(boardrooms, never()).assignBookingToBoardroom(assignedBooking2, boardroomsStrategy);
 	}
 	
 	@Test
 	public void newlyAssignedBookingsShouldBePersistedAfterTheAssignation() {
-		Mockito.doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
-		Mockito.doReturn(bookingsWithOneUnassignedBookings).when(bookingsStrategy).sort(bookingsWithOneUnassignedBookings);
+		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
+		doReturn(bookingsWithOneUnassignedBookings).when(bookingsStrategy).sort(bookingsWithOneUnassignedBookings);
 		
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
 		
-		Mockito.verify(bookingRepository).persist(unassignedBooking);
+		verify(bookingRepository).persist(unassignedBooking);
 	}
 }
