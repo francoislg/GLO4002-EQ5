@@ -93,29 +93,8 @@ public class BookingsTest {
 		assertTrue(bookings.isEmpty());
 	}
 	
-	@Test
-	public void givenATriggerIsAddedWhenBookingAssignedShouldNotifyTrigger(){
-		bookings.registerBookingAssignedTrigger(trigger);
-		
-		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
-		
-		verify(trigger).update(booking);
-	}
-	
-	@Test
-	public void givenMultipleTriggersAreAddedWhenBookingAssignedShouldNotifyAllTriggers(){
-		bookings.registerBookingAssignedTrigger(trigger);
-		bookings.registerBookingAssignedTrigger(secondTrigger);
-		
-		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
-		
-		verify(trigger).update(booking);
-		verify(secondTrigger).update(booking);
-	}
-	
 	private void setUpBookingStrategyMock(){
 		List<Booking> formatedList = new ArrayList<Booking>(Arrays.asList(booking));
 		when(bookingsStrategy.sort(any())).thenReturn(formatedList);
-
 	}
 }

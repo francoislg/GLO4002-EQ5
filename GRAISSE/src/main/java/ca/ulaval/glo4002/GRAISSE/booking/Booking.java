@@ -1,9 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.booking;
 
-import java.util.ArrayList;
-
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
-import ca.ulaval.glo4002.GRAISSE.booker.BookerFinishedAssigningTrigger;
 import ca.ulaval.glo4002.GRAISSE.user.User;
 
 public class Booking implements BookingAssignable {	

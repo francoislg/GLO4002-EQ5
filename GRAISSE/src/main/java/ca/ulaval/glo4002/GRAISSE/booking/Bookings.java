@@ -11,11 +11,9 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
 public class Bookings {
 	
 	private Collection<Booking> bookingList;
-	private ArrayList<BookingAssignedTrigger> triggers;
 
 	public Bookings() {
 		bookingList = new ArrayList<Booking>();
-		triggers = new ArrayList<BookingAssignedTrigger>();
 	}
 
 	public void add(Booking booking) {
@@ -34,21 +32,10 @@ public class Bookings {
 		Collection<Booking> formatedBookingList = bookingsStrategy.sort(bookingList);
 		for (BookingAssignable booking : formatedBookingList) {
 			boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy);
-			notifyTriggers(booking);
 		}
 	}
 
 	public int getSize() {
 		return bookingList.size();
-	}
-	
-	public void notifyTriggers(BookingAssignable booking){
-		for(BookingAssignedTrigger trigger : triggers) {
-			trigger.update(booking);
-		}
-	}
-	
-	public void registerBookingAssignedTrigger(BookingAssignedTrigger trigger) {
-		triggers.add(trigger);
 	}
 }
