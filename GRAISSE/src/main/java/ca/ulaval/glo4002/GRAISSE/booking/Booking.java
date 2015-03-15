@@ -13,14 +13,12 @@ public class Booking implements BookingAssignable {
 	private boolean assigned;
 	private Priority priority;
 	private User creator;
-	private ArrayList<BookingAssignedTrigger> triggers;
 
 	public Booking(User creator, int numberOfSeatsNeeded) {
 		this.creator = creator;
 		this.assigned = false;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = DEFAULT_PRIORITY;
-		this.triggers = new ArrayList<BookingAssignedTrigger>();
 	}
 	
 	public void setPriority(Priority priority) {
@@ -29,7 +27,6 @@ public class Booking implements BookingAssignable {
 
 	public void assign() {
 		assigned = true;
-		notifyTriggers();
 	}
 	
 	public boolean isAssigned() {
@@ -47,14 +44,5 @@ public class Booking implements BookingAssignable {
 	public int comparePriorityToBooking(Booking bookingToCompare) {
 		return priority.compare(bookingToCompare.priority);
 	}
-	
-	public void notifyTriggers(){
-		for(BookingAssignedTrigger trigger : triggers) {
-			trigger.update(this);
-		}
-	}
-	
-	public void registerBookingAssignedTrigger(BookingAssignedTrigger trigger) {
-		triggers.add(trigger);
-	}
+
 }

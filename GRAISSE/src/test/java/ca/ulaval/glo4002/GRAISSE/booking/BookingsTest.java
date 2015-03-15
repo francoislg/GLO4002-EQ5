@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.GRAISSE.booking;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -37,9 +38,16 @@ public class BookingsTest {
 
 	@Mock
 	BoardroomsStrategy boardroomsStrategy;
+	
+	@Mock
+	BookingAssignedTrigger trigger;
+	
+	@Mock
+	BookingAssignedTrigger secondTrigger;
 
 	@Before
 	public void setUp() {
+		setUpBookingStrategyMock();
 		bookings = new Bookings();
 	}
 
@@ -69,10 +77,33 @@ public class BookingsTest {
 
 	@Test
 	public void assignShouldRemoveTheBookingIfItIsAssigned() {
+		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
+		assertTrue(bookings.isEmpty());
+	}
+	
+	@Test
+	public void givenATriggerIsAddedWhenBookingAssignedShouldNotifyTrigger(){
+		bookings.registerBookingAssignedTrigger(trigger);
+		
+		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
+		
+		verify(trigger).update(booking);
+	}
+	
+	@Test
+	public void givenMultipleTriggersAreAddedWhenBookingAssignedShouldNotifyAllTriggers(){
+		bookings.registerBookingAssignedTrigger(trigger);
+		bookings.registerBookingAssignedTrigger(secondTrigger);
+		
+		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
+		
+		verify(trigger).update(booking);
+		verify(secondTrigger).update(booking);
+	}
+	
+	private void setUpBookingStrategyMock(){
 		List<Booking> formatedList = new ArrayList<Booking>(Arrays.asList(booking));
 		when(bookingsStrategy.sort(any())).thenReturn(formatedList);
 
-		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
-		assertTrue(bookings.isEmpty());
 	}
 }

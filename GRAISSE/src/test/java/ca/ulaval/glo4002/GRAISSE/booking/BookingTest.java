@@ -29,12 +29,6 @@ public class BookingTest {
 	
 	@Mock
 	User user;
-	
-	@Mock
-	BookingAssignedTrigger trigger;
-	
-	@Mock
-	BookingAssignedTrigger secondTrigger;
 
 	Booking booking;
 	Booking bookingWithBiggerPriority;
@@ -98,25 +92,5 @@ public class BookingTest {
 	public void withBiggerPriorityBookingcomparePriorityToBookingShouldReturnANegativeNumber() {
 		int result = booking.comparePriorityToBooking(bookingWithBiggerPriority);
 		assertTrue(result < 0);
-	}
-	
-	@Test
-	public void givenATriggerIsAddedWhenBookingAssignedShouldNotifyTrigger(){
-		booking.registerBookingAssignedTrigger(trigger);
-		
-		booking.assign();
-		
-		verify(trigger).update(booking);
-	}
-	
-	@Test
-	public void givenMultipleTriggersAreAddedWhenBookingAssignedShouldNotifyAllTriggers(){
-		booking.registerBookingAssignedTrigger(trigger);
-		booking.registerBookingAssignedTrigger(secondTrigger);
-		
-		booking.assign();
-		
-		verify(trigger).update(booking);
-		verify(secondTrigger).update(booking);
 	}
 }
