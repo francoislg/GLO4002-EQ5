@@ -35,10 +35,10 @@ public class BookerTest {
 	Booking booking;
 	
 	@Mock
-	Trigger trigger;
+	BookerFinishedAssigningTrigger trigger;
 	
 	@Mock
-	Trigger secondTrigger;
+	BookerFinishedAssigningTrigger secondTrigger;
 
 	@Before
 	public void setUp() {

@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.GRAISSE.trigger;
 
 import ca.ulaval.glo4002.GRAISSE.booker.Booker;
-import ca.ulaval.glo4002.GRAISSE.booker.Trigger;
+import ca.ulaval.glo4002.GRAISSE.booker.BookerFinishedAssigningTrigger;
 import ca.ulaval.glo4002.GRAISSE.trigger.exceptions.InvalidThresholdException;
 
-public class ThresholdTrigger implements Trigger {
+public class ThresholdTrigger implements BookerFinishedAssigningTrigger {
 
 	private static final int MINIMUM_THRESHOLD_VALUE = 1;
 	private int threshold;

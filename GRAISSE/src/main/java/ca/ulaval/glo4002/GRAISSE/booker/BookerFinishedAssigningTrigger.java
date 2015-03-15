@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.booker;
 
 
-public interface Trigger {
+public interface BookerFinishedAssigningTrigger {
 	public void update(Booker booker);
 }
