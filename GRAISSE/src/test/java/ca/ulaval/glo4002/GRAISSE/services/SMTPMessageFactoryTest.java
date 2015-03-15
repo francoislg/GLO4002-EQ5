@@ -40,13 +40,13 @@ public class SMTPMessageFactoryTest {
 	}
 
 	@Test
-	public void testCreateShouldReturnAMessage() throws MessagingException {
+	public void createShouldReturnAMessage() throws MessagingException {
 		Message message = smtpMessageFactory.create(mail, session);
 		assertNotNull(message);
 	}
 	
 	@Test
-	public void testCreateShouldReturnAMessageWithRecipientFromMail() throws MessagingException {
+	public void createShouldReturnAMessageWithRecipientFromMail() throws MessagingException {
 		Address expectedAddress = new InternetAddress(MAIL_DESTINATION);
 		
 		Message message = smtpMessageFactory.create(mail, session);
@@ -55,13 +55,13 @@ public class SMTPMessageFactoryTest {
 	}
 	
 	@Test
-	public void testCreateShouldReturnAMessageWithSubjectFromMail() throws MessagingException {
+	public void createShouldReturnAMessageWithSubjectFromMail() throws MessagingException {
 		Message message = smtpMessageFactory.create(mail, session);
 		assertEquals(MAIL_SUBJECT, message.getSubject());
 	}
 	
 	@Test
-	public void testCreateShouldReturnAMessageWithBodyFromMail() throws MessagingException, IOException {
+	public void createShouldReturnAMessageWithBodyFromMail() throws MessagingException, IOException {
 		Message message = smtpMessageFactory.create(mail, session);
 		assertEquals(MAIL_MESSAGE, message.getContent().toString());
 	}
