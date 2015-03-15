@@ -31,11 +31,11 @@ public class Booker {
 	}
 
 	public boolean hasBookingsToAssign() {
-		return !bookings.isEmpty();
+		return bookings.hasUnassignedBookings();
 	}
 
 	public int numberOfBookingsToAssign() {
-		return bookings.getSize();
+		return bookings.getNumberOfUnassignedBookings();
 	}
 
 	private void notifyTriggers() {
