@@ -1,8 +1,9 @@
 package ca.ulaval.glo4002.GRAISSE.booking;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -20,13 +20,12 @@ public class BookingTest {
 	private static final Priority PRIORITY_VALUE_OF_BOOKING_BIGGER = Priority.HIGH;
 	private static final Priority PRIORITY_VALUE_OF_BOOKING_SMALLER = Priority.VERY_LOW;
 
-
 	private static final int NUMBER_OF_SEATS_IN_BOOKING = 10;
 
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_SMALLER_THAN_THE_BOOKING = 9;
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_EQUAL_TO_THE_BOOKING = 10;
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_BIGGER_THAN_THE_BOOKING = 11;
-	
+
 	@Mock
 	User user;
 
@@ -40,7 +39,7 @@ public class BookingTest {
 		bookingWithBiggerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_BIGGER);
 		bookingWithSmallerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_SMALLER);
 	}
-	
+
 	@Test
 	public void assignShouldAssignTheBooking() {
 		booking.assign();
@@ -56,7 +55,7 @@ public class BookingTest {
 	public void hasCreatorShouldReturnTrueForCreator() {
 		assertTrue(booking.hasCreator(user));
 	}
-	
+
 	@Test
 	public void hasCreatorShouldReturnTrueForAnotherUser() {
 		User another_user = mock(User.class);
@@ -89,4 +88,11 @@ public class BookingTest {
 		int result = booking.comparePriorityToBooking(bookingWithBiggerPriority);
 		assertTrue(result < 0);
 	}
+
+	@Test
+	public void withSamePriorityBookingcomparePriorityToBookingShouldReturnZero() {
+		int result = booking.comparePriorityToBooking(booking);
+		assertEquals(0, result);
+	}
+
 }
