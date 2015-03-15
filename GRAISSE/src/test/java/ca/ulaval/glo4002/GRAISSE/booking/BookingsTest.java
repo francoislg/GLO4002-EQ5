@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.booking;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -66,6 +65,19 @@ public class BookingsTest {
 	public void addBookingShouldAddTheBooking() {
 		bookings.add(booking);
 		assertFalse(bookings.isEmpty());
+	}
+	
+	@Test
+	public void addOneBookingShouldHaveSizeOfOne() {
+		bookings.add(booking);
+		assertEquals(1, bookings.getSize());
+	}
+	
+	@Test
+	public void addTwoBookingsShouldHaveSizeOfTwo() {
+		bookings.add(booking);
+		bookings.add(booking);
+		assertEquals(2, bookings.getSize());
 	}
 
 	@Test
