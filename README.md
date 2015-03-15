@@ -28,3 +28,44 @@ Notifier par courriel lors d'une annulation       |en attente
 Afficher une demande                              |en attente
 Permettre la réservation d'une salle              |en attente
 Afficher les demandes d'un organisateur           |en attente
+
+<b>Comment fonctionne notre API: </b>
+
+Tout d'abord, vous devez créer un booker. Voici un exemple utilisant 
+les répertoires en mémoire ainsi que la stratégie d'assignation des bookings par défaut:
+
+```java
+BookerStrategiesFactory bookerStrategiesFactory = new BookerStrategiesFactory();
+BookerStrategy bookerStrategy = bookerStrategiesFactory.create(BookerStrategiesFactory.StrategyType.BASIC);
+
+Bookings bookings = new Bookings(new BookingInMemoryRepository());
+Boardrooms boardrooms = new Boardrooms(new BoardroomInMemoryRepository());
+
+Booker booker = new Booker(bookerStrategy, bookings, boardrooms);
+```
+
+Ensuite, enregistrer des triggers pour déclencher l'assignation des bookings selon différent critères.
+Voici un exemple utilisant un ThresholdTrigger:
+
+```java
+ThresholdTrigger thresholdTrigger = new ThresholdTrigger(3);
+booker.registerTrigger(thresholdTrigger);
+```
+
+Dans cet exemple, le trigger sera déclenché lorsque le booker atteindra 3 bookings à assigner.
+
+Fianlement, ajouter des bookings pour déclencher l'assignation. Pour créer un booking vous devez lui fournir le nombre de siège minimum nécessaire pour le client:
+
+```java
+int aNumberOfSeatsNeeded = 10;
+
+Booking booking1 = new Booking(aNumberOfSeatsNeeded);
+Booking booking2 = new Booking(aNumberOfSeatsNeeded);
+Booking booking3 = new Booking(aNumberOfSeatsNeeded);
+
+booker.addBooking(booking1);
+booker.addBooking(booking2);
+booker.addBooking(booking3);
+```
+
+
