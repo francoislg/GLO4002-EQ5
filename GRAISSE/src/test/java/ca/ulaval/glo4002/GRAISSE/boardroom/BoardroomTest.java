@@ -11,9 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
-import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
-
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomTest {
 
@@ -58,7 +55,7 @@ public class BoardroomTest {
 	}
 
 	@Test
-	public void IfSameNameIsMyNameReturnTrue() {
+	public void IfSameNamehasNameReturnTrue() {
 		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 	}
 
