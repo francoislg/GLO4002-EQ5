@@ -70,6 +70,7 @@ public class BoardroomsTest {
 		verify(trigger).update(assignedBooking);
 	}
 	
+
 	@Test
 	public void givenMultipleTriggersAreAddedWhenBookingAssignedShouldNotifyAllTriggers(){
 		boardrooms.registerBookingAssignedTrigger(trigger);
@@ -80,6 +81,13 @@ public class BoardroomsTest {
 		verify(trigger).update(assignedBooking);
 		verify(secondTrigger).update(assignedBooking);
 	}
+	
+	@Test
+	public void assignBookingToBoardroomShouldPassByPersistance(){
+		boardrooms.assignBookingToBoardroom(assignedBooking, boardroomsStrategy);
+		verify(boardroomRepository, times(1)).persist(boardroom);
+	}
+	
 	
 	private void setUpBoardroomMock(){
 		when(boardroom.assign(assignedBooking)).thenReturn(true);
