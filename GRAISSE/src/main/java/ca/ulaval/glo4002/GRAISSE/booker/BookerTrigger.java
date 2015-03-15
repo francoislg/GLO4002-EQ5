@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.GRAISSE.booker;
 
+import ca.ulaval.glo4002.GRAISSE.trigger.Trigger;
 
-public interface BookerTrigger {
-	public void update(Booker booker);
+
+public interface BookerTrigger extends Trigger<Booker> {
+	
 }
