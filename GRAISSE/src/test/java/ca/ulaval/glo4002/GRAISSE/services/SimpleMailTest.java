@@ -33,7 +33,7 @@ public class SimpleMailTest {
 	
 	@Test
 	public void getDestinationStringShouldReturnEmailAsString() {
-		assertEquals(email, mail.getDestinationString());
+		assertEquals(A_VALID_EMAIL, mail.getDestinationString());
 	}
 	
 	@Test

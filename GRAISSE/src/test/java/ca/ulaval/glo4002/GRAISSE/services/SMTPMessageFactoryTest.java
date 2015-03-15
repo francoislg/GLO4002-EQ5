@@ -31,12 +31,12 @@ public class SMTPMessageFactoryTest {
 	
 	Session session;
 	
-	SMTPMessageFactory smtpMessageFactory;
+	SimpleSMTPMessageFactory smtpMessageFactory;
 	
 	@Before
 	public void setUp() throws Exception {
 		setUpMailMock();
-		smtpMessageFactory = new SMTPMessageFactory();
+		smtpMessageFactory = new SimpleSMTPMessageFactory();
 	}
 
 	@Test

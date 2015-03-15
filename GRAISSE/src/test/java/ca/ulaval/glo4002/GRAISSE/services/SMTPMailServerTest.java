@@ -1,9 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.services;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-
-import java.util.Arrays;
 
 import javax.mail.Address;
 import javax.mail.Message;
@@ -31,7 +28,7 @@ public class SMTPMailServerTest {
 	SMTPMailServerConfig stmpMailServerConfig;
 	
 	@Mock
-	MessageFactory messageFactory;
+	SMTPMessageFactory messageFactory;
 	
 	Session session;
 	
@@ -66,7 +63,7 @@ public class SMTPMailServerTest {
 	}
 	
 	private void setUpSMTPMailServerConfigMock(){
-		when(stmpMailServerConfig.getDefaultSession()).thenReturn(session);
+		when(stmpMailServerConfig.getSession()).thenReturn(session);
 	}
 	
 	private void setUpMessageFactoryMock() throws MessagingException{

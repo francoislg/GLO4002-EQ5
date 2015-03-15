@@ -28,6 +28,13 @@ public class EmailTest {
 	
 	@Test(expected=InvalidEmailException.class)
 	public void invalidEmailShouldThrowInvalidEmailException() {
-		Email email = new Email(INVALID_EMAIL);
+		new Email(INVALID_EMAIL);
+	}
+	
+	@Test
+	public void sameEmailShouldHaveSameHashCode() {
+		Email email = new Email(VALID_EMAIL);
+		Email sameEmail = new Email(VALID_EMAIL);
+		assertEquals(email.hashCode(), sameEmail.hashCode());
 	}
 }
