@@ -15,8 +15,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SMTPMailServerTest {	
-	private final static String DESTINATION = "DESTINATION";
-	
 	@Mock
 	JavaMailMailSender mailSender;
 	
@@ -38,7 +36,6 @@ public class SMTPMailServerTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		setUpMailMock();
 		setUpSMTPMailServerConfigMock();
 		setUpMessageFactoryMock();
 		smtpMailServer = new SMTPMailServer(stmpMailServerConfig, mailSender, messageFactory);
@@ -52,10 +49,6 @@ public class SMTPMailServerTest {
 	
 	private void setUpSMTPMailServerConfigMock(){
 		when(stmpMailServerConfig.getDefaultSession()).thenReturn(session);
-	}
-	
-	private void setUpMailMock(){
-		when(mail.getDestinationString()).thenReturn(DESTINATION);
 	}
 	
 	private void setUpMessageFactoryMock() throws MessagingException{

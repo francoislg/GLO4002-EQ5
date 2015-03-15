@@ -10,5 +10,4 @@ public class JavaMailMailSender implements MailSender {
 	public void send(Message message) throws MessagingException {
 		Transport.send(message);
 	}
-
 }

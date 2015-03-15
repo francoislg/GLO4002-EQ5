@@ -7,9 +7,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class SMTPMessageFactory implements MessageFactory {
-	/* (non-Javadoc)
-	 * @see ca.ulaval.glo4002.GRAISSE.services.MessageFactory#create(ca.ulaval.glo4002.GRAISSE.services.Mail, javax.mail.Session)
-	 */
 	@Override
 	public Message create(Mail mail, Session session) throws MessagingException {
 		Message message = new MimeMessage(session);
