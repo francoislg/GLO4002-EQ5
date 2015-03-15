@@ -43,24 +43,24 @@ public class BoardroomTest {
 	}
 
 	@Test
-	public void IfNotEnoughtSeatsVerifyNumberOfSeatsReturnFalse() {
+	public void withNotEnoughtSeatsVerifyNumberOfSeatsReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(false);
 		assertFalse(boardroom.verifyNumberOfSeats(booking));
 	}
 
 	@Test
-	public void IfEnoughtSeatsVerifyNumberOfSeatsReturnTrue() {
+	public void withEnoughtSeatsVerifyNumberOfSeatsReturnTrue() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
 		assertTrue(boardroom.verifyNumberOfSeats(booking));
 	}
 
 	@Test
-	public void IfSameNamehasNameReturnTrue() {
+	public void withSameNamehasNameReturnTrue() {
 		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 	}
 
 	@Test
-	public void IfNotSameNamehasNameReturnFalse() {
+	public void withDifferentSameNamehasNameReturnFalse() {
 		assertFalse(boardroom.hasName(NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1));
 	}
 
@@ -71,26 +71,26 @@ public class BoardroomTest {
 	}
 
 	@Test
-	public void secondAssignShouldReturnFalse() {
+	public void whenBoadroomIsNotAvailableAssignShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
 		boardroom.assign(booking);
 		assertFalse(boardroom.assign(booking));
 	}
 
 	@Test
-	public void IfVerifyFailassignToBoardroomShouldReturnFalse() {
+	public void whenVerifyFailassignToBoardroomShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(false);
 		assertFalse(boardroom.assign(booking));
 	}
 
 	@Test
-	public void WithSmallerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+	public void withSmallerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithLessSeats);
 		assertEquals(BIGGER, result);
 	}
 
 	@Test
-	public void WithBiggerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+	public void withBiggerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithMoreSeats);
 		assertEquals(SMALLER, result);
 	}
