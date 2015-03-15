@@ -13,15 +13,15 @@ public class Booking implements BookingAssignable {
 	private boolean assigned;
 	private Priority priority;
 	private User creator;
-
+	
 	public Booking(User creator, int numberOfSeatsNeeded) {
+		this(creator, numberOfSeatsNeeded, DEFAULT_PRIORITY);
+	}
+	
+	public Booking(User creator, int numberOfSeatsNeeded, Priority priority) {
 		this.creator = creator;
 		this.assigned = false;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
-		this.priority = DEFAULT_PRIORITY;
-	}
-	
-	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}
 

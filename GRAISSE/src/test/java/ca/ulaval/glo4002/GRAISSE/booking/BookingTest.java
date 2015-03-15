@@ -36,12 +36,9 @@ public class BookingTest {
 
 	@Before
 	public void setUp() {
-		booking = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING);
-		booking.setPriority(PRIORITY_VALUE_OF_BOOKING);
-		bookingWithBiggerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING);
-		bookingWithBiggerPriority.setPriority(PRIORITY_VALUE_OF_BOOKING_BIGGER);
-		bookingWithSmallerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING);
-		bookingWithSmallerPriority.setPriority(PRIORITY_VALUE_OF_BOOKING_SMALLER);
+		booking = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
+		bookingWithBiggerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_BIGGER);
+		bookingWithSmallerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_SMALLER);
 	}
 	
 	@Test
@@ -52,8 +49,7 @@ public class BookingTest {
 
 	@Test
 	public void withValidPriorityValueConstructorShouldNotThrowInvalidPriorityValue() {
-		booking = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING);
-		booking.setPriority(PRIORITY_VALUE_OF_BOOKING);
+		booking = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
 	}
 
 	@Test
