@@ -12,6 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.BoardroomNotFoundException;
+import ca.ulaval.glo4002.GRAISSE.persistence.BoardroomInMemoryRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomInMemoryRepositoryTest {

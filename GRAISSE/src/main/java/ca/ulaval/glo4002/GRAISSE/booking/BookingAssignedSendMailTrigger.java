@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.booking;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
-import ca.ulaval.glo4002.GRAISSE.services.Email;
 import ca.ulaval.glo4002.GRAISSE.services.Mail;
 import ca.ulaval.glo4002.GRAISSE.services.MailServer;
 import ca.ulaval.glo4002.GRAISSE.services.SimpleMail;

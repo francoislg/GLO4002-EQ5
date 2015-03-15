@@ -28,4 +28,10 @@ public class UserTest {
 		boolean result = user.hasEmail(email);
 		assertTrue(result);
 	}
+	
+	@Test
+	public void getEmailShouldReturnSameEmail() {
+		Email result = user.getEmail();
+		assertEquals(email, result);
+	}
 }
