@@ -6,7 +6,7 @@
 Nom                            | matricule
 -------------------------------|-----------------------------------
 Alex Gagnon                    |
-Clotioloman Yeo                |
+Clotioloman Yeo                |909 272 477
 François Lachance-Guillemette  |
 Jean-Philippe Giroux           |111 088 846
 Kouamé Ange Martial Konan      |111 080 517
