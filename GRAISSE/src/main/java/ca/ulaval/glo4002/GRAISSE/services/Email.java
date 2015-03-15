@@ -6,32 +6,33 @@ import java.util.regex.Pattern;
 import ca.ulaval.glo4002.GRAISSE.services.exceptions.InvalidEmailException;
 
 public class Email {
-	private final String email;
+	private final String emailAdresse;
 	// Known regex for email validation
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	
-	public Email(String email){
+
+	public Email(String email) {
 		validateEmail(email);
-		this.email = email;
+		this.emailAdresse = email;
 	}
-	
-	public String getValue(){
-		return email;
+
+	public String getValue() {
+		return emailAdresse;
 	}
-	
-	private void validateEmail(String email){
+
+	private void validateEmail(String email) {
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(email);
-		if(!matcher.matches()){
+		if (!matcher.matches()) {
 			throw new InvalidEmailException();
-		};
+		}
+		;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + emailAdresse.hashCode();
 		return result;
 	}
 
@@ -44,10 +45,10 @@ public class Email {
 		if (getClass() != obj.getClass())
 			return false;
 		Email other = (Email) obj;
-		if (email == null) {
-			if (other.email != null)
+		if (emailAdresse == null) {
+			if (other.emailAdresse != null)
 				return false;
-		} else if (!email.equals(other.email))
+		} else if (!emailAdresse.equals(other.emailAdresse))
 			return false;
 		return true;
 	}
