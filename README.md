@@ -1,7 +1,7 @@
 # G.R.A.I.S.S.E
 <b>G</b>estionnaire de <b>R</b>éservation <b>A</b>gile et <b>I</b>ntelligent de <b>S</b>alle <b>S</b>aisi pour les <b>E</b>ntreprises
 
-<b>Créer par l'équipe #5 :</b>
+<b>Créé par l'équipe #5 :</b>
 
 Nom                            | matricule
 -------------------------------|-----------------------------------
@@ -9,7 +9,7 @@ Alex Gagnon                    |
 Clotioloman Yeo                |
 François Lachance-Guillemette  |
 Jean-Philippe Giroux           |111 088 846
-Kouamé Ange Martial Konan      |
+Kouamé Ange Martial Konan      |111 080 517
 Marie-Christine Noreau         |
 Xavier Bourgeois-Vézina        |111 102 056
 
