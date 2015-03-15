@@ -16,7 +16,7 @@ public class BookingInMemoryRepository implements BookingRepository{
 	
 	@Override
 	public void persist(Booking booking) {
-		if(isNotAllreadyInMemory(booking)) {
+		if(isNotAlreadyInMemory(booking)) {
 			bookings.add(booking);
 		}
 	}
@@ -26,7 +26,7 @@ public class BookingInMemoryRepository implements BookingRepository{
 		return bookings;
 	}
 	
-	private boolean isNotAllreadyInMemory(Booking booking) {
+	private boolean isNotAlreadyInMemory(Booking booking) {
 		return !bookings.contains(booking);
 	}
 

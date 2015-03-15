@@ -19,7 +19,7 @@ public class Bookings {
 	}
 
 	public boolean hasUnassignedBookings() {
-		return !getUnassignedBookings().isEmpty();
+		return getNumberOfUnassignedBookings() > 0;
 	}
 	
 	public int getNumberOfUnassignedBookings() {

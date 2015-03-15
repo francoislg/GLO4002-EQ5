@@ -13,12 +13,12 @@ public class BoardroomInMemoryRepository implements BoardroomRepository {
 	private Collection<Boardroom> boardrooms = new ArrayList<Boardroom>();
 
 	public void persist(Boardroom boardroom) {
-		if(boardroomNotAllreadyInMemory(boardroom)) {
+		if(boardroomNotAlreadyInMemory(boardroom)) {
 			boardrooms.add(boardroom);
 		}
 	}
 	
-	private boolean boardroomNotAllreadyInMemory(Boardroom boardroom) {
+	private boolean boardroomNotAlreadyInMemory(Boardroom boardroom) {
 		return !boardrooms.contains(boardroom);
 	}
 
