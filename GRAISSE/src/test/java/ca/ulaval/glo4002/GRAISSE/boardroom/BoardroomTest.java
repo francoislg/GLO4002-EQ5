@@ -26,7 +26,7 @@ public class BoardroomTest {
 	Boardroom boardroom;
 	Boardroom boardroomWithMoreSeats;
 	Boardroom boardroomWithLessSeats;
-
+	Boardroom boardroomWithSameSeats;
 	@Mock
 	BookingAssignable booking;
 
@@ -35,6 +35,7 @@ public class BoardroomTest {
 		boardroom = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_IN_BOARDROOM);
 		boardroomWithMoreSeats = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_BIGGER);
 		boardroomWithLessSeats = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_SMALLER);
+		boardroomWithSameSeats = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_IN_BOARDROOM);
 	}
 
 	@Test
@@ -94,4 +95,11 @@ public class BoardroomTest {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithMoreSeats);
 		assertEquals(SMALLER, result);
 	}
+	
+	@Test
+	public void withSameNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnZero() {
+		int result = boardroom.compareByNumberOfSeats(boardroomWithSameSeats);
+		assertEquals(0, result);
+	}
+
 }
