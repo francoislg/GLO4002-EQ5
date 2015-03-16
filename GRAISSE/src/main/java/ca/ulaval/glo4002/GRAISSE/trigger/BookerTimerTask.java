@@ -16,5 +16,4 @@ public class BookerTimerTask extends TimerTask {
 	public void run() {
 		booker.assignBookings();
 	}
-
 }

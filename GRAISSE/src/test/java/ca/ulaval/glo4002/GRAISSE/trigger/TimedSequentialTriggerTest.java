@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.GRAISSE.trigger;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.Timer;
@@ -15,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.booker.Booker;
+import ca.ulaval.glo4002.GRAISSE.trigger.exceptions.InvalidIntervalException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TimedSequentialTriggerTest {
@@ -25,29 +25,29 @@ public class TimedSequentialTriggerTest {
 	private static final Boolean HAS_BOOKINGS_TO_ASSIGN = true;
 	private static final Boolean HAS_NO_BOOKINGS_TO_ASSIGN = false;
 	private static final Boolean BOOKERS_ARE_NOT_EQUALS = false;
-
-	private TimedSequentialTrigger timedSequentialTrigger;
 	
 	@Mock
-	private Booker booker;	
+	Booker booker;	
 	
 	@Mock
-	private Booker secondBooker;
+	Booker secondBooker;
 
 	@Mock
-	private BookerTimerTask bookerTimerTask;
+	BookerTimerTask bookerTimerTask;
 	
 	@Mock
-	private BookerTimerTask secondBookerTimerTask;
+	BookerTimerTask secondBookerTimerTask;
 	
 	@Mock
-	private BookerTimerTaskFactory bookerTimerTaskFactory;
+	BookerTimerTaskFactory bookerTimerTaskFactory;
 
 	@Mock
-	private Timer timer;
+	Timer timer;
 	
 	@Mock
-	private TimerFactory timerFactory;
+	TimerFactory timerFactory;
+	
+	TimedSequentialTrigger timedSequentialTrigger;
 
 	@Before
 	public void setUp() {
@@ -66,13 +66,13 @@ public class TimedSequentialTriggerTest {
 	}
 
 	@Test(expected = InvalidIntervalException.class)
-	public void newTimedSequentialTriggerThrowInvalidIntervalExceptionWhenSettingInvalidMinutesInterval() {
+	public void givenInvalidMinutesIntervalCreatingANewTimedSequentialTriggerShouldThrowAnException() {
 		timedSequentialTrigger = new TimedSequentialTrigger(INVALID_NUMBER_OF_MINUTES,
 			timerFactory, bookerTimerTaskFactory);
 	}
 	
 	@Test
-	public void timedSequentialTriggerShouldScheduleATimerWithTheMillisecondIntervalThatHeWasInitialiseWithAndTheNewlyCreatedBookerTimerTaskWhenTheBookerHasBookingsToAssignAndHisNotScheduleYet() {
+	public void givenABookerThatHasBookingToAssignWhenTriggeringUpdateShouldScheduleATimerWithoutCancellingIt() {
 		doReturn(HAS_BOOKINGS_TO_ASSIGN).when(booker).hasBookingsToAssign();
 		
 		timedSequentialTrigger.update(booker);
@@ -82,10 +82,10 @@ public class TimedSequentialTriggerTest {
 	}
 	
 	@Test
-	public void timedSequentialTriggerShouldCancelTheTimerWhenScheduledBookerHasNoMoreBookingsToAssign() {
+	public void givenABookerThatHasBookingToAssignWhenTriggeringUpdateTwiceShouldScheduleThenCancelTheTimer() {
 		doReturn(HAS_BOOKINGS_TO_ASSIGN).doReturn(HAS_NO_BOOKINGS_TO_ASSIGN).when(booker).hasBookingsToAssign();
 		
-		timedSequentialTrigger.update(booker); //schedule the booker
+		timedSequentialTrigger.update(booker);
 		timedSequentialTrigger.update(booker);
 		
 		verify(timer).schedule(bookerTimerTask, THE_VALID_INTERVAL_IN_MILLISECONDS);
@@ -93,7 +93,7 @@ public class TimedSequentialTriggerTest {
 	}
 	
 	@Test
-	public void timedSequentialTriggerShouldDoNothingWhenUnscheduledBookerWithNoBookingsToAssignAskForUpdate() {
+	public void givenABookerThatHasNoBookingToAssignWhenTriggeringUpdateShouldNotScheduleOrCancel() {
 		doReturn(HAS_NO_BOOKINGS_TO_ASSIGN).when(booker).hasBookingsToAssign();
 		
 		timedSequentialTrigger.update(booker);
@@ -103,18 +103,7 @@ public class TimedSequentialTriggerTest {
 	}
 	
 	@Test
-	public void timedSequentialTriggerShouldOnlyScheduleOneTimerWhenBookerIsScheduleAndTheBookerAsBookingsToAssign() {
-		doReturn(HAS_BOOKINGS_TO_ASSIGN).when(booker).hasBookingsToAssign();
-		
-		timedSequentialTrigger.update(booker);
-		timedSequentialTrigger.update(booker);
-		
-		verify(timer).schedule(bookerTimerTask, THE_VALID_INTERVAL_IN_MILLISECONDS);
-		verify(timer, never()).cancel();
-	}
-	
-	@Test
-	public void timedSequentialTriggerShouldScheduleASecondTimerWhenGivenTwoDifferentBooker() {
+	public void GivenTwoDifferentBookerTimedSequentialTriggerShouldScheduleASecondTimer() {
 		doReturn(HAS_BOOKINGS_TO_ASSIGN).when(booker).hasBookingsToAssign();
 		doReturn(HAS_BOOKINGS_TO_ASSIGN).when(secondBooker).hasBookingsToAssign();
 		
@@ -123,11 +112,7 @@ public class TimedSequentialTriggerTest {
 		timedSequentialTrigger.update(booker);
 		timedSequentialTrigger.update(secondBooker);
 		
-		verify(timer, times(1)).schedule(secondBookerTimerTask, THE_VALID_INTERVAL_IN_MILLISECONDS);
+		verify(timer).schedule(secondBookerTimerTask, THE_VALID_INTERVAL_IN_MILLISECONDS);
 		verify(timer, never()).cancel();
 	}
-	
-
-	
-	
 }

@@ -11,23 +11,23 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.booking.Booking;
-import ca.ulaval.glo4002.GRAISSE.booking.BookingsStrategyBasic;
+import ca.ulaval.glo4002.GRAISSE.booking.BookingsSortingStrategyDefault;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookingsStrategyBasicTest {
-
-	BookingsStrategyBasic bookingsStrategyBasic;
+public class BookingsSortingStrategyDefaultTest {
 
 	@Mock
 	Collection<Booking> bookingCollection;
 
+	BookingsSortingStrategyDefault bookingsSortingStrategyDefault;
+	
 	@Before
 	public void setUp() {
-		bookingsStrategyBasic = new BookingsStrategyBasic();
+		bookingsSortingStrategyDefault = new BookingsSortingStrategyDefault();
 	}
 
 	@Test
-	public void withBookingCollectionSortShouldReturnTheSameBoardroomCollection() {
-		assertEquals(bookingCollection, bookingsStrategyBasic.sort(bookingCollection));
+	public void givenAListOfBookingsWhenSortingWithStrategyShouldReturnSameList() {
+		assertEquals(bookingCollection, bookingsSortingStrategyDefault.sort(bookingCollection));
 	}
 }

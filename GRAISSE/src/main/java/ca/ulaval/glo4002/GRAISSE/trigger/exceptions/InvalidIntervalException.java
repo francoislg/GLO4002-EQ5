@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE.trigger;
+package ca.ulaval.glo4002.GRAISSE.trigger.exceptions;
 
 public class InvalidIntervalException extends RuntimeException {
 	

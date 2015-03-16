@@ -16,10 +16,10 @@ import ca.ulaval.glo4002.GRAISSE.booker.BookerStrategyBasic;
 @RunWith(MockitoJUnitRunner.class)
 public class BookerStrategiesFactoryTest {
 
-	BookerStrategiesFactory bookingStrategiesFactory;
-
 	@Mock
-	private Boardrooms boardrooms;
+	Boardrooms boardrooms;
+	
+	BookerStrategiesFactory bookingStrategiesFactory;
 
 	@Before
 	public void setUp() {
@@ -28,19 +28,19 @@ public class BookerStrategiesFactoryTest {
 
 	@Test
 	public void createBasicStrategyShouldReturnBookingStrategyBasic() {
-		BookerStrategy bookingStrategy = bookingStrategiesFactory.createBasicStrategy();
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.create(BookerStrategiesFactory.StrategyType.BASIC);
 		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
 	}
 
 	@Test
 	public void createMaximiseStrategyShouldReturnBookingStrategyOptimize() {
-		BookerStrategy bookingStrategy = bookingStrategiesFactory.createOptimizeStrategy();
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.create(BookerStrategiesFactory.StrategyType.OPTIMIZE);
 		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
 	}
 
 	@Test
 	public void createPriorityStrategyShouldReturnBookingStrategyPriority() {
-		BookerStrategy bookingStrategy = bookingStrategiesFactory.createPriorityStrategy();
+		BookerStrategy bookingStrategy = bookingStrategiesFactory.create(BookerStrategiesFactory.StrategyType.PRIORITY);
 		assertEquals(BookerStrategyBasic.class, bookingStrategy.getClass());
 	}
 }
