@@ -8,5 +8,4 @@ public class TimerFactory {
 	{
 		return new Timer();
 	}
-
 }
