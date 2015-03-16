@@ -5,5 +5,6 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 
 public interface SMTPMessageFactory {
+	
 	public abstract Message create(Mail mail, Session session) throws MessagingException;
 }
