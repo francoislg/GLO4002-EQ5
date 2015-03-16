@@ -11,8 +11,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SMTPMailServerConfigTest {	
-	Session session;
 	
+	Session session;
 	SMTPMailServerConfig smtpMailServerConfig;
 	
 	@Before
@@ -21,8 +21,7 @@ public class SMTPMailServerConfigTest {
 	}
 	
 	@Test
-	public void getSessionShouldReturnSession(){
+	public void getSessionShouldReturnSession() {
 		assertEquals(session, smtpMailServerConfig.getSession());
 	}
-
 }
