@@ -4,6 +4,7 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.user.User;
 
 public class Booking implements BookingAssignable {	
+	
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
 
 	private int numberOfSeatsNeeded;
@@ -41,5 +42,4 @@ public class Booking implements BookingAssignable {
 	public int comparePriorityToBooking(Booking bookingToCompare) {
 		return priority.compare(bookingToCompare.priority);
 	}
-
 }
