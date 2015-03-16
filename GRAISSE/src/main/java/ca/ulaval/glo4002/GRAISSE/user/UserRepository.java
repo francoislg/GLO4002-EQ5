@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.GRAISSE.services.Email;
 
 public interface UserRepository {
 	
-	public User retrieve(Email email);
-	
 	public void persist(User user);
+	
+	public User retrieve(Email email);
 }

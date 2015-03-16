@@ -44,7 +44,7 @@ public class BookingsTest {
 	Boardrooms boardrooms;
 
 	@Mock
-	BookingsStrategy bookingsStrategy;
+	BookingsSortingStrategy bookingsSortingStrategy;
 
 	@Mock
 	BoardroomsSortingStrategy boardroomsSortingStrategy;
@@ -92,7 +92,7 @@ public class BookingsTest {
 	public void assigningBookingsShouldOnlyBeAttemptedWithUnassignedBookings() {
 		setUpOneUnassignedBookingInBookings();
 	
-		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsSortingStrategy);
+		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
 
 		verify(boardrooms).assignBookingToBoardroom(unassignedBooking, boardroomsSortingStrategy);
 		verify(boardrooms, never()).assignBookingToBoardroom(assignedBooking1, boardroomsSortingStrategy);
@@ -103,14 +103,14 @@ public class BookingsTest {
 	public void newlyAssignedBookingsShouldBePersistedAfterTheAssignation() {
 		setUpOneUnassignedBookingInBookings();
 
-		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsSortingStrategy);
+		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
 
 		verify(bookingRepository).persist(unassignedBooking);
 	}
 
 	private void setUpBookingStrategyMock() {
 		List<Booking> formatedList = new ArrayList<Booking>(Arrays.asList(booking));
-		when(bookingsStrategy.sort(any())).thenReturn(formatedList);
+		when(bookingsSortingStrategy.sort(any())).thenReturn(formatedList);
 	}
 	
 	private void setUpBookings() {
@@ -141,6 +141,6 @@ public class BookingsTest {
 		bookingsWithOneUnassignedBookings.add(unassignedBooking);
 		
 		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
-		doReturn(bookingsWithOneUnassignedBookings).when(bookingsStrategy).sort(bookingsWithOneUnassignedBookings);
+		doReturn(bookingsWithOneUnassignedBookings).when(bookingsSortingStrategy).sort(bookingsWithOneUnassignedBookings);
 	}
 }

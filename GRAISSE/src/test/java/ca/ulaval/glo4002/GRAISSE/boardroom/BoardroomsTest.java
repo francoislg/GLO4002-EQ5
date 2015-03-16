@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.UnableToAssignBookingException;
-import ca.ulaval.glo4002.GRAISSE.booking.BookingsStrategy;
+import ca.ulaval.glo4002.GRAISSE.booking.BookingsSortingStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomsTest {
@@ -34,7 +34,7 @@ public class BoardroomsTest {
 	BookingAssignable unassignableBooking;
 	
 	@Mock
-	BookingsStrategy bookingsStrategy;
+	BookingsSortingStrategy bookingsSortingStrategy;
 	
 	@Mock
 	BoardroomsSortingStrategy boardroomsSortingStrategy;

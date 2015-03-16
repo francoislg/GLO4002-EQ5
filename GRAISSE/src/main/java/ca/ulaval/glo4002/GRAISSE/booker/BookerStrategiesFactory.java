@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.GRAISSE.booker;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsSortingStrategyDefault;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsSortingStrategyBySeats;
-import ca.ulaval.glo4002.GRAISSE.booking.BookingsStrategyBasic;
-import ca.ulaval.glo4002.GRAISSE.booking.BookingsStrategyPriority;
+import ca.ulaval.glo4002.GRAISSE.booking.BookingsSortingStrategyDefault;
+import ca.ulaval.glo4002.GRAISSE.booking.BookingsSortingStrategyByPriority;
 
 public class BookerStrategiesFactory {
 
@@ -16,14 +16,14 @@ public class BookerStrategiesFactory {
 		
 		switch (strategyType) {
 			case OPTIMIZE:
-				bookerStrategy = new BookerStrategyBasic(new BookingsStrategyBasic(), new BoardroomsSortingStrategyBySeats());
+				bookerStrategy = new BookerStrategyBasic(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyBySeats());
 				break;
 			case PRIORITY:
-				bookerStrategy = new BookerStrategyBasic(new BookingsStrategyPriority(), new BoardroomsSortingStrategyBySeats());
+				bookerStrategy = new BookerStrategyBasic(new BookingsSortingStrategyByPriority(), new BoardroomsSortingStrategyBySeats());
 				break;
 			case BASIC:
 			default:
-				bookerStrategy = new BookerStrategyBasic(new BookingsStrategyBasic(), new BoardroomsSortingStrategyDefault());
+				bookerStrategy = new BookerStrategyBasic(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyDefault());
 				break;
 		}
 

@@ -15,10 +15,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.booking.Booking;
-import ca.ulaval.glo4002.GRAISSE.booking.BookingsStrategyPriority;
+import ca.ulaval.glo4002.GRAISSE.booking.BookingsSortingStrategyByPriority;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookingsStrategyPriorityTest {
+public class BookingsSortingStrategyByPriorityTest {
 	
 	private static final int BIGGER = 1;
 	private static final int SMALLER = -1;
@@ -36,11 +36,11 @@ public class BookingsStrategyPriorityTest {
 	@Mock
 	Booking bookingWithSmallPriority;
 	
-	BookingsStrategyPriority bookingsStrategyPriority;
+	BookingsSortingStrategyByPriority bookingsSortingStrategyByPriority;
 	
 	@Before
 	public void setUp() {
-		bookingsStrategyPriority = new BookingsStrategyPriority();
+		bookingsSortingStrategyByPriority = new BookingsSortingStrategyByPriority();
 		
 		when(bookingWithSmallPriority.comparePriorityToBooking(any())).thenReturn(SMALLER);
 		
@@ -63,7 +63,7 @@ public class BookingsStrategyPriorityTest {
 		Collection<Booking> expectedBookingList = new ArrayList<Booking>(Arrays.asList(bookingWithSmallPriority, bookingWithMediumPriority,
 				bookingWithMediumPriority2, bookingWithHighPriority));
 		
-		Collection<Booking> result = bookingsStrategyPriority.sort(bookingList);
+		Collection<Booking> result = bookingsSortingStrategyByPriority.sort(bookingList);
 		assertEquals(expectedBookingList, result);
 	}
 }

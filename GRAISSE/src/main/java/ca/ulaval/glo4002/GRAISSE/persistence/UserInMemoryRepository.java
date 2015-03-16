@@ -17,6 +17,13 @@ public class UserInMemoryRepository implements UserRepository {
 	}
 	
 	@Override
+	public void persist(User user) {
+		if(isNotAlreadyInMemory(user)){
+			users.add(user);
+		}
+	}
+	
+	@Override
 	public User retrieve(Email email) {
 		for (User user : users) {
 			if (user.hasEmail(email)) {
@@ -24,13 +31,6 @@ public class UserInMemoryRepository implements UserRepository {
 			}
 		}
 		throw new UserNotFoundException();
-	}
-
-	@Override
-	public void persist(User user) {
-		if(isNotAlreadyInMemory(user)){
-			users.add(user);
-		}
 	}
 	
 	private boolean isNotAlreadyInMemory(User user) {
