@@ -27,14 +27,13 @@ public class Boardrooms {
 		throw new UnableToAssignBookingException();
 	}
 	
-	
-	public void notifyTriggers(BookingAssignable booking){
+	private void notifyTriggers(BookingAssignable booking){
 		for(BookingTrigger trigger : triggers) {
 			trigger.update(booking);
 		}
 	}
 	
-	public void registerBookingAssignedTrigger(BookingTrigger trigger) {
+	public void registerBookingTrigger(BookingTrigger trigger) {
 		triggers.add(trigger);
 	}
 }

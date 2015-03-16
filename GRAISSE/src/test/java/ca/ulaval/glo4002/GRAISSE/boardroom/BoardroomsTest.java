@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.GRAISSE.boardroom;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
@@ -26,10 +28,10 @@ public class BoardroomsTest {
 	BookingTrigger secondTrigger;
 	
 	@Mock
-	BookingAssignable assignedBooking;
+	BookingAssignable assignableBooking;
 	
 	@Mock
-	BookingAssignable notAssignedBooking;
+	BookingAssignable unassignableBooking;
 	
 	@Mock
 	BookingsStrategy bookingsStrategy;
@@ -50,47 +52,39 @@ public class BoardroomsTest {
 	}
 	
 	@Test
-	public void givenABookingWhenBoardroomIsAssignedShouldPersistBoardroomInRepository(){
-		boardrooms.assignBookingToBoardroom(assignedBooking, boardroomsStrategy);
+	public void givenAnAssignableBookingWhenBoardroomIsAssignedShouldPersistBoardroomInRepository(){
+		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsStrategy);
 		
 		verify(boardroomRepository).persist(boardroom);
 	}
 	
 	@Test(expected=UnableToAssignBookingException.class)
-	public void givenABookingWhenBoardroomIsNotAssignedShouldThrowException(){
-		boardrooms.assignBookingToBoardroom(notAssignedBooking, boardroomsStrategy);
+	public void givenAnUnassignableBookingWhenBoardroomIsNotAssignedShouldThrowException(){
+		boardrooms.assignBookingToBoardroom(unassignableBooking, boardroomsStrategy);
 	}
 	
 	@Test
 	public void givenATriggerIsAddedWhenBookingAssignedShouldNotifyTrigger(){
-		boardrooms.registerBookingAssignedTrigger(trigger);
+		boardrooms.registerBookingTrigger(trigger);
 		
-		boardrooms.assignBookingToBoardroom(assignedBooking, boardroomsStrategy);
+		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsStrategy);
 		
-		verify(trigger).update(assignedBooking);
+		verify(trigger).update(assignableBooking);
 	}
-	
 
 	@Test
 	public void givenMultipleTriggersAreAddedWhenBookingAssignedShouldNotifyAllTriggers(){
-		boardrooms.registerBookingAssignedTrigger(trigger);
-		boardrooms.registerBookingAssignedTrigger(secondTrigger);
+		boardrooms.registerBookingTrigger(trigger);
+		boardrooms.registerBookingTrigger(secondTrigger);
 		
-		boardrooms.assignBookingToBoardroom(assignedBooking, boardroomsStrategy);
+		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsStrategy);
 		
-		verify(trigger).update(assignedBooking);
-		verify(secondTrigger).update(assignedBooking);
+		verify(trigger).update(assignableBooking);
+		verify(secondTrigger).update(assignableBooking);
 	}
-	
-	@Test
-	public void assignBookingToBoardroomShouldPersistInRepository (){
-		boardrooms.assignBookingToBoardroom(assignedBooking, boardroomsStrategy);
-		verify(boardroomRepository, times(1)).persist(boardroom);
-	}
-	
 	
 	private void setUpBoardroomMock(){
-		when(boardroom.assign(assignedBooking)).thenReturn(true);
-		when(boardroom.assign(notAssignedBooking)).thenReturn(false);
+		when(boardroom.assign(assignableBooking)).thenReturn(true);
+		when(boardroom.assign(unassignableBooking)).thenReturn(false);
 	}
 }
