@@ -9,7 +9,7 @@ Alex Gagnon                    |111 044 926
 Clotioloman Yeo                |909 272 477
 François Lachance-Guillemette  |111 080 517
 Jean-Philippe Giroux           |111 088 846
-Kouamé Ange Martial Konan      |
+Kouamé Ange Martial Konan      |909 318 064
 Marie-Christine Noreau         |910 049 538
 Xavier Bourgeois-Vézina        |111 102 056
 
