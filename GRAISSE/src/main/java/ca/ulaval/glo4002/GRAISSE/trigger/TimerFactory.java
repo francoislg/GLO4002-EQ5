@@ -4,8 +4,7 @@ import java.util.Timer;
 
 public class TimerFactory {
 	
-	public Timer createTimer()
-	{
+	public Timer createTimer() {
 		return new Timer();
 	}
 }

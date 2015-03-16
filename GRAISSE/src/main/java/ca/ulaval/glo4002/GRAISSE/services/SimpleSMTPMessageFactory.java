@@ -7,6 +7,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class SimpleSMTPMessageFactory implements SMTPMessageFactory {
+	
 	@Override
 	public Message create(Mail mail, Session session) throws MessagingException {
 		Message message = new MimeMessage(session);
