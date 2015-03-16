@@ -29,45 +29,55 @@ public class BoardroomsSortingStrategyBySeatsTest {
 	Boardrooms boardrooms;
 
 	@Mock
-	Boardroom boardroomSmallestNumberOfSeatsNeeded;
+	Boardroom boardroomWithLeastNumberOfSeats;
 
 	@Mock
-	Boardroom boardroomSecondSmallestNumberOfSeatsNeeded;
+	Boardroom boardroomWithSecondLeastNumberOfSeats;
 	
 	@Mock
-	Boardroom boardroomSecondSmallestNumberOfSeatsNeeded2;
+	Boardroom boardroomWithThirdLeastNumberOfSeats;
 
 	@Mock
-	Boardroom boardroomBiggestNumberOfSeatsNeeded;
+	Boardroom boardroomWithMostNumberOfSeats;
 	
 	BoardroomsSortingStrategyBySeats boardroomsSortingStrategyBySeats;
 
 	@Before
 	public void setUp() {
+		setUpMocksForMultipleBoardrooms();
+		
 		boardroomsSortingStrategyBySeats = new BoardroomsSortingStrategyBySeats();
-		
-		when(boardroomSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(any())).thenReturn(SMALLER);
-		
-		when(boardroomSecondSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(boardroomSmallestNumberOfSeatsNeeded)).thenReturn(BIGGER);
-		when(boardroomSecondSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(boardroomBiggestNumberOfSeatsNeeded)).thenReturn(SMALLER);
-		when(boardroomSecondSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(boardroomSecondSmallestNumberOfSeatsNeeded2)).thenReturn(EQUAL);
-		
-		when(boardroomSecondSmallestNumberOfSeatsNeeded2.compareByNumberOfSeats(boardroomSmallestNumberOfSeatsNeeded)).thenReturn(BIGGER);
-		when(boardroomSecondSmallestNumberOfSeatsNeeded2.compareByNumberOfSeats(boardroomBiggestNumberOfSeatsNeeded)).thenReturn(SMALLER);
-		when(boardroomSecondSmallestNumberOfSeatsNeeded2.compareByNumberOfSeats(boardroomSecondSmallestNumberOfSeatsNeeded)).thenReturn(EQUAL);
-		
-		when(boardroomBiggestNumberOfSeatsNeeded.compareByNumberOfSeats(any())).thenReturn(BIGGER);
 	}
 
 	@Test
 	public void withUnorderedListTheStrategyShouldOrderTheListByNumberOfSeats() {
-		Collection<Boardroom> boardroomList = new ArrayList<Boardroom>(Arrays.asList(boardroomSecondSmallestNumberOfSeatsNeeded, 
-				boardroomBiggestNumberOfSeatsNeeded, boardroomSecondSmallestNumberOfSeatsNeeded2, boardroomSmallestNumberOfSeatsNeeded));
+		Collection<Boardroom> unorderedBoardroomList = unorderedListOfBoardrooms();
+		Collection<Boardroom> expectedBoardroomList = orderedListOfBoardroomsByNumberOfSeats();
 		
-		Collection<Boardroom> expectedBoardroomList = new ArrayList<Boardroom>(Arrays.asList(boardroomSmallestNumberOfSeatsNeeded,
-				boardroomSecondSmallestNumberOfSeatsNeeded, boardroomSecondSmallestNumberOfSeatsNeeded2, boardroomBiggestNumberOfSeatsNeeded));
+		Collection<Boardroom> result = boardroomsSortingStrategyBySeats.sort(unorderedBoardroomList);
 		
-		Collection<Boardroom> result = boardroomsSortingStrategyBySeats.sort(boardroomList);
 		assertEquals(expectedBoardroomList, result);
+	}
+	
+	private void setUpMocksForMultipleBoardrooms(){
+		when(boardroomWithLeastNumberOfSeats.compareByNumberOfSeats(any())).thenReturn(SMALLER);
+		
+		when(boardroomWithSecondLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithLeastNumberOfSeats)).thenReturn(BIGGER);
+		when(boardroomWithSecondLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithMostNumberOfSeats)).thenReturn(SMALLER);
+		when(boardroomWithSecondLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithThirdLeastNumberOfSeats)).thenReturn(EQUAL);
+		
+		when(boardroomWithThirdLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithLeastNumberOfSeats)).thenReturn(BIGGER);
+		when(boardroomWithThirdLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithMostNumberOfSeats)).thenReturn(SMALLER);
+		when(boardroomWithThirdLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithSecondLeastNumberOfSeats)).thenReturn(EQUAL);
+	
+		when(boardroomWithMostNumberOfSeats.compareByNumberOfSeats(any())).thenReturn(BIGGER);
+	}
+	
+	private Collection<Boardroom> unorderedListOfBoardrooms(){
+		return Arrays.asList(boardroomWithSecondLeastNumberOfSeats, boardroomWithMostNumberOfSeats, boardroomWithThirdLeastNumberOfSeats, boardroomWithLeastNumberOfSeats);
+	}
+	
+	private Collection<Boardroom> orderedListOfBoardroomsByNumberOfSeats(){
+		return Arrays.asList(boardroomWithLeastNumberOfSeats, boardroomWithSecondLeastNumberOfSeats, boardroomWithThirdLeastNumberOfSeats, boardroomWithMostNumberOfSeats);
 	}
 }

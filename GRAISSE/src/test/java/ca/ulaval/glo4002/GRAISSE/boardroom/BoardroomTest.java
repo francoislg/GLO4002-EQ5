@@ -79,7 +79,9 @@ public class BoardroomTest {
 	@Test
 	public void whenBoadroomIsNotAvailableAndHasEnoughSeatsForTheBookingAssignShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
+		
 		boardroom.assign(booking);
+		
 		assertFalse(boardroom.assign(booking));
 	}
 

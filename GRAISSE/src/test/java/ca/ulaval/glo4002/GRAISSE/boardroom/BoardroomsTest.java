@@ -54,7 +54,6 @@ public class BoardroomsTest {
 	@Test
 	public void givenAnAssignableBookingWhenBoardroomIsAssignedShouldPersistBoardroomInRepository(){
 		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsSortingStrategy);
-		
 		verify(boardroomRepository).persist(boardroom);
 	}
 	
