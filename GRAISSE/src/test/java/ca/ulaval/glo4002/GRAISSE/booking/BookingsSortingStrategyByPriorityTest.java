@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -31,39 +30,49 @@ public class BookingsSortingStrategyByPriorityTest {
 	Booking bookingWithMediumPriority;
 	
 	@Mock
-	Booking bookingWithMediumPriority2;
+	Booking secondBookingWithMediumPriority;
 
 	@Mock
-	Booking bookingWithSmallPriority;
+	Booking bookingWithLowPriority;
 	
 	BookingsSortingStrategyByPriority bookingsSortingStrategyByPriority;
 	
 	@Before
 	public void setUp() {
+		setUpMocksForMultipleBookings();
+		
 		bookingsSortingStrategyByPriority = new BookingsSortingStrategyByPriority();
-		
-		when(bookingWithSmallPriority.comparePriorityToBooking(any())).thenReturn(SMALLER);
-		
-		when(bookingWithMediumPriority.comparePriorityToBooking(bookingWithSmallPriority)).thenReturn(BIGGER);
-		when(bookingWithMediumPriority.comparePriorityToBooking(bookingWithHighPriority)).thenReturn(SMALLER);
-		when(bookingWithMediumPriority.comparePriorityToBooking(bookingWithMediumPriority2)).thenReturn(EQUAL);
-		
-		when(bookingWithMediumPriority2.comparePriorityToBooking(bookingWithSmallPriority)).thenReturn(BIGGER);
-		when(bookingWithMediumPriority2.comparePriorityToBooking(bookingWithHighPriority)).thenReturn(SMALLER);
-		when(bookingWithMediumPriority2.comparePriorityToBooking(bookingWithMediumPriority)).thenReturn(EQUAL);
-		
-		when(bookingWithHighPriority.comparePriorityToBooking(any())).thenReturn(BIGGER);
 	}
 
 	@Test
 	public void withBookingCollectionSortShouldReturnTheSameBoardroomCollection() {
-		Collection<Booking> bookingList = new ArrayList<Booking>(Arrays.asList(bookingWithMediumPriority,
-				bookingWithHighPriority, bookingWithMediumPriority2, bookingWithSmallPriority));
+		Collection<Booking> unorderedBookingList = unorderedBookingsList();
+		Collection<Booking> expectedBookingList = orderedBookingList();
 		
-		Collection<Booking> expectedBookingList = new ArrayList<Booking>(Arrays.asList(bookingWithSmallPriority, bookingWithMediumPriority,
-				bookingWithMediumPriority2, bookingWithHighPriority));
+		Collection<Booking> result = bookingsSortingStrategyByPriority.sort(unorderedBookingList);
 		
-		Collection<Booking> result = bookingsSortingStrategyByPriority.sort(bookingList);
 		assertEquals(expectedBookingList, result);
+	}
+	
+	private void setUpMocksForMultipleBookings(){
+		when(bookingWithLowPriority.comparePriorityToBooking(any())).thenReturn(SMALLER);
+		
+		when(bookingWithMediumPriority.comparePriorityToBooking(bookingWithLowPriority)).thenReturn(BIGGER);
+		when(bookingWithMediumPriority.comparePriorityToBooking(bookingWithHighPriority)).thenReturn(SMALLER);
+		when(bookingWithMediumPriority.comparePriorityToBooking(secondBookingWithMediumPriority)).thenReturn(EQUAL);
+		
+		when(secondBookingWithMediumPriority.comparePriorityToBooking(bookingWithLowPriority)).thenReturn(BIGGER);
+		when(secondBookingWithMediumPriority.comparePriorityToBooking(bookingWithHighPriority)).thenReturn(SMALLER);
+		when(secondBookingWithMediumPriority.comparePriorityToBooking(bookingWithMediumPriority)).thenReturn(EQUAL);
+		
+		when(bookingWithHighPriority.comparePriorityToBooking(any())).thenReturn(BIGGER);
+	}
+	
+	private Collection<Booking> unorderedBookingsList(){
+		return Arrays.asList(bookingWithMediumPriority, bookingWithHighPriority, secondBookingWithMediumPriority, bookingWithLowPriority);
+	}
+	
+	private Collection<Booking> orderedBookingList(){
+		return Arrays.asList(bookingWithLowPriority, bookingWithMediumPriority, secondBookingWithMediumPriority, bookingWithHighPriority);
 	}
 }
