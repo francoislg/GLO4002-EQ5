@@ -1,8 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.booking;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -17,13 +15,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ca.ulaval.glo4002.GRAISSE.services.Email;
 import ca.ulaval.glo4002.GRAISSE.services.Mail;
 import ca.ulaval.glo4002.GRAISSE.services.MailServer;
-import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotSendMailException;
 import ca.ulaval.glo4002.GRAISSE.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingAssignedSendMailTriggerTest {
-	private final static String USER_EMAIL = "email@totalyanemail.ca";
-	private final static String RESPONSIBLE_EMAIL = "email@responsible.com";
+	
+	private static final  String USER_EMAIL = "email@totalyanemail.ca";
+	private static final  String RESPONSIBLE_EMAIL = "email@responsible.com";
 
 	@Mock
 	Booking booking;
@@ -64,14 +62,6 @@ public class BookingAssignedSendMailTriggerTest {
 
 		verify(mailServer).sendMail(withAMailSentTo(USER_EMAIL));
 		verify(mailServer).sendMail(withAMailSentTo(RESPONSIBLE_EMAIL));
-	}
-
-	@Test(expected = CouldNotSendMailException.class)
-	public void whenMailServerFailedToSendAnEmailShouldThrowException() {
-		when(booking.isAssigned()).thenReturn(false);
-		doThrow(new CouldNotSendMailException()).when(mailServer).sendMail(any(Mail.class));
-
-		bookingAssignedSendMailTrigger.update(booking);
 	}
 
 	private Mail withAMailSentTo(String email) {

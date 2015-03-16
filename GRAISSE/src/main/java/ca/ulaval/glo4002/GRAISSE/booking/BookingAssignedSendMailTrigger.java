@@ -8,9 +8,10 @@ import ca.ulaval.glo4002.GRAISSE.services.SimpleMail;
 import ca.ulaval.glo4002.GRAISSE.user.User;
 
 public class BookingAssignedSendMailTrigger implements BookingTrigger {
-	private final static String mailSubject = "Update on your booking";
-	private final static String bookingIsAssignedMessage = "Congratulations ! Assignation succeeded !";
-	private final static String bookingIsNotAssignedMessage = "Assignation failed !";
+	
+	private static final String MAIL_SUBJECT = "Update on your booking";
+	private static final String BOOKING_IS_ASSIGNED_MESSAGE = "Congratulations ! Assignation succeeded !";
+	private static final String BOOKING_IS_NOT_ASSIGNED_MESSAGE = "Assignation failed !";
 
 	private MailServer mailServer;
 	private User user;
@@ -31,15 +32,15 @@ public class BookingAssignedSendMailTrigger implements BookingTrigger {
 	}
 	
 	private void sendMailToEmail(BookingAssignable booking, User user){
-		Mail mailToCreator = new SimpleMail(user.getEmail(), mailSubject, getMailMessage(booking));
+		Mail mailToCreator = new SimpleMail(user.getEmail(), MAIL_SUBJECT, getMailMessage(booking));
 		mailServer.sendMail(mailToCreator);
 	}
 	
 	private String getMailMessage(BookingAssignable booking){
 		if(booking.isAssigned()){
-			return bookingIsAssignedMessage;
+			return BOOKING_IS_ASSIGNED_MESSAGE;
 		}else{
-			return bookingIsNotAssignedMessage;
+			return BOOKING_IS_NOT_ASSIGNED_MESSAGE;
 		}
 	}
 }
