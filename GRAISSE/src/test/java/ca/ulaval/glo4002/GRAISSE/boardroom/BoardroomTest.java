@@ -27,6 +27,7 @@ public class BoardroomTest {
 	Boardroom boardroomWithMoreSeats;
 	Boardroom boardroomWithLessSeats;
 	Boardroom boardroomWithSameSeats;
+	
 	@Mock
 	BookingAssignable booking;
 

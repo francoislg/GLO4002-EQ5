@@ -83,7 +83,7 @@ public class BoardroomsTest {
 	}
 	
 	@Test
-	public void assignBookingToBoardroomShouldPassByPersistance(){
+	public void assignBookingToBoardroomShouldPersistInRepository (){
 		boardrooms.assignBookingToBoardroom(assignedBooking, boardroomsStrategy);
 		verify(boardroomRepository, times(1)).persist(boardroom);
 	}
