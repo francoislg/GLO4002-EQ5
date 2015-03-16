@@ -24,12 +24,12 @@ public class BoardroomTest {
 
 	@Mock
 	BookingAssignable booking;
-	
+
 	Boardroom boardroom;
 	Boardroom boardroomWithMoreSeats;
 	Boardroom boardroomWithLessSeats;
 	Boardroom boardroomWithSameSeats;
-	
+
 	@Before
 	public void setUp() {
 		boardroom = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_IN_BOARDROOM);
@@ -64,7 +64,7 @@ public class BoardroomTest {
 	public void withDifferentNamehasNameReturnFalse() {
 		assertFalse(boardroom.hasName(NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1));
 	}
-	
+
 	@Test
 	public void boardroomShouldBeAvaibleAfterCreation() {
 		assertTrue(boardroom.isAvailable());
@@ -90,17 +90,17 @@ public class BoardroomTest {
 	}
 
 	@Test
-	public void withSmallerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+	public void withSmallerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPositiveNumber() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithLessSeats);
 		assertEquals(BIGGER, result);
 	}
 
 	@Test
-	public void withBiggerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+	public void withBiggerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnANegativeNumber() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithMoreSeats);
 		assertEquals(SMALLER, result);
 	}
-	
+
 	@Test
 	public void withSameNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnZero() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithSameSeats);
