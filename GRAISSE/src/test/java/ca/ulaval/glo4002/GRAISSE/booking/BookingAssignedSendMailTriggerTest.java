@@ -20,8 +20,8 @@ import ca.ulaval.glo4002.GRAISSE.user.User;
 @RunWith(MockitoJUnitRunner.class)
 public class BookingAssignedSendMailTriggerTest {
 	
-	private static final  String USER_EMAIL = "email@totalyanemail.ca";
-	private static final  String RESPONSIBLE_EMAIL = "email@responsible.com";
+	private static final String USER_EMAIL = "email@totalyanemail.ca";
+	private static final String RESPONSIBLE_EMAIL = "email@responsible.com";
 
 	@Mock
 	Booking booking;
@@ -50,8 +50,8 @@ public class BookingAssignedSendMailTriggerTest {
 
 		bookingAssignedSendMailTrigger.update(booking);
 
-		verify(mailServer).sendMail(argThat(IsAMailSentTo(USER_EMAIL)));
-		verify(mailServer).sendMail(argThat(IsAMailSentTo(RESPONSIBLE_EMAIL)));
+		verify(mailServer).sendMail(withAMailSentTo(USER_EMAIL));
+		verify(mailServer).sendMail(withAMailSentTo(RESPONSIBLE_EMAIL));
 	}
 
 	@Test
