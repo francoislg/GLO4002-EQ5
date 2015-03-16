@@ -16,10 +16,10 @@ import ca.ulaval.glo4002.GRAISSE.booker.BookerStrategyBasic;
 @RunWith(MockitoJUnitRunner.class)
 public class BookerStrategiesFactoryTest {
 
-	BookerStrategiesFactory bookingStrategiesFactory;
-
 	@Mock
-	private Boardrooms boardrooms;
+	Boardrooms boardrooms;
+	
+	BookerStrategiesFactory bookingStrategiesFactory;
 
 	@Before
 	public void setUp() {
