@@ -9,9 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SMTPSessionFactoryTest {
-	private final static String A_HOST = "Host";
-	private final static String A_USER = "Superman";
-	private final static String A_PASSWORD = "Most secure password ever";
+	
+	private static final String A_HOST = "Host";
+	private static final String A_USER = "Superman";
+	private static final String A_PASSWORD = "Most secure password ever";
 	
 	SMTPSessionFactory smtpSessionFactory;
 	

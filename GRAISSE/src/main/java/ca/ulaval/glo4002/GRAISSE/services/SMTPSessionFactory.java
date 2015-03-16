@@ -5,7 +5,8 @@ import java.util.Properties;
 import javax.mail.Session;
 
 public class SMTPSessionFactory {
-	private final static String DEFAULT_PORT = "587";
+	
+	private static final String DEFAULT_PORT = "587";
 	
 	public Session create(String host, String user, String password){
 		return create(host, user, password, DEFAULT_PORT);
