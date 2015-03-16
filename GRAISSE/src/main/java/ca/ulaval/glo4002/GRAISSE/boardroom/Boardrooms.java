@@ -24,6 +24,7 @@ public class Boardrooms {
 				return;
 			}
 		}
+		notifyTriggers(bookingToAssign);
 		throw new UnableToAssignBookingException();
 	}
 	
