@@ -21,8 +21,7 @@ public class BoardroomInMemoryRepositoryTest {
 	private static final String NAME_OF_BOARDROOM_2 = "Boardroom2";
 	private static final String NAME_OF_BOARDROOM_3 = "Boardroom3";
 	private static final String NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST = "BoardroomThatDoesNotExist";
-	private BoardroomInMemoryRepository repoBoardrooms;
-
+	
 	@Mock
 	Boardroom boardroom1;
 
@@ -31,6 +30,8 @@ public class BoardroomInMemoryRepositoryTest {
 
 	@Mock
 	Boardroom boardroom3;
+	
+	BoardroomInMemoryRepository repoBoardrooms;
 
 	@Before
 	public void setUp() {
@@ -42,6 +43,7 @@ public class BoardroomInMemoryRepositoryTest {
 		addOneBoardroomtoBoardrooms();
 
 		Boardroom boardroom = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_1);
+		
 		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 	}
 
@@ -82,5 +84,4 @@ public class BoardroomInMemoryRepositoryTest {
 		setIsMyNameForBoardroomMock(boardroom1, NAME_OF_BOARDROOM_1);
 		repoBoardrooms.persist(boardroom1);
 	}
-
 }
