@@ -1,11 +1,12 @@
 package ca.ulaval.glo4002.GRAISSE.boardroom;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,12 +25,12 @@ public class BoardroomTest {
 
 	@Mock
 	BookingAssignable booking;
-	
+
 	Boardroom boardroom;
 	Boardroom boardroomWithMoreSeats;
 	Boardroom boardroomWithLessSeats;
 	Boardroom boardroomWithSameSeats;
-	
+
 	@Before
 	public void setUp() {
 		boardroom = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_IN_BOARDROOM);
@@ -56,15 +57,15 @@ public class BoardroomTest {
 	}
 
 	@Test
-	public void whenHasNameWithSameNameShouldReturnTrue() {
+	public void givenSameNameHasNameWithShouldReturnTrue() {
 		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 	}
 
 	@Test
-	public void whenHasNameWithDifferentNameShouldReturnFalse() {
+	public void givenDifferentNameHasNameShouldReturnFalse() {
 		assertFalse(boardroom.hasName(NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1));
 	}
-	
+
 	@Test
 	public void givenABoardroomWithDefaultAvailabilityShouldBeAvaible() {
 		assertTrue(boardroom.isAvailable());
@@ -79,9 +80,9 @@ public class BoardroomTest {
 	@Test
 	public void whenBoadroomIsNotAvailableAndHasEnoughSeatsForTheBookingAssignShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
-		
+
 		boardroom.assign(booking);
-		
+
 		assertFalse(boardroom.assign(booking));
 	}
 
@@ -102,7 +103,7 @@ public class BoardroomTest {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithMoreSeats);
 		assertThat(result, lessThan(0));
 	}
-	
+
 	@Test
 	public void givenSameNumberOfSeatsThanBoardroomComparingNumberOfSeatsShouldReturnZero() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithSameSeats);
