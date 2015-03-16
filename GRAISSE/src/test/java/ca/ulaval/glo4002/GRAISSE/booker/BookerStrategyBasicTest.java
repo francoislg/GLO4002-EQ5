@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE.booker;
 
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
@@ -17,8 +16,6 @@ import ca.ulaval.glo4002.GRAISSE.booking.BookingsStrategy;
 @RunWith(MockitoJUnitRunner.class)
 public class BookerStrategyBasicTest {
 
-	BookerStrategyBasic bookerStrategyBasic;
-
 	@Mock
 	BookingsStrategy bookingsStrategy;
 
@@ -30,6 +27,8 @@ public class BookerStrategyBasicTest {
 
 	@Mock
 	Boardrooms boardrooms;
+	
+	BookerStrategyBasic bookerStrategyBasic;
 
 	@Before
 	public void setUp() {
@@ -39,10 +38,6 @@ public class BookerStrategyBasicTest {
 	@Test
 	public void assignBookingsShouldCallAssignBookingsToBoardrooms() {
 		bookerStrategyBasic.assignBookings(boardrooms, bookings);
-		verify(bookings, times(1)).assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
-	}
-
-	public void assignBookings(Boardrooms boardrooms, Bookings bookings) {
-		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
+		verify(bookings).assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
 	}
 }
