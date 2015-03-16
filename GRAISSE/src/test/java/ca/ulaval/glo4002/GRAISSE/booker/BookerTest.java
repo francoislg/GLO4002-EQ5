@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE.booker;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
@@ -16,12 +15,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.trigger.Trigger;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookerTest {
-
-	Booker booker;
 
 	@Mock
 	Bookings bookings;
@@ -36,10 +32,12 @@ public class BookerTest {
 	Booking booking;
 	
 	@Mock
-	Trigger trigger;
+	BookerTrigger trigger;
 	
 	@Mock
-	Trigger secondTrigger;
+	BookerTrigger secondTrigger;
+	
+	Booker booker;
 
 	@Before
 	public void setUp() {
@@ -47,35 +45,28 @@ public class BookerTest {
 	}
 
 	@Test
-	public void assignBookingShouldCallAssignBookingsOnBookingStrategy() {
+	public void assignBookingsShouldCallAssignBookingsOnBookerStrategy() {
 		booker.assignBookings();
-		verify(bookerStrategy, times(1)).assignBookings(boardrooms, bookings);
+		verify(bookerStrategy).assignBookings(boardrooms, bookings);
 	}
 
 	@Test
 	public void addBookingShouldAddABookingToBookings() {
 		booker.addBooking(booking);
-		verify(bookings, times(1)).add(booking);
+		verify(bookings).add(booking);
 	}
 
 	@Test
-	public void whenBookingsIsEmptyTheBookerShouldNotHasBookingsToAssign() {
-		doReturn(true).when(bookings).isEmpty();
-		
+	public void whenBookingsHasNoBookingToAssignedTheBookerShouldNotHaveBookingsToAssign() {
+		doReturn(false).when(bookings).hasUnassignedBookings();
 		assertFalse(booker.hasBookingsToAssign());
 	}
 	
 	
 	@Test
-	public void afterAddingABookingTheBookerShouldHasBookingsToAssign() {
-		doReturn(false).when(bookings).isEmpty();
-		
+	public void whenBookingsHasBookingToAssignedTheBookerShouldHaveBookingsToAssign() {
+		doReturn(true).when(bookings).hasUnassignedBookings();
 		assertTrue(booker.hasBookingsToAssign());
-	}
-
-	@Test
-	public void onCreationTheBookerShouldHaveZeroJobsToDo() {
-		assertEquals(0, booker.numberOfBookingsToAssign());
 	}
 
 	@Test

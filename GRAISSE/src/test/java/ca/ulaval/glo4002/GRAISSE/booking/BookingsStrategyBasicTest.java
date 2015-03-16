@@ -16,11 +16,11 @@ import ca.ulaval.glo4002.GRAISSE.booking.BookingsStrategyBasic;
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsStrategyBasicTest {
 
-	BookingsStrategyBasic bookingsStrategyBasic;
-
 	@Mock
 	Collection<Booking> bookingCollection;
 
+	BookingsStrategyBasic bookingsStrategyBasic;
+	
 	@Before
 	public void setUp() {
 		bookingsStrategyBasic = new BookingsStrategyBasic();

@@ -1,40 +1,25 @@
 package ca.ulaval.glo4002.GRAISSE.booking;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
+import ca.ulaval.glo4002.GRAISSE.user.User;
 
-public class Booking implements BookingAssignable {
-	
-	public enum Priority {
-		VERY_LOW(0),
-		LOW(1),
-		MEDIUM(2),
-		HIGH(3),
-		VERY_HIGH(4);
-		
-		private final int value;
-		
-		private Priority(int value) {
-			this.value = value;
-		}
-		
-		public int compare(Priority priorityToCompare) {
-			return  Integer.compare(value, priorityToCompare.value);
-		}
-	}
+public class Booking implements BookingAssignable {	
 	
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
 
 	private int numberOfSeatsNeeded;
 	private boolean assigned;
 	private Priority priority;
-
-	public Booking(int numberOfSeatsNeeded) {
-		assigned = false;
-		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
-		priority = DEFAULT_PRIORITY;
+	private User creator;
+	
+	public Booking(User creator, int numberOfSeatsNeeded) {
+		this(creator, numberOfSeatsNeeded, DEFAULT_PRIORITY);
 	}
 	
-	public void setPriority(Priority priority) {
+	public Booking(User creator, int numberOfSeatsNeeded, Priority priority) {
+		this.creator = creator;
+		this.assigned = false;
+		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = priority;
 	}
 
@@ -44,6 +29,10 @@ public class Booking implements BookingAssignable {
 	
 	public boolean isAssigned() {
 		return assigned;
+	}
+	
+	public boolean hasCreator(User user){
+		return creator.equals(user);
 	}
 
 	public boolean verifyNumberOfSeats(int numberOfSeats) {

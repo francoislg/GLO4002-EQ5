@@ -8,14 +8,14 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.booker.Booker;
-import ca.ulaval.glo4002.GRAISSE.trigger.BookerTimerTask;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookerTimerTaskTest {
 
 	@Mock
-	private Booker booker;
-	private BookerTimerTask timerTaskStrategy;
+	Booker booker;
+	
+	BookerTimerTask timerTaskStrategy;
 
 	@Test
 	public void timerTaskStrategyShouldCalledWorkerDoWorkWhenRunisCalled() {

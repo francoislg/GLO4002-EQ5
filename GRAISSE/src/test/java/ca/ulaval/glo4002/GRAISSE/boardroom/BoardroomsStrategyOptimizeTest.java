@@ -20,38 +20,53 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategyOptimize;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomsStrategyOptimizeTest {
+	
 	private static final int BIGGER = 1;
 	private static final int SMALLER = -1;
+	private static final int EQUAL = 0;
 
+	@Mock
+	Boardrooms boardrooms;
+
+	@Mock
+	Boardroom boardroomSmallestNumberOfSeatsNeeded;
+
+	@Mock
+	Boardroom boardroomSecondSmallestNumberOfSeatsNeeded;
+	
+	@Mock
+	Boardroom boardroomSecondSmallestNumberOfSeatsNeeded2;
+
+	@Mock
+	Boardroom boardroomBiggestNumberOfSeatsNeeded;
+	
 	BoardroomsStrategyOptimize boardroomsStrategyOptimize;
-
-	@Mock
-	private Boardrooms boardrooms;
-
-	@Mock
-	private Boardroom BoardroomSmallestNumberOfSeatsNeeded;
-
-	@Mock
-	private Boardroom BoardroomSecondSmallestNumberOfSeatsNeeded;
-
-	@Mock
-	private Boardroom BoardroomBiggestNumberOfSeatsNeeded;
 
 	@Before
 	public void setUp() {
 		boardroomsStrategyOptimize = new BoardroomsStrategyOptimize();
-		when(BoardroomSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(any())).thenReturn(SMALLER);
-		when(BoardroomSecondSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(BoardroomSmallestNumberOfSeatsNeeded)).thenReturn(BIGGER);
-		when(BoardroomSecondSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(BoardroomBiggestNumberOfSeatsNeeded)).thenReturn(SMALLER);
-		when(BoardroomBiggestNumberOfSeatsNeeded.compareByNumberOfSeats(any())).thenReturn(BIGGER);
+		
+		when(boardroomSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(any())).thenReturn(SMALLER);
+		
+		when(boardroomSecondSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(boardroomSmallestNumberOfSeatsNeeded)).thenReturn(BIGGER);
+		when(boardroomSecondSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(boardroomBiggestNumberOfSeatsNeeded)).thenReturn(SMALLER);
+		when(boardroomSecondSmallestNumberOfSeatsNeeded.compareByNumberOfSeats(boardroomSecondSmallestNumberOfSeatsNeeded2)).thenReturn(EQUAL);
+		
+		when(boardroomSecondSmallestNumberOfSeatsNeeded2.compareByNumberOfSeats(boardroomSmallestNumberOfSeatsNeeded)).thenReturn(BIGGER);
+		when(boardroomSecondSmallestNumberOfSeatsNeeded2.compareByNumberOfSeats(boardroomBiggestNumberOfSeatsNeeded)).thenReturn(SMALLER);
+		when(boardroomSecondSmallestNumberOfSeatsNeeded2.compareByNumberOfSeats(boardroomSecondSmallestNumberOfSeatsNeeded)).thenReturn(EQUAL);
+		
+		when(boardroomBiggestNumberOfSeatsNeeded.compareByNumberOfSeats(any())).thenReturn(BIGGER);
 	}
 
 	@Test
-	public void withUnorderedListformatShouldAnOrderByNumberOfSeats() {
-		Collection<Boardroom> boardroomList = new ArrayList<Boardroom>(Arrays.asList(BoardroomBiggestNumberOfSeatsNeeded, BoardroomSecondSmallestNumberOfSeatsNeeded,
-				BoardroomSmallestNumberOfSeatsNeeded));
-		Collection<Boardroom> expectedBoardroomList = new ArrayList<Boardroom>(Arrays.asList(BoardroomSmallestNumberOfSeatsNeeded,
-				BoardroomSecondSmallestNumberOfSeatsNeeded, BoardroomBiggestNumberOfSeatsNeeded));
+	public void withUnorderedListTheStrategyShouldOrderTheListByNumberOfSeats() {
+		Collection<Boardroom> boardroomList = new ArrayList<Boardroom>(Arrays.asList(boardroomSecondSmallestNumberOfSeatsNeeded, 
+				boardroomBiggestNumberOfSeatsNeeded, boardroomSecondSmallestNumberOfSeatsNeeded2, boardroomSmallestNumberOfSeatsNeeded));
+		
+		Collection<Boardroom> expectedBoardroomList = new ArrayList<Boardroom>(Arrays.asList(boardroomSmallestNumberOfSeatsNeeded,
+				boardroomSecondSmallestNumberOfSeatsNeeded, boardroomSecondSmallestNumberOfSeatsNeeded2, boardroomBiggestNumberOfSeatsNeeded));
+		
 		Collection<Boardroom> result = boardroomsStrategyOptimize.sort(boardroomList);
 		assertEquals(expectedBoardroomList, result);
 	}
