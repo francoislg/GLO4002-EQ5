@@ -35,30 +35,27 @@ public class BookingInMemoryRepositoryTest {
 	}
 	
 	@Test 
-	public void afterPersistingOneBookingTheRepositoryShouldContainTheBooking() {
+	public void whenPersistingOneBookingRepositoryShouldContainTheBooking() {
 		bookingInMemoryRepository.persist(booking);
 		
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
-		
 		assertTrue(result.contains(booking));
 	}
 	
 	@Test 
-	public void afterPersistingOneBookingTheRepositoryShouldContainOnlyOneBooking() {
+	public void whenPersistingOneBookingRepositoryShouldContainOnlyOneBooking() {
 		bookingInMemoryRepository.persist(booking);
 		
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
-		
 		assertEquals(1, result.size());
 	}
 	
 	@Test
-	public void afterPersistingTheSameBookingTwiceTheRepositoryShouldOnlyContainOneBooking() {
+	public void whenPersistingTwiceTheSameBookingRepositoryShouldContainOneBooking() {
 		bookingInMemoryRepository.persist(booking);
 		bookingInMemoryRepository.persist(booking);
 		
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
-		
 		assertEquals(1, result.size());
 	}
 }

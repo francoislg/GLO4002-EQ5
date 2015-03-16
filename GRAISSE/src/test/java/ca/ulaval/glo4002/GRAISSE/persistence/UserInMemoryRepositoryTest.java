@@ -44,7 +44,7 @@ public class UserInMemoryRepositoryTest {
 	}
 	
 	@Test(expected=UserNotFoundException.class)
-	public void whenRetrievingUserNotInMemoryShouldThrowException() {
+	public void givenEmptyRepositoryWhenRetrievingUserNotInMemoryShouldThrowException() {
 		userInMemoryRepository.retrieve(email);
 	}
 }
