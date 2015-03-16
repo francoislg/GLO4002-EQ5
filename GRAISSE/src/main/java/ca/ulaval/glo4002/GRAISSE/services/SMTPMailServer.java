@@ -8,6 +8,7 @@ import javax.mail.Transport;
 import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotSendMailException;
 
 public class SMTPMailServer implements MailServer {
+	
 	private final SMTPMailServerConfig config;
 	private Transport transport;
 	private SMTPMessageFactory messageFactory;

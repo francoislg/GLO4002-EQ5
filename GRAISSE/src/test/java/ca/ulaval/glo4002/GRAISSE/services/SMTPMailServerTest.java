@@ -18,6 +18,7 @@ import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotSendMailException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SMTPMailServerTest {
+	
 	@Mock
 	Address aRecipient;
 	
