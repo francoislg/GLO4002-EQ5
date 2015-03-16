@@ -13,8 +13,9 @@ import ca.ulaval.glo4002.GRAISSE.booker.Booker;
 public class BookerTimerTaskTest {
 
 	@Mock
-	private Booker booker;
-	private BookerTimerTask timerTaskStrategy;
+	Booker booker;
+	
+	BookerTimerTask timerTaskStrategy;
 
 	@Test
 	public void timerTaskStrategyShouldCalledWorkerDoWorkWhenRunisCalled() {
