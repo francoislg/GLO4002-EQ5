@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.Collection;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +14,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.BoardroomNotFoundException;
-import ca.ulaval.glo4002.GRAISSE.persistence.BoardroomInMemoryRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomInMemoryRepositoryTest {
@@ -36,6 +37,12 @@ public class BoardroomInMemoryRepositoryTest {
 	@Before
 	public void setUp() {
 		repoBoardrooms = new BoardroomInMemoryRepository();
+	}
+	
+	@Test
+	public void newRepositoryShouldBeEmpty() {
+		Collection<Boardroom> result = repoBoardrooms.retrieveAll();
+		assertTrue(result.isEmpty());
 	}
 
 	@Test
