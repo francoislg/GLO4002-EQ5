@@ -7,14 +7,15 @@ import ca.ulaval.glo4002.GRAISSE.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.booking.Bookings;
 
 public class Booker {
+	
 	private Bookings bookings;
 	private BookerStrategy bookerStrategy;
 	private Boardrooms boardrooms;
 	private ArrayList<BookerTrigger> triggers;
 
 	public Booker(BookerStrategy bookerStrategy, Bookings bookings, Boardrooms boardrooms) {
-		this.bookings = bookings;
 		this.bookerStrategy = bookerStrategy;
+		this.bookings = bookings;
 		this.boardrooms = boardrooms;
 		triggers = new ArrayList<BookerTrigger>();
 	}
