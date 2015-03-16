@@ -11,9 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
-import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
-
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomTest {
 
@@ -29,7 +26,8 @@ public class BoardroomTest {
 	Boardroom boardroom;
 	Boardroom boardroomWithMoreSeats;
 	Boardroom boardroomWithLessSeats;
-
+	Boardroom boardroomWithSameSeats;
+	
 	@Mock
 	BookingAssignable booking;
 
@@ -38,6 +36,7 @@ public class BoardroomTest {
 		boardroom = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_IN_BOARDROOM);
 		boardroomWithMoreSeats = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_BIGGER);
 		boardroomWithLessSeats = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_SMALLER);
+		boardroomWithSameSeats = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_IN_BOARDROOM);
 	}
 
 	@Test
@@ -46,24 +45,24 @@ public class BoardroomTest {
 	}
 
 	@Test
-	public void IfNotEnoughtSeatsVerifyNumberOfSeatsReturnFalse() {
+	public void withNotEnoughtSeatsVerifyNumberOfSeatsReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(false);
 		assertFalse(boardroom.verifyNumberOfSeats(booking));
 	}
 
 	@Test
-	public void IfEnoughtSeatsVerifyNumberOfSeatsReturnTrue() {
+	public void withEnoughtSeatsVerifyNumberOfSeatsReturnTrue() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
 		assertTrue(boardroom.verifyNumberOfSeats(booking));
 	}
 
 	@Test
-	public void IfSameNameIsMyNameReturnTrue() {
+	public void withSameNamehasNameReturnTrue() {
 		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 	}
 
 	@Test
-	public void IfNotSameNameIsMyNameReturnFalse() {
+	public void withDifferentSameNamehasNameReturnFalse() {
 		assertFalse(boardroom.hasName(NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1));
 	}
 
@@ -74,27 +73,34 @@ public class BoardroomTest {
 	}
 
 	@Test
-	public void secondAssignShouldReturnFalse() {
+	public void whenBoadroomIsNotAvailableAssignShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
 		boardroom.assign(booking);
 		assertFalse(boardroom.assign(booking));
 	}
 
 	@Test
-	public void IfVerifyFailassignToBoardroomShouldReturnFalse() {
+	public void whenVerifyFailassignToBoardroomShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(false);
 		assertFalse(boardroom.assign(booking));
 	}
 
 	@Test
-	public void WithSmallerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+	public void withSmallerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithLessSeats);
 		assertEquals(BIGGER, result);
 	}
 
 	@Test
-	public void WithBiggerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+	public void withBiggerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithMoreSeats);
 		assertEquals(SMALLER, result);
 	}
+	
+	@Test
+	public void withSameNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnZero() {
+		int result = boardroom.compareByNumberOfSeats(boardroomWithSameSeats);
+		assertEquals(0, result);
+	}
+
 }
