@@ -15,13 +15,13 @@ import ca.ulaval.glo4002.GRAISSE.booking.Booking;
 @RunWith(MockitoJUnitRunner.class)
 public class BookingInMemoryRepositoryTest {
 
-	private BookingInMemoryRepository bookingInMemoryRepository;
-	
 	@Mock
 	Booking booking;
 	
 	@Mock
 	Booking bookingThatIsNotInTheRepository;
+	
+	BookingInMemoryRepository bookingInMemoryRepository;
 	
 	@Before
 	public void setUp() {
