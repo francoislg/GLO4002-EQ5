@@ -71,25 +71,25 @@ public class BookingsTest {
 	}
 
 	@Test
-	public void bookingsShouldNotHaveUnassignedBookingsIfTheRepositoryIsEmpty() {
+	public void givenAnEmptyRepositoryBookingsShouldNotHaveUnassignedBookings() {
 		setUpEmptyBookings();	
 		assertFalse(bookings.hasUnassignedBookings());
 	}
 
 	@Test
-	public void bookingsShouldHaveUnassignedBookingsIfTheRepositoryContainOneUnassignedBooking() {
+	public void givenARepositoryWithOneUnassignedBookingBookingsShouldHaveUnassignedBookings() {
 		setUpOneUnassignedBookingInBookings();
 		assertTrue(bookings.hasUnassignedBookings());
 	}
 
 	@Test
-	public void bookingsShouldNotHaveUnassignedBookingsIfTheRepositoryContainOnlyAssignedBooking() {
+	public void givenARepositoryWithOneAssignedBookingBookingsShouldNotHaveUnassignedBookings() {
 		setUpAllAssignedBookings();
 		assertFalse(bookings.hasUnassignedBookings());
 	}
 
 	@Test
-	public void assigningBookingsShouldOnlyBeAttemptedWithUnassignedBookings() {
+	public void givenOneUnassignedBookingAssigningBookingsShouldOnlyAttemptToAssignUnassignedBookings() {
 		setUpOneUnassignedBookingInBookings();
 	
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
@@ -100,7 +100,7 @@ public class BookingsTest {
 	}
 
 	@Test
-	public void newlyAssignedBookingsShouldBePersistedAfterTheAssignation() {
+	public void givenOneUnassignedBookingAssignedBookingShouldPersistTheAssignedBooking() {
 		setUpOneUnassignedBookingInBookings();
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);

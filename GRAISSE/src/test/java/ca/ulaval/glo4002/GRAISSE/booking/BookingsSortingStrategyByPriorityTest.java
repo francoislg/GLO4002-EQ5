@@ -45,7 +45,7 @@ public class BookingsSortingStrategyByPriorityTest {
 	}
 
 	@Test
-	public void withBookingCollectionSortShouldReturnTheSameBoardroomCollection() {
+	public void givenAnUnorderedBookingsListWhenSortingWithStrategyShouldReturnAnOrderedList() {
 		Collection<Booking> unorderedBookingList = unorderedBookingsList();
 		Collection<Booking> expectedBookingList = orderedBookingList();
 		

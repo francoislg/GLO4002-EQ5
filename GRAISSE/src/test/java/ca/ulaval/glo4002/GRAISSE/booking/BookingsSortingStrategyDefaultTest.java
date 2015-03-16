@@ -27,7 +27,7 @@ public class BookingsSortingStrategyDefaultTest {
 	}
 
 	@Test
-	public void withBookingCollectionSortShouldReturnTheSameBoardroomCollection() {
+	public void givenAListOfBookingsWhenSortingWithStrategyShouldReturnSameList() {
 		assertEquals(bookingCollection, bookingsSortingStrategyDefault.sort(bookingCollection));
 	}
 }

@@ -1,5 +1,8 @@
 package ca.ulaval.glo4002.GRAISSE.booking;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -41,55 +44,52 @@ public class BookingTest {
 	}
 
 	@Test
-	public void hasCreatorShouldReturnTrueForCreator() {
+	public void givenSameUserAsBookingHasCreatorShouldReturnTrue() {
 		assertTrue(booking.hasCreator(user));
 	}
 
 	@Test
-	public void hasCreatorShouldReturnTrueForAnotherUser() {
+	public void givenAnotherUserHasCreatorShouldReturnTrue() {
 		User another_user = mock(User.class);
 		assertFalse(booking.hasCreator(another_user));
 	}
 
 	@Test
-	public void withASmallerNumberOfSeatsVerifyNumberOfSeatsShouldReturnFalse() {
+	public void givenSmallerNumberOfSeatsThanBookingVerifyNumberOfSeatsShouldReturnFalse() {
 		assertFalse(booking.verifyNumberOfSeats(A_NUMBER_OF_SEATS_THAT_IS_SMALLER_THAN_THE_BOOKING));
 	}
 
 	@Test
-	public void withTheSameNumberOfSeatsVerifyNumberOfSeatsShouldReturnTrue() {
+	public void givenTheSameNumberOfSeatsThanBookingVerifyNumberOfSeatsShouldReturnTrue() {
 		assertTrue(booking.verifyNumberOfSeats(A_NUMBER_OF_SEATS_THAT_IS_EQUAL_TO_THE_BOOKING));
 	}
 
 	@Test
-	public void withABiggerNumberOfSeatsVerifyNumberOfSeatsShouldReturnTrue() {
+	public void givenBiggerNumberOfSeatsThanBookingVerifyNumberOfSeatsShouldReturnTrue() {
 		assertTrue(booking.verifyNumberOfSeats(A_NUMBER_OF_SEATS_THAT_IS_BIGGER_THAN_THE_BOOKING));
 	}
 
 	@Test
-	public void withSmallerPriorityBookingcomparePriorityToBookingShouldReturnAPositiveNumber() {
-		Booking bookingWithSmallerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING,
-				PRIORITY_VALUE_OF_BOOKING_SMALLER);
+	public void givenBookingABookingWithSmallerPriorityWhenComparingShouldReturnAPositiveNumber() {
+		Booking bookingWithSmallerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_SMALLER);
 		
 		int result = booking.comparePriorityToBooking(bookingWithSmallerPriority);
 		
-		assertTrue(result > 0);
+		assertThat(result, greaterThan(0));
 	}
 
 	@Test
-	public void withBiggerPriorityBookingcomparePriorityToBookingShouldReturnANegativeNumber() {
-		Booking bookingWithBiggerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING,
-				PRIORITY_VALUE_OF_BOOKING_BIGGER);
+	public void givenBookingABookingWithBiggerPriorityWhenComparingShouldReturnANegativeNumber() {
+		Booking bookingWithBiggerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_BIGGER);
 		
 		int result = booking.comparePriorityToBooking(bookingWithBiggerPriority);
 		
-		assertTrue(result < 0);
+		assertThat(result, lessThan(0));
 	}
 
 	@Test
-	public void withSamePriorityBookingcomparePriorityToBookingShouldReturnZero() {
-		Booking bookingWithEqualPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING,
-				PRIORITY_VALUE_OF_BOOKING);
+	public void givenBookingABookingWithSamePriorityWhenComparingShouldReturnZero() {
+		Booking bookingWithEqualPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
 		
 		int result = booking.comparePriorityToBooking(bookingWithEqualPriority);
 		
