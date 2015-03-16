@@ -20,10 +20,10 @@ public class BoardroomsTest {
 	BoardroomRepository boardroomRepository;
 	
 	@Mock
-	BookingAssignedTrigger trigger;
+	BookingTrigger trigger;
 	
 	@Mock
-	BookingAssignedTrigger secondTrigger;
+	BookingTrigger secondTrigger;
 	
 	@Mock
 	BookingAssignable assignedBooking;

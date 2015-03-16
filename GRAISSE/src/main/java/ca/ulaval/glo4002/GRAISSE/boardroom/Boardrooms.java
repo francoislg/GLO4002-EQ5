@@ -8,11 +8,11 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.UnableToAssignBookingExcep
 public class Boardrooms {
 
 	private BoardroomRepository boardroomsRepository;
-	private ArrayList<BookingAssignedTrigger> triggers;
+	private ArrayList<BookingTrigger> triggers;
 
 	public Boardrooms(BoardroomRepository boardroomsRepo) {
 		this.boardroomsRepository = boardroomsRepo;
-		this.triggers = new ArrayList<BookingAssignedTrigger>();
+		this.triggers = new ArrayList<BookingTrigger>();
 	}
 
 	public void assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsStrategy boardroomsStrategy) {
@@ -29,12 +29,12 @@ public class Boardrooms {
 	
 	
 	public void notifyTriggers(BookingAssignable booking){
-		for(BookingAssignedTrigger trigger : triggers) {
+		for(BookingTrigger trigger : triggers) {
 			trigger.update(booking);
 		}
 	}
 	
-	public void registerBookingAssignedTrigger(BookingAssignedTrigger trigger) {
+	public void registerBookingAssignedTrigger(BookingTrigger trigger) {
 		triggers.add(trigger);
 	}
 }
