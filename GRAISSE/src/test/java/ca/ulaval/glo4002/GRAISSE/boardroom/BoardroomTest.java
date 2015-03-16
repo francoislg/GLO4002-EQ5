@@ -44,29 +44,29 @@ public class BoardroomTest {
 	}
 
 	@Test
-	public void withNotEnoughtSeatsVerifyNumberOfSeatsReturnFalse() {
+	public void givenInsufficentSeatsWhenVerifyingNumberOfSeatsShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(false);
 		assertFalse(boardroom.verifyNumberOfSeats(booking));
 	}
 
 	@Test
-	public void withEnoughtSeatsVerifyNumberOfSeatsReturnTrue() {
+	public void givenEnoughtSeatsWhenVerifyingNumberOfSeatsShouldReturnTrue() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
 		assertTrue(boardroom.verifyNumberOfSeats(booking));
 	}
 
 	@Test
-	public void withSameNamehasNameReturnTrue() {
+	public void whenHasNameWithSameNameShouldReturnTrue() {
 		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 	}
 
 	@Test
-	public void withDifferentNamehasNameReturnFalse() {
+	public void whenHasNameWithDifferentNameShouldReturnFalse() {
 		assertFalse(boardroom.hasName(NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1));
 	}
 	
 	@Test
-	public void boardroomShouldBeAvaibleAfterCreation() {
+	public void givenABoardroomWithDefaultAvailabilityShouldBeAvaible() {
 		assertTrue(boardroom.isAvailable());
 	}
 
