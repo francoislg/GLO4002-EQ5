@@ -13,11 +13,12 @@ import ca.ulaval.glo4002.GRAISSE.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserTest {
-	User user;
-	
+
 	@Mock
 	Email email;
 	
+	User user;
+
 	@Before
 	public void setUp() {
 		user = new User(email);

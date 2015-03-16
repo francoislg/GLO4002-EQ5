@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.GRAISSE.user;
 import ca.ulaval.glo4002.GRAISSE.services.Email;
 
 public class User {
+	
 	private Email email;
 	
 	public User(Email email){
