@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.GRAISSE.trigger.exceptions.InvalidThresholdException;
 public class ThresholdTrigger implements BookerTrigger {
 
 	private static final int MINIMUM_THRESHOLD_VALUE = 1;
+	
 	private int threshold;
 
 	public ThresholdTrigger(int threshold) {
