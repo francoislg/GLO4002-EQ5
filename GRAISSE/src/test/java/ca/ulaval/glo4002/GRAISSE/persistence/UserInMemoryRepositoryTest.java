@@ -15,7 +15,6 @@ import ca.ulaval.glo4002.GRAISSE.user.exceptions.UserNotFoundException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserInMemoryRepositoryTest {
-	UserInMemoryRepository userInMemoryRepository;
 	
 	@Mock
 	User user;
@@ -26,8 +25,10 @@ public class UserInMemoryRepositoryTest {
 	@Mock
 	Email anotherEmail;
 	
+	UserInMemoryRepository userInMemoryRepository;
+	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		when(user.hasEmail(any(Email.class))).thenReturn(false);
 		when(user.hasEmail(email)).thenReturn(true);
 		userInMemoryRepository = new UserInMemoryRepository();
