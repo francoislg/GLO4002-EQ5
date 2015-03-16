@@ -15,8 +15,8 @@ public class Boardrooms {
 		this.triggers = new ArrayList<BookingTrigger>();
 	}
 
-	public void assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsStrategy boardroomsStrategy) {
-		Collection<Boardroom> formatedBoardroomList = boardroomsStrategy.sort(boardroomsRepository.retrieveAll());
+	public void assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsSortingStrategy boardroomsSortingStrategy) {
+		Collection<Boardroom> formatedBoardroomList = boardroomsSortingStrategy.sort(boardroomsRepository.retrieveAll());
 		for (Boardroom boardroom : formatedBoardroomList) {
 			if (boardroom.assign(bookingToAssign)) {
 				boardroomsRepository.persist(boardroom);

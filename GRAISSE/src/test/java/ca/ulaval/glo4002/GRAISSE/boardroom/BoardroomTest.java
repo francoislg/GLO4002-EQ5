@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +18,6 @@ public class BoardroomTest {
 
 	private static final String NAME_OF_BOARDROOM_1 = "Boardroom1";
 	private static final String NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1 = "Boardroom1Different";
-	private static final int BIGGER = 1;
-	private static final int SMALLER = -1;
 	private static final int NUMBER_OF_SEATS_IN_BOARDROOM = 10;
 	private static final int NUMBER_OF_SEATS_SMALLER = 8;
 	private static final int NUMBER_OF_SEATS_BIGGER = 11;
@@ -90,15 +90,15 @@ public class BoardroomTest {
 	}
 
 	@Test
-	public void withSmallerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+	public void withSmallerNumberOfSeatsBoardroomcompareByNumberOfSeatsShouldReturnAPositiveNumber() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithLessSeats);
-		assertEquals(BIGGER, result);
+		assertThat(result, greaterThan(0));
 	}
 
 	@Test
-	public void withBiggerNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnAPossitiveNumber() {
+	public void withBiggerNumberOfSeatsBoardroomcompareByNumberOfSeatsShouldReturnANegativeNumber() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithMoreSeats);
-		assertEquals(SMALLER, result);
+		assertThat(result, lessThan(0));
 	}
 	
 	@Test

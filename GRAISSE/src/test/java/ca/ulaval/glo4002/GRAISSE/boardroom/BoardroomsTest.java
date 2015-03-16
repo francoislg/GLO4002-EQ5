@@ -37,7 +37,7 @@ public class BoardroomsTest {
 	BookingsStrategy bookingsStrategy;
 	
 	@Mock
-	BoardroomsStrategy boardroomsStrategy;
+	BoardroomsSortingStrategy boardroomsSortingStrategy;
 	
 	@Mock
 	Boardroom boardroom;
@@ -47,27 +47,27 @@ public class BoardroomsTest {
 	@Before
 	public void setUp(){
 		setUpBoardroomMock();
-		when(boardroomsStrategy.sort(any())).thenReturn(Arrays.asList(boardroom));
+		when(boardroomsSortingStrategy.sort(any())).thenReturn(Arrays.asList(boardroom));
 		boardrooms = new Boardrooms(boardroomRepository);
 	}
 	
 	@Test
 	public void givenAnAssignableBookingWhenBoardroomIsAssignedShouldPersistBoardroomInRepository(){
-		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsStrategy);
+		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsSortingStrategy);
 		
 		verify(boardroomRepository).persist(boardroom);
 	}
 	
 	@Test(expected=UnableToAssignBookingException.class)
 	public void givenAnUnassignableBookingWhenBoardroomIsNotAssignedShouldThrowException(){
-		boardrooms.assignBookingToBoardroom(unassignableBooking, boardroomsStrategy);
+		boardrooms.assignBookingToBoardroom(unassignableBooking, boardroomsSortingStrategy);
 	}
 	
 	@Test
 	public void givenATriggerIsAddedWhenBookingAssignedShouldNotifyTrigger(){
 		boardrooms.registerBookingTrigger(trigger);
 		
-		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsStrategy);
+		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsSortingStrategy);
 		
 		verify(trigger).update(assignableBooking);
 	}
@@ -77,7 +77,7 @@ public class BoardroomsTest {
 		boardrooms.registerBookingTrigger(trigger);
 		boardrooms.registerBookingTrigger(secondTrigger);
 		
-		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsStrategy);
+		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsSortingStrategy);
 		
 		verify(trigger).update(assignableBooking);
 		verify(secondTrigger).update(assignableBooking);

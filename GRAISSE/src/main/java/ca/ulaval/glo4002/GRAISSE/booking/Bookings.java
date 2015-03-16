@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategy;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsSortingStrategy;
 
 public class Bookings {
 	
@@ -37,10 +37,10 @@ public class Bookings {
 		return bookings;
 	}
 
-	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsStrategy bookingsStrategy, BoardroomsStrategy boardroomsStrategy) {
+	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsStrategy bookingsStrategy, BoardroomsSortingStrategy boardroomsSortingStrategy) {
 		Collection<Booking> formatedBookingList = bookingsStrategy.sort(getUnassignedBookings());
 		for (Booking booking : formatedBookingList) {
-			boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy);
+			boardrooms.assignBookingToBoardroom(booking, boardroomsSortingStrategy);
 			bookingRepository.persist(booking);
 		}
 	}

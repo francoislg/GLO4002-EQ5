@@ -20,7 +20,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategy;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsSortingStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
@@ -47,7 +47,7 @@ public class BookingsTest {
 	BookingsStrategy bookingsStrategy;
 
 	@Mock
-	BoardroomsStrategy boardroomsStrategy;
+	BoardroomsSortingStrategy boardroomsSortingStrategy;
 
 	@Mock
 	BookingRepository bookingRepository;
@@ -92,18 +92,18 @@ public class BookingsTest {
 	public void assigningBookingsShouldOnlyBeAttemptedWithUnassignedBookings() {
 		setUpOneUnassignedBookingInBookings();
 	
-		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
+		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsSortingStrategy);
 
-		verify(boardrooms).assignBookingToBoardroom(unassignedBooking, boardroomsStrategy);
-		verify(boardrooms, never()).assignBookingToBoardroom(assignedBooking1, boardroomsStrategy);
-		verify(boardrooms, never()).assignBookingToBoardroom(assignedBooking2, boardroomsStrategy);
+		verify(boardrooms).assignBookingToBoardroom(unassignedBooking, boardroomsSortingStrategy);
+		verify(boardrooms, never()).assignBookingToBoardroom(assignedBooking1, boardroomsSortingStrategy);
+		verify(boardrooms, never()).assignBookingToBoardroom(assignedBooking2, boardroomsSortingStrategy);
 	}
 
 	@Test
 	public void newlyAssignedBookingsShouldBePersistedAfterTheAssignation() {
 		setUpOneUnassignedBookingInBookings();
 
-		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
+		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsSortingStrategy);
 
 		verify(bookingRepository).persist(unassignedBooking);
 	}
