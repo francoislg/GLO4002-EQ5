@@ -70,6 +70,17 @@ public class BoardroomsTest {
 		
 		verify(trigger).update(assignableBooking);
 	}
+	
+	@Test
+	public void givenAnUnassignableBookingAndATriggerWhenAssigningShouldNotifyTrigger(){
+		boardrooms.registerBookingTrigger(trigger);
+		
+		try{
+			boardrooms.assignBookingToBoardroom(unassignableBooking, boardroomsSortingStrategy);
+		}catch(Exception ex){}
+		
+		verify(trigger).update(unassignableBooking);
+	}
 
 	@Test
 	public void givenMultipleTriggersAreAddedWhenBookingAssignedShouldNotifyAllTriggers(){
