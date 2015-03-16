@@ -10,9 +10,11 @@ public class SimpleSMTPMessageFactory implements SMTPMessageFactory {
 	@Override
 	public Message create(Mail mail, Session session) throws MessagingException {
 		Message message = new MimeMessage(session);
+		
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(mail.getDestinationString()));
 		message.setSubject(mail.getSubject());
 		message.setText(mail.getMessage());
+		
 		return message;
 	}
 }

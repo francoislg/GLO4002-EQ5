@@ -21,20 +21,20 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SMTPMessageFactoryTest {
-	private final static String MAIL_DESTINATION = "Destination";
-	private final static String MAIL_SUBJECT = "Title";
-	private final static String MAIL_MESSAGE = "Message";
+public class SimpleSMTPMessageFactoryTest {
+	
+	private static final String MAIL_DESTINATION = "Destination";
+	private static final String MAIL_SUBJECT = "Title";
+	private static final String MAIL_MESSAGE = "Message";
 	
 	@Mock
 	Mail mail;
 	
 	Session session;
-	
 	SimpleSMTPMessageFactory smtpMessageFactory;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		setUpMailMock();
 		smtpMessageFactory = new SimpleSMTPMessageFactory();
 	}
