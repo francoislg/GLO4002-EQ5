@@ -64,22 +64,27 @@ public class BoardroomTest {
 	public void withDifferentNamehasNameReturnFalse() {
 		assertFalse(boardroom.hasName(NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1));
 	}
+	
+	@Test
+	public void boardroomShouldBeAvaibleAfterCreation() {
+		assertTrue(boardroom.isAvailable());
+	}
 
 	@Test
-	public void firstAssignShouldReturnTrue() {
+	public void whenBoardroomIsAvailableAndHasEnoughSeatsForTheBookingAssignShouldReturnTrue() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
 		assertTrue(boardroom.assign(booking));
 	}
 
 	@Test
-	public void whenBoadroomIsNotAvailableAssignShouldReturnFalse() {
+	public void whenBoadroomIsNotAvailableAndHasEnoughSeatsForTheBookingAssignShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
 		boardroom.assign(booking);
 		assertFalse(boardroom.assign(booking));
 	}
 
 	@Test
-	public void whenVerifyFailassignToBoardroomShouldReturnFalse() {
+	public void whenBoardroomIsAvailableAndHasNotEnoughSeatsForTheBookingAssignShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(false);
 		assertFalse(boardroom.assign(booking));
 	}
