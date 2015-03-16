@@ -23,49 +23,49 @@ public class ThresholdTriggerTest {
 	private static final int A_LESSER_NUMBER_OF_UNASSIGNED_BOOKINGS_THAN_THRESHOLD = -10;
 	
 	@Mock
-	Booker mockedBooker;
+	Booker booker;
 
 	ThresholdTrigger threshold;
 
 	@Test(expected = InvalidThresholdException.class)
-	public void thresholdTriggerShouldThrowInvalidThresholdExceptionWhenThresholdIsLesserThanZero() {
+	public void givenThresholdSmallerThanZeroThresholdTriggerShouldThrowInvalidThresholdException() {
 		threshold = new ThresholdTrigger(THRESHOLD_LESSER_THAN_ZERO);
 	}
 
 	@Test(expected = InvalidThresholdException.class)
-	public void thresholdTriggerShouldThrowInvalidThresholdExceptionWhenThresholdIsEqualToZero() {
+	public void givenThresholdEqualToZeroThresholdTriggerShouldThrowInvalidThresholdException() {
 		threshold = new ThresholdTrigger(THRESHOLD_EQUAL_TO_ZERO);
 	}
 
 	@Test
-	public void thresholdTriggerShouldAssignBookingsWhenBookerAsEqualUnassignedBookingsThanThresholdValue() {
-		doReturn(THE_SAME_NUMBER_OF_UNASSIGNED_BOOKINGS_AS_THRESHOLD).when(mockedBooker).numberOfBookingsToAssign();
+	public void givenABookerThatHasSameNumberOfUnassignedBookingAsThresholdShouldAssignBookings() {
+		doReturn(THE_SAME_NUMBER_OF_UNASSIGNED_BOOKINGS_AS_THRESHOLD).when(booker).numberOfBookingsToAssign();
 
 		initValidThresholdTrigger();
 
-		verify(mockedBooker).assignBookings();
+		verify(booker).assignBookings();
 	}
 
 	@Test
-	public void thresholdTriggerShouldAssignBookingsWhenBookerAsMoreUnassignedBookingsThanThresholdValue() {
-		doReturn(A_BIGGER_NUMBER_OF_UNASSIGNED_BOOKINGS_THAN_THRESHOLD).when(mockedBooker).numberOfBookingsToAssign();
+	public void givenABookerThatHasMoreUnassignedBookingThanThresholdShouldAssignBookings() {
+		doReturn(A_BIGGER_NUMBER_OF_UNASSIGNED_BOOKINGS_THAN_THRESHOLD).when(booker).numberOfBookingsToAssign();
 
 		initValidThresholdTrigger();
 
-		verify(mockedBooker).assignBookings();
+		verify(booker).assignBookings();
 	}
 
 	@Test
-	public void thresholdTriggerShouldNotAssignBookingsWhenBookerAsLessUnassignedBookingsThanThresholdValue() {
-		doReturn(A_LESSER_NUMBER_OF_UNASSIGNED_BOOKINGS_THAN_THRESHOLD).when(mockedBooker).numberOfBookingsToAssign();
+	public void givenABookerThatHasLessUnassignedBookingThanThresholdShouldNotAssignBookings() {
+		doReturn(A_LESSER_NUMBER_OF_UNASSIGNED_BOOKINGS_THAN_THRESHOLD).when(booker).numberOfBookingsToAssign();
 
 		initValidThresholdTrigger();
 
-		verify(mockedBooker, never()).assignBookings();
+		verify(booker, never()).assignBookings();
 	}
 	
 	private void initValidThresholdTrigger() {
 		threshold = new ThresholdTrigger(A_VALID_THRESHOLD);
-		threshold.update(mockedBooker);
+		threshold.update(booker);
 	}
 }

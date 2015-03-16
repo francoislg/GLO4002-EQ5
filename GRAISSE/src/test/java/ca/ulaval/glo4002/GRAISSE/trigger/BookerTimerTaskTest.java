@@ -18,7 +18,7 @@ public class BookerTimerTaskTest {
 	BookerTimerTask timerTaskStrategy;
 
 	@Test
-	public void timerTaskStrategyShouldCalledWorkerDoWorkWhenRunisCalled() {
+	public void whenRunningTimerTaskShouldCallBookerAssignBookings() {
 		timerTaskStrategy = new BookerTimerTask(booker);
 		
 		timerTaskStrategy.run();

@@ -53,13 +53,13 @@ public class SMTPMailServerTest {
 	}
 
 	@Test
-	public void testSendMailShouldSendMail() throws MessagingException {
+	public void sendMailShouldCallTransportSendMessage() throws MessagingException {
 		smtpMailServer.sendMail(mail);
 		verify(transport).sendMessage(message, message.getAllRecipients());
 	}
 	
 	@Test(expected=CouldNotSendMailException.class)
-	public void testSendInvalidMailShouldThrowAnException() throws MessagingException {
+	public void sendInvalidMailShouldThrowAnException() throws MessagingException {
 		smtpMailServer.sendMail(invalidMail);
 	}
 	

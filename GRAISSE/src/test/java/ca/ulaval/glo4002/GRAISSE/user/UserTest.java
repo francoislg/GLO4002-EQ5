@@ -25,7 +25,7 @@ public class UserTest {
 	}
 
 	@Test
-	public void userHasEmailWhenGivingSameEmailShouldReturnTrue() {
+	public void givenSameEmailUserHasEmailShouldReturnTrue() {
 		boolean result = user.hasEmail(email);
 		assertTrue(result);
 	}
