@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.GRAISSE.booker;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
@@ -57,20 +56,20 @@ public class BookerTest {
 	}
 
 	@Test
-	public void whenBookingsHasNoBookingToAssignedTheBookerShouldNotHaveBookingsToAssign() {
+	public void whenBookingsHasNoBookingToAssignBookerShouldNotHaveBookingsToAssign() {
 		doReturn(false).when(bookings).hasUnassignedBookings();
 		assertFalse(booker.hasBookingsToAssign());
 	}
 	
 	
 	@Test
-	public void whenBookingsHasBookingToAssignedTheBookerShouldHaveBookingsToAssign() {
+	public void whenBookingsHasBookingToAssignBookerShouldHaveBookingsToAssign() {
 		doReturn(true).when(bookings).hasUnassignedBookings();
 		assertTrue(booker.hasBookingsToAssign());
 	}
 
 	@Test
-	public void theBookerAfterAddingANewBookingShouldUpdateRegistredTriggers() {
+	public void givenTwoTriggersRegisteredInBookerWhenAddingANewBookingBookerShouldUpdateBothTriggers() {
 		booker.registerTrigger(trigger);
 		booker.registerTrigger(secondTrigger);
 		
@@ -81,7 +80,7 @@ public class BookerTest {
 	}
 	
 	@Test
-	public void theBookerAfterRegistringTheSameTriggerTwiceOnlyUpdateTheTriggerOnceWhenAddingBooking() {
+	public void givenTwoOfTheSameTriggerRegisteredInBookerWhenAddingABookingShouldUpdateTriggerOnlyOnce() {
 		booker.registerTrigger(trigger);
 		booker.registerTrigger(trigger);
 		
@@ -91,14 +90,14 @@ public class BookerTest {
 	}
 	
 	@Test
-	public void theBookerWithBookingToAssignShouldUpdateRegistredTriggersWhenAssigningBookings() {
+	public void givenABookingToAssignAndTwoTriggersRegisteredInBookerWhenAssigningBookerShouldUpdateBothTriggers() {
+		booker.addBooking(booking);
 		booker.registerTrigger(trigger);
 		booker.registerTrigger(secondTrigger);
 		
-		booker.addBooking(booking);
 		booker.assignBookings();
 		
-		verify(trigger, times(2)).update(booker);
-		verify(secondTrigger, times(2)).update(booker);
+		verify(trigger).update(booker);
+		verify(secondTrigger).update(booker);
 	}
 }
