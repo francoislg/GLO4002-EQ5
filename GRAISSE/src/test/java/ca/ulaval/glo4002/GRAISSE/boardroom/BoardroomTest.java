@@ -16,7 +16,6 @@ public class BoardroomTest {
 
 	private static final String NAME_OF_BOARDROOM_1 = "Boardroom1";
 	private static final String NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1 = "Boardroom1Different";
-
 	private static final int BIGGER = 1;
 	private static final int SMALLER = -1;
 	private static final int NUMBER_OF_SEATS_IN_BOARDROOM = 10;
@@ -62,7 +61,7 @@ public class BoardroomTest {
 	}
 
 	@Test
-	public void withDifferentSameNamehasNameReturnFalse() {
+	public void withDifferentNamehasNameReturnFalse() {
 		assertFalse(boardroom.hasName(NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1));
 	}
 
@@ -102,5 +101,4 @@ public class BoardroomTest {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithSameSeats);
 		assertEquals(0, result);
 	}
-
 }
