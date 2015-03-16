@@ -49,7 +49,7 @@ public class BoardroomsSortingStrategyBySeatsTest {
 	}
 
 	@Test
-	public void withUnorderedListTheStrategyShouldOrderTheListByNumberOfSeats() {
+	public void givenUnorderedListWhenSortingListWithStrategyShouldOrderByNumberOfSeats() {
 		Collection<Boardroom> unorderedBoardroomList = unorderedListOfBoardrooms();
 		Collection<Boardroom> expectedBoardroomList = orderedListOfBoardroomsByNumberOfSeats();
 		

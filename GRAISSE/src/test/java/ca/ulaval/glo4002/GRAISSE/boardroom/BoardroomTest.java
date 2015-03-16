@@ -86,25 +86,25 @@ public class BoardroomTest {
 	}
 
 	@Test
-	public void whenBoardroomIsAvailableAndHasNotEnoughSeatsForTheBookingAssignShouldReturnFalse() {
+	public void givenBoardroomIsAvailableAndHasInsufficentSeatsForTheBookingWhenAssigningShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(false);
 		assertFalse(boardroom.assign(booking));
 	}
 
 	@Test
-	public void withSmallerNumberOfSeatsBoardroomcompareByNumberOfSeatsShouldReturnAPositiveNumber() {
+	public void givenLessNumberOfSeatsThanBoardroomComparingNumberOfSeatsShouldReturnAPositiveNumber() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithLessSeats);
 		assertThat(result, greaterThan(0));
 	}
 
 	@Test
-	public void withBiggerNumberOfSeatsBoardroomcompareByNumberOfSeatsShouldReturnANegativeNumber() {
+	public void givenMoreNumberOfSeatsThanBoardroomComparingNumberOfSeatsShouldReturnANegativeNumber() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithMoreSeats);
 		assertThat(result, lessThan(0));
 	}
 	
 	@Test
-	public void withSameNumberOfSeatsBoardroomcompareNumberOfSeatsToBoardroomShouldReturnZero() {
+	public void givenSameNumberOfSeatsThanBoardroomComparingNumberOfSeatsShouldReturnZero() {
 		int result = boardroom.compareByNumberOfSeats(boardroomWithSameSeats);
 		assertEquals(0, result);
 	}

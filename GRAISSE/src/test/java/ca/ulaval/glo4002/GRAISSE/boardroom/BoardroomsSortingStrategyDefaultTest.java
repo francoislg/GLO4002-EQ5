@@ -27,7 +27,7 @@ public class BoardroomsSortingStrategyDefaultTest {
 	}
 
 	@Test
-	public void withBoardroomCollectionformatShouldReturnTheSameBoardroomCollection() {
+	public void givenAListOfBoardroomWhenSortingWithStrategyShouldReturnSameList() {
 		assertEquals(boardroomCollection, boardroomsSortingStrategyDefault.sort(boardroomCollection));
 	}
 }
