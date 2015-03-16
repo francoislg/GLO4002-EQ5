@@ -21,21 +21,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategy;
-import ca.ulaval.glo4002.GRAISSE.boardroom.BookingTrigger;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
 
 	private static final boolean ASSIGNED = true;
 	private static final boolean NOT_ASSIGNED = false;
-
-	private Bookings bookings;
-
-	private Collection<Booking> emptyBookingCollection;
-
-	private Collection<Booking> bookingsWithOneUnassignedBookings;
-
-	private Collection<Booking> bookingsWithOnlyAssignedBookings;
 
 	@Mock
 	Booking booking;
@@ -59,68 +50,48 @@ public class BookingsTest {
 	BoardroomsStrategy boardroomsStrategy;
 
 	@Mock
-	BookingTrigger trigger;
-
-	@Mock
-	BookingTrigger secondTrigger;
-
-	@Mock
 	BookingRepository bookingRepository;
+	
+	Bookings bookings;
+	Collection<Booking> emptyBookingCollection;
+	Collection<Booking> bookingsWithOneUnassignedBookings;
+	Collection<Booking> bookingsWithOnlyAssignedBookings;
 
 	@Before
 	public void setUp() {
 		setUpBookingStrategyMock();
+		setUpBookings();
 		bookings = new Bookings(bookingRepository);
-
-		emptyBookingCollection = new ArrayList<Booking>();
-		bookingsWithOneUnassignedBookings = new ArrayList<Booking>();
-		bookingsWithOnlyAssignedBookings = new ArrayList<Booking>();
-
-		doReturn(ASSIGNED).when(assignedBooking1).isAssigned();
-		doReturn(ASSIGNED).when(assignedBooking2).isAssigned();
-		doReturn(NOT_ASSIGNED).when(unassignedBooking).isAssigned();
-
-		bookingsWithOneUnassignedBookings.add(assignedBooking1);
-		bookingsWithOneUnassignedBookings.add(assignedBooking2);
-		bookingsWithOneUnassignedBookings.add(unassignedBooking);
-
-		bookingsWithOnlyAssignedBookings.add(assignedBooking1);
-		bookingsWithOnlyAssignedBookings.add(assignedBooking2);
 	}
 
 	@Test
 	public void whenAddingABookingBookingsShouldTellRepositoryToPersistIt() {
 		bookings.add(booking);
-
 		verify(bookingRepository).persist(booking);
 	}
 
 	@Test
 	public void bookingsShouldNotHaveUnassignedBookingsIfTheRepositoryIsEmpty() {
-		doReturn(emptyBookingCollection).when(bookingRepository).retrieveAll();
-
+		setUpEmptyBookings();	
 		assertFalse(bookings.hasUnassignedBookings());
 	}
 
 	@Test
 	public void bookingsShouldHaveUnassignedBookingsIfTheRepositoryContainOneUnassignedBooking() {
-		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
-
+		setUpOneUnassignedBookingInBookings();
 		assertTrue(bookings.hasUnassignedBookings());
 	}
 
 	@Test
 	public void bookingsShouldNotHaveUnassignedBookingsIfTheRepositoryContainOnlyAssignedBooking() {
-		doReturn(bookingsWithOnlyAssignedBookings).when(bookingRepository).retrieveAll();
-
+		setUpAllAssignedBookings();
 		assertFalse(bookings.hasUnassignedBookings());
 	}
 
 	@Test
 	public void assigningBookingsShouldOnlyBeAttemptedWithUnassignedBookings() {
-		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
-		doReturn(bookingsWithOneUnassignedBookings).when(bookingsStrategy).sort(bookingsWithOneUnassignedBookings);
-
+		setUpOneUnassignedBookingInBookings();
+	
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
 
 		verify(boardrooms).assignBookingToBoardroom(unassignedBooking, boardroomsStrategy);
@@ -130,8 +101,7 @@ public class BookingsTest {
 
 	@Test
 	public void newlyAssignedBookingsShouldBePersistedAfterTheAssignation() {
-		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
-		doReturn(bookingsWithOneUnassignedBookings).when(bookingsStrategy).sort(bookingsWithOneUnassignedBookings);
+		setUpOneUnassignedBookingInBookings();
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsStrategy, boardroomsStrategy);
 
@@ -141,5 +111,36 @@ public class BookingsTest {
 	private void setUpBookingStrategyMock() {
 		List<Booking> formatedList = new ArrayList<Booking>(Arrays.asList(booking));
 		when(bookingsStrategy.sort(any())).thenReturn(formatedList);
+	}
+	
+	private void setUpBookings() {
+		doReturn(ASSIGNED).when(assignedBooking1).isAssigned();
+		doReturn(ASSIGNED).when(assignedBooking2).isAssigned();
+		doReturn(NOT_ASSIGNED).when(unassignedBooking).isAssigned();
+	}
+	
+	private void setUpEmptyBookings() {
+		emptyBookingCollection = new ArrayList<Booking>();
+		doReturn(emptyBookingCollection).when(bookingRepository).retrieveAll();
+	}
+	
+	private void setUpAllAssignedBookings() {
+		bookingsWithOnlyAssignedBookings = new ArrayList<Booking>();
+		
+		bookingsWithOnlyAssignedBookings.add(assignedBooking1);
+		bookingsWithOnlyAssignedBookings.add(assignedBooking2);
+		
+		doReturn(bookingsWithOnlyAssignedBookings).when(bookingRepository).retrieveAll();
+	}
+	
+	private void setUpOneUnassignedBookingInBookings() {
+		bookingsWithOneUnassignedBookings = new ArrayList<Booking>();
+	
+		bookingsWithOneUnassignedBookings.add(assignedBooking1);
+		bookingsWithOneUnassignedBookings.add(assignedBooking2);
+		bookingsWithOneUnassignedBookings.add(unassignedBooking);
+		
+		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
+		doReturn(bookingsWithOneUnassignedBookings).when(bookingsStrategy).sort(bookingsWithOneUnassignedBookings);
 	}
 }

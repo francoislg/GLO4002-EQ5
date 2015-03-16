@@ -39,11 +39,9 @@ public class Bookings {
 
 	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsStrategy bookingsStrategy, BoardroomsStrategy boardroomsStrategy) {
 		Collection<Booking> formatedBookingList = bookingsStrategy.sort(getUnassignedBookings());
-		for (Iterator<Booking> bookingIter = formatedBookingList.iterator(); bookingIter.hasNext();) {
-			Booking booking = bookingIter.next();
+		for (Booking booking : formatedBookingList) {
 			boardrooms.assignBookingToBoardroom(booking, boardroomsStrategy);
 			bookingRepository.persist(booking);
-			bookingIter.remove();
 		}
 	}
 }
