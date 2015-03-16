@@ -9,7 +9,7 @@ Alex Gagnon                    |111 044 926
 Clotioloman Yeo                |909 272 477
 François Lachance-Guillemette  |111 080 517
 Jean-Philippe Giroux           |111 088 846
-Kouamé Ange Martial Konan      |
+Kouamé Ange Martial Konan      |909 318 064
 Marie-Christine Noreau         |910 049 538
 Xavier Bourgeois-Vézina        |111 102 056
 
@@ -22,7 +22,7 @@ Assigner périodiquement des salles aux demandes   |terminé
 Assignation en lot des salles aux demandes        |terminé
 Maximiser les places dans la salle                |terminé
 Ordonner les demandes par priorité                |terminé
-Notifier par courriel après l'assignation         |en cours
+Notifier par courriel après l'assignation         |terminé
 Annuler une demande                               |en attente
 Notifier par courriel lors d'une annulation       |en attente
 Afficher une demande                              |en attente
