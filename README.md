@@ -22,7 +22,7 @@ Assigner périodiquement des salles aux demandes   |terminé
 Assignation en lot des salles aux demandes        |terminé
 Maximiser les places dans la salle                |terminé
 Ordonner les demandes par priorité                |terminé
-Notifier par courriel après l'assignation         |en cours
+Notifier par courriel après l'assignation         |terminé
 Annuler une demande                               |en attente
 Notifier par courriel lors d'une annulation       |en attente
 Afficher une demande                              |en attente
