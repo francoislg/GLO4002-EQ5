@@ -5,7 +5,6 @@
 	<groupId>ca.ulaval.glo4002</groupId>
 	<artifactId>GRAISSE</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
 
 	<name>GRAISSE</name>
 	<url>http://maven.apache.org</url>
