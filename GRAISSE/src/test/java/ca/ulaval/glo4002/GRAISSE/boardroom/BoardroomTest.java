@@ -22,14 +22,14 @@ public class BoardroomTest {
 	private static final int NUMBER_OF_SEATS_SMALLER = 8;
 	private static final int NUMBER_OF_SEATS_BIGGER = 11;
 
+	@Mock
+	BookingAssignable booking;
+	
 	Boardroom boardroom;
 	Boardroom boardroomWithMoreSeats;
 	Boardroom boardroomWithLessSeats;
 	Boardroom boardroomWithSameSeats;
 	
-	@Mock
-	BookingAssignable booking;
-
 	@Before
 	public void setUp() {
 		boardroom = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_IN_BOARDROOM);
