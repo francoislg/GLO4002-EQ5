@@ -22,35 +22,47 @@ public class BookingsStrategyPriorityTest {
 	
 	private static final int BIGGER = 1;
 	private static final int SMALLER = -1;
+	private static final int EQUAL = 0;
+	
+	@Mock
+	Booking bookingWithHighPriority;
 
+	@Mock
+	Booking bookingWithMediumPriority;
+	
+	@Mock
+	Booking bookingWithMediumPriority2;
+
+	@Mock
+	Booking bookingWithSmallPriority;
+	
 	BookingsStrategyPriority bookingsStrategyPriority;
-
-	@Mock
-	Collection<Booking> bookingCollection;
-
-	@Mock
-	private Booking BookingWithHighPriority;
-
-	@Mock
-	private Booking BookingWithMediumPriority;
-
-	@Mock
-	private Booking BookingWithSmallPriority;
-
+	
 	@Before
 	public void setUp() {
 		bookingsStrategyPriority = new BookingsStrategyPriority();
-		when(BookingWithSmallPriority.comparePriorityToBooking(any())).thenReturn(SMALLER);
-		when(BookingWithMediumPriority.comparePriorityToBooking(BookingWithSmallPriority)).thenReturn(BIGGER);
-		when(BookingWithMediumPriority.comparePriorityToBooking(BookingWithHighPriority)).thenReturn(SMALLER);
-		when(BookingWithHighPriority.comparePriorityToBooking(any())).thenReturn(BIGGER);
+		
+		when(bookingWithSmallPriority.comparePriorityToBooking(any())).thenReturn(SMALLER);
+		
+		when(bookingWithMediumPriority.comparePriorityToBooking(bookingWithSmallPriority)).thenReturn(BIGGER);
+		when(bookingWithMediumPriority.comparePriorityToBooking(bookingWithHighPriority)).thenReturn(SMALLER);
+		when(bookingWithMediumPriority.comparePriorityToBooking(bookingWithMediumPriority2)).thenReturn(EQUAL);
+		
+		when(bookingWithMediumPriority2.comparePriorityToBooking(bookingWithSmallPriority)).thenReturn(BIGGER);
+		when(bookingWithMediumPriority2.comparePriorityToBooking(bookingWithHighPriority)).thenReturn(SMALLER);
+		when(bookingWithMediumPriority2.comparePriorityToBooking(bookingWithMediumPriority)).thenReturn(EQUAL);
+		
+		when(bookingWithHighPriority.comparePriorityToBooking(any())).thenReturn(BIGGER);
 	}
 
 	@Test
 	public void withBookingCollectionSortShouldReturnTheSameBoardroomCollection() {
-		Collection<Booking> bookingList = new ArrayList<Booking>(Arrays.asList(BookingWithHighPriority, BookingWithMediumPriority, BookingWithSmallPriority));
-		Collection<Booking> expectedBookingList = new ArrayList<Booking>(Arrays.asList(BookingWithSmallPriority, BookingWithMediumPriority,
-				BookingWithHighPriority));
+		Collection<Booking> bookingList = new ArrayList<Booking>(Arrays.asList(bookingWithMediumPriority,
+				bookingWithHighPriority, bookingWithMediumPriority2, bookingWithSmallPriority));
+		
+		Collection<Booking> expectedBookingList = new ArrayList<Booking>(Arrays.asList(bookingWithSmallPriority, bookingWithMediumPriority,
+				bookingWithMediumPriority2, bookingWithHighPriority));
+		
 		Collection<Booking> result = bookingsStrategyPriority.sort(bookingList);
 		assertEquals(expectedBookingList, result);
 	}
