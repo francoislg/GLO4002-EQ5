@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE.services;
 
+import static org.junit.Assert.*;
+
 import javax.mail.Transport;
 
 import org.junit.Before;
@@ -25,5 +27,6 @@ public class SMTPSessionFactoryTest {
 	@Test
 	public void createShouldReturnASession() {
 		SMTPMailSession mailSession = smtpSessionFactory.create(A_HOST, A_USER, A_PASSWORD);
+		assertNotNull(mailSession);
 	}
 }

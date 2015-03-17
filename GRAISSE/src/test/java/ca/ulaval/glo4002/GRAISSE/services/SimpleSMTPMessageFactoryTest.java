@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE.services;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -10,6 +10,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 import javax.mail.Address;
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
@@ -19,6 +20,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCreateMessage;
 
 import com.sun.mail.smtp.SMTPMessage;
 
@@ -33,6 +36,9 @@ public class SimpleSMTPMessageFactoryTest {
 	Mail mail;
 	
 	@Mock
+	Message message;
+	
+	@Mock
 	SMTPMailSession mailSession;
 	
 	Session session;
@@ -41,7 +47,7 @@ public class SimpleSMTPMessageFactoryTest {
 	@Before
 	public void setUp() {
 		setUpMailMock();
-		when(mailSession.getNewMessage()).thenReturn(new SMTPMessage(session));
+		when(mailSession.getNewMessage()).thenReturn(message);
 		smtpMessageFactory = new SimpleSMTPMessageFactory();
 	}
 
