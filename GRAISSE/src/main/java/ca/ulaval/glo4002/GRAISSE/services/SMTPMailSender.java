@@ -30,6 +30,10 @@ public class SMTPMailSender implements MailSender {
 		}
 		disconnect();
 	}
+	
+	private void connect() {
+		mailSession.connect(transport);
+	}
 
 	private void disconnect() {
 		try {
@@ -37,9 +41,5 @@ public class SMTPMailSender implements MailSender {
 		} catch (MessagingException e) {
 			throw new CouldNotCloseConnectionException();
 		}
-	}
-	
-	private void connect() {
-		mailSession.connect(transport);
 	}
 }

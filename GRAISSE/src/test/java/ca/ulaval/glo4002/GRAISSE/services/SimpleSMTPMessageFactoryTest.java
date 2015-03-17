@@ -4,16 +4,12 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
-import java.util.Arrays;
-
-import static org.hamcrest.CoreMatchers.*;
 
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import org.junit.Before;
@@ -23,8 +19,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCreateMessageException;
-
-import com.sun.mail.smtp.SMTPMessage;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleSMTPMessageFactoryTest {
