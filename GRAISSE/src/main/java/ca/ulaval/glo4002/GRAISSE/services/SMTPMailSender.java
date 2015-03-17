@@ -8,12 +8,12 @@ import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCloseConnectionExce
 import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotSendMailException;
 
 public class SMTPMailSender implements MailSender {
-	
+
 	private SMTPMailSession mailSession;
 	private Transport transport;
 	private SMTPMessageFactory messageFactory;
 
-	public SMTPMailSender(SMTPMessageFactory messageFactory, SMTPMailSession mailSession){
+	public SMTPMailSender(SMTPMessageFactory messageFactory, SMTPMailSession mailSession) {
 		this.messageFactory = messageFactory;
 		this.mailSession = mailSession;
 		this.transport = mailSession.getSMTPTransport();
@@ -30,7 +30,7 @@ public class SMTPMailSender implements MailSender {
 		}
 		disconnect();
 	}
-	
+
 	private void connect() {
 		mailSession.connect(transport);
 	}

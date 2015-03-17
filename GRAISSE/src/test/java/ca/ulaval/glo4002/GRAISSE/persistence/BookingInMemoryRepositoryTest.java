@@ -17,44 +17,44 @@ public class BookingInMemoryRepositoryTest {
 
 	@Mock
 	Booking booking;
-	
+
 	@Mock
 	Booking bookingThatIsNotInTheRepository;
-	
+
 	BookingInMemoryRepository bookingInMemoryRepository;
-	
+
 	@Before
 	public void setUp() {
 		bookingInMemoryRepository = new BookingInMemoryRepository();
 	}
-	
+
 	@Test
 	public void newRepositoryShouldBeEmpty() {
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
 		assertTrue(result.isEmpty());
 	}
-	
-	@Test 
+
+	@Test
 	public void whenPersistingOneBookingRepositoryShouldContainTheBooking() {
 		bookingInMemoryRepository.persist(booking);
-		
+
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
 		assertTrue(result.contains(booking));
 	}
-	
-	@Test 
+
+	@Test
 	public void whenPersistingOneBookingRepositoryShouldContainOnlyOneBooking() {
 		bookingInMemoryRepository.persist(booking);
-		
+
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
 		assertEquals(1, result.size());
 	}
-	
+
 	@Test
 	public void whenPersistingTwiceTheSameBookingRepositoryShouldContainOneBooking() {
 		bookingInMemoryRepository.persist(booking);
 		bookingInMemoryRepository.persist(booking);
-		
+
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
 		assertEquals(1, result.size());
 	}

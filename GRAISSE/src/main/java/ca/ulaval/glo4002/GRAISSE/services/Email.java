@@ -6,12 +6,12 @@ import java.util.regex.Pattern;
 import ca.ulaval.glo4002.GRAISSE.services.exceptions.InvalidEmailException;
 
 public class Email {
-	
+
 	// Known regex for email validation
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	private final String emailAddress;
-	
+
 	public Email(String email) {
 		validateEmail(email);
 		emailAddress = email;

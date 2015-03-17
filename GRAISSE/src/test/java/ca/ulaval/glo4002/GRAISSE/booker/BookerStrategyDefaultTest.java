@@ -27,7 +27,7 @@ public class BookerStrategyDefaultTest {
 
 	@Mock
 	Boardrooms boardrooms;
-	
+
 	BookerStrategyDefault bookerStrategyBasic;
 
 	@Before
