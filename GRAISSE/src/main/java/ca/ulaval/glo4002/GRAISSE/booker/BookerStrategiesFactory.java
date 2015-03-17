@@ -16,14 +16,14 @@ public class BookerStrategiesFactory {
 		
 		switch (strategyType) {
 			case OPTIMIZE:
-				bookerStrategy = new BookerStrategyBasic(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyBySeats());
+				bookerStrategy = new BookerStrategyDefault(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyBySeats());
 				break;
 			case PRIORITY:
-				bookerStrategy = new BookerStrategyBasic(new BookingsSortingStrategyByPriority(), new BoardroomsSortingStrategyBySeats());
+				bookerStrategy = new BookerStrategyDefault(new BookingsSortingStrategyByPriority(), new BoardroomsSortingStrategyBySeats());
 				break;
 			case BASIC:
 			default:
-				bookerStrategy = new BookerStrategyBasic(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyDefault());
+				bookerStrategy = new BookerStrategyDefault(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyDefault());
 				break;
 		}
 

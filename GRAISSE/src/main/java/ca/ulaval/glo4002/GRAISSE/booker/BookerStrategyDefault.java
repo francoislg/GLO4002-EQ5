@@ -5,12 +5,12 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsSortingStrategy;
 import ca.ulaval.glo4002.GRAISSE.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.booking.BookingsSortingStrategy;
 
-public class BookerStrategyBasic implements BookerStrategy {
+public class BookerStrategyDefault implements BookerStrategy {
 
 	private BookingsSortingStrategy bookingsSortingStrategy;
 	private BoardroomsSortingStrategy boardroomsSortingStrategy;
 
-	public BookerStrategyBasic(BookingsSortingStrategy bookingsSortingStrategy, BoardroomsSortingStrategy boardroomsSortingStrategy) {
+	public BookerStrategyDefault(BookingsSortingStrategy bookingsSortingStrategy, BoardroomsSortingStrategy boardroomsSortingStrategy) {
 		this.bookingsSortingStrategy = bookingsSortingStrategy;
 		this.boardroomsSortingStrategy = boardroomsSortingStrategy;
 	}

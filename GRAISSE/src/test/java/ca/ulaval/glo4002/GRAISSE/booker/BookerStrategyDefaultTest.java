@@ -14,7 +14,7 @@ import ca.ulaval.glo4002.GRAISSE.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.booking.BookingsSortingStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookerStrategyBasicTest {
+public class BookerStrategyDefaultTest {
 
 	@Mock
 	BookingsSortingStrategy bookingsSortingStrategy;
@@ -28,11 +28,11 @@ public class BookerStrategyBasicTest {
 	@Mock
 	Boardrooms boardrooms;
 	
-	BookerStrategyBasic bookerStrategyBasic;
+	BookerStrategyDefault bookerStrategyBasic;
 
 	@Before
 	public void setUp() {
-		bookerStrategyBasic = new BookerStrategyBasic(bookingsSortingStrategy, boardroomsSortingStrategy);
+		bookerStrategyBasic = new BookerStrategyDefault(bookingsSortingStrategy, boardroomsSortingStrategy);
 	}
 
 	@Test
