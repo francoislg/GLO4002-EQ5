@@ -13,6 +13,7 @@ import javax.mail.Message;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Session;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import org.junit.Before;
@@ -63,19 +64,26 @@ public class SimpleSMTPMessageFactoryTest {
 		
 		Message message = smtpMessageFactory.create(mail, mailSession);
 		
-		assertThat(Arrays.asList(message.getAllRecipients()), hasItem(expectedAddress));
+		verify(message).addRecipient(Message.RecipientType.TO, expectedAddress);
 	}
 	
 	@Test
-	public void createShouldReturnAMessageWithSubjectFromMail() throws MessagingException {
-		Message message = smtpMessageFactory.create(mail, mailSession);
-		assertEquals(MAIL_SUBJECT, message.getSubject());
+	public void createShouldAddContentToMessage() throws MessagingException {
+		smtpMessageFactory.create(mail, mailSession);
+		verify(message).setText(MAIL_MESSAGE);
 	}
 	
 	@Test
-	public void createShouldReturnAMessageWithBodyFromMail() throws MessagingException, IOException {
-		Message message = smtpMessageFactory.create(mail, mailSession);
-		assertEquals(MAIL_MESSAGE, message.getContent().toString());
+	public void createShouldAddSubjectToMessage() throws MessagingException, IOException {
+		smtpMessageFactory.create(mail, mailSession);
+		verify(message).setSubject(MAIL_SUBJECT);
+	}
+	
+	@Test(expected=CouldNotCreateMessage.class)
+	public void givenFaultyEmailCreateShouldThrowException() throws MessagingException {
+		Address addressThatWillFail = new InternetAddress(MAIL_DESTINATION);
+		doThrow(new MessagingException()).when(message).addRecipient(RecipientType.TO, addressThatWillFail);
+		smtpMessageFactory.create(mail, mailSession);
 	}
 	
 	private void setUpMailMock(){
