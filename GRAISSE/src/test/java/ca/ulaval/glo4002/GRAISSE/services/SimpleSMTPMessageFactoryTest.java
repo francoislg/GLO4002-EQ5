@@ -20,6 +20,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.sun.mail.smtp.SMTPMessage;
+
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleSMTPMessageFactoryTest {
 	
@@ -30,18 +32,22 @@ public class SimpleSMTPMessageFactoryTest {
 	@Mock
 	Mail mail;
 	
+	@Mock
+	SMTPMailSession mailSession;
+	
 	Session session;
 	SimpleSMTPMessageFactory smtpMessageFactory;
 	
 	@Before
 	public void setUp() {
 		setUpMailMock();
+		when(mailSession.getNewMessage()).thenReturn(new SMTPMessage(session));
 		smtpMessageFactory = new SimpleSMTPMessageFactory();
 	}
 
 	@Test
 	public void createShouldReturnAMessage() throws MessagingException {
-		Message message = smtpMessageFactory.create(mail, session);
+		Message message = smtpMessageFactory.create(mail, mailSession);
 		assertNotNull(message);
 	}
 	
@@ -49,20 +55,20 @@ public class SimpleSMTPMessageFactoryTest {
 	public void createShouldReturnAMessageWithRecipientFromMail() throws MessagingException {
 		Address expectedAddress = new InternetAddress(MAIL_DESTINATION);
 		
-		Message message = smtpMessageFactory.create(mail, session);
+		Message message = smtpMessageFactory.create(mail, mailSession);
 		
 		assertThat(Arrays.asList(message.getAllRecipients()), hasItem(expectedAddress));
 	}
 	
 	@Test
 	public void createShouldReturnAMessageWithSubjectFromMail() throws MessagingException {
-		Message message = smtpMessageFactory.create(mail, session);
+		Message message = smtpMessageFactory.create(mail, mailSession);
 		assertEquals(MAIL_SUBJECT, message.getSubject());
 	}
 	
 	@Test
 	public void createShouldReturnAMessageWithBodyFromMail() throws MessagingException, IOException {
-		Message message = smtpMessageFactory.create(mail, session);
+		Message message = smtpMessageFactory.create(mail, mailSession);
 		assertEquals(MAIL_MESSAGE, message.getContent().toString());
 	}
 	
