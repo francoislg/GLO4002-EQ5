@@ -43,8 +43,8 @@ public class SMTPMailSenderTest {
 	}
 	
 	@Test
-	public void connectingShouldCallMailSenderConnect() {
-		smtpMailSender.connect();
+	public void sendingMailShouldConnectMailSender() {
+		smtpMailSender.send(mail);
 		verify(mailSession).connect(transport);
 	}
 
@@ -55,8 +55,8 @@ public class SMTPMailSenderTest {
 	}
 
 	@Test
-	public void disconnectShouldCloseTransport() throws MessagingException {
-		smtpMailSender.disconnect();
+	public void sendingMailShouldDisconnectTransport() throws MessagingException {
+		smtpMailSender.send(mail);
 		verify(transport).close();
 	}
 	

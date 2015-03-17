@@ -18,29 +18,28 @@ public class SMTPMailSender implements MailSender {
 		this.mailSession = mailSession;
 		this.transport = mailSession.getSMTPTransport();
 	}
-	
-	@Override
-	public void connect() {
-		mailSession.connect(transport);
-	}
 
 	@Override
 	public void send(Mail mail) {
+		connect();
 		Message message = messageFactory.create(mail, mailSession);
 		try {
 			transport.sendMessage(message, message.getAllRecipients());
 		} catch (MessagingException e) {
 			throw new CouldNotSendMailException();
 		}
+		disconnect();
 	}
 
-	@Override
-	public void disconnect() {
+	private void disconnect() {
 		try {
 			transport.close();
 		} catch (MessagingException e) {
 			throw new CouldNotCloseConnection();
 		}
 	}
-
+	
+	private void connect() {
+		mailSession.connect(transport);
+	}
 }
