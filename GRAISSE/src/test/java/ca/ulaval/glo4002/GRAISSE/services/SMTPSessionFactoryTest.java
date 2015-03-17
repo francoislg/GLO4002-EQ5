@@ -1,12 +1,12 @@
 package ca.ulaval.glo4002.GRAISSE.services;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 
-import javax.mail.Session;
+import javax.mail.Transport;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 public class SMTPSessionFactoryTest {
 	
@@ -14,34 +14,19 @@ public class SMTPSessionFactoryTest {
 	private static final String A_USER = "Superman";
 	private static final String A_PASSWORD = "Most secure password ever";
 	
-	SMTPSessionFactory smtpSessionFactory;
+	@Mock
+	Transport transport;
+	
+	SMTPMailSessionFactory smtpSessionFactory;
 	
 	@Before
 	public void setUp() throws Exception {
-		smtpSessionFactory = new SMTPSessionFactory();
+		smtpSessionFactory = new SMTPMailSessionFactory();
 	}
 
 	@Test
-	public void createShouldReturnSessionWithPropertyForHostSet() {
-		Session session = smtpSessionFactory.create(A_HOST, A_USER, A_PASSWORD);
-		assertEquals(A_HOST, session.getProperty("mail.smtp.host"));
-	}
-
-	@Test
-	public void createShouldReturnSessionWithPropertyForUserSet() {
-		Session session = smtpSessionFactory.create(A_HOST, A_USER, A_PASSWORD);
-		assertEquals(A_USER, session.getProperty("mail.smtp.user"));
-	}
-	
-	@Test
-	public void createShouldReturnSessionWithPropertyForPasswordSet() {
-		Session session = smtpSessionFactory.create(A_HOST, A_USER, A_PASSWORD);
-		assertEquals(A_PASSWORD, session.getProperty("mail.smtp.password"));
-	}
-	
-	@Test
-	public void createShouldReturnSessionWithPropertyForPortSetToDefault() {
-		Session session = smtpSessionFactory.create(A_HOST, A_USER, A_PASSWORD);
-		assertThat(session.getProperty("mail.smtp.host"), any(String.class));
+	public void createShouldReturnASession() {
+		SMTPMailSession mailSession = smtpSessionFactory.create(A_HOST, A_USER, A_PASSWORD);
+		assertNotNull(mailSession);
 	}
 }
