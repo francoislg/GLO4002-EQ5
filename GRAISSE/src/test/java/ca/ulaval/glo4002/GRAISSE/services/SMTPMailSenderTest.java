@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE.services;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import javax.mail.Address;
@@ -13,6 +12,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCloseConnection;
+import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotSendMailException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SMTPMailSenderTest {
@@ -58,6 +60,18 @@ public class SMTPMailSenderTest {
 	public void sendingMailShouldDisconnectTransport() throws MessagingException {
 		smtpMailSender.send(mail);
 		verify(transport).close();
+	}
+	
+	@Test(expected=CouldNotSendMailException.class)
+	public void givenTransportThrowsWhenSendingMessageShouldThrowException() throws MessagingException {
+		doThrow(new MessagingException()).when(transport).sendMessage(message, addresses);
+		smtpMailSender.send(mail);
+	}
+	
+	@Test(expected=CouldNotCloseConnection.class)
+	public void givenTransportThrowsWhenClosingShouldThrowException() throws MessagingException {
+		doThrow(new MessagingException()).when(transport).close();
+		smtpMailSender.send(mail);
 	}
 	
 	private void setUpSMTPMessageFactory() {
