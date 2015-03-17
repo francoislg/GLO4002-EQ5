@@ -1,6 +1,11 @@
 package ca.ulaval.glo4002.GRAISSE.services;
 
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Transport;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,33 +15,33 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SMTPMailSenderTest {
-	
+
 	@Mock
 	SMTPMessageFactory smtpMessageFactory;
-	
+
 	@Mock
 	SMTPMailSession mailSession;
-	
+
+	@Mock
+	Mail mail;
+
+	@Mock
+	Transport transport;
+
+	@Mock
+	Message message;
+
 	SMTPMailSender smtpMailSender;
-	
+
 	@Before
-	public void setUp(){
+	public void setUp() throws MessagingException {
 		smtpMailSender = new SMTPMailSender(smtpMessageFactory, mailSession);
-	}
-	
-	@Test
-	public void testConnect() {
-		smtpMailSender.connect();
+		when(smtpMessageFactory.create(mail, mailSession)).thenReturn(message);
 	}
 
 	@Test
-	public void testSend() {
-		fail("Not yet implemented");
+	public void sendShouldSendTheMessage() throws MessagingException {
+		smtpMailSender.send(mail);
+		verify(transport).sendMessage(message, message.getAllRecipients());
 	}
-
-	@Test
-	public void testDisconnect() {
-		fail("Not yet implemented");
-	}
-
 }
