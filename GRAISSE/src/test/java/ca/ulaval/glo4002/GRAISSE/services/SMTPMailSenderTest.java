@@ -1,6 +1,12 @@
 package ca.ulaval.glo4002.GRAISSE.services;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Transport;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,26 +23,47 @@ public class SMTPMailSenderTest {
 	@Mock
 	SMTPMailSession mailSession;
 	
+	@Mock
+	Transport transport;
+	
+	@Mock
+	Mail mail;
+	
+	@Mock
+	Message message;
+	
+	Address[] addresses;
 	SMTPMailSender smtpMailSender;
 	
 	@Before
 	public void setUp(){
+		setUpSMTPMessageFactory();
+		when(mailSession.getSMTPTransport()).thenReturn(transport);
 		smtpMailSender = new SMTPMailSender(smtpMessageFactory, mailSession);
 	}
 	
 	@Test
-	public void testConnect() {
+	public void connectingShouldCallMailSenderConnect() {
 		smtpMailSender.connect();
+		verify(mailSession).connect(transport);
 	}
 
 	@Test
-	public void testSend() {
-		fail("Not yet implemented");
+	public void sendShouldSendAMessageWithTransport() throws MessagingException {
+		smtpMailSender.send(mail);
+		verify(transport).sendMessage(message, addresses);
 	}
 
 	@Test
-	public void testDisconnect() {
-		fail("Not yet implemented");
+	public void disconnectShouldCloseTransport() throws MessagingException {
+		smtpMailSender.disconnect();
+		verify(transport).close();
 	}
-
+	
+	private void setUpSMTPMessageFactory() {
+		when(smtpMessageFactory.create(mail, mailSession)).thenReturn(message);
+		try {
+			when(message.getAllRecipients()).thenReturn(addresses);
+		} catch (MessagingException e) {}
+	}
 }
