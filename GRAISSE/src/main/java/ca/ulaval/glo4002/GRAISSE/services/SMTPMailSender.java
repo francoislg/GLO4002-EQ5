@@ -26,11 +26,10 @@ public class SMTPMailSender implements MailSender {
 
 	@Override
 	public void send(Mail mail) {
+		Message message = messageFactory.create(mail, mailSession);
 		try {
-			Message message = messageFactory.create(mail, mailSession);
 			transport.sendMessage(message, message.getAllRecipients());
 		} catch (MessagingException e) {
-			e.printStackTrace();
 			throw new CouldNotSendMailException();
 		}
 	}
@@ -40,7 +39,6 @@ public class SMTPMailSender implements MailSender {
 		try {
 			transport.close();
 		} catch (MessagingException e) {
-			e.printStackTrace();
 			throw new CouldNotCloseConnection();
 		}
 	}

@@ -106,7 +106,6 @@ public class TimedSequentialTriggerTest {
 	public void GivenTwoDifferentBookerTimedSequentialTriggerShouldScheduleASecondTimer() {
 		doReturn(HAS_BOOKINGS_TO_ASSIGN).when(booker).hasBookingsToAssign();
 		doReturn(HAS_BOOKINGS_TO_ASSIGN).when(secondBooker).hasBookingsToAssign();
-		
 		doReturn(BOOKERS_ARE_NOT_EQUALS).when(booker).equals(secondBooker);
 		
 		timedSequentialTrigger.update(booker);

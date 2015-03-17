@@ -25,7 +25,6 @@ public class SMTPMailSession {
 		try {
 			return session.getTransport("smtp");
 		} catch (NoSuchProviderException e) {
-			e.printStackTrace();
 			throw new CouldNotConnectException();
 		}
 	}
@@ -34,7 +33,6 @@ public class SMTPMailSession {
 		try {
 			transport.connect(username, password);
 		} catch (MessagingException e) {
-			e.printStackTrace();
 			throw new CouldNotConnectException();
 		}
 	}
