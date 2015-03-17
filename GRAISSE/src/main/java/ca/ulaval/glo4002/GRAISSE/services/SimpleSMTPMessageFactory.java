@@ -4,7 +4,7 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 
-import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCreateMessage;
+import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCreateMessageException;
 
 public class SimpleSMTPMessageFactory implements SMTPMessageFactory {
 	
@@ -18,7 +18,7 @@ public class SimpleSMTPMessageFactory implements SMTPMessageFactory {
 			
 			return message;
 		}catch(MessagingException e){
-			throw new CouldNotCreateMessage();
+			throw new CouldNotCreateMessageException();
 		}
 	}
 }

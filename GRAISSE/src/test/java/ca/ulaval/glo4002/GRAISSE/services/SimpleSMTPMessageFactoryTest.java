@@ -22,7 +22,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCreateMessage;
+import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCreateMessageException;
 
 import com.sun.mail.smtp.SMTPMessage;
 
@@ -79,7 +79,7 @@ public class SimpleSMTPMessageFactoryTest {
 		verify(message).setSubject(MAIL_SUBJECT);
 	}
 	
-	@Test(expected=CouldNotCreateMessage.class)
+	@Test(expected=CouldNotCreateMessageException.class)
 	public void givenFaultyEmailCreateShouldThrowException() throws MessagingException {
 		Address addressThatWillFail = new InternetAddress(MAIL_DESTINATION);
 		doThrow(new MessagingException()).when(message).addRecipient(RecipientType.TO, addressThatWillFail);

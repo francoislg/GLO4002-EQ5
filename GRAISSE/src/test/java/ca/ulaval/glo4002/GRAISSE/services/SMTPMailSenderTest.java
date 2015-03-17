@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCloseConnection;
+import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCloseConnectionException;
 import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotSendMailException;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -68,7 +68,7 @@ public class SMTPMailSenderTest {
 		smtpMailSender.send(mail);
 	}
 	
-	@Test(expected=CouldNotCloseConnection.class)
+	@Test(expected=CouldNotCloseConnectionException.class)
 	public void givenTransportThrowsWhenClosingShouldThrowException() throws MessagingException {
 		doThrow(new MessagingException()).when(transport).close();
 		smtpMailSender.send(mail);

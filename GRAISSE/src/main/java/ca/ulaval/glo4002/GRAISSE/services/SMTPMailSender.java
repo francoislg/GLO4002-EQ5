@@ -4,7 +4,7 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
 
-import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCloseConnection;
+import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCloseConnectionException;
 import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotSendMailException;
 
 public class SMTPMailSender implements MailSender {
@@ -35,7 +35,7 @@ public class SMTPMailSender implements MailSender {
 		try {
 			transport.close();
 		} catch (MessagingException e) {
-			throw new CouldNotCloseConnection();
+			throw new CouldNotCloseConnectionException();
 		}
 	}
 	
