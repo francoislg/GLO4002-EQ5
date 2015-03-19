@@ -20,7 +20,7 @@ public class Boardrooms {
 	public void assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsSortingStrategy boardroomsSortingStrategy) {
 		Collection<Boardroom> formatedBoardroomList = boardroomsSortingStrategy.sort(boardroomsRepository.retrieveAll());
 		for (Boardroom boardroom : formatedBoardroomList) {
-			if (boardroom.assign(bookingToAssign)) {
+			if (boardroom.assign(bookingToAssign, interfaceReservationBoardroom)) {
 				boardroomsRepository.persist(boardroom);
 				notifyTriggers(bookingToAssign);
 				return;

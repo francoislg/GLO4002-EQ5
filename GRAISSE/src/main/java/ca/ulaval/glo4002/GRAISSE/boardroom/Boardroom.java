@@ -1,20 +1,13 @@
 package ca.ulaval.glo4002.GRAISSE.boardroom;
 
-
 public class Boardroom implements AssignedBoardroom {
 
 	private int numberOfSeats;
 	private String name;
-	private boolean available;
 
 	public Boardroom(String name, int numberOfSeats) {
 		this.name = name;
 		this.numberOfSeats = numberOfSeats;
-		this.available = true;
-	}
-
-	public boolean isAvailable() {
-		return available;
 	}
 
 	public boolean hasName(String name) {
@@ -33,10 +26,10 @@ public class Boardroom implements AssignedBoardroom {
 		return name;
 	}
 
-	public boolean assign(BookingAssignable bookingToAssign) {
-		if (isAvailable() && verifyNumberOfSeats(bookingToAssign)) {
+	public boolean assign(BookingAssignable bookingToAssign, InterfaceReservationBoardroom interfaceReservationBoardroom) {
+		if (interfaceReservationBoardroom.isAvailable(this) && verifyNumberOfSeats(bookingToAssign)) {
+			interfaceReservationBoardroom.assign(this, bookingToAssign);
 			bookingToAssign.assign();
-			available = false;
 			return true;
 		}
 		return false;

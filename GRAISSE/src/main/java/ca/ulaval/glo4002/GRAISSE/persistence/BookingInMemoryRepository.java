@@ -7,17 +7,17 @@ import java.util.List;
 import ca.ulaval.glo4002.GRAISSE.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.booking.BookingRepository;
 
-public class BookingInMemoryRepository implements BookingRepository{
+public class BookingInMemoryRepository implements BookingRepository {
 
 	private List<Booking> bookings;
-	
+
 	public BookingInMemoryRepository() {
 		bookings = new ArrayList<Booking>();
 	}
-	
+
 	@Override
 	public void persist(Booking booking) {
-		if(isNotAlreadyInMemory(booking)) {
+		if (isNotAlreadyInMemory(booking)) {
 			bookings.add(booking);
 		}
 	}
@@ -26,8 +26,9 @@ public class BookingInMemoryRepository implements BookingRepository{
 	public Collection<Booking> retrieveAll() {
 		return bookings;
 	}
-	
+
 	private boolean isNotAlreadyInMemory(Booking booking) {
 		return !bookings.contains(booking);
 	}
+
 }

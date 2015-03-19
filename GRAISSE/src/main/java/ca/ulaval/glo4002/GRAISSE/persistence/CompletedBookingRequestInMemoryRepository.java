@@ -7,6 +7,7 @@ import java.util.List;
 import ca.ulaval.glo4002.GRAISSE.CompletedBookingRequest.CompletedBookingRequest;
 import ca.ulaval.glo4002.GRAISSE.CompletedBookingRequest.CompletedBookingRequestNotFoundException;
 import ca.ulaval.glo4002.GRAISSE.CompletedBookingRequest.CompletedBookingRequestRepository;
+import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.booking.AssignedBooking;
 
 public class CompletedBookingRequestInMemoryRepository implements CompletedBookingRequestRepository {
@@ -38,5 +39,15 @@ public class CompletedBookingRequestInMemoryRepository implements CompletedBooki
 			}
 		}
 		throw new CompletedBookingRequestNotFoundException();
+	}
+
+	@Override
+	public boolean existsWithBoardroom(Boardroom boardroom) {
+		for (CompletedBookingRequest completedBookingRequest : completedBookingRequests) {
+			if (completedBookingRequest.containsBoardroom(boardroom)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
