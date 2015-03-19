@@ -1,14 +1,15 @@
 package ca.ulaval.glo4002.GRAISSE.CompletedBookingRequest;
 
-import ca.ulaval.glo4002.GRAISSE.boardroom.AssignedBoardrooom;
+import ca.ulaval.glo4002.GRAISSE.boardroom.AssignedBoardroom;
 import ca.ulaval.glo4002.GRAISSE.booking.AssignedBooking;
+
 
 public class CompletedBookingRequest {
 
-	private AssignedBoardrooom assignedBoardroom;
+	private AssignedBoardroom assignedBoardroom;
 	private AssignedBooking assignedBooking;
 
-	public CompletedBookingRequest(AssignedBoardrooom assignedBoardroom, AssignedBooking assignedBooking) {
+	public CompletedBookingRequest(AssignedBoardroom assignedBoardroom, AssignedBooking assignedBooking) {
 		this.assignedBoardroom = assignedBoardroom;
 		this.assignedBooking = assignedBooking;
 	}

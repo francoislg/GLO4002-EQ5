@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE.boardroom;
 
-public class Boardroom {
+
+public class Boardroom implements AssignedBoardroom {
 
 	private int numberOfSeats;
 	private String name;
