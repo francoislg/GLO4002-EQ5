@@ -1,81 +1,46 @@
 package ca.ulaval.glo4002.GRAISSE.services;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Transport;
+import javax.mail.Session;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCloseConnectionException;
-import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotSendMailException;
-
 @RunWith(MockitoJUnitRunner.class)
 public class SMTPMailSenderTest {
 
+	private final static String username = "USERNAME";
+	private final static String password = "PASSWORD";
+	
 	@Mock
-	SMTPMessageFactory smtpMessageFactory;
+	JavaMailMessageFactory smtpMessageFactory;
+
+	Session session;
 
 	@Mock
-	SMTPMailSession mailSession;
-
-	@Mock
-	Transport transport;
-
-	@Mock
-	Mail mail;
+	MailMessage mail;
 
 	@Mock
 	Message message;
 
 	Address[] addresses;
-	SMTPMailSender smtpMailSender;
+	JavaMailMailSender smtpMailSender;
 
 	@Before
 	public void setUp() {
 		setUpSMTPMessageFactory();
-		when(mailSession.getSMTPTransport()).thenReturn(transport);
-		smtpMailSender = new SMTPMailSender(smtpMessageFactory, mailSession);
+		smtpMailSender = new JavaMailMailSender(smtpMessageFactory, session, username, password);
 	}
 
-	@Test
-	public void sendingMailShouldConnectMailSender() {
-		smtpMailSender.send(mail);
-		verify(mailSession).connect(transport);
-	}
-
-	@Test
-	public void sendShouldSendAMessageWithTransport() throws MessagingException {
-		smtpMailSender.send(mail);
-		verify(transport).sendMessage(message, addresses);
-	}
-
-	@Test
-	public void sendingMailShouldDisconnectTransport() throws MessagingException {
-		smtpMailSender.send(mail);
-		verify(transport).close();
-	}
-
-	@Test(expected = CouldNotSendMailException.class)
-	public void givenTransportThrowsWhenSendingMessageShouldThrowException() throws MessagingException {
-		doThrow(new MessagingException()).when(transport).sendMessage(message, addresses);
-		smtpMailSender.send(mail);
-	}
-
-	@Test(expected = CouldNotCloseConnectionException.class)
-	public void givenTransportThrowsWhenClosingShouldThrowException() throws MessagingException {
-		doThrow(new MessagingException()).when(transport).close();
-		smtpMailSender.send(mail);
-	}
 
 	private void setUpSMTPMessageFactory() {
-		when(smtpMessageFactory.create(mail, mailSession)).thenReturn(message);
+		when(smtpMessageFactory.create(mail, session)).thenReturn(message);
 		try {
 			when(message.getAllRecipients()).thenReturn(addresses);
 		} catch (MessagingException e) {
