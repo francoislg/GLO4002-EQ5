@@ -19,7 +19,7 @@ import ca.ulaval.glo4002.GRAISSE.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingAssignedSendMailTriggerTest {
-	
+
 	private static final String USER_EMAIL = "email@totalyanemail.ca";
 	private static final String RESPONSIBLE_EMAIL = "email@responsible.com";
 

@@ -22,7 +22,7 @@ public class BoardroomInMemoryRepositoryTest {
 	private static final String NAME_OF_BOARDROOM_2 = "Boardroom2";
 	private static final String NAME_OF_BOARDROOM_3 = "Boardroom3";
 	private static final String NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST = "BoardroomThatDoesNotExist";
-	
+
 	@Mock
 	Boardroom boardroom1;
 
@@ -31,14 +31,14 @@ public class BoardroomInMemoryRepositoryTest {
 
 	@Mock
 	Boardroom boardroom3;
-	
+
 	BoardroomInMemoryRepository repoBoardrooms;
 
 	@Before
 	public void setUp() {
 		repoBoardrooms = new BoardroomInMemoryRepository();
 	}
-	
+
 	@Test
 	public void newRepositoryShouldBeEmpty() {
 		Collection<Boardroom> result = repoBoardrooms.retrieveAll();
@@ -50,7 +50,7 @@ public class BoardroomInMemoryRepositoryTest {
 		addOneBoardroomtoBoardrooms();
 
 		Boardroom boardroom = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_1);
-		
+
 		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
 	}
 
@@ -61,7 +61,7 @@ public class BoardroomInMemoryRepositoryTest {
 		Boardroom boardroom1 = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_1);
 		Boardroom boardroom2 = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_2);
 		Boardroom boardroom3 = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_3);
-		
+
 		assertTrue(boardroom1.hasName(NAME_OF_BOARDROOM_1));
 		assertTrue(boardroom2.hasName(NAME_OF_BOARDROOM_2));
 		assertTrue(boardroom3.hasName(NAME_OF_BOARDROOM_3));
@@ -76,7 +76,7 @@ public class BoardroomInMemoryRepositoryTest {
 		setBoardroomHasNameMock(boardroom1, NAME_OF_BOARDROOM_1);
 		setBoardroomHasNameMock(boardroom2, NAME_OF_BOARDROOM_2);
 		setBoardroomHasNameMock(boardroom3, NAME_OF_BOARDROOM_3);
-		
+
 		repoBoardrooms.persist(boardroom1);
 		repoBoardrooms.persist(boardroom2);
 		repoBoardrooms.persist(boardroom3);

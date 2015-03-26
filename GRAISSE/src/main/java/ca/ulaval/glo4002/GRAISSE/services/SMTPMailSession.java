@@ -10,25 +10,25 @@ import javax.mail.internet.MimeMessage;
 import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotConnectException;
 
 public class SMTPMailSession {
-	
+
 	private Session session;
 	private String username;
 	private String password;
-	
-	public SMTPMailSession(Session session, String username, String password){
+
+	public SMTPMailSession(Session session, String username, String password) {
 		this.session = session;
 		this.username = username;
 		this.password = password;
 	}
-	
-	public Transport getSMTPTransport(){
+
+	public Transport getSMTPTransport() {
 		try {
 			return session.getTransport("smtp");
 		} catch (NoSuchProviderException e) {
 			throw new CouldNotConnectException();
 		}
 	}
-	
+
 	public void connect(Transport transport) {
 		try {
 			transport.connect(username, password);

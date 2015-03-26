@@ -29,13 +29,13 @@ public class BookerTest {
 
 	@Mock
 	Booking booking;
-	
+
 	@Mock
 	BookerTrigger trigger;
-	
+
 	@Mock
 	BookerTrigger secondTrigger;
-	
+
 	Booker booker;
 
 	@Before
@@ -60,8 +60,7 @@ public class BookerTest {
 		doReturn(false).when(bookings).hasUnassignedBookings();
 		assertFalse(booker.hasBookingsToAssign());
 	}
-	
-	
+
 	@Test
 	public void whenBookingsHasBookingToAssignBookerShouldHaveBookingsToAssign() {
 		doReturn(true).when(bookings).hasUnassignedBookings();
@@ -72,31 +71,31 @@ public class BookerTest {
 	public void givenTwoTriggersRegisteredInBookerWhenAddingANewBookingBookerShouldUpdateBothTriggers() {
 		booker.registerTrigger(trigger);
 		booker.registerTrigger(secondTrigger);
-		
+
 		booker.addBooking(booking);
-		
+
 		verify(trigger).update(booker);
 		verify(secondTrigger).update(booker);
 	}
-	
+
 	@Test
 	public void givenTwoOfTheSameTriggerRegisteredInBookerWhenAddingABookingShouldUpdateTriggerOnlyOnce() {
 		booker.registerTrigger(trigger);
 		booker.registerTrigger(trigger);
-		
+
 		booker.addBooking(booking);
-		
+
 		verify(trigger).update(booker);
 	}
-	
+
 	@Test
 	public void givenABookingToAssignAndTwoTriggersRegisteredInBookerWhenAssigningBookerShouldUpdateBothTriggers() {
 		booker.addBooking(booking);
 		booker.registerTrigger(trigger);
 		booker.registerTrigger(secondTrigger);
-		
+
 		booker.assignBookings();
-		
+
 		verify(trigger).update(booker);
 		verify(secondTrigger).update(booker);
 	}

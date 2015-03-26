@@ -9,16 +9,16 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 public class SMTPSessionFactoryTest {
-	
+
 	private static final String A_HOST = "Host";
 	private static final String A_USER = "Superman";
 	private static final String A_PASSWORD = "Most secure password ever";
-	
+
 	@Mock
 	Transport transport;
-	
+
 	SMTPMailSessionFactory smtpSessionFactory;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		smtpSessionFactory = new SMTPMailSessionFactory();

@@ -72,27 +72,27 @@ public class BookingTest {
 	@Test
 	public void givenBookingABookingWithSmallerPriorityWhenComparingShouldReturnAPositiveNumber() {
 		Booking bookingWithSmallerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_SMALLER);
-		
+
 		int result = booking.comparePriorityToBooking(bookingWithSmallerPriority);
-		
+
 		assertThat(result, greaterThan(0));
 	}
 
 	@Test
 	public void givenBookingABookingWithBiggerPriorityWhenComparingShouldReturnANegativeNumber() {
 		Booking bookingWithBiggerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_BIGGER);
-		
+
 		int result = booking.comparePriorityToBooking(bookingWithBiggerPriority);
-		
+
 		assertThat(result, lessThan(0));
 	}
 
 	@Test
 	public void givenBookingABookingWithSamePriorityWhenComparingShouldReturnZero() {
 		Booking bookingWithEqualPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
-		
+
 		int result = booking.comparePriorityToBooking(bookingWithEqualPriority);
-		
+
 		assertEquals(0, result);
 	}
 }

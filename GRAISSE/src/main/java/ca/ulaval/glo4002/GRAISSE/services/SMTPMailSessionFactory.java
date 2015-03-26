@@ -5,19 +5,19 @@ import java.util.Properties;
 import javax.mail.Session;
 
 public class SMTPMailSessionFactory {
-	
+
 	private static final String DEFAULT_PORT = "587";
-	
-	public SMTPMailSession create(String host, String username, String password){
+
+	public SMTPMailSession create(String host, String username, String password) {
 		return create(host, username, password, DEFAULT_PORT);
 	}
-	
+
 	public SMTPMailSession create(String host, String username, String password, String port) {
 		Properties properties = createPropertiesObject(host, port);
 		Session session = Session.getInstance(properties);
 		return new SMTPMailSession(session, username, password);
 	}
-	
+
 	private Properties createPropertiesObject(String host, String port) {
 		Properties properties = new Properties();
 		properties.setProperty("mail.smtp.auth", "true");

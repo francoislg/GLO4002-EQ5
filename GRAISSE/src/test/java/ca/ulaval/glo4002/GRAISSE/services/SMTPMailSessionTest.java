@@ -20,17 +20,17 @@ import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotConnectException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SMTPMailSessionTest {
-	
+
 	private static final String USERNAME = "Username";
 	private static final String PASSWORD = "Password";
-	
+
 	Session session;
-	
+
 	@Mock
 	Transport transport;
-	
+
 	SMTPMailSession smtpMailSession;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		session = getAnySession();
@@ -48,8 +48,8 @@ public class SMTPMailSessionTest {
 		smtpMailSession.connect(transport);
 		verify(transport).connect(USERNAME, PASSWORD);
 	}
-	
-	@Test(expected=CouldNotConnectException.class)
+
+	@Test(expected = CouldNotConnectException.class)
 	public void givenTransportThrowErrorWhenConnectionShouldThrowException() throws MessagingException {
 		doThrow(new MessagingException()).when(transport).connect(USERNAME, PASSWORD);
 		smtpMailSession.connect(transport);
@@ -60,8 +60,8 @@ public class SMTPMailSessionTest {
 		Message message = smtpMailSession.getNewMessage();
 		assertNotNull(message);
 	}
-	
-	public Session getAnySession(){
+
+	public Session getAnySession() {
 		return Session.getDefaultInstance(new Properties());
 	}
 }

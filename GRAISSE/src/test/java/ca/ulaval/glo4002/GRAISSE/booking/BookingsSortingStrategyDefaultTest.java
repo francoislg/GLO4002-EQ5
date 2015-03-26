@@ -20,7 +20,7 @@ public class BookingsSortingStrategyDefaultTest {
 	Collection<Booking> bookingCollection;
 
 	BookingsSortingStrategyDefault bookingsSortingStrategyDefault;
-	
+
 	@Before
 	public void setUp() {
 		bookingsSortingStrategyDefault = new BookingsSortingStrategyDefault();

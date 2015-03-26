@@ -21,7 +21,7 @@ public class ThresholdTriggerTest {
 	private static final int THE_SAME_NUMBER_OF_UNASSIGNED_BOOKINGS_AS_THRESHOLD = 1;
 	private static final int A_BIGGER_NUMBER_OF_UNASSIGNED_BOOKINGS_THAN_THRESHOLD = 2;
 	private static final int A_LESSER_NUMBER_OF_UNASSIGNED_BOOKINGS_THAN_THRESHOLD = -10;
-	
+
 	@Mock
 	Booker booker;
 
@@ -63,7 +63,7 @@ public class ThresholdTriggerTest {
 
 		verify(booker, never()).assignBookings();
 	}
-	
+
 	private void initValidThresholdTrigger() {
 		threshold = new ThresholdTrigger(A_VALID_THRESHOLD);
 		threshold.update(booker);

@@ -15,18 +15,18 @@ import ca.ulaval.glo4002.GRAISSE.user.exceptions.UserNotFoundException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserInMemoryRepositoryTest {
-	
+
 	@Mock
 	User user;
-	
+
 	@Mock
 	Email email;
-	
+
 	@Mock
 	Email anotherEmail;
-	
+
 	UserInMemoryRepository userInMemoryRepository;
-	
+
 	@Before
 	public void setUp() {
 		when(user.hasEmail(any(Email.class))).thenReturn(false);
@@ -37,13 +37,13 @@ public class UserInMemoryRepositoryTest {
 	@Test
 	public void givenOneUserPersistedWhenRetrievingItShouldReturnSameUser() {
 		userInMemoryRepository.persist(user);
-		
+
 		User retrievedUser = userInMemoryRepository.retrieve(email);
-		
+
 		assertEquals(user, retrievedUser);
 	}
-	
-	@Test(expected=UserNotFoundException.class)
+
+	@Test(expected = UserNotFoundException.class)
 	public void givenEmptyRepositoryWhenRetrievingUserNotInMemoryShouldThrowException() {
 		userInMemoryRepository.retrieve(email);
 	}

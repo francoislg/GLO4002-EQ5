@@ -1,4 +1,4 @@
-# G.R.A.I.S.S.E
+﻿# G.R.A.I.S.S.E
 <b>G</b>estionnaire de <b>R</b>éservation <b>A</b>gile et <b>I</b>ntelligent de <b>S</b>alle <b>S</b>aisi pour les <b>E</b>ntreprises
 
 <b>Créé par l'équipe #5 :</b>

@@ -11,14 +11,14 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.BoardroomNotFoundException
 public class BoardroomInMemoryRepository implements BoardroomRepository {
 
 	private List<Boardroom> boardrooms = new ArrayList<Boardroom>();
-	
+
 	private boolean boardroomNotAlreadyInMemory(Boardroom boardroom) {
 		return !boardrooms.contains(boardroom);
 	}
-	
+
 	@Override
 	public void persist(Boardroom boardroom) {
-		if(boardroomNotAlreadyInMemory(boardroom)) {
+		if (boardroomNotAlreadyInMemory(boardroom)) {
 			boardrooms.add(boardroom);
 		}
 	}

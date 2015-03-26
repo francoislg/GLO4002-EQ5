@@ -7,7 +7,7 @@ import ca.ulaval.glo4002.GRAISSE.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.booking.Bookings;
 
 public class Booker {
-	
+
 	private Bookings bookings;
 	private BookerStrategy bookerStrategy;
 	private Boardrooms boardrooms;
@@ -39,13 +39,13 @@ public class Booker {
 	}
 
 	private void notifyTriggers() {
-		for(BookerTrigger trigger : triggers) {
+		for (BookerTrigger trigger : triggers) {
 			trigger.update(this);
 		}
 	}
-	
+
 	public void registerTrigger(BookerTrigger trigger) {
-		if(!triggers.contains(trigger)) {
+		if (!triggers.contains(trigger)) {
 			triggers.add(trigger);
 		}
 	}
