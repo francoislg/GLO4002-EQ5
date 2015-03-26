@@ -7,17 +7,17 @@ import ca.ulaval.glo4002.GRAISSE.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.booking.Bookings;
 
 public class Booker {
-	
+
 	private Bookings bookings;
 	private BookerStrategy bookerStrategy;
 	private Boardrooms boardrooms;
-	private ArrayList<Trigger> triggers;
+	private ArrayList<BookerTrigger> triggers;
 
 	public Booker(BookerStrategy bookerStrategy, Bookings bookings, Boardrooms boardrooms) {
-		this.bookings = bookings;
 		this.bookerStrategy = bookerStrategy;
+		this.bookings = bookings;
 		this.boardrooms = boardrooms;
-		triggers = new ArrayList<Trigger>();
+		triggers = new ArrayList<BookerTrigger>();
 	}
 
 	public void assignBookings() {
@@ -31,21 +31,21 @@ public class Booker {
 	}
 
 	public boolean hasBookingsToAssign() {
-		return !bookings.isEmpty();
+		return bookings.hasUnassignedBookings();
 	}
 
 	public int numberOfBookingsToAssign() {
-		return bookings.getSize();
+		return bookings.getNumberOfUnassignedBookings();
 	}
 
 	private void notifyTriggers() {
-		for(Trigger trigger : triggers) {
+		for (BookerTrigger trigger : triggers) {
 			trigger.update(this);
 		}
 	}
-	
-	public void registerTrigger(Trigger trigger) {
-		if(!triggers.contains(trigger)) {
+
+	public void registerTrigger(BookerTrigger trigger) {
+		if (!triggers.contains(trigger)) {
 			triggers.add(trigger);
 		}
 	}

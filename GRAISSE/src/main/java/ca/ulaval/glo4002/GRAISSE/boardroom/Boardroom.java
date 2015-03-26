@@ -12,7 +12,7 @@ public class Boardroom {
 		this.available = true;
 	}
 
-	private boolean isAvailable() {
+	public boolean isAvailable() {
 		return available;
 	}
 

@@ -11,23 +11,23 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
-import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsStrategyBasic;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsSortingStrategyDefault;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BoardroomsStrategyBasicTest {
+public class BoardroomsSortingStrategyDefaultTest {
 
-	BoardroomsStrategyBasic boardroomsStrategyBasic;
+	BoardroomsSortingStrategyDefault boardroomsSortingStrategyDefault;
 
 	@Mock
 	Collection<Boardroom> boardroomCollection;
 
 	@Before
 	public void setUp() {
-		boardroomsStrategyBasic = new BoardroomsStrategyBasic();
+		boardroomsSortingStrategyDefault = new BoardroomsSortingStrategyDefault();
 	}
 
 	@Test
-	public void withBoardroomCollectionformatShouldReturnTheSameBoardroomCollection() {
-		assertEquals(boardroomCollection, boardroomsStrategyBasic.sort(boardroomCollection));
+	public void givenAListOfBoardroomWhenSortingWithStrategyShouldReturnSameList() {
+		assertEquals(boardroomCollection, boardroomsSortingStrategyDefault.sort(boardroomCollection));
 	}
 }
