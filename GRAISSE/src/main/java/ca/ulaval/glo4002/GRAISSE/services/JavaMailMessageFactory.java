@@ -13,7 +13,7 @@ public class JavaMailMessageFactory {
 	public Message create(MailMessage mail, Session session) {
 		Message message = new MimeMessage(session);
 		try {
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(mail.getDestinationString()));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(mail.getDestinationString(), true));
 			message.setSubject(mail.getSubject());
 			message.setText(mail.getMessage());
 

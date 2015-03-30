@@ -1,15 +1,15 @@
 package ca.ulaval.glo4002.GRAISSE.services;
 
+import static org.hamcrest.collection.IsArrayContaining.hasItemInArray;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
 import javax.mail.Address;
 import javax.mail.Message;
-import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
@@ -25,28 +25,26 @@ import ca.ulaval.glo4002.GRAISSE.services.exceptions.CouldNotCreateMessageExcept
 @RunWith(MockitoJUnitRunner.class)
 public class JavaMailMessageFactoryTest {
 
-	private static final String MAIL_DESTINATION = "Destination";
+	private static final String MAIL_DESTINATION = "Destination@gmail.com";
+	private static final String INVALID_MAIL_DESTINATION = "Destination";
 	private static final String MAIL_SUBJECT = "Title";
 	private static final String MAIL_MESSAGE = "Message";
 
 	@Mock
 	MailMessage mail;
 
-	@Mock
-	Message message;
-
 	Session session;
-	JavaMailMessageFactory smtpMessageFactory;
+	JavaMailMessageFactory javaMailMessageFactory;
 
 	@Before
 	public void setUp() {
 		setUpMailMock();
-		smtpMessageFactory = new JavaMailMessageFactory();
+		javaMailMessageFactory = new JavaMailMessageFactory();
 	}
 
 	@Test
 	public void createShouldReturnAMessage() throws MessagingException {
-		Message message = smtpMessageFactory.create(mail, session);
+		Message message = javaMailMessageFactory.create(mail, session);
 		assertNotNull(message);
 	}
 
@@ -54,28 +52,27 @@ public class JavaMailMessageFactoryTest {
 	public void createShouldReturnAMessageWithRecipientFromMail() throws MessagingException {
 		Address expectedAddress = new InternetAddress(MAIL_DESTINATION);
 
-		Message message = smtpMessageFactory.create(mail, session);
+		Message message = javaMailMessageFactory.create(mail, session);
 
-		verify(message).addRecipient(Message.RecipientType.TO, expectedAddress);
+		assertThat(message.getAllRecipients(), hasItemInArray(expectedAddress));
 	}
 
 	@Test
-	public void createShouldAddContentToMessage() throws MessagingException {
-		smtpMessageFactory.create(mail, session);
-		verify(message).setText(MAIL_MESSAGE);
+	public void createShouldAddContentToMessage() throws MessagingException, IOException {
+		Message message = javaMailMessageFactory.create(mail, session);
+		assertEquals(message.getContent().toString(), MAIL_MESSAGE);
 	}
 
 	@Test
 	public void createShouldAddSubjectToMessage() throws MessagingException, IOException {
-		smtpMessageFactory.create(mail, session);
-		verify(message).setSubject(MAIL_SUBJECT);
+		Message message = javaMailMessageFactory.create(mail, session);
+		assertEquals(message.getSubject(), MAIL_SUBJECT);
 	}
 
 	@Test(expected = CouldNotCreateMessageException.class)
 	public void givenFaultyEmailCreateShouldThrowException() throws MessagingException {
-		Address addressThatWillFail = new InternetAddress(MAIL_DESTINATION);
-		doThrow(new MessagingException()).when(message).addRecipient(RecipientType.TO, addressThatWillFail);
-		smtpMessageFactory.create(mail, session);
+		when(mail.getDestinationString()).thenReturn(INVALID_MAIL_DESTINATION);
+		javaMailMessageFactory.create(mail, session);
 	}
 
 	private void setUpMailMock() {
