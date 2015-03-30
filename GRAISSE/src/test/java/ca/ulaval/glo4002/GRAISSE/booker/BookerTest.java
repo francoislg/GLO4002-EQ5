@@ -22,6 +22,9 @@ public class BookerTest {
 	Bookings bookings;
 
 	@Mock
+	InterfaceReservationBooking interfaceReservationBooking;
+
+	@Mock
 	BookerStrategy bookerStrategy;
 
 	@Mock
@@ -29,22 +32,23 @@ public class BookerTest {
 
 	@Mock
 	Booking booking;
-	
+
 	@Mock
 	BookerTrigger trigger;
-	
+
 	@Mock
 	BookerTrigger secondTrigger;
-	
+
 	Booker booker;
 
 	@Before
 	public void setUp() {
-		booker = new Booker(bookerStrategy, bookings, boardrooms);
+		booker = new Booker(bookings, boardrooms, interfaceReservationBooking);
 	}
 
 	@Test
-	public void assignBookingsShouldCallAssignBookingsOnBookerStrategy() {
+	public void whenSettingNewStrategyassignBookingsShouldCallAssignBookingsOnBookerStrategy() {
+		booker.setBookerStrategy(bookerStrategy);
 		booker.assignBookings();
 		verify(bookerStrategy).assignBookings(boardrooms, bookings);
 	}
@@ -60,8 +64,7 @@ public class BookerTest {
 		doReturn(false).when(bookings).hasUnassignedBookings();
 		assertFalse(booker.hasBookingsToAssign());
 	}
-	
-	
+
 	@Test
 	public void whenBookingsHasBookingToAssignBookerShouldHaveBookingsToAssign() {
 		doReturn(true).when(bookings).hasUnassignedBookings();
@@ -72,31 +75,31 @@ public class BookerTest {
 	public void givenTwoTriggersRegisteredInBookerWhenAddingANewBookingBookerShouldUpdateBothTriggers() {
 		booker.registerTrigger(trigger);
 		booker.registerTrigger(secondTrigger);
-		
+
 		booker.addBooking(booking);
-		
+
 		verify(trigger).update(booker);
 		verify(secondTrigger).update(booker);
 	}
-	
+
 	@Test
 	public void givenTwoOfTheSameTriggerRegisteredInBookerWhenAddingABookingShouldUpdateTriggerOnlyOnce() {
 		booker.registerTrigger(trigger);
 		booker.registerTrigger(trigger);
-		
+
 		booker.addBooking(booking);
-		
+
 		verify(trigger).update(booker);
 	}
-	
+
 	@Test
 	public void givenABookingToAssignAndTwoTriggersRegisteredInBookerWhenAssigningBookerShouldUpdateBothTriggers() {
 		booker.addBooking(booking);
 		booker.registerTrigger(trigger);
 		booker.registerTrigger(secondTrigger);
-		
+
 		booker.assignBookings();
-		
+
 		verify(trigger).update(booker);
 		verify(secondTrigger).update(booker);
 	}

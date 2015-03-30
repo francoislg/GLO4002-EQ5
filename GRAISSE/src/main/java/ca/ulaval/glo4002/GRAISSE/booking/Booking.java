@@ -9,7 +9,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	private int numberOfSeatsNeeded;
 	private boolean assigned;
-	private boolean cancel;
+	private boolean canceled;
 	private Priority priority;
 	private User creator;
 
@@ -20,7 +20,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	public Booking(User creator, int numberOfSeatsNeeded, Priority priority) {
 		this.creator = creator;
 		this.assigned = false;
-		this.cancel = false;
+		this.canceled = false;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = priority;
 	}
@@ -34,7 +34,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	}
 
 	public void cancel() {
-		this.cancel = true;
+		this.canceled = true;
 	}
 
 	public boolean hasCreator(User user) {

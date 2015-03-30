@@ -4,8 +4,8 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.AssignedBoardroom;
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.boardroom.InterfaceReservationBoardroom;
+import ca.ulaval.glo4002.GRAISSE.booker.InterfaceReservationBooking;
 import ca.ulaval.glo4002.GRAISSE.booking.AssignedBooking;
-import ca.ulaval.glo4002.GRAISSE.booking.InterfaceReservationBooking;
 
 public class CompletedBookingRequests implements InterfaceReservationBoardroom, InterfaceReservationBooking {
 	private CompletedBookingRequestRepository completedBookingRequestRepository;

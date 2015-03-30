@@ -27,7 +27,7 @@ public class Boardroom implements AssignedBoardroom {
 	}
 
 	public boolean assign(BookingAssignable bookingToAssign, InterfaceReservationBoardroom interfaceReservationBoardroom) {
-		if (interfaceReservationBoardroom.isAvailable(this) && verifyNumberOfSeats(bookingToAssign)) {
+		if (verifyNumberOfSeats(bookingToAssign) && interfaceReservationBoardroom.isAvailable(this)) {
 			interfaceReservationBoardroom.assign(this, bookingToAssign);
 			bookingToAssign.assign();
 			return true;

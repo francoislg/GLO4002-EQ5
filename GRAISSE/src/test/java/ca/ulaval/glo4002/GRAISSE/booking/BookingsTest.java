@@ -21,6 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsSortingStrategy;
+import ca.ulaval.glo4002.GRAISSE.booker.InterfaceReservationBooking;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
