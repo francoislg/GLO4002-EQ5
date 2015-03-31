@@ -22,12 +22,12 @@ public class SimpleMailTest {
 	@Mock
 	Email email;
 
-	SimpleMail mail;
+	SimpleMailMessage mail;
 
 	@Before
 	public void setUp() {
 		setUpEmailMock();
-		mail = new SimpleMail(email, MAIL_TITLE, MAIL_MESSAGE);
+		mail = new SimpleMailMessage(email, MAIL_TITLE, MAIL_MESSAGE);
 	}
 
 	@Test
@@ -60,26 +60,26 @@ public class SimpleMailTest {
 		Email anotherEmail = mock(Email.class);
 		when(anotherEmail.getValue()).thenReturn(ANOTHER_VALID_EMAIL);
 
-		SimpleMail mailWithDifferentDestination = new SimpleMail(anotherEmail, MAIL_TITLE, MAIL_MESSAGE);
+		SimpleMailMessage mailWithDifferentDestination = new SimpleMailMessage(anotherEmail, MAIL_TITLE, MAIL_MESSAGE);
 
 		assertFalse(mail.equals(mailWithDifferentDestination));
 	}
 
 	@Test
 	public void simpleMailsWithDifferentTitlesAreNotEquals() {
-		SimpleMail mailWithDifferentTitle = new SimpleMail(email, ANOTHER_MAIL_TITLE, MAIL_MESSAGE);
+		SimpleMailMessage mailWithDifferentTitle = new SimpleMailMessage(email, ANOTHER_MAIL_TITLE, MAIL_MESSAGE);
 		assertFalse(mail.equals(mailWithDifferentTitle));
 	}
 
 	@Test
 	public void simpleMailsWithDifferentMessagesAreNotEquals() {
-		SimpleMail mailWithDifferentMessage = new SimpleMail(email, MAIL_TITLE, ANOTHER_MAIL_MESSAGE);
+		SimpleMailMessage mailWithDifferentMessage = new SimpleMailMessage(email, MAIL_TITLE, ANOTHER_MAIL_MESSAGE);
 		assertFalse(mail.equals(mailWithDifferentMessage));
 	}
 
 	@Test
 	public void simpleMailsWithEqualsMailTitleAndMessageAreEquals() {
-		SimpleMail equalMail = new SimpleMail(email, MAIL_TITLE, MAIL_MESSAGE);
+		SimpleMailMessage equalMail = new SimpleMailMessage(email, MAIL_TITLE, MAIL_MESSAGE);
 		assertTrue(mail.equals(equalMail));
 	}
 

@@ -2,9 +2,9 @@ package ca.ulaval.glo4002.GRAISSE.booking;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingTrigger;
-import ca.ulaval.glo4002.GRAISSE.services.Mail;
-import ca.ulaval.glo4002.GRAISSE.services.MailServer;
-import ca.ulaval.glo4002.GRAISSE.services.SimpleMail;
+import ca.ulaval.glo4002.GRAISSE.services.MailMessage;
+import ca.ulaval.glo4002.GRAISSE.services.MailSender;
+import ca.ulaval.glo4002.GRAISSE.services.SimpleMailMessage;
 import ca.ulaval.glo4002.GRAISSE.user.User;
 
 public class BookingAssignedSendMailTrigger implements BookingTrigger {
@@ -13,12 +13,12 @@ public class BookingAssignedSendMailTrigger implements BookingTrigger {
 	private static final String BOOKING_IS_ASSIGNED_MESSAGE = "Congratulations ! Assignation succeeded !";
 	private static final String BOOKING_IS_NOT_ASSIGNED_MESSAGE = "Assignation failed !";
 
-	private MailServer mailServer;
+	private MailSender mailSender;
 	private User user;
 	private User responsible;
 
-	public BookingAssignedSendMailTrigger(MailServer mailServer, User user, User responsible) {
-		this.mailServer = mailServer;
+	public BookingAssignedSendMailTrigger(MailSender mailSender, User user, User responsible) {
+		this.mailSender = mailSender;
 		this.user = user;
 		this.responsible = responsible;
 	}
@@ -32,8 +32,8 @@ public class BookingAssignedSendMailTrigger implements BookingTrigger {
 	}
 
 	private void sendMailToEmail(BookingAssignable booking, User user) {
-		Mail mailToCreator = new SimpleMail(user.getEmail(), MAIL_SUBJECT, getMailMessage(booking));
-		mailServer.sendMail(mailToCreator);
+		MailMessage mailToCreator = new SimpleMailMessage(user.getEmail(), MAIL_SUBJECT, getMailMessage(booking));
+		mailSender.sendMail(mailToCreator);
 	}
 
 	private String getMailMessage(BookingAssignable booking) {

@@ -13,8 +13,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.services.Email;
-import ca.ulaval.glo4002.GRAISSE.services.Mail;
-import ca.ulaval.glo4002.GRAISSE.services.MailServer;
+import ca.ulaval.glo4002.GRAISSE.services.MailMessage;
+import ca.ulaval.glo4002.GRAISSE.services.MailSender;
 import ca.ulaval.glo4002.GRAISSE.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -33,7 +33,7 @@ public class BookingAssignedSendMailTriggerTest {
 	User responsible;
 
 	@Mock
-	MailServer mailServer;
+	MailSender mailSender;
 
 	BookingAssignedSendMailTrigger bookingAssignedSendMailTrigger;
 
@@ -41,7 +41,7 @@ public class BookingAssignedSendMailTriggerTest {
 	public void setUp() throws Exception {
 		setUpUsersMocks();
 		setUpBookingMock();
-		bookingAssignedSendMailTrigger = new BookingAssignedSendMailTrigger(mailServer, user, responsible);
+		bookingAssignedSendMailTrigger = new BookingAssignedSendMailTrigger(mailSender, user, responsible);
 	}
 
 	@Test
@@ -50,8 +50,8 @@ public class BookingAssignedSendMailTriggerTest {
 
 		bookingAssignedSendMailTrigger.update(booking);
 
-		verify(mailServer).sendMail(withAMailSentTo(USER_EMAIL));
-		verify(mailServer).sendMail(withAMailSentTo(RESPONSIBLE_EMAIL));
+		verify(mailSender).sendMail(withAMailSentTo(USER_EMAIL));
+		verify(mailSender).sendMail(withAMailSentTo(RESPONSIBLE_EMAIL));
 	}
 
 	@Test
@@ -60,19 +60,19 @@ public class BookingAssignedSendMailTriggerTest {
 
 		bookingAssignedSendMailTrigger.update(booking);
 
-		verify(mailServer).sendMail(withAMailSentTo(USER_EMAIL));
-		verify(mailServer).sendMail(withAMailSentTo(RESPONSIBLE_EMAIL));
+		verify(mailSender).sendMail(withAMailSentTo(USER_EMAIL));
+		verify(mailSender).sendMail(withAMailSentTo(RESPONSIBLE_EMAIL));
 	}
 
-	private Mail withAMailSentTo(String email) {
+	private MailMessage withAMailSentTo(String email) {
 		return argThat(IsAMailSentTo(email));
 	}
 
-	private static BaseMatcher<Mail> IsAMailSentTo(final String email) {
-		return new BaseMatcher<Mail>() {
+	private static BaseMatcher<MailMessage> IsAMailSentTo(final String email) {
+		return new BaseMatcher<MailMessage>() {
 			@Override
 			public boolean matches(Object argument) {
-				final Mail mail = (Mail) argument;
+				final MailMessage mail = (MailMessage) argument;
 				return mail.getDestinationString().equals(email);
 			}
 
