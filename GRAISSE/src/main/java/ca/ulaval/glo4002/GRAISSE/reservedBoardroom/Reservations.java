@@ -16,9 +16,12 @@ public class Reservations implements InterfaceReservationBoardroom, InterfaceRes
 
 	@Override
 	public void cancelBooking(AssignedBooking assignedBooking) {
-		Reservation completedBookingRequestToCancel = completedBookingRequestRepository.retrieve(assignedBooking);
-		completedBookingRequestToCancel.cancel();
-		completedBookingRequestRepository.remove(completedBookingRequestToCancel);
+		if (completedBookingRequestRepository.existWithBooking(assignedBooking)) {
+			Reservation completedBookingRequestToCancel = completedBookingRequestRepository.retrieve(assignedBooking);
+			completedBookingRequestToCancel.cancel();
+			completedBookingRequestRepository.remove(completedBookingRequestToCancel);
+		}
+
 	}
 
 	@Override

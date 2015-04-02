@@ -56,15 +56,12 @@ public class BookingsTest {
 	@Mock
 	BoardroomsSortingStrategy boardroomsSortingStrategy;
 
-<<<<<<< HEAD
-=======
-	@Mock
-	BookingRepository bookingRepository;
-
->>>>>>> origin/dev
 	Bookings bookings;
+
 	Collection<Booking> emptyBookingCollection;
+
 	Collection<Booking> bookingsWithOneUnassignedBookings;
+
 	Collection<Booking> bookingsWithOnlyAssignedBookings;
 
 	@Before

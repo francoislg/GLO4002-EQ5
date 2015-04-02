@@ -56,4 +56,9 @@ public class CompletedBookingRequestInMemoryRepository implements ReservationRep
 		completedBookingRequests.remove(completedBookingRequest);
 
 	}
+
+	@Override
+	public boolean existWithBooking(AssignedBooking assignedBooking) {
+		return completedBookingRequests.contains(assignedBooking);
+	}
 }

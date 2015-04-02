@@ -15,4 +15,6 @@ public interface ReservationRepository {
 	public Collection<Reservation> retrieveAll();
 
 	public boolean existsWithBoardroom(Boardroom boardroom);
+
+	public boolean existWithBooking(AssignedBooking assignedBooking);
 }
