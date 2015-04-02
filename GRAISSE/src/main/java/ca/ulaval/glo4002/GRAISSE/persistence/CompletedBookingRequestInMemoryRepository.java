@@ -50,4 +50,10 @@ public class CompletedBookingRequestInMemoryRepository implements CompletedBooki
 		}
 		return false;
 	}
+
+	@Override
+	public void remove(CompletedBookingRequest completedBookingRequest) {
+		completedBookingRequests.remove(completedBookingRequest);
+
+	}
 }

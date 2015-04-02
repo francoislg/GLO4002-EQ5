@@ -22,4 +22,8 @@ public class CompletedBookingRequest {
 		return this.assignedBoardroom.equals(assignedBoardroom);
 	}
 
+	public void cancel() {
+		assignedBooking.cancel();
+	}
+
 }

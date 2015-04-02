@@ -11,4 +11,6 @@ public interface BookingAssignable {
 	public boolean hasCreator(User user);
 
 	public boolean isAssigned();
+
+	public void cancel();
 }
