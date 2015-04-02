@@ -3,20 +3,24 @@ package ca.ulaval.glo4002.GRAISSE.booker;
 import java.util.ArrayList;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
+import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsSortingStrategyDefault;
 import ca.ulaval.glo4002.GRAISSE.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.booking.Bookings;
+import ca.ulaval.glo4002.GRAISSE.booking.BookingsSortingStrategyDefault;
 
 public class Booker {
 
 	private Bookings bookings;
-	private BookerStrategy bookerStrategy;
 	private Boardrooms boardrooms;
+	private BookerStrategy bookerStrategy;
+	private InterfaceReservationBooking interfaceReservationBooking;
 	private ArrayList<BookerTrigger> triggers;
 
-	public Booker(BookerStrategy bookerStrategy, Bookings bookings, Boardrooms boardrooms) {
-		this.bookerStrategy = bookerStrategy;
+	public Booker(Bookings bookings, Boardrooms boardrooms, InterfaceReservationBooking interfaceReservationBooking) {
+		this.bookerStrategy = new BookerStrategyDefault(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyDefault());
 		this.bookings = bookings;
 		this.boardrooms = boardrooms;
+		this.interfaceReservationBooking = interfaceReservationBooking;
 		triggers = new ArrayList<BookerTrigger>();
 	}
 
@@ -28,6 +32,14 @@ public class Booker {
 	public void addBooking(Booking bookingToAdd) {
 		bookings.add(bookingToAdd);
 		notifyTriggers();
+	}
+
+	public void cancelBooking(Booking booking) {
+		interfaceReservationBooking.cancelBooking(booking);
+	}
+
+	public void setBookerStrategy(BookerStrategy bookerStrategy) {
+		this.bookerStrategy = bookerStrategy;
 	}
 
 	public boolean hasBookingsToAssign() {

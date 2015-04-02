@@ -22,6 +22,9 @@ public class BookerTest {
 	Bookings bookings;
 
 	@Mock
+	InterfaceReservationBooking interfaceReservationBooking;
+
+	@Mock
 	BookerStrategy bookerStrategy;
 
 	@Mock
@@ -40,11 +43,12 @@ public class BookerTest {
 
 	@Before
 	public void setUp() {
-		booker = new Booker(bookerStrategy, bookings, boardrooms);
+		booker = new Booker(bookings, boardrooms, interfaceReservationBooking);
 	}
 
 	@Test
-	public void assignBookingsShouldCallAssignBookingsOnBookerStrategy() {
+	public void whenSettingNewStrategyassignBookingsShouldCallAssignBookingsOnBookerStrategy() {
+		booker.setBookerStrategy(bookerStrategy);
 		booker.assignBookings();
 		verify(bookerStrategy).assignBookings(boardrooms, bookings);
 	}

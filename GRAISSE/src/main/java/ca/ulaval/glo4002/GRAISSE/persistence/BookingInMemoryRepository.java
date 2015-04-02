@@ -30,4 +30,5 @@ public class BookingInMemoryRepository implements BookingRepository {
 	private boolean isNotAlreadyInMemory(Booking booking) {
 		return !bookings.contains(booking);
 	}
+
 }

@@ -21,12 +21,19 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BoardroomsSortingStrategy;
+import ca.ulaval.glo4002.GRAISSE.booker.InterfaceReservationBooking;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
 
 	private static final boolean ASSIGNED = true;
 	private static final boolean NOT_ASSIGNED = false;
+
+	@Mock
+	BookingRepository bookingRepository;
+
+	@Mock
+	InterfaceReservationBooking interfaceReservationBooking;
 
 	@Mock
 	Booking booking;
@@ -49,9 +56,12 @@ public class BookingsTest {
 	@Mock
 	BoardroomsSortingStrategy boardroomsSortingStrategy;
 
+<<<<<<< HEAD
+=======
 	@Mock
 	BookingRepository bookingRepository;
 
+>>>>>>> origin/dev
 	Bookings bookings;
 	Collection<Booking> emptyBookingCollection;
 	Collection<Booking> bookingsWithOneUnassignedBookings;
@@ -61,7 +71,7 @@ public class BookingsTest {
 	public void setUp() {
 		setUpBookingStrategyMock();
 		setUpBookings();
-		bookings = new Bookings(bookingRepository);
+		bookings = new Bookings(bookingRepository, interfaceReservationBooking);
 	}
 
 	@Test
