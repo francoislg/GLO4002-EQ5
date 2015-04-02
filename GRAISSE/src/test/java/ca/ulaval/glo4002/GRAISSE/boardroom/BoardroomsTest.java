@@ -21,9 +21,12 @@ public class BoardroomsTest {
 	@Mock
 	BoardroomRepository boardroomRepository;
 
+<<<<<<< HEAD
 	@Mock
 	InterfaceReservationBoardroom interfaceReservationBoardroom;
 
+=======
+>>>>>>> origin/dev
 	@Mock
 	BookingTrigger trigger;
 
@@ -98,7 +101,12 @@ public class BoardroomsTest {
 	}
 
 	private void setUpBoardroomMock() {
+<<<<<<< HEAD
 		when(boardroom.assign(assignableBooking, interfaceReservationBoardroom)).thenReturn(true);
 		when(boardroom.assign(unassignableBooking, interfaceReservationBoardroom)).thenReturn(false);
+=======
+		when(boardroom.assign(assignableBooking)).thenReturn(true);
+		when(boardroom.assign(unassignableBooking)).thenReturn(false);
+>>>>>>> origin/dev
 	}
 }

@@ -14,13 +14,13 @@ public class BookerTimerTaskTest {
 
 	@Mock
 	Booker booker;
-	
+
 	BookerTimerTask timerTaskStrategy;
 
 	@Test
 	public void whenRunningTimerTaskShouldCallBookerAssignBookings() {
 		timerTaskStrategy = new BookerTimerTask(booker);
-		
+
 		timerTaskStrategy.run();
 
 		verify(booker).assignBookings();

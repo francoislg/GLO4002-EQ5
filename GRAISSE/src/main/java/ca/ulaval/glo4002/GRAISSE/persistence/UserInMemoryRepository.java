@@ -9,20 +9,20 @@ import ca.ulaval.glo4002.GRAISSE.user.UserRepository;
 import ca.ulaval.glo4002.GRAISSE.user.exceptions.UserNotFoundException;
 
 public class UserInMemoryRepository implements UserRepository {
-	
+
 	private List<User> users;
-	
-	public UserInMemoryRepository(){
+
+	public UserInMemoryRepository() {
 		users = new ArrayList<User>();
 	}
-	
+
 	@Override
 	public void persist(User user) {
-		if(isNotAlreadyInMemory(user)){
+		if (isNotAlreadyInMemory(user)) {
 			users.add(user);
 		}
 	}
-	
+
 	@Override
 	public User retrieve(Email email) {
 		for (User user : users) {
@@ -32,7 +32,7 @@ public class UserInMemoryRepository implements UserRepository {
 		}
 		throw new UserNotFoundException();
 	}
-	
+
 	private boolean isNotAlreadyInMemory(User user) {
 		return !users.contains(user);
 	}
