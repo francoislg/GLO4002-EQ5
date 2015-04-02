@@ -6,20 +6,20 @@ import java.util.List;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.booking.AssignedBooking;
-import ca.ulaval.glo4002.GRAISSE.reservedBoardroom.ReservedBoardroom;
-import ca.ulaval.glo4002.GRAISSE.reservedBoardroom.ReservedBoadroomNotFoundException;
-import ca.ulaval.glo4002.GRAISSE.reservedBoardroom.ReservedBoardroomRepository;
+import ca.ulaval.glo4002.GRAISSE.reservedBoardroom.Reservation;
+import ca.ulaval.glo4002.GRAISSE.reservedBoardroom.ReservationNotFoundException;
+import ca.ulaval.glo4002.GRAISSE.reservedBoardroom.ReservationRepository;
 
-public class CompletedBookingRequestInMemoryRepository implements ReservedBoardroomRepository {
+public class CompletedBookingRequestInMemoryRepository implements ReservationRepository {
 
-	private List<ReservedBoardroom> completedBookingRequests = new ArrayList<ReservedBoardroom>();
+	private List<Reservation> completedBookingRequests = new ArrayList<Reservation>();
 
-	private boolean completedBookingRequestNotAlreadyInMemory(ReservedBoardroom completedBookingRequest) {
+	private boolean completedBookingRequestNotAlreadyInMemory(Reservation completedBookingRequest) {
 		return !completedBookingRequests.contains(completedBookingRequest);
 	}
 
 	@Override
-	public void persist(ReservedBoardroom completedBookingRequest) {
+	public void persist(Reservation completedBookingRequest) {
 		if (completedBookingRequestNotAlreadyInMemory(completedBookingRequest)) {
 			completedBookingRequests.add(completedBookingRequest);
 		}
@@ -27,23 +27,23 @@ public class CompletedBookingRequestInMemoryRepository implements ReservedBoardr
 	}
 
 	@Override
-	public Collection<ReservedBoardroom> retrieveAll() {
+	public Collection<Reservation> retrieveAll() {
 		return completedBookingRequests;
 	}
 
 	@Override
-	public ReservedBoardroom retrieve(AssignedBooking assignedBooking) throws ReservedBoadroomNotFoundException {
-		for (ReservedBoardroom completedBookingRequest : completedBookingRequests) {
+	public Reservation retrieve(AssignedBooking assignedBooking) throws ReservationNotFoundException {
+		for (Reservation completedBookingRequest : completedBookingRequests) {
 			if (completedBookingRequest.containsBooking(assignedBooking)) {
 				return completedBookingRequest;
 			}
 		}
-		throw new ReservedBoadroomNotFoundException();
+		throw new ReservationNotFoundException();
 	}
 
 	@Override
 	public boolean existsWithBoardroom(Boardroom boardroom) {
-		for (ReservedBoardroom completedBookingRequest : completedBookingRequests) {
+		for (Reservation completedBookingRequest : completedBookingRequests) {
 			if (completedBookingRequest.containsBoardroom(boardroom)) {
 				return true;
 			}
@@ -52,7 +52,7 @@ public class CompletedBookingRequestInMemoryRepository implements ReservedBoardr
 	}
 
 	@Override
-	public void remove(ReservedBoardroom completedBookingRequest) {
+	public void remove(Reservation completedBookingRequest) {
 		completedBookingRequests.remove(completedBookingRequest);
 
 	}

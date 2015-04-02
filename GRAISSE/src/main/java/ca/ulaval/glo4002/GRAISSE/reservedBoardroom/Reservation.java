@@ -4,12 +4,12 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.AssignedBoardroom;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.booking.AssignedBooking;
 
-public class ReservedBoardroom {
+public class Reservation {
 
 	private AssignedBoardroom assignedBoardroom;
 	private BookingAssignable assignedBooking;
 
-	public ReservedBoardroom(AssignedBoardroom assignedBoardroom, BookingAssignable bookingToAssign) {
+	public Reservation(AssignedBoardroom assignedBoardroom, BookingAssignable bookingToAssign) {
 		this.assignedBoardroom = assignedBoardroom;
 		this.assignedBooking = bookingToAssign;
 	}

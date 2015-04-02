@@ -7,16 +7,16 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.InterfaceReservationBoardroom;
 import ca.ulaval.glo4002.GRAISSE.booker.InterfaceReservationBooking;
 import ca.ulaval.glo4002.GRAISSE.booking.AssignedBooking;
 
-public class ReservedBoadrooms implements InterfaceReservationBoardroom, InterfaceReservationBooking {
-	private ReservedBoardroomRepository completedBookingRequestRepository;
+public class Reservations implements InterfaceReservationBoardroom, InterfaceReservationBooking {
+	private ReservationRepository completedBookingRequestRepository;
 
-	public ReservedBoadrooms(ReservedBoardroomRepository completedBookingRequestRepository) {
+	public Reservations(ReservationRepository completedBookingRequestRepository) {
 		this.completedBookingRequestRepository = completedBookingRequestRepository;
 	}
 
 	@Override
 	public void cancelBooking(AssignedBooking assignedBooking) {
-		ReservedBoardroom completedBookingRequestToCancel = completedBookingRequestRepository.retrieve(assignedBooking);
+		Reservation completedBookingRequestToCancel = completedBookingRequestRepository.retrieve(assignedBooking);
 		completedBookingRequestToCancel.cancel();
 		completedBookingRequestRepository.remove(completedBookingRequestToCancel);
 	}
@@ -28,7 +28,7 @@ public class ReservedBoadrooms implements InterfaceReservationBoardroom, Interfa
 
 	@Override
 	public void assign(AssignedBoardroom boardroomToAssign, BookingAssignable bookingToAssign) {
-		ReservedBoardroom completedBookingRequest = new ReservedBoardroom(boardroomToAssign, bookingToAssign);
+		Reservation completedBookingRequest = new Reservation(boardroomToAssign, bookingToAssign);
 		completedBookingRequestRepository.persist(completedBookingRequest);
 	}
 }
