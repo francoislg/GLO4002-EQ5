@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE.CompletedBookingRequest;
+package ca.ulaval.glo4002.GRAISSE.completedBookingRequest;
 
 import ca.ulaval.glo4002.GRAISSE.boardroom.AssignedBoardroom;
 import ca.ulaval.glo4002.GRAISSE.boardroom.BookingAssignable;

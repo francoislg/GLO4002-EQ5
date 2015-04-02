@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import ca.ulaval.glo4002.GRAISSE.CompletedBookingRequest.CompletedBookingRequest;
-import ca.ulaval.glo4002.GRAISSE.CompletedBookingRequest.CompletedBookingRequestNotFoundException;
-import ca.ulaval.glo4002.GRAISSE.CompletedBookingRequest.CompletedBookingRequestRepository;
 import ca.ulaval.glo4002.GRAISSE.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.booking.AssignedBooking;
+import ca.ulaval.glo4002.GRAISSE.completedBookingRequest.CompletedBookingRequest;
+import ca.ulaval.glo4002.GRAISSE.completedBookingRequest.CompletedBookingRequestNotFoundException;
+import ca.ulaval.glo4002.GRAISSE.completedBookingRequest.CompletedBookingRequestRepository;
 
 public class CompletedBookingRequestInMemoryRepository implements CompletedBookingRequestRepository {
 

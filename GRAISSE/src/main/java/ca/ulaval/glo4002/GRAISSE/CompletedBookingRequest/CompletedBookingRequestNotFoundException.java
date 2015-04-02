@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE.CompletedBookingRequest;
+package ca.ulaval.glo4002.GRAISSE.completedBookingRequest;
 
 public class CompletedBookingRequestNotFoundException extends RuntimeException {
 
