@@ -26,14 +26,14 @@ public class Bookings {
 	}
 
 	public int getNumberOfUnassignedBookings() {
-		return getUnassignedBookings().size();
+		return getAssignableBookings().size();
 	}
 
-	private Collection<Booking> getUnassignedBookings() {
+	private Collection<Booking> getAssignableBookings() {
 		Collection<Booking> bookings = bookingRepository.retrieveAll();
 		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();
-			if (booking.isAssigned()) {
+			if (booking.isAssignable()) {
 				bookingIter.remove();
 			}
 		}
@@ -42,7 +42,7 @@ public class Bookings {
 
 	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsSortingStrategy bookingsSortingStrategy,
 			BoardroomsSortingStrategy boardroomsSortingStrategy) {
-		Collection<Booking> formatedBookingList = bookingsSortingStrategy.sort(getUnassignedBookings());
+		Collection<Booking> formatedBookingList = bookingsSortingStrategy.sort(getAssignableBookings());
 		for (Booking booking : formatedBookingList) {
 			boardrooms.assignBookingToBoardroom(booking, boardroomsSortingStrategy);
 			bookingRepository.persist(booking);

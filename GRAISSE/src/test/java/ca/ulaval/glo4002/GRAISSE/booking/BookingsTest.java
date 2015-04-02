@@ -121,9 +121,9 @@ public class BookingsTest {
 	}
 
 	private void setUpBookings() {
-		doReturn(ASSIGNED).when(assignedBooking1).isAssigned();
-		doReturn(ASSIGNED).when(assignedBooking2).isAssigned();
-		doReturn(NOT_ASSIGNED).when(unassignedBooking).isAssigned();
+		doReturn(ASSIGNED).when(assignedBooking1).isAssignable();
+		doReturn(ASSIGNED).when(assignedBooking2).isAssignable();
+		doReturn(NOT_ASSIGNED).when(unassignedBooking).isAssignable();
 	}
 
 	private void setUpEmptyBookings() {

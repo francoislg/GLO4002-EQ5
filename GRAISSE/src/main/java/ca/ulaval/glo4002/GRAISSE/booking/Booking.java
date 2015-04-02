@@ -33,6 +33,10 @@ public class Booking implements BookingAssignable, AssignedBooking {
 		return assigned;
 	}
 
+	public boolean isAssignable() {
+		return (!this.isAssigned() && !this.canceled);
+	}
+
 	public void cancel() {
 		this.canceled = true;
 	}
