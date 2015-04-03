@@ -18,13 +18,13 @@ import ca.ulaval.glo4002.GRAISSE.boardroom.exceptions.BoardroomNotFoundException
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomInMemoryRepositoryTest {
 
-	private static final String NAME_OF_BOARDROOM_1 = "Boardroom1";
-	private static final String NAME_OF_BOARDROOM_2 = "Boardroom2";
-	private static final String NAME_OF_BOARDROOM_3 = "Boardroom3";
+	private static final String A_BOARDROOM_NAME = "Boardroom1";
+	private static final String A_BOARDROOM_NAME_2 = "Boardroom2";
+	private static final String A_BOARDROOM_NAME_3 = "Boardroom3";
 	private static final String NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST = "BoardroomThatDoesNotExist";
 
 	@Mock
-	Boardroom boardroom1;
+	Boardroom boardroom;
 
 	@Mock
 	Boardroom boardroom2;
@@ -49,22 +49,22 @@ public class BoardroomInMemoryRepositoryTest {
 	public void givenOneBoardroomRetrievingBoardroomShouldReturnTheBoardroom() {
 		addOneBoardroomtoBoardrooms();
 
-		Boardroom boardroom = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_1);
+		Boardroom boardroom = repoBoardrooms.retrieve(A_BOARDROOM_NAME);
 
-		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
+		assertTrue(boardroom.hasName(A_BOARDROOM_NAME));
 	}
 
 	@Test
 	public void givenMultipleBoardroomsRetrievingEachBoardroomShouldReturnEachBoardroom() {
 		addThreeBoardroomtoBoardroomsRespository();
 
-		Boardroom boardroom1 = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_1);
-		Boardroom boardroom2 = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_2);
-		Boardroom boardroom3 = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_3);
+		Boardroom boardroom1 = repoBoardrooms.retrieve(A_BOARDROOM_NAME);
+		Boardroom boardroom2 = repoBoardrooms.retrieve(A_BOARDROOM_NAME_2);
+		Boardroom boardroom3 = repoBoardrooms.retrieve(A_BOARDROOM_NAME_3);
 
-		assertTrue(boardroom1.hasName(NAME_OF_BOARDROOM_1));
-		assertTrue(boardroom2.hasName(NAME_OF_BOARDROOM_2));
-		assertTrue(boardroom3.hasName(NAME_OF_BOARDROOM_3));
+		assertTrue(boardroom1.hasName(A_BOARDROOM_NAME));
+		assertTrue(boardroom2.hasName(A_BOARDROOM_NAME_2));
+		assertTrue(boardroom3.hasName(A_BOARDROOM_NAME_3));
 	}
 
 	@Test(expected = BoardroomNotFoundException.class)
@@ -73,11 +73,11 @@ public class BoardroomInMemoryRepositoryTest {
 	}
 
 	private void addThreeBoardroomtoBoardroomsRespository() {
-		setBoardroomHasNameMock(boardroom1, NAME_OF_BOARDROOM_1);
-		setBoardroomHasNameMock(boardroom2, NAME_OF_BOARDROOM_2);
-		setBoardroomHasNameMock(boardroom3, NAME_OF_BOARDROOM_3);
+		setBoardroomHasNameMock(boardroom, A_BOARDROOM_NAME);
+		setBoardroomHasNameMock(boardroom2, A_BOARDROOM_NAME_2);
+		setBoardroomHasNameMock(boardroom3, A_BOARDROOM_NAME_3);
 
-		repoBoardrooms.persist(boardroom1);
+		repoBoardrooms.persist(boardroom);
 		repoBoardrooms.persist(boardroom2);
 		repoBoardrooms.persist(boardroom3);
 	}
@@ -88,7 +88,7 @@ public class BoardroomInMemoryRepositoryTest {
 	}
 
 	private void addOneBoardroomtoBoardrooms() {
-		setBoardroomHasNameMock(boardroom1, NAME_OF_BOARDROOM_1);
-		repoBoardrooms.persist(boardroom1);
+		setBoardroomHasNameMock(boardroom, A_BOARDROOM_NAME_3);
+		repoBoardrooms.persist(boardroom);
 	}
 }
