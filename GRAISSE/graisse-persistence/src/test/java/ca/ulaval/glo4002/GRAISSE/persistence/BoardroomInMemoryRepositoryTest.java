@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.persistence;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
@@ -70,6 +71,15 @@ public class BoardroomInMemoryRepositoryTest {
 	@Test(expected = BoardroomNotFoundException.class)
 	public void givenNoExistingBoardroomRetrivingShouldThrowBoardroomNotFoundExeption() {
 		repoBoardrooms.retrieve(NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST);
+	}
+	
+	@Test
+	public void whenPersistingTwiceTheSameBoardroomTheRepositoryShouldContainOneBoardroom() {
+		repoBoardrooms.persist(boardroom);
+		repoBoardrooms.persist(boardroom);
+
+		int resultSize = repoBoardrooms.retrieveAll().size();
+		assertEquals(1, resultSize);
 	}
 
 	private void addThreeBoardroomtoBoardroomsRespository() {
