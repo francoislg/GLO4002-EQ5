@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.GRAISSE.core.boardroom;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.UnableToAssignBookingException;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Notifyer;
@@ -10,11 +11,11 @@ public class Boardrooms {
 
 	private BoardroomRepository boardroomsRepository;
 	private InterfaceReservationBoardroom interfaceReservationBoardroom;
-	private ArrayList<Notifyer<BookingAssignable>> notifyers;
+	private List<Notifyer<BookingAssignable>> notifiers;
 
 	public Boardrooms(BoardroomRepository boardroomsRepo, InterfaceReservationBoardroom interfaceReservationBoardroom) {
 		this.boardroomsRepository = boardroomsRepo;
-		this.notifyers = new ArrayList<Notifyer<BookingAssignable>>();
+		this.notifiers = new ArrayList<Notifyer<BookingAssignable>>();
 		this.interfaceReservationBoardroom = interfaceReservationBoardroom;
 	}
 
@@ -32,12 +33,12 @@ public class Boardrooms {
 	}
 
 	private void notifyTriggers(BookingAssignable booking) {
-		for (Notifyer<BookingAssignable> notifyer : notifyers) {
+		for (Notifyer<BookingAssignable> notifyer : notifiers) {
 			notifyer.notify(booking);
 		}
 	}
 
 	public void registerObserver(Notifyer<BookingAssignable> observer) {
-		notifyers.add(observer);
+		notifiers.add(observer);
 	}
 }

@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE.application.service.booking;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategyDefault;
@@ -16,7 +17,7 @@ public class Booker {
 	private Boardrooms boardrooms;
 	private BookerStrategy bookerStrategy;
 	private InterfaceReservationBooking interfaceReservationBooking;
-	private ArrayList<Observer<Booker>> observers;
+	private List<Observer<Booker>> observers;
 
 	public Booker(Bookings bookings, Boardrooms boardrooms, InterfaceReservationBooking interfaceReservationBooking) {
 		this.bookerStrategy = new BookerStrategyDefault(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyDefault());
