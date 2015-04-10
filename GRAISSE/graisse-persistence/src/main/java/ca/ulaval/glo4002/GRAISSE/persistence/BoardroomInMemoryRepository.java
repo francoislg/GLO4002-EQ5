@@ -2,7 +2,9 @@ package ca.ulaval.glo4002.GRAISSE.persistence;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomRepository;
@@ -36,4 +38,10 @@ public class BoardroomInMemoryRepository implements BoardroomRepository {
 	public Collection<Boardroom> retrieveAll() {
 		return boardrooms;
 	}
+	
+	public Collection<Boardroom>  getBoardroomsOrderedByNumberOfSeats(){
+		Comparator<Boardroom> byNumberOfSeats = (boardroom1, boardroom2) -> boardroom1.compareByNumberOfSeats(boardroom2);
+		return boardrooms.stream().sorted(byNumberOfSeats).collect(Collectors.toList());
+	}
+
 }
