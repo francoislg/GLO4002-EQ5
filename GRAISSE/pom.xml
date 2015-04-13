@@ -20,5 +20,6 @@
 	    <module>graisse-persistence</module>
 	    <module>graisse-application-service</module>
     <module>graisse-uat</module>
+    <module>graisse-context</module>
   </modules>
 </project>

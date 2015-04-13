@@ -54,6 +54,11 @@
       <artifactId>reflections</artifactId>
       <version>0.9.9</version>
     </dependency>
+    <dependency>
+      <groupId>ca.ulaval.glo4002</groupId>
+      <artifactId>graisse-context</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
   </dependencies>
   
    <build>   
