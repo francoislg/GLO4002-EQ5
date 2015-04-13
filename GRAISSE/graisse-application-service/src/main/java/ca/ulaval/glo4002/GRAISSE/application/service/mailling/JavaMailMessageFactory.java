@@ -14,6 +14,9 @@ public class JavaMailMessageFactory {
 		Message message = new MimeMessage(session);
 		try {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(mail.getDestinationString(), true));
+			for(String email : mail.getCC()){
+				message.addRecipient(Message.RecipientType.CC, new InternetAddress(email, true));
+			}
 			message.setSubject(mail.getSubject());
 			message.setText(mail.getMessage());
 

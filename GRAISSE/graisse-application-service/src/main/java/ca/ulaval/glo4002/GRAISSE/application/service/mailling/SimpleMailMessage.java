@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE.application.service.mailling;
 
+import java.util.List;
+
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class SimpleMailMessage implements MailMessage {
@@ -7,6 +9,7 @@ public class SimpleMailMessage implements MailMessage {
 	private final Email destination;
 	private final String title;
 	private final String message;
+	private List<String> cc;
 
 	public SimpleMailMessage(Email destination, String title, String message) {
 		this.destination = destination;
@@ -78,5 +81,15 @@ public class SimpleMailMessage implements MailMessage {
 
 	private boolean messagesAreNotEquals(SimpleMailMessage otherMailToCompareMessage) {
 		return !message.equals(otherMailToCompareMessage.message);
+	}
+
+	@Override
+	public List<String> getCC() {
+		return cc;
+	}
+
+	@Override
+	public void addCC(Email email) {
+		cc.add(email.getValue());
 	}
 }
