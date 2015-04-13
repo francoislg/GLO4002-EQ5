@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.application.service.mailling;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
@@ -15,6 +16,7 @@ public class SimpleMailMessage implements MailMessage {
 		this.destination = destination;
 		this.title = title;
 		this.message = message;
+		this.cc = new ArrayList<String>();
 	}
 
 	@Override

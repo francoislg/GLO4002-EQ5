@@ -14,7 +14,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailMessage;
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailSender;
-import ca.ulaval.glo4002.GRAISSE.application.service.notification.BookingAssignedSendMailNotifyer;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
@@ -75,12 +74,12 @@ public class BookingAssignedSendMailNotifyerTest {
 			@Override
 			public boolean matches(Object argument) {
 				final MailMessage mail = (MailMessage) argument;
-				return mail.getDestinationString().equals(email);
+				return mail.getDestinationString().equals(email) || mail.getCC().contains(email);
 			}
 
 			@Override
 			public void describeTo(Description description) {
-				description.appendText("destination for mail should be ").appendText(email);
+				description.appendText("destination for mail should contain ").appendText(email);
 			}
 		};
 	}
