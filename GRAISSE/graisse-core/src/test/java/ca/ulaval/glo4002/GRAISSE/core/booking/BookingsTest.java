@@ -160,6 +160,6 @@ public class BookingsTest {
 		bookingsWithOneUnassignedBookings.add(unassignedBooking);
 
 		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
-		doReturn(bookingsWithOneUnassignedBookings).when(bookingsSortingStrategy).sort(bookingsWithOneUnassignedBookings);
+		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveSortedByPriority();
 	}
 }
