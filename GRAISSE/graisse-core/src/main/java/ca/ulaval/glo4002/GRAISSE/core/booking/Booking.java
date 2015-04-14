@@ -10,8 +10,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	
 	private String name;
 	private int numberOfSeatsNeeded;
-	private boolean assigned;
-	private boolean canceled;
+	private BookingState state;
 	private Priority priority;
 	private User promoter;
 
@@ -24,20 +23,23 @@ public class Booking implements BookingAssignable, AssignedBooking {
 		this.name = name;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = priority;
-		assigned = false;
-		canceled = false;
+		this.state = BookingState.WAITING;
 	}
 
 	public void assign() {
-		assigned = true;
+		state = BookingState.ASSIGNED;
 	}
 
 	public boolean isAssigned() {
-		return assigned;
+		return state == BookingState.ASSIGNED;
 	}
 
 	public void cancel() {
-		canceled = true;
+		state = BookingState.CANCELLED;
+	}
+	
+	public void refuse(){
+		state = BookingState.REFUSED;
 	}
 
 	public boolean hasPromoter(User user) {
