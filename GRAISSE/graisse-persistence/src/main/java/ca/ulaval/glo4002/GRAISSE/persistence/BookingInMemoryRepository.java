@@ -17,7 +17,7 @@ public class BookingInMemoryRepository implements BookingRepository {
 
 	@Override
 	public void persist(Booking booking) {
-		if (isNotAlreadyInMemory(booking)) {
+		if (!bookings.contains(booking)) {
 			bookings.add(booking);
 		}
 	}
@@ -25,10 +25,6 @@ public class BookingInMemoryRepository implements BookingRepository {
 	@Override
 	public Collection<Booking> retrieveAll() {
 		return bookings;
-	}
-
-	private boolean isNotAlreadyInMemory(Booking booking) {
-		return !bookings.contains(booking);
 	}
 
 }
