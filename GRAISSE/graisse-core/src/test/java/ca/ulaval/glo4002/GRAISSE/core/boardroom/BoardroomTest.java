@@ -76,7 +76,7 @@ public class BoardroomTest {
 	public void whenBoardroomIsAvailableAndHasEnoughSeatsForTheBookingAssignShouldReturnTrue() {
 		when(interfaceReservationBoardroom.isAvailable(boardroom)).thenReturn(true);
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
-		assertTrue(boardroom.assign(booking, interfaceReservationBoardroom));
+		assertTrue(boardroom.canAssign(booking, interfaceReservationBoardroom));
 	}
 
 	@Test
@@ -85,13 +85,13 @@ public class BoardroomTest {
 
 		boardroom.assign(booking, interfaceReservationBoardroom);
 
-		assertFalse(boardroom.assign(booking, interfaceReservationBoardroom));
+		assertFalse(boardroom.canAssign(booking, interfaceReservationBoardroom));
 	}
 
 	@Test
 	public void givenBoardroomIsAvailableAndHasInsufficentSeatsForTheBookingWhenAssigningShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(false);
-		assertFalse(boardroom.assign(booking, interfaceReservationBoardroom));
+		assertFalse(boardroom.canAssign(booking, interfaceReservationBoardroom));
 	}
 
 	@Test

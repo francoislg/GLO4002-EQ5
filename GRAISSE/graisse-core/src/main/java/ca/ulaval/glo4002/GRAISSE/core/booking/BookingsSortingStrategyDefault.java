@@ -4,7 +4,8 @@ import java.util.Collection;
 
 public class BookingsSortingStrategyDefault implements BookingsSortingStrategy {
 
-	public Collection<Booking> sort(Collection<Booking> bookings) {
+	public Collection<Booking> sort(BookingRepository bookingRepository) {
+		Collection<Booking> bookings = bookingRepository.retrieveAll();
 		return bookings;
 	}
 }
