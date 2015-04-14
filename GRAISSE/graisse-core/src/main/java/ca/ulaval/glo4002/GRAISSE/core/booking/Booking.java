@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.GRAISSE.core.booking;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
-
 public class Booking implements BookingAssignable, AssignedBooking {
 
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
@@ -32,6 +31,10 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	public boolean isAssigned() {
 		return assigned;
+	}
+
+	public boolean isAssignable() {
+		return (!isAssigned() && !this.canceled);
 	}
 
 	public void cancel() {

@@ -25,7 +25,7 @@ public class Bookings {
 	}
 
 	public int getNumberOfUnassignedBookings() {
-		return getUnassignedBookings().size();
+		return getAssignableBookings().size();
 	}
 
 	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsSortingStrategy bookingsSortingStrategy,
@@ -43,11 +43,11 @@ public class Bookings {
 		interfaceReservationBooking.cancelBooking(booking);
 	}
 
-	private Collection<Booking> getUnassignedBookings() {
+	private Collection<Booking> getAssignableBookings() {
 		Collection<Booking> bookings = bookingRepository.retrieveAll();
 		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();
-			if (booking.isAssigned()) {
+			if (booking.isAssignable()) {
 				bookingIter.remove();
 			}
 		}
