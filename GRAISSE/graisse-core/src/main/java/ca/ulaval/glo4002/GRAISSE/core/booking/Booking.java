@@ -7,19 +7,21 @@ import ca.ulaval.glo4002.GRAISSE.core.user.User;
 public class Booking implements BookingAssignable, AssignedBooking {
 
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
-
+	
+	private String name;
 	private int numberOfSeatsNeeded;
 	private boolean assigned;
 	private boolean canceled;
 	private Priority priority;
 	private User promoter;
 
-	public Booking(User promoter, int numberOfSeatsNeeded) {
-		this(promoter, numberOfSeatsNeeded, DEFAULT_PRIORITY);
+	public Booking(User promoter, String name, int numberOfSeatsNeeded) {
+		this(promoter, name, numberOfSeatsNeeded, DEFAULT_PRIORITY);
 	}
 
-	public Booking(User promoter, int numberOfSeatsNeeded, Priority priority) {
+	public Booking(User promoter, String name, int numberOfSeatsNeeded, Priority priority) {
 		this.promoter = promoter;
+		this.name = name;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = priority;
 		assigned = false;
@@ -40,6 +42,10 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	public boolean hasPromoter(User user) {
 		return promoter.equals(user);
+	}
+	
+	public boolean hasName(String name){
+		return this.name.equals(name);
 	}
 
 	public boolean verifyNumberOfSeats(int numberOfSeats) {
