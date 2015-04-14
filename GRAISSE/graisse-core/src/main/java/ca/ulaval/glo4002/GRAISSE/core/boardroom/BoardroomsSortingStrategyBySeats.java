@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 public class BoardroomsSortingStrategyBySeats implements BoardroomsSortingStrategy {
 
-	public Collection<Boardroom> sort(Collection<Boardroom> boardrooms) {
-		Comparator<Boardroom> byNumberOfSeats = (boardroom1, boardroom2) -> boardroom1.compareByNumberOfSeats(boardroom2);
-		return boardrooms.stream().sorted(byNumberOfSeats).collect(Collectors.toList());
+	public Collection<Boardroom> sort(BoardroomRepository boardroomRepo) {
+		Collection<Boardroom> boardrooms = boardroomRepo.retrieveBoardroomsOrderedByNumberOfSeats();
+		return boardrooms;
 	}
 }

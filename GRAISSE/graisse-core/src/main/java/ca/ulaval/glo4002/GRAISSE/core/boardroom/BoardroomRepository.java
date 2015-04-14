@@ -12,5 +12,5 @@ public interface BoardroomRepository {
 
 	public Collection<Boardroom> retrieveAll();
 	
-	public Collection<Boardroom>  getBoardroomsOrderedByNumberOfSeats();
+	public Collection<Boardroom>  retrieveBoardroomsOrderedByNumberOfSeats();
 }

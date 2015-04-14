@@ -4,5 +4,5 @@ import java.util.Collection;
 
 public interface BoardroomsSortingStrategy {
 	
-	public Collection<Boardroom> sort(Collection<Boardroom> boardrooms);	
+	public Collection<Boardroom> sort(BoardroomRepository boardroomRepo);	
 }
