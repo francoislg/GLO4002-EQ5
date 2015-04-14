@@ -22,7 +22,8 @@ public class Boardrooms {
 	public void assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsSortingStrategy boardroomsSortingStrategy) {
 		Collection<Boardroom> formatedBoardroomList = boardroomsSortingStrategy.sort(boardroomsRepository);
 		for (Boardroom boardroom : formatedBoardroomList) {
-			if (boardroom.assign(bookingToAssign, interfaceReservationBoardroom)) {
+			if (boardroom.canAssign(bookingToAssign, interfaceReservationBoardroom)) {
+				boardroom.assign(bookingToAssign, interfaceReservationBoardroom);
 				boardroomsRepository.persist(boardroom);
 				notifyTriggers(bookingToAssign);
 				return;

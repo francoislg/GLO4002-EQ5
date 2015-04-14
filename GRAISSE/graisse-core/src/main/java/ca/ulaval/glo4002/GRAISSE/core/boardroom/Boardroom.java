@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE.core.boardroom;
 
+import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.UnableToAssignBookingException;
+
 public class Boardroom implements AssignedBoardroom {
 
 	private int numberOfSeats;
@@ -26,16 +28,19 @@ public class Boardroom implements AssignedBoardroom {
 		return name;
 	}
 
-	public boolean assign(BookingAssignable bookingToAssign, InterfaceReservationBoardroom interfaceReservationBoardroom) {
-		if (verifyNumberOfSeats(bookingToAssign) && interfaceReservationBoardroom.isAvailable(this)) {
+	public void assign(BookingAssignable bookingToAssign, InterfaceReservationBoardroom interfaceReservationBoardroom) {
 			interfaceReservationBoardroom.assign(this, bookingToAssign);
 			bookingToAssign.assign();
-			return true;
-		}
-		return false;
 	}
 
 	public int compareByNumberOfSeats(Boardroom boardrooomToCompare) {
 		return Integer.compare(numberOfSeats, boardrooomToCompare.numberOfSeats);
+	}
+	
+	public boolean canAssign(BookingAssignable bookingToAssign, InterfaceReservationBoardroom interfaceReservationBoardroom){
+		if (verifyNumberOfSeats(bookingToAssign) && interfaceReservationBoardroom.isAvailable(this)){
+			return true;
+		}
+		return false;
 	}
 }

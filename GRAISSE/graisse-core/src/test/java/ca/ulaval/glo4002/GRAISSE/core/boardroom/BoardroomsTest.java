@@ -110,8 +110,8 @@ public class BoardroomsTest {
 
 	private void setUpBoardroomMock() {
 
-		when(boardroom.assign(assignableBooking, interfaceReservationBoardroom)).thenReturn(true);
-		when(boardroom.assign(unassignableBooking, interfaceReservationBoardroom)).thenReturn(false);
+		when(boardroom.canAssign(assignableBooking, interfaceReservationBoardroom)).thenReturn(true);
+		when(boardroom.canAssign(unassignableBooking, interfaceReservationBoardroom)).thenReturn(false);
 
 	}
 }
