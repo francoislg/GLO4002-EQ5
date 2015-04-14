@@ -45,13 +45,13 @@ public class BookingTest {
 
 	@Test
 	public void givenSameUserAsBookingHasCreatorShouldReturnTrue() {
-		assertTrue(booking.hasCreator(user));
+		assertTrue(booking.hasPromoter(user));
 	}
 
 	@Test
 	public void givenAnotherUserHasCreatorShouldReturnTrue() {
 		User another_user = mock(User.class);
-		assertFalse(booking.hasCreator(another_user));
+		assertFalse(booking.hasPromoter(another_user));
 	}
 
 	@Test

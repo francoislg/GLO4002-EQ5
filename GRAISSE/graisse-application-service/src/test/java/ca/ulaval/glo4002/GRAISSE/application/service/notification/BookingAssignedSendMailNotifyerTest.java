@@ -86,7 +86,7 @@ public class BookingAssignedSendMailNotifyerTest {
 	}
 
 	private void setUpBookingMock() {
-		when(booking.hasCreator(user)).thenReturn(true);
+		when(booking.hasPromoter(user)).thenReturn(true);
 	}
 
 	private void setUpUsersMocks() {

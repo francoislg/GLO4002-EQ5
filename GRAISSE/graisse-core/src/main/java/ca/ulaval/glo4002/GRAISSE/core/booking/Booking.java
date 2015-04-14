@@ -12,14 +12,14 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	private boolean assigned;
 	private boolean canceled;
 	private Priority priority;
-	private User creator;
+	private User promoter;
 
-	public Booking(User creator, int numberOfSeatsNeeded) {
-		this(creator, numberOfSeatsNeeded, DEFAULT_PRIORITY);
+	public Booking(User promoter, int numberOfSeatsNeeded) {
+		this(promoter, numberOfSeatsNeeded, DEFAULT_PRIORITY);
 	}
 
-	public Booking(User creator, int numberOfSeatsNeeded, Priority priority) {
-		this.creator = creator;
+	public Booking(User promoter, int numberOfSeatsNeeded, Priority priority) {
+		this.promoter = promoter;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = priority;
 		assigned = false;
@@ -38,8 +38,8 @@ public class Booking implements BookingAssignable, AssignedBooking {
 		canceled = true;
 	}
 
-	public boolean hasCreator(User user) {
-		return creator.equals(user);
+	public boolean hasPromoter(User user) {
+		return promoter.equals(user);
 	}
 
 	public boolean verifyNumberOfSeats(int numberOfSeats) {
