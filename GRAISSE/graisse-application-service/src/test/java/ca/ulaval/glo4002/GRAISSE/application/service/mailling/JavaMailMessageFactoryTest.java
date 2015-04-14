@@ -31,7 +31,7 @@ public class JavaMailMessageFactoryTest {
 	private static final String A_MAIL_DESTINATION = "Destination@gmail.com";
 	private static final String INVALID_MAIL_DESTINATION = "Destination";
 	private static final String ANOTHER_MAIL_DESTINATION = "Another@gmail.com";
-	private static final List<String> VALID_CC = new ArrayList<String>(Arrays.asList(ANOTHER_MAIL_DESTINATION));
+	private static final List<String> VALID_CARBONCOPY = new ArrayList<String>(Arrays.asList(ANOTHER_MAIL_DESTINATION));
 	private static final String A_MAIL_SUBJECT = "Title";
 	private static final String A_MAIL_MESSAGE = "Message";
 
@@ -75,7 +75,7 @@ public class JavaMailMessageFactoryTest {
 	}
 	
 	@Test
-	public void createShouldAddCCToMessage() throws MessagingException, IOException {
+	public void createShouldAddCarbonCopyToMessage() throws MessagingException, IOException {
 		Address expectedAddress = new InternetAddress(ANOTHER_MAIL_DESTINATION);
 		
 		Message message = javaMailMessageFactory.create(mail, session);
@@ -92,7 +92,7 @@ public class JavaMailMessageFactoryTest {
 	private void setUpMailMock() {
 		when(mail.getDestinationString()).thenReturn(A_MAIL_DESTINATION);
 		when(mail.getSubject()).thenReturn(A_MAIL_SUBJECT);
-		when(mail.getAllCCRecipients()).thenReturn(VALID_CC);
+		when(mail.getAllCarbonCopyRecipients()).thenReturn(VALID_CARBONCOPY);
 		when(mail.getMessage()).thenReturn(A_MAIL_MESSAGE);
 	}
 }

@@ -27,7 +27,7 @@ public class BookingAssignedSendMailNotifyer implements Notifyer<BookingAssignab
 	public void notify(BookingAssignable booking) {
 		if (booking.hasCreator(user)) {
 			MailMessage mail = new SimpleMailMessage(user.getEmail(), MAIL_SUBJECT, getMailMessage(booking));
-			mail.addCCRecipient(responsible.getEmail());
+			mail.addCarbonCopyRecipient(responsible.getEmail());
 			mailSender.sendMail(mail);
 		}
 	}
