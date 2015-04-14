@@ -92,7 +92,7 @@ public class JavaMailMessageFactoryTest {
 	private void setUpMailMock() {
 		when(mail.getDestinationString()).thenReturn(A_MAIL_DESTINATION);
 		when(mail.getSubject()).thenReturn(A_MAIL_SUBJECT);
-		when(mail.getCC()).thenReturn(VALID_CC);
+		when(mail.getAllCCRecipients()).thenReturn(VALID_CC);
 		when(mail.getMessage()).thenReturn(A_MAIL_MESSAGE);
 	}
 }

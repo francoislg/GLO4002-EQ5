@@ -10,9 +10,9 @@ public interface MailMessage {
 	
 	public String getDestinationString();
 	
-	public void addCC(Email email);
+	public void addCCRecipient(Email email);
 
-	public List<String> getCC();
+	public List<String> getAllCCRecipients();
 	
 	public String getSubject();
 	

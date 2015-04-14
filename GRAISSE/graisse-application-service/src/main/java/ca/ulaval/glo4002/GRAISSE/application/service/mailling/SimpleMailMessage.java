@@ -10,13 +10,13 @@ public class SimpleMailMessage implements MailMessage {
 	private final Email destination;
 	private final String title;
 	private final String message;
-	private List<String> cc;
+	private List<String> ccRecipients;
 
 	public SimpleMailMessage(Email destination, String title, String message) {
 		this.destination = destination;
 		this.title = title;
 		this.message = message;
-		this.cc = new ArrayList<String>();
+		this.ccRecipients = new ArrayList<String>();
 	}
 
 	@Override
@@ -86,12 +86,12 @@ public class SimpleMailMessage implements MailMessage {
 	}
 
 	@Override
-	public List<String> getCC() {
-		return cc;
+	public List<String> getAllCCRecipients() {
+		return ccRecipients;
 	}
 
 	@Override
-	public void addCC(Email email) {
-		cc.add(email.getValue());
+	public void addCCRecipient(Email email) {
+		ccRecipients.add(email.getValue());
 	}
 }

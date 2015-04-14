@@ -74,7 +74,7 @@ public class BookingAssignedSendMailNotifyerTest {
 			@Override
 			public boolean matches(Object argument) {
 				final MailMessage mail = (MailMessage) argument;
-				return mail.getDestinationString().equals(email) || mail.getCC().contains(email);
+				return mail.getDestinationString().equals(email) || mail.getAllCCRecipients().contains(email);
 			}
 
 			@Override
