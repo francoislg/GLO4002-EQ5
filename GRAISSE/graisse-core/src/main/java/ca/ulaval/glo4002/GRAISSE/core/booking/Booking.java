@@ -31,26 +31,26 @@ public class Booking implements BookingAssignable, AssignedBooking {
 		this.state = BookingState.WAITING;
 		participants = new ArrayList<Email>();
 	}
-	
+
 	@Override
 	public void assign() {
 		state = BookingState.ASSIGNED;
 	}
-	
+
 	@Override
 	public boolean isAssigned() {
 		return state == BookingState.ASSIGNED;
 	}
 
 	public boolean isAssignable() {
-		return (!isAssigned() && !this.canceled);
+		return state == BookingState.WAITING;
 	}
 
 	@Override
 	public void cancel() {
 		state = BookingState.CANCELLED;
 	}
-	
+
 	@Override
 	public void refuse() {
 		state = BookingState.REFUSED;
@@ -83,20 +83,20 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	public Collection<Email> getParticipantsEmail() {
 		return participants;
 	}
-	
-	public int getNumberOfSeats(){
+
+	public int getNumberOfSeats() {
 		return numberOfSeatsNeeded;
 	}
-	
-	public String getPromoterEmail(){
+
+	public String getPromoterEmail() {
 		return promoter.getEmail().getValue();
 	}
-	
-	public BookingState getState(){
+
+	public BookingState getState() {
 		return state;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
 }

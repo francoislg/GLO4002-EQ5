@@ -55,6 +55,7 @@ public class BookingTest {
 	public void givenSameUserAsBookingHasPromoterShouldReturnTrue() {
 		assertTrue(booking.hasPromoter(email));
 	}
+
 	@Test
 	public void whenNotCanceledAndNotAssignedIsAssignableShouldReturnTrue() {
 		assertTrue(booking.isAssignable());
@@ -73,14 +74,9 @@ public class BookingTest {
 	}
 
 	@Test
-	public void givenSameUserAsBookingHasCreatorShouldReturnTrue() {
-		assertTrue(booking.hasCreator(user));
-	}
-
-	@Test
-	public void givenAnotherUserHasPromoterShouldReturnFalse() {
-		Email another_user = mock(Email.class);
-		assertFalse(booking.hasPromoter(another_user));
+	public void givenAnotherEmailHasPromoterShouldReturnFalse() {
+		Email another_email = mock(Email.class);
+		assertFalse(booking.hasPromoter(another_email));
 	}
 
 	@Test

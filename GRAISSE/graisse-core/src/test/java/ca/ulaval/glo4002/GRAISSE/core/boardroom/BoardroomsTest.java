@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE.core.boardroom;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
