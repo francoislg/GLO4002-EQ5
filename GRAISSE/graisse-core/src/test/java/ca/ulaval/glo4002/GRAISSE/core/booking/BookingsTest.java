@@ -82,25 +82,31 @@ public class BookingsTest {
 
 	@Test
 	public void givenARepositoryWithOneUnassignedBookingBookingsShouldHaveUnassignedBookings() {
-		setUpOneUnassignedBookingInBookings();
+		setUpOneAssignableBookingInBookings();
 		assertTrue(bookings.hasAssignableBookings());
 	}
 
 	@Test
-	public void withOneUnassignedBookingGetNumberOfUnassignedBookingShouldReturnOne() {
-		setUpOneUnassignedBookingInBookings();
+	public void givenOneUnassignedBookingGetNumberOfUnassignedBookingShouldReturnOne() {
+		setUpOneAssignableBookingInBookings();
 		assertEquals(1, bookings.getNumberOfUnassignedBookings());
 	}
 
 	@Test
-	public void givenARepositoryWithOneAssignedBookingBookingsShouldNotHaveUnassignedBookings() {
-		setUpAllAssignedBookings();
+	public void givenZeroUnassignedBookingGetNumberOfUnassignedBookingShouldReturnZero() {
+		setUpAllUnassignableBookings();
+		assertEquals(0, bookings.getNumberOfUnassignedBookings());
+	}
+
+	@Test
+	public void givenARepositoryWithAllUnassignableBookingBookingsShouldNotHaveAssignableBooking() {
+		setUpAllUnassignableBookings();
 		assertFalse(bookings.hasAssignableBookings());
 	}
 
 	@Test
-	public void givenOneUnassignedBookingAssigningBookingsShouldOnlyAttemptToAssignUnassignedBookings() {
-		setUpOneUnassignedBookingInBookings();
+	public void givenOneAssignableBookingassignBookingsToBoardroomsShouldOnlyAttemptToAssignAssignablBookings() {
+		setUpOneAssignableBookingInBookings();
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
 
@@ -110,8 +116,8 @@ public class BookingsTest {
 	}
 
 	@Test
-	public void givenOneUnassignedBookingAssignedBookingShouldPersistTheAssignedBooking() {
-		setUpOneUnassignedBookingInBookings();
+	public void givenOneAssignableBookingassignBookingsToBoardroomsShouldPersistAssignableBooking() {
+		setUpOneAssignableBookingInBookings();
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
 
@@ -134,7 +140,7 @@ public class BookingsTest {
 		doReturn(emptyBookingCollection).when(bookingRepository).retrieveAll();
 	}
 
-	private void setUpAllAssignedBookings() {
+	private void setUpAllUnassignableBookings() {
 		bookingsWithOnlyAssignedBookings = new ArrayList<Booking>();
 
 		bookingsWithOnlyAssignedBookings.add(assignedBooking1);
@@ -143,7 +149,7 @@ public class BookingsTest {
 		doReturn(bookingsWithOnlyAssignedBookings).when(bookingRepository).retrieveAll();
 	}
 
-	private void setUpOneUnassignedBookingInBookings() {
+	private void setUpOneAssignableBookingInBookings() {
 		bookingsWithOneUnassignedBookings = new ArrayList<Booking>();
 
 		bookingsWithOneUnassignedBookings.add(assignedBooking1);
