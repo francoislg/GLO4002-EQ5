@@ -20,7 +20,7 @@ public class Bookings {
 		bookingRepository.persist(booking);
 	}
 
-	public boolean hasUnassignedBookings() {
+	public boolean hasAssignableBookings() {
 		return getNumberOfUnassignedBookings() > 0;
 	}
 
@@ -47,7 +47,7 @@ public class Bookings {
 		Collection<Booking> bookings = bookingRepository.retrieveAll();
 		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();
-			if (booking.isAssignable()) {
+			if (!booking.isAssignable()) {
 				bookingIter.remove();
 			}
 		}

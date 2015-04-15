@@ -46,7 +46,7 @@ public class Booker {
 	}
 
 	public boolean hasBookingsToAssign() {
-		return bookings.hasUnassignedBookings();
+		return bookings.hasAssignableBookings();
 	}
 
 	public int numberOfBookingsToAssign() {

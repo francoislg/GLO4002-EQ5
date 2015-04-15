@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.core.booking;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -25,8 +26,8 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
 
-	private static final boolean ASSIGNED = true;
-	private static final boolean NOT_ASSIGNED = false;
+	private static final boolean ASSIGNABLE = true;
+	private static final boolean NOT_ASSIGNABLE = false;
 
 	@Mock
 	BookingRepository bookingRepository;
@@ -76,19 +77,25 @@ public class BookingsTest {
 	@Test
 	public void givenAnEmptyRepositoryBookingsShouldNotHaveUnassignedBookings() {
 		setUpEmptyBookings();
-		assertFalse(bookings.hasUnassignedBookings());
+		assertFalse(bookings.hasAssignableBookings());
 	}
 
 	@Test
 	public void givenARepositoryWithOneUnassignedBookingBookingsShouldHaveUnassignedBookings() {
 		setUpOneUnassignedBookingInBookings();
-		assertTrue(bookings.hasUnassignedBookings());
+		assertTrue(bookings.hasAssignableBookings());
+	}
+
+	@Test
+	public void withOneUnassignedBookingGetNumberOfUnassignedBookingShouldReturnOne() {
+		setUpOneUnassignedBookingInBookings();
+		assertEquals(1, bookings.getNumberOfUnassignedBookings());
 	}
 
 	@Test
 	public void givenARepositoryWithOneAssignedBookingBookingsShouldNotHaveUnassignedBookings() {
 		setUpAllAssignedBookings();
-		assertFalse(bookings.hasUnassignedBookings());
+		assertFalse(bookings.hasAssignableBookings());
 	}
 
 	@Test
@@ -117,9 +124,9 @@ public class BookingsTest {
 	}
 
 	private void setUpBookings() {
-		doReturn(ASSIGNED).when(assignedBooking1).isAssigned();
-		doReturn(ASSIGNED).when(assignedBooking2).isAssigned();
-		doReturn(NOT_ASSIGNED).when(unassignedBooking).isAssigned();
+		doReturn(NOT_ASSIGNABLE).when(assignedBooking1).isAssignable();
+		doReturn(NOT_ASSIGNABLE).when(assignedBooking2).isAssignable();
+		doReturn(ASSIGNABLE).when(unassignedBooking).isAssignable();
 	}
 
 	private void setUpEmptyBookings() {
