@@ -9,8 +9,10 @@ public interface BookingRepository {
 	public void persist(Booking booking);
 
 	public Collection<Booking> retrieveAll();
-	
+
 	public Collection<Booking> retrieveSortedByPriority();
+
+	public Collection<Booking> getAssignableBookings();
 
 	public Booking retrieveBooking(Email promoter, String name);
 }

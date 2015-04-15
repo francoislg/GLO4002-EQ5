@@ -14,6 +14,8 @@ public interface BookingAssignable {
 
 	public void cancel();
 
+	public Collection<Email> getParticipantsEmail();
+
 	boolean hasName(String name);
 
 	void refuse();

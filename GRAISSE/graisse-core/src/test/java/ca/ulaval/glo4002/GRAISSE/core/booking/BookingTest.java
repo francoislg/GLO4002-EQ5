@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -53,6 +54,27 @@ public class BookingTest {
 	@Test
 	public void givenSameUserAsBookingHasPromoterShouldReturnTrue() {
 		assertTrue(booking.hasPromoter(email));
+	}
+	@Test
+	public void whenNotCanceledAndNotAssignedIsAssignableShouldReturnTrue() {
+		assertTrue(booking.isAssignable());
+	}
+
+	@Test
+	public void whenCanceledIsAssignableShouldReturnFalse() {
+		booking.cancel();
+		assertFalse(booking.isAssignable());
+	}
+
+	@Test
+	public void whenAssignedIsAssignableShouldReturnFalse() {
+		booking.assign();
+		assertFalse(booking.isAssignable());
+	}
+
+	@Test
+	public void givenSameUserAsBookingHasCreatorShouldReturnTrue() {
+		assertTrue(booking.hasCreator(user));
 	}
 
 	@Test
@@ -112,5 +134,17 @@ public class BookingTest {
 		int result = booking.comparePriorityToBooking(bookingWithEqualPriority);
 
 		assertEquals(0, result);
+	}
+
+	@Ignore
+	@Test
+	public void givenAParticipantShouldBePresentInList() {
+
+	}
+
+	@Ignore
+	@Test
+	public void givenSameParticipantShouldBePresentOnceInList() {
+
 	}
 }

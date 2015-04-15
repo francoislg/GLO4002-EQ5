@@ -61,15 +61,6 @@ public class BoardroomsTest {
 		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsSortingStrategy);
 		verify(boardroomRepository).persist(boardroom);
 	}
-	
-	@Test
-	public void whenPersistingTwiceTheSameBoardroomTheRepositoryShouldContainOneBoardroom() {
-		boardroomRepository.persist(boardroom);
-		boardroomRepository.persist(boardroom);
-
-		int resultSize = boardroomRepository.retrieveAll().size();
-		assertEquals(1, resultSize);
-	}
 
 	@Test(expected = UnableToAssignBookingException.class)
 	public void givenAnUnassignableBookingWhenBoardroomIsNotAssignedShouldThrowException() {

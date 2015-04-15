@@ -1,5 +1,9 @@
 package ca.ulaval.glo4002.GRAISSE.core.booking;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
@@ -13,6 +17,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	private BookingState state;
 	private Priority priority;
 	private User promoter;
+	private List<Email> participants;
 
 	public Booking(User promoter, String name, int numberOfSeatsNeeded) {
 		this(promoter, name, numberOfSeatsNeeded, DEFAULT_PRIORITY);
@@ -24,6 +29,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = priority;
 		this.state = BookingState.WAITING;
+		participants = new ArrayList<Email>();
 	}
 	
 	@Override
@@ -34,6 +40,10 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	@Override
 	public boolean isAssigned() {
 		return state == BookingState.ASSIGNED;
+	}
+
+	public boolean isAssignable() {
+		return (!isAssigned() && !this.canceled);
 	}
 
 	@Override
@@ -63,6 +73,15 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	public int comparePriorityToBooking(Booking bookingToCompare) {
 		return priority.compare(bookingToCompare.priority);
+	}
+
+	public void addParticipant(Email email) {
+		participants.add(email);
+	}
+
+	@Override
+	public Collection<Email> getParticipantsEmail() {
+		return participants;
 	}
 	
 	public int getNumberOfSeats(){
