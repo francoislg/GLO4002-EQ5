@@ -44,6 +44,23 @@ public class BookingTest {
 	}
 
 	@Test
+	public void whenNotCanceledAndNotAssignedIsAssignableShouldReturnTrue() {
+		assertTrue(booking.isAssignable());
+	}
+
+	@Test
+	public void whenCanceledIsAssignableShouldReturnFalse() {
+		booking.cancel();
+		assertFalse(booking.isAssignable());
+	}
+
+	@Test
+	public void whenAssignedIsAssignableShouldReturnFalse() {
+		booking.assign();
+		assertFalse(booking.isAssignable());
+	}
+
+	@Test
 	public void givenSameUserAsBookingHasCreatorShouldReturnTrue() {
 		assertTrue(booking.hasCreator(user));
 	}
