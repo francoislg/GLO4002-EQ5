@@ -78,7 +78,7 @@ public class TimedSequentialTrigger implements Observer<Booker> {
 		return timer;
 	}
 	
-	public long getMilliSecondInterval() {
+	private long getMilliSecondInterval() {
 		return minutesInterval * NB_OF_SECOND_IN_A_MINUTE * NB_OF_MILLISECOND_IN_A_SECOND;
 	}
 }

@@ -2,15 +2,22 @@ package ca.ulaval.glo4002.GRAISSE.uat.steps;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-import org.apache.commons.lang.time.StopWatch;
+import java.util.Timer;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
+import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTask;
+import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTaskFactory;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.TimedSequentialTrigger;
+import ca.ulaval.glo4002.GRAISSE.application.service.queuing.TimerFactory;
 import ca.ulaval.glo4002.GRAISSE.application.service.shared.ServiceLocator;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomRepository;
@@ -28,6 +35,7 @@ import ca.ulaval.glo4002.GRAISSE.uat.steps.state.StepState;
 public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 	private static final long AN_INTERVAL = 1;
+	private static final long AN_INTERVAL_IN_MILLISECOND = 60000;
 	
 	protected ReservationStepState getInitialState() {
         return new ReservationStepState();
@@ -35,8 +43,8 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	
 	@Given("some rooms")
 	public void givenSomeRooms() {
-        state().firstAvailableBoardroom = new Boardroom("first available boardroom", 5);
-        state().secondAvailableBoardroom = new Boardroom("second available boardroom", 5);
+        state().firstAvailableBoardroom = new Boardroom("first available boardroom", 10);
+        state().secondAvailableBoardroom = new Boardroom("second available boardroom", 10);
  
         BoardroomRepository boardroomRepositoy = getBoardroomRepository();
         boardroomRepositoy.persist(state().firstAvailableBoardroom);
@@ -59,10 +67,13 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	
 	@Given("an interval")
 	public void givenAnInterval() {
-		state().timedTrigger = new TimedSequentialTrigger(AN_INTERVAL);
-		
 		state().booker = FakeBookerFactory.create();
-	    state().booker.addBooking(state().booking);
+		
+		ensureThatMockedTimerDoesNotStartANewThread();
+		doReturn(state().bookerTimerTask).when(state().bookerTimerTaskFactory).createBookerTimerTask(state().booker);
+		doReturn(state().timer).when(state().timerFactory).createTimer();
+		state().timedTrigger = new TimedSequentialTrigger(AN_INTERVAL, state().timerFactory, state().bookerTimerTaskFactory);
+		
 		state().booker.registerTrigger(state().timedTrigger);
 	}
 	
@@ -82,8 +93,8 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		state().booker.addBooking(state().booking);
 	}
 	 
-	@Then("the application is assigned to the first available room")
-	public void thenTheApplicationIsAssignedToTheFirstAvailableRoom() {
+	@Then("the reservation should be associated with the first available room")
+	public void thenCalice() {
 		ReservationRepository reservationRepository = getReservationRepository();
 		Reservation reservation = reservationRepository.retrieve(state().booking);
 
@@ -99,18 +110,11 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	
 	@Then("the applications are processed at the end of the interval")
 	public void thenTheApplicationsAreProcessedAtTheEndOfTheInterval() {
-		
-		assertTrue("the applications should not be processed yet", state().booker.hasBookingsToAssign());
-		
-		StopWatch stopwatch = new StopWatch();
-		stopwatch.start();
-		
-		while(stopwatch.getTime() <  state().timedTrigger.getMilliSecondInterval())
-		{
-			//waiting
-		}
-		
-		assertFalse("the applications should have been processed", state().booker.hasBookingsToAssign());
+		verify(state().timer).schedule(state().bookerTimerTask, AN_INTERVAL_IN_MILLISECOND);
+	}
+	
+	private void ensureThatMockedTimerDoesNotStartANewThread() {
+		doNothing().when(state().timer).schedule(state().bookerTimerTask, AN_INTERVAL_IN_MILLISECOND);
 	}
 	
 	private BoardroomRepository getBoardroomRepository(){
@@ -132,5 +136,9 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		Booking secondBooking;
 		Booker booker;
 		TimedSequentialTrigger timedTrigger;
+		BookerTimerTaskFactory bookerTimerTaskFactory = mock(BookerTimerTaskFactory.class);
+		BookerTimerTask bookerTimerTask = mock(BookerTimerTask.class);
+		Timer timer = mock(Timer.class);
+		TimerFactory timerFactory = mock(TimerFactory.class);
     }
 }

@@ -23,7 +23,7 @@ public class Reservations implements InterfaceReservationBoardroom, InterfaceRes
 
 	@Override
 	public boolean isAvailable(Boardroom boardroom) {
-		return completedBookingRequestRepository.existsWithBoardroom(boardroom);
+		return !completedBookingRequestRepository.existsWithBoardroom(boardroom);
 	}
 
 	@Override

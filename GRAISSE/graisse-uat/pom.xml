@@ -25,6 +25,11 @@
       <version>4.12</version>
     </dependency>
     <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.9.5</version>
+    </dependency>
+    <dependency>
       <groupId>org.jbehave</groupId>
       <artifactId>jbehave-core</artifactId>
       <version>4.0-beta-11</version>
@@ -79,14 +84,14 @@
           <target>${java.version}</target>
         </configuration>
       </plugin>
-      <plugin>
+   	  <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.3</version>
         <executions>
           <execution>
             <configuration>
-              <mainClass> ca.ulaval.glo4002.med.uat.GraisseStories </mainClass>
+              <mainClass> ca.ulaval.glo4002.GRAISSE.uat.GraisseStories </mainClass>
             </configuration>
             <goals>
               <goal>java</goal>

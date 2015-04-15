@@ -9,7 +9,7 @@ Scenario:  get the first room available
 Given some rooms
 And an application to be processed
 When the application is processed
-Then the application is assigned to the first available room
+Then the reservation should be associated with the first available room
 					 
 Scenario: bookings are queued 
 Given some rooms
