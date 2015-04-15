@@ -41,19 +41,6 @@ public class ThresholdTriggerTest {
 		threshold = new ThresholdTrigger(THRESHOLD_EQUAL_TO_ZERO);
 	}
 
-	
-	@Test
-	public void givenAValidThresholdTriggerShouldNotThrowInvalidThresholdException() {
-
-	try {
-		threshold = new ThresholdTrigger(A_VALID_THRESHOLD);
-	 }
-	catch (InvalidThresholdException ex){
-		  fail();
-		}
-
-	}
-
 	@Test
 	public void givenABookerThatHasSameNumberOfUnassignedBookingAsThresholdShouldAssignBookings() {
 		doReturn(THE_SAME_NUMBER_OF_UNASSIGNED_BOOKINGS_AS_THRESHOLD).when(booker).numberOfBookingsToAssign();
