@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.core.booking;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 		this.priority = priority;
 		assigned = false;
 		canceled = false;
+		participants = new ArrayList<Email>();
 	}
 
 	public void assign() {
