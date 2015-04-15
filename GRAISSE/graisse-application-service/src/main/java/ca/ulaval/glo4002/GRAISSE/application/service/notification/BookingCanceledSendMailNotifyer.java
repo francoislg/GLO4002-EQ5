@@ -44,8 +44,8 @@ public class BookingCanceledSendMailNotifyer implements Notifyer<BookingAssignab
 	private void sendMailToEmail(BookingAssignable booking, User user) {
 		MailMessage mail = new SimpleMailMessage(user.getEmail(), MAIL_SUBJECT, getMailMessage(booking));
 		for (Email email : createParticipantEmailRepertorie(participant))
-			mail.addCC(email);
-		mail.addCC(responsible.getEmail());
+			mail.addCarbonCopyRecipient(email);
+		mail.addCarbonCopyRecipient(responsible.getEmail());
 		mailSender.sendMail(mail);
 	}
 
