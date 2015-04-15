@@ -21,7 +21,6 @@ public class BookingCancelledSendMailNotifyer implements Notifyer<BookingAssigna
 		this.mailSender = mailSender;
 		this.user = user;
 		this.responsible = responsible;
-
 	}
 
 	@Override
