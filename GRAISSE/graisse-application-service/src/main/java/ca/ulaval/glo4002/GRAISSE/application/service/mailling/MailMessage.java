@@ -10,9 +10,9 @@ public interface MailMessage {
 	
 	public String getDestinationString();
 	
-	public void addCC(Email email);
+	public void addCarbonCopyRecipient(Email email);
 
-	public List<String> getCC();
+	public List<String> getAllCarbonCopyRecipients();
 	
 	public String getSubject();
 	
