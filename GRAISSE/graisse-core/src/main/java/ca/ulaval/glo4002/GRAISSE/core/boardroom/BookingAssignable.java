@@ -1,6 +1,9 @@
 package ca.ulaval.glo4002.GRAISSE.core.boardroom;
-import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
+import java.util.Collection;
+
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
+import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
 public interface BookingAssignable {
 
@@ -13,4 +16,6 @@ public interface BookingAssignable {
 	public boolean isAssigned();
 
 	public void cancel();
+
+	public Collection<Email> getParticipantsEmail();
 }
