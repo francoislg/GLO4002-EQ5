@@ -32,7 +32,7 @@ public class BookingTest {
 
 	@Mock
 	Email email;
-	
+
 	@Mock
 	User user;
 
@@ -63,6 +63,11 @@ public class BookingTest {
 
 	@Test
 	public void givenSameNameBookingHasNameShouldReturnTrue() {
+		assertTrue(booking.hasName(A_NAME));
+	}
+
+	@Test
+	public void givenDifferentNameBookingHasNameShouldReturnFalse() {
 		String ANOTHER_DIFFERENT_NAME = A_NAME + "garbage";
 		assertFalse(booking.hasName(ANOTHER_DIFFERENT_NAME));
 	}
