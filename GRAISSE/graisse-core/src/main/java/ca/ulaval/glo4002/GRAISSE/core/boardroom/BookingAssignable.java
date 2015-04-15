@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.core.boardroom;
-import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public interface BookingAssignable {
 
@@ -8,9 +8,13 @@ public interface BookingAssignable {
 
 	public boolean verifyNumberOfSeats(int numberOfSeats);
 
-	public boolean hasPromoter(User user);
+	public boolean hasPromoter(Email email);
 
 	public boolean isAssigned();
 
 	public void cancel();
+
+	boolean hasName(String name);
+
+	void refuse();
 }

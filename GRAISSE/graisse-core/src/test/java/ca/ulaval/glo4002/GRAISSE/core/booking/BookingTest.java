@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +15,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingTest {
-	
+
 	private static final Priority PRIORITY_VALUE_OF_BOOKING = Priority.LOW;
 	private static final Priority PRIORITY_VALUE_OF_BOOKING_BIGGER = Priority.HIGH;
 	private static final Priority PRIORITY_VALUE_OF_BOOKING_SMALLER = Priority.VERY_LOW;
@@ -29,12 +31,16 @@ public class BookingTest {
 	private static final String A_NAME = "MeaninglessRandomName";
 
 	@Mock
+	Email email;
+	
+	@Mock
 	User user;
 
 	Booking booking;
 
 	@Before
 	public void setUp() {
+		when(user.hasEmail(email)).thenReturn(true);
 		booking = new Booking(user, A_NAME, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
 	}
 
@@ -46,15 +52,15 @@ public class BookingTest {
 
 	@Test
 	public void givenSameUserAsBookingHasPromoterShouldReturnTrue() {
-		assertTrue(booking.hasPromoter(user));
+		assertTrue(booking.hasPromoter(email));
 	}
 
 	@Test
 	public void givenAnotherUserHasPromoterShouldReturnFalse() {
-		User another_user = mock(User.class);
+		Email another_user = mock(Email.class);
 		assertFalse(booking.hasPromoter(another_user));
 	}
-	
+
 	@Test
 	public void givenSameNameBookingHasNameShouldReturnTrue() {
 		String ANOTHER_DIFFERENT_NAME = A_NAME + "garbage";

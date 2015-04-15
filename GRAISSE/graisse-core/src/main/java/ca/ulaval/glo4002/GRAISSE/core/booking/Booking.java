@@ -1,13 +1,13 @@
 package ca.ulaval.glo4002.GRAISSE.core.booking;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
-
 
 public class Booking implements BookingAssignable, AssignedBooking {
 
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
-	
+
 	private String name;
 	private int numberOfSeatsNeeded;
 	private BookingState state;
@@ -25,36 +25,59 @@ public class Booking implements BookingAssignable, AssignedBooking {
 		this.priority = priority;
 		this.state = BookingState.WAITING;
 	}
-
+	
+	@Override
 	public void assign() {
 		state = BookingState.ASSIGNED;
 	}
-
+	
+	@Override
 	public boolean isAssigned() {
 		return state == BookingState.ASSIGNED;
 	}
 
+	@Override
 	public void cancel() {
 		state = BookingState.CANCELLED;
 	}
 	
-	public void refuse(){
+	@Override
+	public void refuse() {
 		state = BookingState.REFUSED;
 	}
 
-	public boolean hasPromoter(User user) {
-		return promoter.equals(user);
+	@Override
+	public boolean hasPromoter(Email email) {
+		return this.promoter.hasEmail(email);
 	}
-	
-	public boolean hasName(String name){
+
+	@Override
+	public boolean hasName(String name) {
 		return this.name.equals(name);
 	}
 
+	@Override
 	public boolean verifyNumberOfSeats(int numberOfSeats) {
 		return numberOfSeatsNeeded <= numberOfSeats;
 	}
 
 	public int comparePriorityToBooking(Booking bookingToCompare) {
 		return priority.compare(bookingToCompare.priority);
+	}
+	
+	public int getNumberOfSeats(){
+		return numberOfSeatsNeeded;
+	}
+	
+	public String getPromoterEmail(){
+		return promoter.getEmail().getValue();
+	}
+	
+	public BookingState getState(){
+		return state;
+	}
+	
+	public String getName(){
+		return name;
 	}
 }
