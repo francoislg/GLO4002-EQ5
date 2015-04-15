@@ -35,26 +35,6 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.jbehave</groupId>
-				<artifactId>jbehave-maven-plugin</artifactId>
-				<version>4.0-beta-5</version>
-				<executions>
-					<execution>
-						<id>run-stories-as-embeddables</id>
-						<phase>integration-test</phase>
-						<configuration>
-							<includes>
-								<include>**/*Stories.java</include>
-							</includes>
-							<scope>test</scope>
-						</configuration>
-						<goals>
-							<goal>run-stories-as-embeddables</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 
@@ -97,18 +77,6 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.186</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jbehave</groupId>
-			<artifactId>jbehave-core</artifactId>
-			<version>4.0-beta-5</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>de.codecentric</groupId>
-			<artifactId>jbehave-junit-runner</artifactId>
-			<version>1.1.0</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
