@@ -9,22 +9,21 @@ import ca.ulaval.glo4002.GRAISSE.persistence.BoardroomInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.persistence.BookingInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.persistence.CompletedBookingRequestInMemoryRepository;
 
-public class UatContext extends ContextBase{
+public class UatContext extends ContextBase {
 
 	public void reinitialize() {
-        ServiceLocator.reset();
-        apply();
-    }
-	
+		ServiceLocator.reset();
+		apply();
+	}
+
 	@Override
 	protected void registerServices() {
-		   ServiceLocator.getInstance().register(BoardroomRepository.class, new BoardroomInMemoryRepository());
-		   ServiceLocator.getInstance().register(BookingRepository.class, new BookingInMemoryRepository());
-		   ServiceLocator.getInstance().register(ReservationRepository.class, new CompletedBookingRequestInMemoryRepository());
+		ServiceLocator.getInstance().register(BoardroomRepository.class, new BoardroomInMemoryRepository());
+		ServiceLocator.getInstance().register(BookingRepository.class, new BookingInMemoryRepository());
+		ServiceLocator.getInstance().register(ReservationRepository.class, new CompletedBookingRequestInMemoryRepository());
 	}
 
 	@Override
 	protected void applyFillers() {
 	}
-
 }
