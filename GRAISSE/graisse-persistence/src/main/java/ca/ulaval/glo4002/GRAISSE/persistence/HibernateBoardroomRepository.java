@@ -24,7 +24,9 @@ public class HibernateBoardroomRepository implements BoardroomRepository {
 
 	@Override
 	public void persist(Boardroom boardroom) {
-		entityManager.persist(boardroom);
+		if(!entityManager.contains(boardroom)) {
+			entityManager.persist(boardroom);
+		}
 	}
 
 	@Override

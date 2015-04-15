@@ -133,7 +133,7 @@ public class BoardroomInMemoryRepositoryTest {
 	}
 
 	private void addOneBoardroomtoBoardrooms() {
-		setBoardroomHasNameMock(boardroom, A_BOARDROOM_NAME_3);
+		setBoardroomHasNameMock(boardroom, A_BOARDROOM_NAME);
 		repoBoardrooms.persist(boardroom);
 	}
 	

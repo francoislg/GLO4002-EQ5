@@ -24,7 +24,9 @@ public class HibernateBookingRepository implements BookingRepository {
 
 	@Override
 	public void persist(Booking booking) {
-		entityManager.persist(booking);
+		if(!entityManager.contains(booking)) {
+			entityManager.persist(booking);
+		}
 	}
 
 	@Override

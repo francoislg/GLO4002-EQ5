@@ -114,7 +114,6 @@ public class BookingsTest {
 		verify(bookingRepository).persist(unassignedBooking);
 	}
 	
-	
 	@Test
 	public void whenPersistingTwiceTheSameBookingTheRepositoryShouldContainOneBooking() {
 		setUpOneUnassignedBookingInBookings();
