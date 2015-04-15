@@ -9,9 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -62,7 +60,6 @@ public class BookingsTest {
 
 	@Before
 	public void setUp() {
-		setUpBookingStrategyMock();
 		bookings = new Bookings(bookingRepository, interfaceReservationBooking);
 	}
 
@@ -92,13 +89,13 @@ public class BookingsTest {
 
 	@Test
 	public void givenZeroUnassignedBookingGetNumberOfUnassignedBookingShouldReturnZero() {
-		setUpAllUnassignableBookings();
+		setUpEmptyBookings();
 		assertEquals(0, bookings.getNumberOfAssignableBookings());
 	}
 
 	@Test
 	public void givenARepositoryWithAllUnassignableBookingBookingsShouldNotHaveAssignableBooking() {
-		setUpAllUnassignableBookings();
+		setUpEmptyBookings();
 		assertFalse(bookings.hasAssignableBookings());
 	}
 
@@ -110,30 +107,18 @@ public class BookingsTest {
 		verify(bookingRepository).persist(assignableBooking);
 	}
 
-	private void setUpBookingStrategyMock() {
-		List<Booking> formatedList = new ArrayList<Booking>(Arrays.asList(booking));
-		when(bookingsSortingStrategy.sort(any())).thenReturn(formatedList);
-	}
-
 	private void setUpEmptyBookings() {
 		emptyBookingCollection = new ArrayList<Booking>();
-		doReturn(emptyBookingCollection).when(bookingRepository).retrieveAll();
-	}
-
-	private void setUpAllUnassignableBookings() {
-		bookingsNoAssignabledBooking = new ArrayList<Booking>();
-
-		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsNoAssignabledBooking);
-		when(bookingRepository.getAssignableBookings()).thenReturn(bookingsNoAssignabledBooking);
+		doReturn(emptyBookingCollection).when(bookingRepository).getAssignableBookings();
+		when(bookingsSortingStrategy.sort(any())).thenReturn(emptyBookingCollection);
 	}
 
 	private void setUpOneAssignableBookingInBookings() {
 		bookingsWithOneAssignablBookings = new ArrayList<Booking>();
 		bookingsWithOneAssignablBookings.add(assignableBooking);
 
-		doReturn(bookingsWithOneAssignablBookings).when(bookingRepository).retrieveAll();
-		doReturn(bookingsWithOneAssignablBookings).when(bookingRepository).retrieveSortedByPriority();
+		doReturn(bookingsWithOneAssignablBookings).when(bookingRepository).getAssignableBookings();
 		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneAssignablBookings);
-		when(bookingRepository.getAssignableBookings()).thenReturn(bookingsNoAssignabledBooking);
+
 	}
 }
