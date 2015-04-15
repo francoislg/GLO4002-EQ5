@@ -23,6 +23,10 @@ public class BookingRessource {
 		new BookingRepositoryFiller().fill(bookingRepository);
 	}
 
+	public BookingRessource(BookingRepository bookingRepository) {
+		this.bookingRepository = bookingRepository;
+	}
+
 	@GET
 	@Path("/{COURRIEL}/{NUMERO_DEMANDE}")
 	@Produces(MediaType.APPLICATION_JSON)
