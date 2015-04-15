@@ -6,6 +6,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class BookingInMemoryRepository implements BookingRepository {
 
@@ -29,6 +30,16 @@ public class BookingInMemoryRepository implements BookingRepository {
 
 	private boolean isNotAlreadyInMemory(Booking booking) {
 		return !bookings.contains(booking);
+	}
+
+	@Override
+	public Booking retrieveBooking(Email promoter, String name) {
+		for(Booking booking : bookings){
+			if(booking.hasPromoter(promoter) && booking.hasName(name)){
+				return booking;
+			}
+		}
+		throw new CouldNotFindBooking();
 	}
 
 }

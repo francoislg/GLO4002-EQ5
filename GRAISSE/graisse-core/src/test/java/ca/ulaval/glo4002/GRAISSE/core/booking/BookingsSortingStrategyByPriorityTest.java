@@ -13,9 +13,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
-import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategyByPriority;
-
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsSortingStrategyByPriorityTest {
 

@@ -10,9 +10,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategyDefault;
-
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomsSortingStrategyDefaultTest {
 

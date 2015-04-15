@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.core.boardroom;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -12,10 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategyBySeats;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomsSortingStrategyBySeatsTest {

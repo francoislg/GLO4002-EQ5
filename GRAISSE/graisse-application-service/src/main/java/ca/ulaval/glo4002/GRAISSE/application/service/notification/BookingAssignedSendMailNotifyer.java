@@ -25,7 +25,7 @@ public class BookingAssignedSendMailNotifyer implements Notifyer<BookingAssignab
 
 	@Override
 	public void notify(BookingAssignable booking) {
-		if (booking.hasPromoter(user)) {
+		if (booking.hasPromoter(user.getEmail())) {
 			sendMailToEmail(booking, user);
 			sendMailToEmail(booking, responsible);
 		}
