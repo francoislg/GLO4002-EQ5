@@ -65,7 +65,7 @@ public class BoardroomInMemoryRepositoryTest {
 
 	@Test
 	public void givenOneBoardroomRetrievingBoardroomShouldReturnTheBoardroom() {
-		repoBoardrooms.
+		addOneBoardroomtoBoardrooms();
 
 		Boardroom boardroom = repoBoardrooms.retrieve(A_BOARDROOM_NAME);
 
