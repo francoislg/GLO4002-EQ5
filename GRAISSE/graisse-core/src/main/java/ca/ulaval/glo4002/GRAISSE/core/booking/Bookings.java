@@ -20,10 +20,10 @@ public class Bookings {
 	}
 
 	public boolean hasAssignableBookings() {
-		return getNumberAssignableBookings() > 0;
+		return getNumberOfAssignableBookings() > 0;
 	}
 
-	public int getNumberAssignableBookings() {
+	public int getNumberOfAssignableBookings() {
 		return bookingRepository.getAssignableBookings().size();
 	}
 

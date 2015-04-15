@@ -39,13 +39,13 @@ public class BookingsTest {
 	Booking booking;
 
 	@Mock
-	Booking assignedBooking1;
+	Booking unassignableBooking1;
 
 	@Mock
-	Booking assignedBooking2;
+	Booking unassignableBooking2;
 
 	@Mock
-	Booking unassignedBooking;
+	Booking assignablBooking;
 
 	@Mock
 	Boardrooms boardrooms;
@@ -58,8 +58,8 @@ public class BookingsTest {
 
 	Bookings bookings;
 	Collection<Booking> emptyBookingCollection;
-	Collection<Booking> bookingsWithOneUnassignedBookings;
-	Collection<Booking> bookingsWithOnlyAssignedBookings;
+	Collection<Booking> bookingsWithOneAssignablBookings;
+	Collection<Booking> bookingsNoAssignabledBooking;
 
 	@Before
 	public void setUp() {
@@ -87,15 +87,15 @@ public class BookingsTest {
 	}
 
 	@Test
-	public void givenOneUnassignedBookingGetNumberOfUnassignedBookingShouldReturnOne() {
+	public void givenOneAssignableBookingGetNumberOfUnassignedBookingShouldReturnOne() {
 		setUpOneAssignableBookingInBookings();
-		assertEquals(1, bookings.getNumberAssignableBookings());
+		assertEquals(1, bookings.getNumberOfAssignableBookings());
 	}
 
 	@Test
 	public void givenZeroUnassignedBookingGetNumberOfUnassignedBookingShouldReturnZero() {
 		setUpAllUnassignableBookings();
-		assertEquals(0, bookings.getNumberAssignableBookings());
+		assertEquals(0, bookings.getNumberOfAssignableBookings());
 	}
 
 	@Test
@@ -105,14 +105,14 @@ public class BookingsTest {
 	}
 
 	@Test
-	public void givenOneAssignableBookingassignBookingsToBoardroomsShouldOnlyAttemptToAssignAssignablBookings() {
+	public void givenOneAssignableBookingassignBookingsToBoardroomsShouldOnlyAttemptToAssignAssignableBookings() {
 		setUpOneAssignableBookingInBookings();
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
 
-		verify(boardrooms).assignBookingToBoardroom(unassignedBooking, boardroomsSortingStrategy);
-		verify(boardrooms, never()).assignBookingToBoardroom(assignedBooking1, boardroomsSortingStrategy);
-		verify(boardrooms, never()).assignBookingToBoardroom(assignedBooking2, boardroomsSortingStrategy);
+		verify(boardrooms).assignBookingToBoardroom(assignablBooking, boardroomsSortingStrategy);
+		verify(boardrooms, never()).assignBookingToBoardroom(unassignableBooking1, boardroomsSortingStrategy);
+		verify(boardrooms, never()).assignBookingToBoardroom(unassignableBooking2, boardroomsSortingStrategy);
 	}
 
 	@Test
@@ -121,7 +121,7 @@ public class BookingsTest {
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
 
-		verify(bookingRepository).persist(unassignedBooking);
+		verify(bookingRepository).persist(assignablBooking);
 	}
 
 	private void setUpBookingStrategyMock() {
@@ -130,9 +130,9 @@ public class BookingsTest {
 	}
 
 	private void setUpBookings() {
-		doReturn(NOT_ASSIGNABLE).when(assignedBooking1).isAssignable();
-		doReturn(NOT_ASSIGNABLE).when(assignedBooking2).isAssignable();
-		doReturn(ASSIGNABLE).when(unassignedBooking).isAssignable();
+		doReturn(NOT_ASSIGNABLE).when(unassignableBooking1).isAssignable();
+		doReturn(NOT_ASSIGNABLE).when(unassignableBooking2).isAssignable();
+		doReturn(ASSIGNABLE).when(assignablBooking).isAssignable();
 	}
 
 	private void setUpEmptyBookings() {
@@ -141,23 +141,23 @@ public class BookingsTest {
 	}
 
 	private void setUpAllUnassignableBookings() {
-		bookingsWithOnlyAssignedBookings = new ArrayList<Booking>();
+		bookingsNoAssignabledBooking = new ArrayList<Booking>();
 
-		bookingsWithOnlyAssignedBookings.add(assignedBooking1);
-		bookingsWithOnlyAssignedBookings.add(assignedBooking2);
+		bookingsNoAssignabledBooking.add(unassignableBooking1);
+		bookingsNoAssignabledBooking.add(unassignableBooking2);
 
-		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOnlyAssignedBookings);
+		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsNoAssignabledBooking);
 	}
 
 	private void setUpOneAssignableBookingInBookings() {
-		bookingsWithOneUnassignedBookings = new ArrayList<Booking>();
+		bookingsWithOneAssignablBookings = new ArrayList<Booking>();
 
-		bookingsWithOneUnassignedBookings.add(assignedBooking1);
-		bookingsWithOneUnassignedBookings.add(assignedBooking2);
-		bookingsWithOneUnassignedBookings.add(unassignedBooking);
+		bookingsWithOneAssignablBookings.add(unassignableBooking1);
+		bookingsWithOneAssignablBookings.add(unassignableBooking2);
+		bookingsWithOneAssignablBookings.add(assignablBooking);
 
-		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
-		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveSortedByPriority();
-		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneUnassignedBookings);
+		doReturn(bookingsWithOneAssignablBookings).when(bookingRepository).retrieveAll();
+		doReturn(bookingsWithOneAssignablBookings).when(bookingRepository).retrieveSortedByPriority();
+		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneAssignablBookings);
 	}
 }

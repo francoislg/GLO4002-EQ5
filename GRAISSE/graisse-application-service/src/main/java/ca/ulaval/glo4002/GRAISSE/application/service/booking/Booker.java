@@ -50,7 +50,7 @@ public class Booker {
 	}
 
 	public int numberOfBookingsToAssign() {
-		return bookings.getNumberAssignableBookings();
+		return bookings.getNumberOfAssignableBookings();
 	}
 
 	private void notifyTriggers() {

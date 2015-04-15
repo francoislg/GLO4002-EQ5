@@ -36,6 +36,7 @@ public class BookingInMemoryRepository implements BookingRepository {
 		return getAssignableBookings().stream().sorted(byPriorityValue).collect(Collectors.toList());
 	}
 
+	@Override
 	public Collection<Booking> getAssignableBookings() {
 		Collection<Booking> bookings = this.retrieveAll();
 		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
