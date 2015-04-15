@@ -39,7 +39,7 @@ public class BookingInMemoryRepository implements BookingRepository {
 				return booking;
 			}
 		}
-		throw new CouldNotFindBooking();
+		throw new BookingNotFoundException();
 	}
 
 }
