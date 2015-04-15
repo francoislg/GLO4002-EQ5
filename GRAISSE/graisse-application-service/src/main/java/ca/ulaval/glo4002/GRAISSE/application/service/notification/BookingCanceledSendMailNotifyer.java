@@ -36,12 +36,12 @@ public class BookingCanceledSendMailNotifyer implements Notifyer<BookingAssignab
 	@Override
 	public void notify(BookingAssignable booking) {
 		if (booking.hasCreator(user)) {
-			sendMailToEmail(booking, user);
-			sendMailToEmail(booking, responsible);
+			sendMailToEmails(booking, user, participant, responsible);
+
 		}
 	}
 
-	private void sendMailToEmail(BookingAssignable booking, User user) {
+	private void sendMailToEmails(BookingAssignable booking, User user, List<User> participant, User responsible) {
 		MailMessage mail = new SimpleMailMessage(user.getEmail(), MAIL_SUBJECT, getMailMessage(booking));
 		for (Email email : createParticipantEmailRepertorie(participant))
 			mail.addCarbonCopyRecipient(email);
