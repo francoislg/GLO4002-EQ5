@@ -36,4 +36,10 @@ public class HibernateBookingRepository implements BookingRepository {
 
 		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
+
+	@Override
+	public Collection<Booking> retrieveSortedByPriority() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

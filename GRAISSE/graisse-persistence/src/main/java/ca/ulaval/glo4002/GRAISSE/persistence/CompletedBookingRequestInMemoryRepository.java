@@ -14,13 +14,9 @@ public class CompletedBookingRequestInMemoryRepository implements ReservationRep
 
 	private List<Reservation> completedBookingRequests = new ArrayList<Reservation>();
 
-	private boolean completedBookingRequestNotAlreadyInMemory(Reservation completedBookingRequest) {
-		return !completedBookingRequests.contains(completedBookingRequest);
-	}
-
 	@Override
 	public void persist(Reservation completedBookingRequest) {
-		if (completedBookingRequestNotAlreadyInMemory(completedBookingRequest)) {
+		if (!completedBookingRequests.contains(completedBookingRequest)) {
 			completedBookingRequests.add(completedBookingRequest);
 		}
 	}

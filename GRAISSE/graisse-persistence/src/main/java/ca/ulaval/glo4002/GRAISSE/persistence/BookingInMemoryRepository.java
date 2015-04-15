@@ -2,7 +2,9 @@ package ca.ulaval.glo4002.GRAISSE.persistence;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
@@ -17,7 +19,7 @@ public class BookingInMemoryRepository implements BookingRepository {
 
 	@Override
 	public void persist(Booking booking) {
-		if (isNotAlreadyInMemory(booking)) {
+		if (!bookings.contains(booking)) {
 			bookings.add(booking);
 		}
 	}
@@ -27,8 +29,10 @@ public class BookingInMemoryRepository implements BookingRepository {
 		return bookings;
 	}
 
-	private boolean isNotAlreadyInMemory(Booking booking) {
-		return !bookings.contains(booking);
+	@Override
+	public Collection<Booking> retrieveSortedByPriority() {
+		Comparator<Booking> byPriorityValue = (booking1, booking2) -> booking1.comparePriorityToBooking(booking2);
+		return bookings.stream().sorted(byPriorityValue).collect(Collectors.toList());
 	}
 
 }

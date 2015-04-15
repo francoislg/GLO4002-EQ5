@@ -18,7 +18,7 @@ public class UserInMemoryRepository implements UserRepository {
 
 	@Override
 	public void persist(User user) {
-		if (isNotAlreadyInMemory(user)) {
+		if (!users.contains(user)) {
 			users.add(user);
 		}
 	}
@@ -31,9 +31,5 @@ public class UserInMemoryRepository implements UserRepository {
 			}
 		}
 		throw new UserNotFoundException();
-	}
-
-	private boolean isNotAlreadyInMemory(User user) {
-		return !users.contains(user);
 	}
 }

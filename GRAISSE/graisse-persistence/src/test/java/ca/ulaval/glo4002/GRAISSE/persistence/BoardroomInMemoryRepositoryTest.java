@@ -1,9 +1,11 @@
 package ca.ulaval.glo4002.GRAISSE.persistence;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Before;
@@ -18,19 +20,36 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.BoardroomNotFoundExcep
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomInMemoryRepositoryTest {
 
-	private static final String NAME_OF_BOARDROOM_1 = "Boardroom1";
-	private static final String NAME_OF_BOARDROOM_2 = "Boardroom2";
-	private static final String NAME_OF_BOARDROOM_3 = "Boardroom3";
+	private static final String A_BOARDROOM_NAME = "Boardroom1";
+	private static final String A_BOARDROOM_NAME_2 = "Boardroom2";
+	private static final String A_BOARDROOM_NAME_3 = "Boardroom3";
 	private static final String NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST = "BoardroomThatDoesNotExist";
+	
+	private static final int BIGGER = 1;
+	private static final int SMALLER = -1;
+	private static final int EQUAL = 0;
 
 	@Mock
-	Boardroom boardroom1;
+	Boardroom boardroom;
 
 	@Mock
 	Boardroom boardroom2;
 
 	@Mock
 	Boardroom boardroom3;
+	
+	@Mock
+	Boardroom boardroomWithLeastNumberOfSeats;
+
+	@Mock
+	Boardroom boardroomWithSecondLeastNumberOfSeats;
+
+	@Mock
+	Boardroom boardroomWithThirdLeastNumberOfSeats;
+
+	@Mock
+	Boardroom boardroomWithMostNumberOfSeats;
+
 
 	BoardroomInMemoryRepository repoBoardrooms;
 
@@ -49,35 +68,61 @@ public class BoardroomInMemoryRepositoryTest {
 	public void givenOneBoardroomRetrievingBoardroomShouldReturnTheBoardroom() {
 		addOneBoardroomtoBoardrooms();
 
-		Boardroom boardroom = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_1);
+		Boardroom boardroom = repoBoardrooms.retrieve(A_BOARDROOM_NAME);
 
-		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
+		assertTrue(boardroom.hasName(A_BOARDROOM_NAME));
 	}
 
 	@Test
 	public void givenMultipleBoardroomsRetrievingEachBoardroomShouldReturnEachBoardroom() {
 		addThreeBoardroomtoBoardroomsRespository();
 
-		Boardroom boardroom1 = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_1);
-		Boardroom boardroom2 = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_2);
-		Boardroom boardroom3 = repoBoardrooms.retrieve(NAME_OF_BOARDROOM_3);
+		Boardroom boardroom1 = repoBoardrooms.retrieve(A_BOARDROOM_NAME);
+		Boardroom boardroom2 = repoBoardrooms.retrieve(A_BOARDROOM_NAME_2);
+		Boardroom boardroom3 = repoBoardrooms.retrieve(A_BOARDROOM_NAME_3);
 
-		assertTrue(boardroom1.hasName(NAME_OF_BOARDROOM_1));
-		assertTrue(boardroom2.hasName(NAME_OF_BOARDROOM_2));
-		assertTrue(boardroom3.hasName(NAME_OF_BOARDROOM_3));
+		assertTrue(boardroom1.hasName(A_BOARDROOM_NAME));
+		assertTrue(boardroom2.hasName(A_BOARDROOM_NAME_2));
+		assertTrue(boardroom3.hasName(A_BOARDROOM_NAME_3));
 	}
 
 	@Test(expected = BoardroomNotFoundException.class)
 	public void givenNoExistingBoardroomRetrivingShouldThrowBoardroomNotFoundExeption() {
 		repoBoardrooms.retrieve(NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST);
 	}
+	
+	@Test
+	public void whenPersistingTwiceTheSameBoardroomTheRepositoryShouldContainOneBoardroom() {
+		repoBoardrooms.persist(boardroom);
+		repoBoardrooms.persist(boardroom);
+
+		int resultSize = repoBoardrooms.retrieveAll().size();
+		assertEquals(1, resultSize);
+	}
+	
+	@Test
+	public void givenUnorderedListWhenSortingWithdOrderByNumberOfSeatsShouldReturnOrderedByNumberOfSeats() {
+		setUpMocksForMultipleBoardroomsWithSeats();
+		setUpRepositoryWithUnorderedListOfBoardrooms();
+		Collection<Boardroom> expectedBoardroomList = orderedListOfBoardroomsByNumberOfSeats();
+
+		Collection<Boardroom> result = repoBoardrooms.retrieveBoardroomsOrderedByNumberOfSeats();
+
+		assertEquals(expectedBoardroomList, result);
+	}
+	@Test
+	public void givenAListOfBoardroomWhenSortingDefaultShouldReturnSameList(){
+		Collection<Boardroom> boardroomCollection = orderedListOfBoardroomsByNumberOfSeats();
+		setUpRepositoryWithOrderedListOfBoardrooms();
+		assertEquals(boardroomCollection,repoBoardrooms.retrieveAll());
+	}
 
 	private void addThreeBoardroomtoBoardroomsRespository() {
-		setBoardroomHasNameMock(boardroom1, NAME_OF_BOARDROOM_1);
-		setBoardroomHasNameMock(boardroom2, NAME_OF_BOARDROOM_2);
-		setBoardroomHasNameMock(boardroom3, NAME_OF_BOARDROOM_3);
+		setBoardroomHasNameMock(boardroom, A_BOARDROOM_NAME);
+		setBoardroomHasNameMock(boardroom2, A_BOARDROOM_NAME_2);
+		setBoardroomHasNameMock(boardroom3, A_BOARDROOM_NAME_3);
 
-		repoBoardrooms.persist(boardroom1);
+		repoBoardrooms.persist(boardroom);
 		repoBoardrooms.persist(boardroom2);
 		repoBoardrooms.persist(boardroom3);
 	}
@@ -88,7 +133,40 @@ public class BoardroomInMemoryRepositoryTest {
 	}
 
 	private void addOneBoardroomtoBoardrooms() {
-		setBoardroomHasNameMock(boardroom1, NAME_OF_BOARDROOM_1);
-		repoBoardrooms.persist(boardroom1);
+		setBoardroomHasNameMock(boardroom, A_BOARDROOM_NAME_3);
+		repoBoardrooms.persist(boardroom);
+	}
+	
+	private void setUpMocksForMultipleBoardroomsWithSeats() {
+		when(boardroomWithLeastNumberOfSeats.compareByNumberOfSeats(any())).thenReturn(SMALLER);
+
+		when(boardroomWithSecondLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithLeastNumberOfSeats)).thenReturn(BIGGER);
+		when(boardroomWithSecondLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithMostNumberOfSeats)).thenReturn(SMALLER);
+		when(boardroomWithSecondLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithThirdLeastNumberOfSeats)).thenReturn(EQUAL);
+
+		when(boardroomWithThirdLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithLeastNumberOfSeats)).thenReturn(BIGGER);
+		when(boardroomWithThirdLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithMostNumberOfSeats)).thenReturn(SMALLER);
+		when(boardroomWithThirdLeastNumberOfSeats.compareByNumberOfSeats(boardroomWithSecondLeastNumberOfSeats)).thenReturn(EQUAL);
+
+		when(boardroomWithMostNumberOfSeats.compareByNumberOfSeats(any())).thenReturn(BIGGER);
+	}
+	
+	private void setUpRepositoryWithUnorderedListOfBoardrooms() {
+		repoBoardrooms.persist(boardroomWithSecondLeastNumberOfSeats);
+		repoBoardrooms.persist(boardroomWithMostNumberOfSeats);
+		repoBoardrooms.persist(boardroomWithThirdLeastNumberOfSeats);
+		repoBoardrooms.persist(boardroomWithLeastNumberOfSeats);
+	}
+	
+	private void setUpRepositoryWithOrderedListOfBoardrooms(){
+		repoBoardrooms.persist(boardroomWithLeastNumberOfSeats);
+		repoBoardrooms.persist(boardroomWithSecondLeastNumberOfSeats);
+		repoBoardrooms.persist(boardroomWithThirdLeastNumberOfSeats);
+		repoBoardrooms.persist(boardroomWithMostNumberOfSeats);
+	}
+	
+	private Collection<Boardroom> orderedListOfBoardroomsByNumberOfSeats() {
+		return Arrays.asList(boardroomWithLeastNumberOfSeats, boardroomWithSecondLeastNumberOfSeats, boardroomWithThirdLeastNumberOfSeats,
+				boardroomWithMostNumberOfSeats);
 	}
 }

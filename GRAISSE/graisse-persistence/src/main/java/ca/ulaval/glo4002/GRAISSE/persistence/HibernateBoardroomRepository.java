@@ -41,4 +41,10 @@ public class HibernateBoardroomRepository implements BoardroomRepository {
 
 		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
+
+	@Override
+	public Collection<Boardroom> retrieveBoardroomsOrderedByNumberOfSeats() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

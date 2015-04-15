@@ -17,7 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class BoardroomTest {
 
-	private static final String NAME_OF_BOARDROOM_1 = "Boardroom1";
+	private static final String A_BOARDROOM_NAME = "Boardroom1";
 	private static final String NAME_NOT_EQUAL_TO_NAME_OF_BOARDROOM_1 = "Boardroom1Different";
 	private static final int NUMBER_OF_SEATS_IN_BOARDROOM = 10;
 	private static final int NUMBER_OF_SEATS_SMALLER = 8;
@@ -39,10 +39,10 @@ public class BoardroomTest {
 
 	@Before
 	public void setUp() {
-		boardroom = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_IN_BOARDROOM);
-		boardroomWithMoreSeats = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_BIGGER);
-		boardroomWithLessSeats = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_SMALLER);
-		boardroomWithSameSeats = new Boardroom(NAME_OF_BOARDROOM_1, NUMBER_OF_SEATS_IN_BOARDROOM);
+		boardroom = new Boardroom(A_BOARDROOM_NAME, NUMBER_OF_SEATS_IN_BOARDROOM);
+		boardroomWithMoreSeats = new Boardroom(A_BOARDROOM_NAME, NUMBER_OF_SEATS_BIGGER);
+		boardroomWithLessSeats = new Boardroom(A_BOARDROOM_NAME, NUMBER_OF_SEATS_SMALLER);
+		boardroomWithSameSeats = new Boardroom(A_BOARDROOM_NAME, NUMBER_OF_SEATS_IN_BOARDROOM);
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class BoardroomTest {
 
 	@Test
 	public void givenSameNameHasNameWithShouldReturnTrue() {
-		assertTrue(boardroom.hasName(NAME_OF_BOARDROOM_1));
+		assertTrue(boardroom.hasName(A_BOARDROOM_NAME));
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class BoardroomTest {
 	public void whenBoardroomIsAvailableAndHasEnoughSeatsForTheBookingAssignShouldReturnTrue() {
 		when(interfaceReservationBoardroom.isAvailable(boardroom)).thenReturn(true);
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
-		assertTrue(boardroom.assign(booking, interfaceReservationBoardroom));
+		assertTrue(boardroom.canAssign(booking, interfaceReservationBoardroom));
 	}
 
 	@Test
@@ -85,13 +85,13 @@ public class BoardroomTest {
 
 		boardroom.assign(booking, interfaceReservationBoardroom);
 
-		assertFalse(boardroom.assign(booking, interfaceReservationBoardroom));
+		assertFalse(boardroom.canAssign(booking, interfaceReservationBoardroom));
 	}
 
 	@Test
 	public void givenBoardroomIsAvailableAndHasInsufficentSeatsForTheBookingWhenAssigningShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(false);
-		assertFalse(boardroom.assign(booking, interfaceReservationBoardroom));
+		assertFalse(boardroom.canAssign(booking, interfaceReservationBoardroom));
 	}
 
 	@Test
