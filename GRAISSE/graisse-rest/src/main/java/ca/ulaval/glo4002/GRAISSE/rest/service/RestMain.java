@@ -8,14 +8,13 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 public class RestMain {
+	private static final int httpPort = 8080;
 
 	public static void main(String[] args) throws Exception {
 		new RestMain().execute();
 	}
 
 	public void execute() throws Exception {
-		int httpPort = 8080;
-
 		Server server = new Server(httpPort);
 		ServletContextHandler servletContextHandler = new ServletContextHandler(server, "/");
 		configurerJersey(servletContextHandler);
