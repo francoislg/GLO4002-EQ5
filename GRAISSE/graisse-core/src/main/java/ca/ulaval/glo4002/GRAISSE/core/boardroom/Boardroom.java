@@ -1,5 +1,9 @@
 package ca.ulaval.glo4002.GRAISSE.core.boardroom;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Boardroom implements AssignedBoardroom {
 
 	private int numberOfSeats;
@@ -21,7 +25,8 @@ public class Boardroom implements AssignedBoardroom {
 	public int getNumberOfSeats() {
 		return numberOfSeats;
 	}
-
+	
+	@Id
 	public String getName() {
 		return name;
 	}

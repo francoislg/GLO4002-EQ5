@@ -1,9 +1,12 @@
 package ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom;
 
+import javax.persistence.Entity;
+
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.AssignedBoardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 
+@Entity
 public class Reservation {
 
 	private AssignedBoardroom assignedBoardroom;
@@ -25,5 +28,4 @@ public class Reservation {
 	public void cancel() {
 		assignedBooking.cancel();
 	}
-
 }

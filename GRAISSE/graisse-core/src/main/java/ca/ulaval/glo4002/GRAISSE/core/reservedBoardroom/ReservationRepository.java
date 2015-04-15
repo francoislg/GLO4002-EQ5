@@ -6,9 +6,10 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 
 public interface ReservationRepository {
-	public void persist(Reservation assignedBooking);
+	
+	public void persist(Reservation reservation);
 
-	public void remove(Reservation assignedBooking);
+	public void remove(Reservation reservation);
 
 	public Reservation retrieve(AssignedBooking assignedBooking) throws ReservationNotFoundException;
 

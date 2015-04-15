@@ -23,7 +23,6 @@ public class CompletedBookingRequestInMemoryRepository implements ReservationRep
 		if (completedBookingRequestNotAlreadyInMemory(completedBookingRequest)) {
 			completedBookingRequests.add(completedBookingRequest);
 		}
-
 	}
 
 	@Override

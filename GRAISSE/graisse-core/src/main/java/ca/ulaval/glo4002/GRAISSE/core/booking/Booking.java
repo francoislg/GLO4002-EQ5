@@ -1,9 +1,11 @@
 package ca.ulaval.glo4002.GRAISSE.core.booking;
 
+import javax.persistence.Entity;
+
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
-
+@Entity
 public class Booking implements BookingAssignable, AssignedBooking {
 
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
