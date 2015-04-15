@@ -89,13 +89,13 @@ public class BookingsTest {
 	@Test
 	public void givenOneUnassignedBookingGetNumberOfUnassignedBookingShouldReturnOne() {
 		setUpOneAssignableBookingInBookings();
-		assertEquals(1, bookings.getNumberOfUnassignedBookings());
+		assertEquals(1, bookings.getNumberAssignableBookings());
 	}
 
 	@Test
 	public void givenZeroUnassignedBookingGetNumberOfUnassignedBookingShouldReturnZero() {
 		setUpAllUnassignableBookings();
-		assertEquals(0, bookings.getNumberOfUnassignedBookings());
+		assertEquals(0, bookings.getNumberAssignableBookings());
 	}
 
 	@Test
@@ -146,7 +146,7 @@ public class BookingsTest {
 		bookingsWithOnlyAssignedBookings.add(assignedBooking1);
 		bookingsWithOnlyAssignedBookings.add(assignedBooking2);
 
-		doReturn(bookingsWithOnlyAssignedBookings).when(bookingRepository).retrieveAll();
+		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOnlyAssignedBookings);
 	}
 
 	private void setUpOneAssignableBookingInBookings() {
@@ -158,5 +158,6 @@ public class BookingsTest {
 
 		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveAll();
 		doReturn(bookingsWithOneUnassignedBookings).when(bookingRepository).retrieveSortedByPriority();
+		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneUnassignedBookings);
 	}
 }
