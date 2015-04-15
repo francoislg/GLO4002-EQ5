@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -111,5 +112,17 @@ public class BookingTest {
 		int result = booking.comparePriorityToBooking(bookingWithEqualPriority);
 
 		assertEquals(0, result);
+	}
+
+	@Ignore
+	@Test
+	public void givenAParticipantShouldBePresentInList() {
+
+	}
+
+	@Ignore
+	@Test
+	public void givenSameParticipantShouldBePresentOnceInList() {
+
 	}
 }

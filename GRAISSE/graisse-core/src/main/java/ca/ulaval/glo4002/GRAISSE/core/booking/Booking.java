@@ -1,6 +1,11 @@
 package ca.ulaval.glo4002.GRAISSE.core.booking;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
 public class Booking implements BookingAssignable, AssignedBooking {
@@ -12,6 +17,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	private boolean canceled;
 	private Priority priority;
 	private User creator;
+	private List<Email> participants;
 
 	public Booking(User creator, int numberOfSeatsNeeded) {
 		this(creator, numberOfSeatsNeeded, DEFAULT_PRIORITY);
@@ -23,6 +29,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 		this.priority = priority;
 		assigned = false;
 		canceled = false;
+		participants = new ArrayList<Email>();
 	}
 
 	public void assign() {
@@ -51,5 +58,14 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	public int comparePriorityToBooking(Booking bookingToCompare) {
 		return priority.compare(bookingToCompare.priority);
+	}
+
+	public void addParticipant(Email email) {
+		participants.add(email);
+	}
+
+	@Override
+	public Collection<Email> getParticipantsEmail() {
+		return participants;
 	}
 }
