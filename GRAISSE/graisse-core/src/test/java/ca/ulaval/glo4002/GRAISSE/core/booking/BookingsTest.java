@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -64,7 +63,6 @@ public class BookingsTest {
 	@Before
 	public void setUp() {
 		setUpBookingStrategyMock();
-		setUpBookings();
 		bookings = new Bookings(bookingRepository, interfaceReservationBooking);
 	}
 
@@ -105,34 +103,16 @@ public class BookingsTest {
 	}
 
 	@Test
-	public void givenOneAssignableBookingassignBookingsToBoardroomsShouldOnlyAttemptToAssignAssignableBookings() {
-		setUpOneAssignableBookingInBookings();
-
-		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
-
-		verify(boardrooms).assignBookingToBoardroom(assignableBooking, boardroomsSortingStrategy);
-		verify(boardrooms, never()).assignBookingToBoardroom(unassignableBooking1, boardroomsSortingStrategy);
-		verify(boardrooms, never()).assignBookingToBoardroom(unassignableBooking2, boardroomsSortingStrategy);
-	}
-
-	@Test
 	public void givenOneAssignableBookingassignBookingsToBoardroomsShouldPersistAssignableBooking() {
 		setUpOneAssignableBookingInBookings();
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
-
 		verify(bookingRepository).persist(assignableBooking);
 	}
 
 	private void setUpBookingStrategyMock() {
 		List<Booking> formatedList = new ArrayList<Booking>(Arrays.asList(booking));
 		when(bookingsSortingStrategy.sort(any())).thenReturn(formatedList);
-	}
-
-	private void setUpBookings() {
-		doReturn(NOT_ASSIGNABLE).when(unassignableBooking1).isAssignable();
-		doReturn(NOT_ASSIGNABLE).when(unassignableBooking2).isAssignable();
-		doReturn(ASSIGNABLE).when(assignableBooking).isAssignable();
 	}
 
 	private void setUpEmptyBookings() {
@@ -143,21 +123,17 @@ public class BookingsTest {
 	private void setUpAllUnassignableBookings() {
 		bookingsNoAssignabledBooking = new ArrayList<Booking>();
 
-		bookingsNoAssignabledBooking.add(unassignableBooking1);
-		bookingsNoAssignabledBooking.add(unassignableBooking2);
-
 		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsNoAssignabledBooking);
+		when(bookingRepository.getAssignableBookings()).thenReturn(bookingsNoAssignabledBooking);
 	}
 
 	private void setUpOneAssignableBookingInBookings() {
 		bookingsWithOneAssignablBookings = new ArrayList<Booking>();
-
-		bookingsWithOneAssignablBookings.add(unassignableBooking1);
-		bookingsWithOneAssignablBookings.add(unassignableBooking2);
 		bookingsWithOneAssignablBookings.add(assignableBooking);
 
 		doReturn(bookingsWithOneAssignablBookings).when(bookingRepository).retrieveAll();
 		doReturn(bookingsWithOneAssignablBookings).when(bookingRepository).retrieveSortedByPriority();
 		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneAssignablBookings);
+		when(bookingRepository.getAssignableBookings()).thenReturn(bookingsNoAssignabledBooking);
 	}
 }
