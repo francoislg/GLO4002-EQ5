@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.GRAISSE.core.boardroom;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
@@ -60,15 +59,6 @@ public class BoardroomsTest {
 	public void givenAnAssignableBookingWhenBoardroomIsAssignedShouldPersistBoardroomInRepository() {
 		boardrooms.assignBookingToBoardroom(assignableBooking, boardroomsSortingStrategy);
 		verify(boardroomRepository).persist(boardroom);
-	}
-	
-	@Test
-	public void whenPersistingTwiceTheSameBoardroomTheRepositoryShouldContainOneBoardroom() {
-		boardroomRepository.persist(boardroom);
-		boardroomRepository.persist(boardroom);
-
-		int resultSize = boardroomRepository.retrieveAll().size();
-		assertEquals(1, resultSize);
 	}
 
 	@Test(expected = UnableToAssignBookingException.class)

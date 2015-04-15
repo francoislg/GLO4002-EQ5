@@ -63,13 +63,13 @@ public class BookerTest {
 
 	@Test
 	public void whenBookingsHasNoBookingToAssignBookerShouldNotHaveBookingsToAssign() {
-		doReturn(false).when(bookings).hasUnassignedBookings();
+		doReturn(false).when(bookings).hasAssignableBookings();
 		assertFalse(booker.hasBookingsToAssign());
 	}
 
 	@Test
 	public void whenBookingsHasBookingToAssignBookerShouldHaveBookingsToAssign() {
-		doReturn(true).when(bookings).hasUnassignedBookings();
+		doReturn(true).when(bookings).hasAssignableBookings();
 		assertTrue(booker.hasBookingsToAssign());
 	}
 

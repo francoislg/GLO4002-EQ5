@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.GRAISSE.persistence;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,19 @@ public class BookingInMemoryRepository implements BookingRepository {
 	@Override
 	public Collection<Booking> retrieveSortedByPriority() {
 		Comparator<Booking> byPriorityValue = (booking1, booking2) -> booking1.comparePriorityToBooking(booking2);
-		return bookings.stream().sorted(byPriorityValue).collect(Collectors.toList());
+		return getAssignableBookings().stream().sorted(byPriorityValue).collect(Collectors.toList());
+	}
+
+	@Override
+	public Collection<Booking> getAssignableBookings() {
+		Collection<Booking> bookings = this.retrieveAll();
+		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
+			Booking booking = bookingIter.next();
+			if (!booking.isAssignable()) {
+				bookingIter.remove();
+			}
+		}
+		return bookings;
 	}
 
 }

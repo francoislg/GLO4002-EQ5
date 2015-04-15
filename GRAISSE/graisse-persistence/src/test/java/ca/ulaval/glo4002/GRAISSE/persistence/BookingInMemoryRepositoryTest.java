@@ -22,7 +22,7 @@ public class BookingInMemoryRepositoryTest {
 	private static final int BIGGER = 1;
 	private static final int SMALLER = -1;
 	private static final int EQUAL = 0;
-	
+
 	@Mock
 	Booking booking;
 
@@ -78,7 +78,7 @@ public class BookingInMemoryRepositoryTest {
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
 		assertEquals(1, result.size());
 	}
-	
+
 	private void setUpMocksForMultipleBookings() {
 		when(bookingWithLowPriority.comparePriorityToBooking(any())).thenReturn(SMALLER);
 
@@ -92,25 +92,14 @@ public class BookingInMemoryRepositoryTest {
 
 		when(bookingWithHighPriority.comparePriorityToBooking(any())).thenReturn(BIGGER);
 	}
-	
-	@Test
-	public void givenAnUnorderedBookingsListWhenSortingByPriorityShouldReturnSorted() {
-		setUpMocksForMultipleBookings();
-		setUpUnorderedBookingsRepo();
-		Collection<Booking> expectedBookingList = orderedBookingList();
 
-		Collection<Booking> result = bookingInMemoryRepository.retrieveSortedByPriority();
-
-		assertEquals(expectedBookingList, result);
-	}
-	
 	@Test
 	public void givenAListOfBookingsWhenSortingByDefaultShouldReturnSameList() {
-		
+
 		setUpOrderedBookingsRepo();
 		assertEquals(orderedBookingList(), bookingInMemoryRepository.retrieveAll());
 	}
-	
+
 	private void setUpUnorderedBookingsRepo() {
 		bookingInMemoryRepository.persist(bookingWithMediumPriority);
 		bookingInMemoryRepository.persist(bookingWithHighPriority);
@@ -124,7 +113,12 @@ public class BookingInMemoryRepositoryTest {
 		bookingInMemoryRepository.persist(secondBookingWithMediumPriority);
 		bookingInMemoryRepository.persist(bookingWithHighPriority);
 	}
-	
+
+	@Test
+	public void givenAnUnorderedBookingsListWhenSortingByPriorityShouldReturnSorted() {
+		assertTrue(false);
+	}
+
 	private Collection<Booking> orderedBookingList() {
 		return Arrays.asList(bookingWithLowPriority, bookingWithMediumPriority, secondBookingWithMediumPriority, bookingWithHighPriority);
 	}

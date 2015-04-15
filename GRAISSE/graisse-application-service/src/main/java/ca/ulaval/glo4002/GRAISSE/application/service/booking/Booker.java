@@ -46,11 +46,11 @@ public class Booker {
 	}
 
 	public boolean hasBookingsToAssign() {
-		return bookings.hasUnassignedBookings();
+		return bookings.hasAssignableBookings();
 	}
 
 	public int numberOfBookingsToAssign() {
-		return bookings.getNumberOfUnassignedBookings();
+		return bookings.getNumberOfAssignableBookings();
 	}
 
 	private void notifyTriggers() {

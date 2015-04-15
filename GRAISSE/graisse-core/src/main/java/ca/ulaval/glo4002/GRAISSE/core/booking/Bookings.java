@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.core.booking;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
@@ -20,23 +19,12 @@ public class Bookings {
 		bookingRepository.persist(booking);
 	}
 
-	public boolean hasUnassignedBookings() {
-		return getNumberOfUnassignedBookings() > 0;
+	public boolean hasAssignableBookings() {
+		return getNumberOfAssignableBookings() > 0;
 	}
 
-	public int getNumberOfUnassignedBookings() {
-		return getUnassignedBookings().size();
-	}
-
-	private Collection<Booking> getUnassignedBookings() {
-		Collection<Booking> bookings = bookingRepository.retrieveAll();
-		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
-			Booking booking = bookingIter.next();
-			if (booking.isAssigned()) {
-				bookingIter.remove();
-			}
-		}
-		return bookings;
+	public int getNumberOfAssignableBookings() {
+		return bookingRepository.getAssignableBookings().size();
 	}
 
 	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsSortingStrategy bookingsSortingStrategy,
@@ -53,4 +41,5 @@ public class Bookings {
 		bookingRepository.persist(booking);
 		interfaceReservationBooking.cancelBooking(booking);
 	}
+
 }
