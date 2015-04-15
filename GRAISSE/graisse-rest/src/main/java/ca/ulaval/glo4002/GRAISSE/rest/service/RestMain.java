@@ -17,12 +17,12 @@ public class RestMain {
 	public void execute() throws Exception {
 		Server server = new Server(httpPort);
 		ServletContextHandler servletContextHandler = new ServletContextHandler(server, "/");
-		configurerJersey(servletContextHandler);
+		configureJersey(servletContextHandler);
 		server.start();
 		server.join();
 	}
 
-	private void configurerJersey(ServletContextHandler servletContextHandler) {
+	private void configureJersey(ServletContextHandler servletContextHandler) {
 		ServletContainer container = new ServletContainer(new ResourceConfig().packages("ca.ulaval.glo4002.GRAISSE.rest.interfaces").register(
 				JacksonFeature.class));
 		ServletHolder jerseyServletHolder = new ServletHolder(container);
