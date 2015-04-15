@@ -41,7 +41,7 @@ public class Bookings {
 
 	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsSortingStrategy bookingsSortingStrategy,
 			BoardroomsSortingStrategy boardroomsSortingStrategy) {
-		Collection<Booking> formatedBookingList = bookingsSortingStrategy.sort(getUnassignedBookings());
+		Collection<Booking> formatedBookingList = bookingsSortingStrategy.sort(bookingRepository);
 		for (Booking booking : formatedBookingList) {
 			boardrooms.assignBookingToBoardroom(booking, boardroomsSortingStrategy);
 			bookingRepository.persist(booking);
