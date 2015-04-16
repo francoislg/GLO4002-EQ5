@@ -12,20 +12,18 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
 
-	private String name;
 	private int numberOfSeatsNeeded;
 	private BookingState state;
 	private Priority priority;
 	private User promoter;
 	private List<Email> participants;
 
-	public Booking(User promoter, String name, int numberOfSeatsNeeded) {
-		this(promoter, name, numberOfSeatsNeeded, DEFAULT_PRIORITY);
+	public Booking(User promoter, int numberOfSeatsNeeded) {
+		this(promoter, numberOfSeatsNeeded, DEFAULT_PRIORITY);
 	}
 
-	public Booking(User promoter, String name, int numberOfSeatsNeeded, Priority priority) {
+	public Booking(User promoter,  int numberOfSeatsNeeded, Priority priority) {
 		this.promoter = promoter;
-		this.name = name;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = priority;
 		this.state = BookingState.WAITING;
@@ -62,11 +60,6 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	}
 
 	@Override
-	public boolean hasName(String name) {
-		return this.name.equals(name);
-	}
-
-	@Override
 	public boolean verifyNumberOfSeats(int numberOfSeats) {
 		return numberOfSeatsNeeded <= numberOfSeats;
 	}
@@ -94,9 +87,5 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	public BookingState getState() {
 		return state;
-	}
-
-	public String getName() {
-		return name;
 	}
 }
