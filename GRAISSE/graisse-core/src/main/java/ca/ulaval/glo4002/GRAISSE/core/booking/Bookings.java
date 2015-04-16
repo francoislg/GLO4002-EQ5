@@ -8,11 +8,11 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
 public class Bookings {
 
 	private BookingRepository bookingRepository;
-	private InterfaceReservationBooking interfaceReservationBooking;
+	private BookingCanceller bookingCanceller;
 
-	public Bookings(BookingRepository bookingRepository, InterfaceReservationBooking interfaceReservationBooking) {
+	public Bookings(BookingRepository bookingRepository, BookingCanceller bookingCanceller) {
 		this.bookingRepository = bookingRepository;
-		this.interfaceReservationBooking = interfaceReservationBooking;
+		this.bookingCanceller = bookingCanceller;
 	}
 
 	public void add(Booking booking) {
@@ -39,7 +39,7 @@ public class Bookings {
 	public void cancelBooking(Booking booking) {
 		booking.cancel();
 		bookingRepository.persist(booking);
-		interfaceReservationBooking.cancelBooking(booking);
+		bookingCanceller.cancelBooking(booking);
 	}
 
 }

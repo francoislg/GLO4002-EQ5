@@ -23,7 +23,7 @@ public class BoardroomsTest {
 	BoardroomRepository boardroomRepository;
 
 	@Mock
-	InterfaceReservationBoardroom interfaceReservationBoardroom;
+	ReservationAssigner reservationAssigner;
 
 	@Mock
 	Notifyer<BookingAssignable> notifyer;
@@ -52,7 +52,7 @@ public class BoardroomsTest {
 	public void setUp() {
 		setUpBoardroomMock();
 		when(boardroomsSortingStrategy.sort(any())).thenReturn(Arrays.asList(boardroom));
-		boardrooms = new Boardrooms(boardroomRepository, interfaceReservationBoardroom);
+		boardrooms = new Boardrooms(boardroomRepository, reservationAssigner);
 	}
 
 	@Test
@@ -100,8 +100,8 @@ public class BoardroomsTest {
 
 	private void setUpBoardroomMock() {
 
-		when(boardroom.canAssign(assignableBooking, interfaceReservationBoardroom)).thenReturn(true);
-		when(boardroom.canAssign(unassignableBooking, interfaceReservationBoardroom)).thenReturn(false);
+		when(boardroom.canAssign(assignableBooking, reservationAssigner)).thenReturn(true);
+		when(boardroom.canAssign(unassignableBooking, reservationAssigner)).thenReturn(false);
 
 	}
 }

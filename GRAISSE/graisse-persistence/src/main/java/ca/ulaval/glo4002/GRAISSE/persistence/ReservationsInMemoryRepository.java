@@ -8,9 +8,9 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservation;
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationNotFoundException;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationRepository;
+import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationsRepository;
 
-public class CompletedBookingRequestInMemoryRepository implements ReservationRepository {
+public class ReservationsInMemoryRepository implements ReservationsRepository {
 
 	private List<Reservation> completedBookingRequests = new ArrayList<Reservation>();
 
