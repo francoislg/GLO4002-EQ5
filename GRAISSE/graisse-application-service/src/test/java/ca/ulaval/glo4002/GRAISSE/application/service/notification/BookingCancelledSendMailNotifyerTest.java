@@ -13,6 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailSender;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,6 +30,9 @@ public class BookingCancelledSendMailNotifyerTest {
 	private User user;
 
 	@Mock
+	private Email email;
+
+	@Mock
 	private User responsible;
 
 	@Mock
@@ -36,6 +40,7 @@ public class BookingCancelledSendMailNotifyerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		when(user.getEmail()).thenReturn(email);
 		setUpBookingMock();
 		bookingCancelledNotifyer = new BookingCancelledSendMailNotifyer(mailSender, user, responsible);
 	}
@@ -58,6 +63,6 @@ public class BookingCancelledSendMailNotifyerTest {
 	}
 
 	private void setUpBookingMock() {
-		when(booking.hasCreator(user)).thenReturn(true);
+		when(booking.hasPromoter(email)).thenReturn(true);
 	}
 }

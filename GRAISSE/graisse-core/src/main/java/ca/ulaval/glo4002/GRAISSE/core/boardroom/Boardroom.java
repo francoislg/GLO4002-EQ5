@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE.core.boardroom;
 
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.UnableToAssignBookingException;
 
 public class Boardroom implements AssignedBoardroom {
 

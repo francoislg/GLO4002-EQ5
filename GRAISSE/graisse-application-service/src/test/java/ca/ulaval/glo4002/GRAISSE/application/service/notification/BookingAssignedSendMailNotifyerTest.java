@@ -29,6 +29,9 @@ public class BookingAssignedSendMailNotifyerTest {
 
 	@Mock
 	User responsible;
+	
+	@Mock
+	Email email;
 
 	@Mock
 	MailSender mailSender;
@@ -63,11 +66,12 @@ public class BookingAssignedSendMailNotifyerTest {
 	}
 
 	private void setUpBookingMock() {
-		when(booking.hasCreator(user)).thenReturn(true);
+		when(booking.hasPromoter(email)).thenReturn(true);
 	}
 
 	private void setUpUsersMocks() {
-		when(user.getEmail()).thenReturn(new Email(USER_EMAIL));
+		when(email.getValue()).thenReturn(USER_EMAIL);
+		when(user.getEmail()).thenReturn(email);
 		when(responsible.getEmail()).thenReturn(new Email(RESPONSIBLE_EMAIL));
 	}
 }
