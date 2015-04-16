@@ -28,7 +28,7 @@ public class BookingsTest {
 	BookingRepository bookingRepository;
 
 	@Mock
-	InterfaceReservationBooking interfaceReservationBooking;
+	BookingCanceller bookingCanceller;
 
 	@Mock
 	Booking booking;
@@ -58,7 +58,7 @@ public class BookingsTest {
 
 	@Before
 	public void setUp() {
-		bookings = new Bookings(bookingRepository, interfaceReservationBooking);
+		bookings = new Bookings(bookingRepository, bookingCanceller);
 	}
 
 	@Test

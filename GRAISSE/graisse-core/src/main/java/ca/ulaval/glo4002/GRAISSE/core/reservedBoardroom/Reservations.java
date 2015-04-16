@@ -3,14 +3,14 @@ package ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.AssignedBoardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.InterfaceReservationBoardroom;
+import ca.ulaval.glo4002.GRAISSE.core.boardroom.ReservationAssigner;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
-import ca.ulaval.glo4002.GRAISSE.core.booking.InterfaceReservationBooking;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingCanceller;
 
-public class Reservations implements InterfaceReservationBoardroom, InterfaceReservationBooking {
-	private ReservationRepository completedBookingRequestRepository;
+public class Reservations implements ReservationAssigner, BookingCanceller {
+	private ReservationsRepository completedBookingRequestRepository;
 
-	public Reservations(ReservationRepository completedBookingRequestRepository) {
+	public Reservations(ReservationsRepository completedBookingRequestRepository) {
 		this.completedBookingRequestRepository = completedBookingRequestRepository;
 	}
 
