@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.ReservationAssigner;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingCanceller;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingDTO;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class Reservations implements ReservationAssigner, BookingCanceller {
@@ -35,17 +36,18 @@ public class Reservations implements ReservationAssigner, BookingCanceller {
 	}
 
 	@Override
-	public BookingDTO retrieveReservation(Email email, String boardroomName) {
-		Reservation reservation = reservationsRepository.retrieve(email, boardroomName);
+	public BookingDTO retrieveReservation(Email email, BookingID bookingID) {
+		Reservation reservation = reservationsRepository.retrieve(email, bookingID);
 		return convertToBookingDTO(reservation);
 	}
 
 	@Override
-	public boolean hasReservation(Email email, String boardroomName) {
-		return reservationsRepository.hasReservation(email, boardroomName);
+	public boolean hasReservation(Email email, BookingID bookingID) {
+		return reservationsRepository.hasReservation(email, bookingID);
 	}
-	
-	private BookingDTO convertToBookingDTO(Reservation reservation){
-		return new BookingDTO(reservation.getID(), reservation.getNumberOfSeats(), reservation.getPromoterEmail(), reservation.getState(), reservation.getBoardroomName());
+
+	private BookingDTO convertToBookingDTO(Reservation reservation) {
+		return new BookingDTO(reservation.getBookingID(), reservation.getNumberOfSeats(), reservation.getPromoterEmail(), reservation.getState(),
+				reservation.getBoardroomName());
 	}
 }

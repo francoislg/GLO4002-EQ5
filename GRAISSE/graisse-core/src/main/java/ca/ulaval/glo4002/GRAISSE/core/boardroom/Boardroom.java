@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE.core.boardroom;
 
-
 public class Boardroom implements AssignedBoardroom {
 
 	private int numberOfSeats;
@@ -28,16 +27,15 @@ public class Boardroom implements AssignedBoardroom {
 	}
 
 	public void assign(BookingAssignable bookingToAssign, ReservationAssigner reservationAssigner) {
-			reservationAssigner.assign(this, bookingToAssign);
-			bookingToAssign.assign();
+		reservationAssigner.assign(this, bookingToAssign);
 	}
 
 	public int compareByNumberOfSeats(Boardroom boardrooomToCompare) {
 		return Integer.compare(numberOfSeats, boardrooomToCompare.numberOfSeats);
 	}
-	
-	public boolean canAssign(BookingAssignable bookingToAssign, ReservationAssigner reservationAssigner){
-		if (verifyNumberOfSeats(bookingToAssign) && reservationAssigner.isAvailable(this)){
+
+	public boolean canAssign(BookingAssignable bookingToAssign, ReservationAssigner reservationAssigner) {
+		if (verifyNumberOfSeats(bookingToAssign) && reservationAssigner.isAvailable(this)) {
 			return true;
 		}
 		return false;
