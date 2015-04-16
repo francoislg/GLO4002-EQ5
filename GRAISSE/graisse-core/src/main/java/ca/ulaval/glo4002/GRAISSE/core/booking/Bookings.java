@@ -41,5 +41,4 @@ public class Bookings {
 		bookingRepository.persist(booking);
 		bookingCanceller.cancelBooking(booking);
 	}
-
 }

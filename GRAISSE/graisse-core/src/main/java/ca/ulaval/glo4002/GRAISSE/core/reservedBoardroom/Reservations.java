@@ -6,29 +6,42 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.ReservationAssigner;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingCanceller;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingDTO;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class Reservations implements ReservationAssigner, BookingCanceller {
-	private ReservationsRepository completedBookingRequestRepository;
+	private ReservationsRepository reservationsRepository;
 
-	public Reservations(ReservationsRepository completedBookingRequestRepository) {
-		this.completedBookingRequestRepository = completedBookingRequestRepository;
+	public Reservations(ReservationsRepository reservationsRepository) {
+		this.reservationsRepository = reservationsRepository;
 	}
 
 	@Override
 	public void cancelBooking(AssignedBooking assignedBooking) {
-		Reservation completedBookingRequestToCancel = completedBookingRequestRepository.retrieve(assignedBooking);
-		completedBookingRequestToCancel.cancel();
-		completedBookingRequestRepository.remove(completedBookingRequestToCancel);
+		Reservation reservationToCancel = reservationsRepository.retrieve(assignedBooking);
+		reservationToCancel.cancel();
+		reservationsRepository.remove(reservationToCancel);
 	}
 
 	@Override
 	public boolean isAvailable(Boardroom boardroom) {
-		return completedBookingRequestRepository.existsWithBoardroom(boardroom);
+		return reservationsRepository.existsWithBoardroom(boardroom);
 	}
 
 	@Override
 	public void assign(AssignedBoardroom boardroomToAssign, BookingAssignable bookingToAssign) {
-		Reservation completedBookingRequest = new Reservation(boardroomToAssign, bookingToAssign);
-		completedBookingRequestRepository.persist(completedBookingRequest);
+		Reservation reservation = new Reservation(boardroomToAssign, bookingToAssign);
+		reservationsRepository.persist(reservation);
+	}
+
+	@Override
+	public BookingDTO retrieveReservation(Email email, String boardroomName) {
+		Reservation reservation = reservationsRepository.retrieve(email, boardroomName);
+		return new BookingDTO(reservation.getID(), reservation.getNumberOfSeats(), reservation.getPromoterEmail(), reservation.getState(), reservation.getBoardroomName());
+	}
+
+	@Override
+	public boolean hasReservation(Email email, String boardroomName) {
+		return reservationsRepository.hasReservation(email, boardroomName);
 	}
 }

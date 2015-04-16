@@ -11,7 +11,8 @@ import ca.ulaval.glo4002.GRAISSE.core.user.User;
 public class Booking implements BookingAssignable, AssignedBooking {
 
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
-
+	
+	private String ID;
 	private int numberOfSeatsNeeded;
 	private BookingState state;
 	private Priority priority;
@@ -22,7 +23,8 @@ public class Booking implements BookingAssignable, AssignedBooking {
 		this(promoter, numberOfSeatsNeeded, DEFAULT_PRIORITY);
 	}
 
-	public Booking(User promoter,  int numberOfSeatsNeeded, Priority priority) {
+	public Booking(User promoter, int numberOfSeatsNeeded, Priority priority) {
+		this.ID = promoter.getEmail().getValue() + "." + numberOfSeatsNeeded;
 		this.promoter = promoter;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = priority;
@@ -87,5 +89,10 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	public BookingState getState() {
 		return state;
+	}
+
+	@Override
+	public String getID() {
+		return ID;
 	}
 }

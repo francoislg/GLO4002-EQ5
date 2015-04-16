@@ -26,4 +26,6 @@ public interface BookingAssignable {
 	public String getPromoterEmail();
 
 	public int getNumberOfSeats();
+
+	public String getID();
 }

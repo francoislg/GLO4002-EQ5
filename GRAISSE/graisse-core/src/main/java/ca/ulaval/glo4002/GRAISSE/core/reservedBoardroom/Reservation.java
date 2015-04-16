@@ -4,6 +4,7 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.AssignedBoardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingState;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class Reservation {
 
@@ -16,11 +17,19 @@ public class Reservation {
 	}
 
 	public boolean containsBooking(AssignedBooking assignedBooking) {
-		return this.assignedBooking.equals(assignedBooking);
+		return assignedBooking.equals(assignedBooking);
 	}
 
 	public boolean containsBoardroom(AssignedBoardroom assignedBoardroom) {
-		return this.assignedBoardroom.equals(assignedBoardroom);
+		return assignedBoardroom.equals(assignedBoardroom);
+	}
+	
+	public boolean hasPromoter(Email promoter) {
+		return assignedBooking.hasPromoter(promoter);
+	}
+	
+	public boolean hasBoardroomName(String boardroomName) {
+		return assignedBoardroom.hasName(boardroomName);
 	}
 
 	public void cancel() {
@@ -43,4 +52,7 @@ public class Reservation {
 		return assignedBoardroom.getName();
 	}
 
+	public String getID() {
+		return assignedBooking.getID();
+	}
 }

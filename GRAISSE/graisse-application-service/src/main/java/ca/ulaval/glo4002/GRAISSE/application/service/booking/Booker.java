@@ -5,10 +5,13 @@ import java.util.List;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategyDefault;
+import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.BoardroomNotFoundException;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingCanceller;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingDTO;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategyDefault;
-import ca.ulaval.glo4002.GRAISSE.core.booking.BookingCanceller;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Observer;
 
 public class Booker {
@@ -63,5 +66,12 @@ public class Booker {
 		if (!observers.contains(observer)) {
 			observers.add(observer);
 		}
+	}
+
+	public BookingDTO retrieveBooking(Email email, String ID) {
+		if(bookingCanceller.hasReservation(email, ID)){
+			return bookingCanceller.retrieveReservation(email, ID);
+		}
+		throw new BoardroomNotFoundException();
 	}
 }
