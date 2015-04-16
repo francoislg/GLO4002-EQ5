@@ -16,9 +16,9 @@ public interface ReservationsRepository {
 
 	public Collection<Reservation> retrieveAll();
 
-	public boolean existsWithBoardroom(Boardroom boardroom);
+	public boolean exists(Boardroom boardroom);
 
-	public boolean hasReservation(Email email, BookingID bookingID);
+	public boolean exists(Email email, BookingID bookingID);
 
 	public Reservation retrieve(Email email, BookingID bookingID) throws ReservationNotFoundException;
 }

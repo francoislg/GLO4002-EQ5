@@ -26,7 +26,7 @@ public class Reservations implements ReservationAssigner, BookingCanceller {
 
 	@Override
 	public boolean isAvailable(Boardroom boardroom) {
-		return reservationsRepository.existsWithBoardroom(boardroom);
+		return reservationsRepository.exists(boardroom);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class Reservations implements ReservationAssigner, BookingCanceller {
 
 	@Override
 	public boolean hasReservation(Email email, BookingID bookingID) {
-		return reservationsRepository.hasReservation(email, bookingID);
+		return reservationsRepository.exists(email, bookingID);
 	}
 
 	private BookingDTO convertToBookingDTO(Reservation reservation) {

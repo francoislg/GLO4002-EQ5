@@ -118,7 +118,19 @@ public class BookingInMemoryRepositoryTest {
 	@Ignore
 	@Test
 	public void givenAnUnorderedBookingsListWhenSortingByPriorityShouldReturnSorted() {
-		assertTrue(false);
+
+	}
+
+	@Ignore
+	@Test
+	public void givenAListOfBookingWhenGettingAllAssignedShouldOnlyReturnAssignedBookings() {
+
+	}
+
+	@Ignore
+	@Test
+	public void givenAListOfBookingWhenGettingAllBookingsForEmailShouldOnlyReturnBookingsWithThisEmail() {
+
 	}
 
 	private Collection<Booking> orderedBookingList() {

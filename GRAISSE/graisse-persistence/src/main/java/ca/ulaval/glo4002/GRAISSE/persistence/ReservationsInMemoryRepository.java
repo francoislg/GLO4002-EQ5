@@ -40,7 +40,7 @@ public class ReservationsInMemoryRepository implements ReservationsRepository {
 	}
 
 	@Override
-	public boolean existsWithBoardroom(Boardroom boardroom) {
+	public boolean exists(Boardroom boardroom) {
 		for (Reservation reservation : reservations) {
 			if (reservation.containsBoardroom(boardroom)) {
 				return true;
@@ -55,7 +55,7 @@ public class ReservationsInMemoryRepository implements ReservationsRepository {
 	}
 
 	@Override
-	public boolean hasReservation(Email promoter, BookingID bookingID) {
+	public boolean exists(Email promoter, BookingID bookingID) {
 		for (Reservation reservation : reservations) {
 			if (reservation.hasPromoter(promoter) && reservation.hasBookingID(bookingID)) {
 				return true;
