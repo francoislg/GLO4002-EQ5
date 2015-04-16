@@ -38,6 +38,12 @@ public class BookingTest {
 		booking = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
 	}
 
+	@Ignore
+	@Test
+	public void whenBookingIsInstantiateWithoutPriorityTheBookingShouldHaveAMediumPriority() {
+
+	}
+
 	@Test
 	public void assignShouldAssignTheBooking() {
 		booking.assign();
