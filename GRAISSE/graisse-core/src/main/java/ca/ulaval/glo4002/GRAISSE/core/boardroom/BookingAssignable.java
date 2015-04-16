@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.core.boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
-
 public interface BookingAssignable {
 
 	public void assign();
