@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -59,8 +60,20 @@ public class BookingRessourceTest {
 	}
 
 	@Test(expected = BookingNotFoundWebException.class)
-	public void getBookingWithInvalidBookingShouldThrowBookingNotFoundWebException() {
+	public void getBookingWithInvalidBookingShouldThrowAnException() {
 		bookingRessource.getBooking(PROMOTER_EMAIL, A_NON_EXISTING_RESERVATION_ID);
+	}
+
+	@Ignore
+	@Test(expected = InvalidEmailWebException.class)
+	public void givenInvalidEmailgetBookingForEmailShouldThrowAnException() {
+
+	}
+
+	@Ignore
+	@Test
+	public void getBookingForEmailShouldReturnAListOfBookingForEmail() {
+
 	}
 
 	private void setUpBookingMock() {
