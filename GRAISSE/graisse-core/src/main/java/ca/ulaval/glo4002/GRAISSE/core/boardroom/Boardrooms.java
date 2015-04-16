@@ -10,20 +10,20 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Notifyer;
 public class Boardrooms {
 
 	private BoardroomRepository boardroomsRepository;
-	private InterfaceReservationBoardroom interfaceReservationBoardroom;
+	private ReservationAssigner reservationAssigner;
 	private List<Notifyer<BookingAssignable>> notifiers;
 
-	public Boardrooms(BoardroomRepository boardroomsRepo, InterfaceReservationBoardroom interfaceReservationBoardroom) {
+	public Boardrooms(BoardroomRepository boardroomsRepo, ReservationAssigner reservationAssigner) {
 		this.boardroomsRepository = boardroomsRepo;
 		this.notifiers = new ArrayList<Notifyer<BookingAssignable>>();
-		this.interfaceReservationBoardroom = interfaceReservationBoardroom;
+		this.reservationAssigner = reservationAssigner;
 	}
 
 	public void assignBookingToBoardroom(BookingAssignable bookingToAssign, BoardroomsSortingStrategy boardroomsSortingStrategy) {
 		Collection<Boardroom> formatedBoardroomList = boardroomsSortingStrategy.sort(boardroomsRepository);
 		for (Boardroom boardroom : formatedBoardroomList) {
-			if (boardroom.canAssign(bookingToAssign, interfaceReservationBoardroom)) {
-				boardroom.assign(bookingToAssign, interfaceReservationBoardroom);
+			if (boardroom.canAssign(bookingToAssign, reservationAssigner)) {
+				boardroom.assign(bookingToAssign, reservationAssigner);
 				boardroomsRepository.persist(boardroom);
 				notifyTriggers(bookingToAssign);
 				return;
