@@ -1,4 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE.rest.interfaces;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -11,7 +12,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingDTO;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingState;
+import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationNotFoundException;
+import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservations;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.rest.interfaces.form.RetrievedBookingResponse;
 
@@ -23,9 +26,15 @@ public class BookingRessourceTest {
 	private static final int A_NUMBER_OF_SEATS = 1;
 	private static final String PROMOTER_EMAIL = "Email@something.ca";
 	private static final BookingState ANY_STATE = BookingState.ASSIGNED;
-	
+
 	@Mock
 	Booker booker;
+
+	@Mock
+	Bookings bookings;
+
+	@Mock
+	Reservations reservations;
 
 	@Mock
 	BookingDTO bookingDTO;
@@ -36,7 +45,7 @@ public class BookingRessourceTest {
 	public void setUp() throws Exception {
 		setUpBookerMock();
 		setUpBookingMock();
-		bookingRessource = new BookingRessource(booker);
+		bookingRessource = new BookingRessource(booker, bookings, reservations);
 	}
 
 	@Test
@@ -58,9 +67,9 @@ public class BookingRessourceTest {
 		when(bookingDTO.getPromoterEmail()).thenReturn(PROMOTER_EMAIL);
 		when(bookingDTO.getBookingState()).thenReturn(ANY_STATE);
 	}
-	
-	private void setUpBookerMock(){
-		when(booker.retrieveReservation(new Email(PROMOTER_EMAIL), A_BOOKING_NAME)).thenReturn(bookingDTO);
-		when(booker.retrieveReservation(new Email(PROMOTER_EMAIL), A_NON_EXISTING_BOOKING_NAME)).thenThrow(new ReservationNotFoundException());
+
+	private void setUpBookerMock() {
+		when(reservations.retrieveReservation(new Email(PROMOTER_EMAIL), A_BOOKING_NAME)).thenReturn(bookingDTO);
+		when(reservations.retrieveReservation(new Email(PROMOTER_EMAIL), A_NON_EXISTING_BOOKING_NAME)).thenThrow(new ReservationNotFoundException());
 	}
 }
