@@ -9,6 +9,7 @@ import javax.persistence.criteria.Root;
 
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class HibernateBookingRepository implements BookingRepository {
 
@@ -41,6 +42,18 @@ public class HibernateBookingRepository implements BookingRepository {
 
 	@Override
 	public Collection<Booking> retrieveSortedByPriority() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Booking> getAssignableBookings() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Booking retrieveBooking(Email promoter, String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -14,7 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.core.booking.InterfaceReservationBooking;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingCanceller;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Observer;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,7 +24,7 @@ public class BookerTest {
 	Bookings bookings;
 
 	@Mock
-	InterfaceReservationBooking interfaceReservationBooking;
+	BookingCanceller bookingCanceller;
 
 	@Mock
 	BookerStrategy bookerStrategy;
@@ -45,7 +45,7 @@ public class BookerTest {
 
 	@Before
 	public void setUp() {
-		booker = new Booker(bookings, boardrooms, interfaceReservationBooking);
+		booker = new Booker(bookings, boardrooms, bookingCanceller);
 	}
 
 	@Test
@@ -63,13 +63,13 @@ public class BookerTest {
 
 	@Test
 	public void whenBookingsHasNoBookingToAssignBookerShouldNotHaveBookingsToAssign() {
-		doReturn(false).when(bookings).hasUnassignedBookings();
+		doReturn(false).when(bookings).hasAssignableBookings();
 		assertFalse(booker.hasBookingsToAssign());
 	}
 
 	@Test
 	public void whenBookingsHasBookingToAssignBookerShouldHaveBookingsToAssign() {
-		doReturn(true).when(bookings).hasUnassignedBookings();
+		doReturn(true).when(bookings).hasAssignableBookings();
 		assertTrue(booker.hasBookingsToAssign());
 	}
 

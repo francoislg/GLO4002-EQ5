@@ -27,7 +27,7 @@ public class BoardroomTest {
 	BookingAssignable booking;
 
 	@Mock
-	InterfaceReservationBoardroom interfaceReservationBoardroom;
+	ReservationAssigner reservationAssigner;
 
 	Boardroom boardroom;
 
@@ -74,24 +74,24 @@ public class BoardroomTest {
 
 	@Test
 	public void whenBoardroomIsAvailableAndHasEnoughSeatsForTheBookingAssignShouldReturnTrue() {
-		when(interfaceReservationBoardroom.isAvailable(boardroom)).thenReturn(true);
+		when(reservationAssigner.isAvailable(boardroom)).thenReturn(true);
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
-		assertTrue(boardroom.canAssign(booking, interfaceReservationBoardroom));
+		assertTrue(boardroom.canAssign(booking, reservationAssigner));
 	}
 
 	@Test
 	public void whenBoadroomIsNotAvailableAndHasEnoughSeatsForTheBookingAssignShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
 
-		boardroom.assign(booking, interfaceReservationBoardroom);
+		boardroom.assign(booking, reservationAssigner);
 
-		assertFalse(boardroom.canAssign(booking, interfaceReservationBoardroom));
+		assertFalse(boardroom.canAssign(booking, reservationAssigner));
 	}
 
 	@Test
 	public void givenBoardroomIsAvailableAndHasInsufficentSeatsForTheBookingWhenAssigningShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(false);
-		assertFalse(boardroom.canAssign(booking, interfaceReservationBoardroom));
+		assertFalse(boardroom.canAssign(booking, reservationAssigner));
 	}
 
 	@Test

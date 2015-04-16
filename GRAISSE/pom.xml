@@ -15,9 +15,11 @@
 	</properties>
 
 	<packaging>pom</packaging>
+	
 	<modules>
 		<module>graisse-core</module>
 		<module>graisse-persistence</module>
 		<module>graisse-application-service</module>
+		<module>graisse-rest</module>
 	</modules>
 </project>

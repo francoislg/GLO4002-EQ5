@@ -3,11 +3,13 @@ package ca.ulaval.glo4002.GRAISSE.persistence;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class BookingInMemoryRepository implements BookingRepository {
 
@@ -32,7 +34,29 @@ public class BookingInMemoryRepository implements BookingRepository {
 	@Override
 	public Collection<Booking> retrieveSortedByPriority() {
 		Comparator<Booking> byPriorityValue = (booking1, booking2) -> booking1.comparePriorityToBooking(booking2);
-		return bookings.stream().sorted(byPriorityValue).collect(Collectors.toList());
+		return getAssignableBookings().stream().sorted(byPriorityValue).collect(Collectors.toList());
+	}
+
+	@Override
+	public Collection<Booking> getAssignableBookings() {
+		Collection<Booking> bookings = this.retrieveAll();
+		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
+			Booking booking = bookingIter.next();
+			if (!booking.isAssignable()) {
+				bookingIter.remove();
+			}
+		}
+		return bookings;
+	}
+
+	@Override
+	public Booking retrieveBooking(Email promoter, String name) {
+		for(Booking booking : bookings){
+			if(booking.hasPromoter(promoter) && booking.hasName(name)){
+				return booking;
+			}
+		}
+		throw new BookingNotFoundException();
 	}
 
 }

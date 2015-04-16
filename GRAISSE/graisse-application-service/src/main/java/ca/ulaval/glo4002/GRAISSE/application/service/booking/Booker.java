@@ -8,7 +8,7 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategyDefault
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategyDefault;
-import ca.ulaval.glo4002.GRAISSE.core.booking.InterfaceReservationBooking;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingCanceller;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Observer;
 
 public class Booker {
@@ -16,14 +16,14 @@ public class Booker {
 	private Bookings bookings;
 	private Boardrooms boardrooms;
 	private BookerStrategy bookerStrategy;
-	private InterfaceReservationBooking interfaceReservationBooking;
+	private BookingCanceller bookingCanceller;
 	private List<Observer<Booker>> observers;
 
-	public Booker(Bookings bookings, Boardrooms boardrooms, InterfaceReservationBooking interfaceReservationBooking) {
+	public Booker(Bookings bookings, Boardrooms boardrooms, BookingCanceller bookingCanceller) {
 		this.bookerStrategy = new BookerStrategyDefault(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyDefault());
 		this.bookings = bookings;
 		this.boardrooms = boardrooms;
-		this.interfaceReservationBooking = interfaceReservationBooking;
+		this.bookingCanceller = bookingCanceller;
 		observers = new ArrayList<Observer<Booker>>();
 	}
 
@@ -38,7 +38,7 @@ public class Booker {
 	}
 
 	public void cancelBooking(Booking booking) {
-		interfaceReservationBooking.cancelBooking(booking);
+		bookingCanceller.cancelBooking(booking);
 	}
 
 	public void setBookerStrategy(BookerStrategy bookerStrategy) {
@@ -46,11 +46,11 @@ public class Booker {
 	}
 
 	public boolean hasBookingsToAssign() {
-		return bookings.hasUnassignedBookings();
+		return bookings.hasAssignableBookings();
 	}
 
 	public int numberOfBookingsToAssign() {
-		return bookings.getNumberOfUnassignedBookings();
+		return bookings.getNumberOfAssignableBookings();
 	}
 
 	private void notifyTriggers() {
