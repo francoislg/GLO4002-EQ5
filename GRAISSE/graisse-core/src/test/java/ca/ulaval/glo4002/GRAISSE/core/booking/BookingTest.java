@@ -29,7 +29,6 @@ public class BookingTest {
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_SMALLER_THAN_THE_BOOKING = 9;
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_EQUAL_TO_THE_BOOKING = 10;
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_BIGGER_THAN_THE_BOOKING = 11;
-	private static final String A_NAME = "MeaninglessRandomName";
 
 	@Mock
 	Email email;
@@ -42,7 +41,7 @@ public class BookingTest {
 	@Before
 	public void setUp() {
 		when(user.hasEmail(email)).thenReturn(true);
-		booking = new Booking(user, A_NAME, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
+		booking = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
 	}
 
 	@Test
@@ -80,17 +79,6 @@ public class BookingTest {
 	}
 
 	@Test
-	public void givenSameNameBookingHasNameShouldReturnTrue() {
-		assertTrue(booking.hasName(A_NAME));
-	}
-
-	@Test
-	public void givenDifferentNameBookingHasNameShouldReturnFalse() {
-		String ANOTHER_DIFFERENT_NAME = A_NAME + "garbage";
-		assertFalse(booking.hasName(ANOTHER_DIFFERENT_NAME));
-	}
-
-	@Test
 	public void givenSmallerNumberOfSeatsThanBookingVerifyNumberOfSeatsShouldReturnFalse() {
 		assertFalse(booking.verifyNumberOfSeats(A_NUMBER_OF_SEATS_THAT_IS_SMALLER_THAN_THE_BOOKING));
 	}
@@ -107,7 +95,7 @@ public class BookingTest {
 
 	@Test
 	public void givenBookingABookingWithSmallerPriorityWhenComparingShouldReturnAPositiveNumber() {
-		Booking bookingWithSmallerPriority = new Booking(user, A_NAME, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_SMALLER);
+		Booking bookingWithSmallerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_SMALLER);
 
 		int result = booking.comparePriorityToBooking(bookingWithSmallerPriority);
 
@@ -116,7 +104,7 @@ public class BookingTest {
 
 	@Test
 	public void givenBookingABookingWithBiggerPriorityWhenComparingShouldReturnANegativeNumber() {
-		Booking bookingWithBiggerPriority = new Booking(user, A_NAME, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_BIGGER);
+		Booking bookingWithBiggerPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING_BIGGER);
 
 		int result = booking.comparePriorityToBooking(bookingWithBiggerPriority);
 
@@ -125,7 +113,7 @@ public class BookingTest {
 
 	@Test
 	public void givenBookingABookingWithSamePriorityWhenComparingShouldReturnZero() {
-		Booking bookingWithEqualPriority = new Booking(user, A_NAME, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
+		Booking bookingWithEqualPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
 
 		int result = booking.comparePriorityToBooking(bookingWithEqualPriority);
 
