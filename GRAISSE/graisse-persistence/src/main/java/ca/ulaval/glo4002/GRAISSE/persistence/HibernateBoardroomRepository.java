@@ -24,9 +24,7 @@ public class HibernateBoardroomRepository implements BoardroomRepository {
 
 	@Override
 	public void persist(Boardroom boardroom) {
-		if(!entityManager.contains(boardroom)) {
-			entityManager.persist(boardroom);
-		}
+		entityManager.persist(boardroom);
 	}
 
 	@Override
@@ -40,13 +38,18 @@ public class HibernateBoardroomRepository implements BoardroomRepository {
 		CriteriaQuery<Boardroom> criteriaQuery = criteriaBuilder.createQuery(Boardroom.class);
 		Root<Boardroom> boardroom = criteriaQuery.from(Boardroom.class);
 		criteriaQuery.select(boardroom);
-
+	
 		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 
 	@Override
 	public Collection<Boardroom> retrieveBoardroomsOrderedByNumberOfSeats() {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Boardroom> criteriaQuery = criteriaBuilder.createQuery(Boardroom.class);
+		Root<Boardroom> boardroom = criteriaQuery.from(Boardroom.class);
+		criteriaQuery.select(boardroom);
+		criteriaQuery.orderBy(criteriaBuilder.asc(boardroom.get("numberOfSeats")));
+	
+		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 }
