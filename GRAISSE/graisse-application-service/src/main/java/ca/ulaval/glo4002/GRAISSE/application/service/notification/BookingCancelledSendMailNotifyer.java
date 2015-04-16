@@ -25,7 +25,7 @@ public class BookingCancelledSendMailNotifyer implements Notifyer<BookingAssigna
 
 	@Override
 	public void notify(BookingAssignable booking) {
-		if (booking.hasCreator(user)) {
+		if (booking.hasPromoter(user.getEmail())) {
 			MailMessage mail = new SimpleMailMessage(user.getEmail(), MAIL_SUBJECT, MAIL_MESSAGE);
 			for (Email email : booking.getParticipantsEmail())
 				mail.addCarbonCopyRecipient(email);

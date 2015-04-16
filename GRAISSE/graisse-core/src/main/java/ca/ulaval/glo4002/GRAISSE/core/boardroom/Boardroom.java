@@ -1,5 +1,9 @@
 package ca.ulaval.glo4002.GRAISSE.core.boardroom;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/dev
 public class Boardroom implements AssignedBoardroom {
 
 	private int numberOfSeats;

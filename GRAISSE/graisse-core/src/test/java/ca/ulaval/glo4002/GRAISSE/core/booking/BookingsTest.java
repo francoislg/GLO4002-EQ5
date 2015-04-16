@@ -24,9 +24,6 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
 
-	private static final boolean ASSIGNABLE = true;
-	private static final boolean NOT_ASSIGNABLE = false;
-
 	@Mock
 	BookingRepository bookingRepository;
 
