@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.GRAISSE.core.booking;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
@@ -24,12 +25,16 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	}
 
 	public Booking(User promoter, int numberOfSeatsNeeded, Priority priority) {
-		this.ID = promoter.getEmail().getValue() + "." + numberOfSeatsNeeded;
+		this.ID = generateID();
 		this.promoter = promoter;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = priority;
 		this.state = BookingState.WAITING;
 		participants = new ArrayList<Email>();
+	}
+	
+	private String generateID(){
+		return UUID.randomUUID().toString();
 	}
 
 	@Override
