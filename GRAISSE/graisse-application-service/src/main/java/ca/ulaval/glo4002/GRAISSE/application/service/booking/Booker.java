@@ -74,4 +74,8 @@ public class Booker {
 		}
 		throw new ReservationNotFoundException();
 	}
+
+	public List<BookingDTO> retrieveReservationsForEmail(Email email) {
+		return bookings.getBookingsForEmail(email);
+	}
 }

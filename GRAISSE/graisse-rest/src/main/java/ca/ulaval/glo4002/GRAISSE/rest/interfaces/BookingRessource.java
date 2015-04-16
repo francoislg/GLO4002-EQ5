@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE.rest.interfaces;
 
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -20,6 +22,7 @@ import ca.ulaval.glo4002.GRAISSE.persistence.BoardroomInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.persistence.BookingInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.persistence.ReservationsInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.rest.contexts.BookingRepositoryFiller;
+import ca.ulaval.glo4002.GRAISSE.rest.interfaces.form.BookingsForEmailResponse;
 import ca.ulaval.glo4002.GRAISSE.rest.interfaces.form.RetrievedBookingResponse;
 
 @Path("/demandes")
@@ -52,5 +55,13 @@ public class BookingRessource {
 		} catch (ReservationNotFoundException exception) {
 			throw new BookingNotFoundWebException("Il n'existe pas de demande \"" + ID + "\" pour l'organisateur \"" + promoter + "\"");
 		}
+	}
+	
+	@GET
+	@Path("/{COURRIEL}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public BookingsForEmailResponse getBookingForEmail(@PathParam("COURRIEL") String promoter) {
+		List<BookingDTO> foundBookings = booker.retrieveReservationsForEmail(new Email(promoter));
+		return new BookingsForEmailResponse(foundBookings);
 	}
 }

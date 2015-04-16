@@ -37,11 +37,15 @@ public class Reservations implements ReservationAssigner, BookingCanceller {
 	@Override
 	public BookingDTO retrieveReservation(Email email, String boardroomName) {
 		Reservation reservation = reservationsRepository.retrieve(email, boardroomName);
-		return new BookingDTO(reservation.getID(), reservation.getNumberOfSeats(), reservation.getPromoterEmail(), reservation.getState(), reservation.getBoardroomName());
+		return convertToBookingDTO(reservation);
 	}
 
 	@Override
 	public boolean hasReservation(Email email, String boardroomName) {
 		return reservationsRepository.hasReservation(email, boardroomName);
+	}
+	
+	private BookingDTO convertToBookingDTO(Reservation reservation){
+		return new BookingDTO(reservation.getID(), reservation.getNumberOfSeats(), reservation.getPromoterEmail(), reservation.getState(), reservation.getBoardroomName());
 	}
 }

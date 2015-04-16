@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class BookingInMemoryRepository implements BookingRepository {
 
@@ -42,6 +43,18 @@ public class BookingInMemoryRepository implements BookingRepository {
 		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();
 			if (!booking.isAssignable()) {
+				bookingIter.remove();
+			}
+		}
+		return bookings;
+	}
+
+	@Override
+	public Collection<Booking> retrieveAllForEmail(Email email) {
+		Collection<Booking> bookings = this.retrieveAll();
+		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
+			Booking booking = bookingIter.next();
+			if (!booking.hasPromoter(email)) {
 				bookingIter.remove();
 			}
 		}
