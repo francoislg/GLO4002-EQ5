@@ -123,6 +123,12 @@ public class BookingsTest {
 
 	}
 
+	@Ignore
+	@Test
+	public void getBookingsForEmailShouldReturnAListOfBookingDTO() {
+
+	}
+
 	private void setUpEmptyBookings() {
 		emptyBookingCollection = new ArrayList<Booking>();
 		doReturn(emptyBookingCollection).when(bookingRepository).getAssignableBookings();

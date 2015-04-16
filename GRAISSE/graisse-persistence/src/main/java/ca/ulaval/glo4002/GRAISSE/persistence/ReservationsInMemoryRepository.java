@@ -6,6 +6,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservation;
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationNotFoundException;
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationsRepository;
@@ -54,9 +55,9 @@ public class ReservationsInMemoryRepository implements ReservationsRepository {
 	}
 
 	@Override
-	public boolean hasReservation(Email promoter, String boardroomName) {
+	public boolean hasReservation(Email promoter, BookingID bookingID) {
 		for (Reservation reservation : reservations) {
-			if (reservation.hasPromoter(promoter) && reservation.hasBoardroomName(boardroomName)) {
+			if (reservation.hasPromoter(promoter) && reservation.hasBookingID(bookingID)) {
 				return true;
 			}
 		}
@@ -64,10 +65,9 @@ public class ReservationsInMemoryRepository implements ReservationsRepository {
 	}
 
 	@Override
-	public Reservation retrieve(Email promoter, String boardroomName)
-			throws ReservationNotFoundException {
+	public Reservation retrieve(Email promoter, BookingID bookingID) throws ReservationNotFoundException {
 		for (Reservation reservation : reservations) {
-			if (reservation.hasPromoter(promoter) && reservation.hasBoardroomName(boardroomName)) {
+			if (reservation.hasPromoter(promoter) && reservation.hasBookingID(bookingID)) {
 				return reservation;
 			}
 		}

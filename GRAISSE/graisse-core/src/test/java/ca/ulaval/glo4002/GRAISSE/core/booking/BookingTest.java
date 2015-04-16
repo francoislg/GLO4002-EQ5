@@ -21,7 +21,7 @@ import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingTest {
-	
+
 	private static final String USER_EMAIL = "RANDOM_EMAIL@test.ca";
 	private static final Priority PRIORITY_VALUE_OF_BOOKING = Priority.LOW;
 	private static final Priority PRIORITY_VALUE_OF_BOOKING_BIGGER = Priority.HIGH;
@@ -130,13 +130,13 @@ public class BookingTest {
 
 	@Ignore
 	@Test
-	public void givenAParticipantShouldBePresentInList() {
+	public void addingAParticipantShouldBePresentInList() {
 
 	}
 
 	@Ignore
 	@Test
-	public void givenSameParticipantShouldBePresentOnceInList() {
+	public void addingTheSameParticipantTwiceShouldAddOnceInList() {
 
 	}
 }

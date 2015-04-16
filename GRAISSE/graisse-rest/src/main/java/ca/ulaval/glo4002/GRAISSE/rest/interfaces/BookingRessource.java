@@ -12,6 +12,7 @@ import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomRepository;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingDTO;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationNotFoundException;
@@ -24,6 +25,8 @@ import ca.ulaval.glo4002.GRAISSE.persistence.BookingInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.persistence.ReservationsInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.rest.contexts.BookingRepositoryFiller;
 import ca.ulaval.glo4002.GRAISSE.rest.contexts.DemoFillerConfig;
+import ca.ulaval.glo4002.GRAISSE.rest.contexts.FillerConfig;
+import ca.ulaval.glo4002.GRAISSE.rest.contexts.ReservationsRepositoryFiller;
 import ca.ulaval.glo4002.GRAISSE.rest.interfaces.form.BookingsForEmailResponse;
 import ca.ulaval.glo4002.GRAISSE.rest.interfaces.form.RetrievedBookingResponse;
 
@@ -42,7 +45,10 @@ public class BookingRessource {
 		this.bookings = new Bookings(bookingRepository, reservations);
 		this.booker = new Booker(bookings, boardrooms, reservations);
 
-		new BookingRepositoryFiller(DemoFillerConfig.get()).fill(bookingRepository);
+		FillerConfig config = DemoFillerConfig.get();
+
+		new BookingRepositoryFiller(config).fill(bookingRepository);
+		new ReservationsRepositoryFiller(config).fill(reservationsRepository);
 	}
 
 	public BookingRessource(Booker booker, Bookings bookings, Reservations reservations) {
@@ -56,7 +62,7 @@ public class BookingRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public RetrievedBookingResponse getBooking(@PathParam("COURRIEL") String promoter, @PathParam("NUMERO_DEMANDE") String ID) {
 		try {
-			BookingDTO foundBooking = reservations.retrieveReservation(getEmail(promoter), ID);
+			BookingDTO foundBooking = reservations.retrieveReservation(getEmail(promoter), new BookingID(ID));
 			return new RetrievedBookingResponse(foundBooking);
 		} catch (ReservationNotFoundException exception) {
 			throw new BookingNotFoundWebException("Il n'existe pas de demande \"" + ID + "\" pour l'organisateur \"" + promoter + "\"");
@@ -75,7 +81,7 @@ public class BookingRessource {
 		try {
 			return new Email(email);
 		} catch (InvalidEmailException ex) {
-			throw new InvalidEmailWebException("Le email donné \"" + email + "\" n'est pas un email valide");
+			throw new InvalidEmailWebException("Le courriel \"" + email + "\" n'est pas valide");
 		}
 	}
 }

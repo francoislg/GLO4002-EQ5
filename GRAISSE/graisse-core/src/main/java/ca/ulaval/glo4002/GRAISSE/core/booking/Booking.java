@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.GRAISSE.core.booking;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
@@ -12,8 +11,8 @@ import ca.ulaval.glo4002.GRAISSE.core.user.User;
 public class Booking implements BookingAssignable, AssignedBooking {
 
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
-	
-	private String ID;
+
+	private BookingID ID;
 	private int numberOfSeatsNeeded;
 	private BookingState state;
 	private Priority priority;
@@ -25,16 +24,12 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	}
 
 	public Booking(User promoter, int numberOfSeatsNeeded, Priority priority) {
-		this.ID = generateID();
+		this.ID = new BookingID();
 		this.promoter = promoter;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = priority;
 		this.state = BookingState.WAITING;
 		participants = new ArrayList<Email>();
-	}
-	
-	private String generateID(){
-		return UUID.randomUUID().toString();
 	}
 
 	@Override
@@ -63,7 +58,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	@Override
 	public boolean hasPromoter(Email email) {
-		return this.promoter.hasEmail(email);
+		return promoter.hasEmail(email);
 	}
 
 	@Override
@@ -97,7 +92,12 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	}
 
 	@Override
-	public String getID() {
+	public BookingID getID() {
 		return ID;
+	}
+
+	@Override
+	public boolean hasID(BookingID bookingID) {
+		return ID.equals(bookingID);
 	}
 }

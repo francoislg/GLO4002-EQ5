@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingDTO;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingState;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationNotFoundException;
@@ -21,8 +22,8 @@ import ca.ulaval.glo4002.GRAISSE.rest.interfaces.form.RetrievedBookingResponse;
 @RunWith(MockitoJUnitRunner.class)
 public class BookingRessourceTest {
 
-	private static final String A_BOOKING_NAME = "RandomBookingName";
-	private static final String A_NON_EXISTING_BOOKING_NAME = "DoesntExistSorryBro";
+	private static final String A_RESERVATION_ID = "RandomBookingName";
+	private static final String A_NON_EXISTING_RESERVATION_ID = "DoesntExistSorryBro";
 	private static final int A_NUMBER_OF_SEATS = 1;
 	private static final String PROMOTER_EMAIL = "Email@something.ca";
 	private static final BookingState ANY_STATE = BookingState.ASSIGNED;
@@ -52,14 +53,14 @@ public class BookingRessourceTest {
 	public void getBookingWithValidUserAndIDShouldReturnAValidObject() {
 		RetrievedBookingResponse expectedResponse = new RetrievedBookingResponse(bookingDTO);
 
-		RetrievedBookingResponse response = bookingRessource.getBooking(PROMOTER_EMAIL, A_BOOKING_NAME);
+		RetrievedBookingResponse response = bookingRessource.getBooking(PROMOTER_EMAIL, A_RESERVATION_ID);
 
 		assertEquals(expectedResponse, response);
 	}
 
 	@Test(expected = BookingNotFoundWebException.class)
 	public void getBookingWithInvalidBookingShouldThrowBookingNotFoundWebException() {
-		bookingRessource.getBooking(PROMOTER_EMAIL, A_NON_EXISTING_BOOKING_NAME);
+		bookingRessource.getBooking(PROMOTER_EMAIL, A_NON_EXISTING_RESERVATION_ID);
 	}
 
 	private void setUpBookingMock() {
@@ -69,7 +70,8 @@ public class BookingRessourceTest {
 	}
 
 	private void setUpBookerMock() {
-		when(reservations.retrieveReservation(new Email(PROMOTER_EMAIL), A_BOOKING_NAME)).thenReturn(bookingDTO);
-		when(reservations.retrieveReservation(new Email(PROMOTER_EMAIL), A_NON_EXISTING_BOOKING_NAME)).thenThrow(new ReservationNotFoundException());
+		when(reservations.retrieveReservation(new Email(PROMOTER_EMAIL), new BookingID(A_RESERVATION_ID))).thenReturn(bookingDTO);
+		when(reservations.retrieveReservation(new Email(PROMOTER_EMAIL), new BookingID(A_NON_EXISTING_RESERVATION_ID))).thenThrow(
+				new ReservationNotFoundException());
 	}
 }

@@ -48,13 +48,13 @@ public class Bookings {
 	public List<BookingDTO> getBookingsForEmail(Email email) {
 		Collection<Booking> retrievedBookings = bookingRepository.retrieveAllForEmail(email);
 		List<BookingDTO> bookingDTOList = new ArrayList<BookingDTO>();
-		for(Booking booking : retrievedBookings){
+		for (Booking booking : retrievedBookings) {
 			bookingDTOList.add(convertToDTO(booking));
 		}
 		return bookingDTOList;
 	}
-	
-	private BookingDTO convertToDTO(Booking booking){
+
+	private BookingDTO convertToDTO(Booking booking) {
 		return new BookingDTO(booking.getID(), booking.getNumberOfSeats(), booking.getPromoterEmail(), booking.getState(), "");
 	}
 }

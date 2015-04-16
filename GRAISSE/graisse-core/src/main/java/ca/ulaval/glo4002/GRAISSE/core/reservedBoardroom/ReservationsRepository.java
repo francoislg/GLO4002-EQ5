@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public interface ReservationsRepository {
@@ -17,7 +18,7 @@ public interface ReservationsRepository {
 
 	public boolean existsWithBoardroom(Boardroom boardroom);
 
-	public boolean hasReservation(Email email, String boardroomName);
+	public boolean hasReservation(Email email, BookingID bookingID);
 
-	public Reservation retrieve(Email email, String boardroomName) throws ReservationNotFoundException;
+	public Reservation retrieve(Email email, BookingID bookingID) throws ReservationNotFoundException;
 }

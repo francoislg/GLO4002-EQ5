@@ -8,10 +8,10 @@ public class InvalidEmailWebException extends WebApplicationException {
 	private static final long serialVersionUID = 946700083736492605L;
 
 	public InvalidEmailWebException() {
-		super(Response.status(Status.NOT_FOUND).build());
+		super(Response.status(Status.BAD_REQUEST).build());
 	}
 
 	public InvalidEmailWebException(String message) {
-		super(Response.status(Status.NOT_FOUND).entity(message).type("text/plain").build());
+		super(Response.status(Status.BAD_REQUEST).entity(message).type("text/plain").build());
 	}
 }

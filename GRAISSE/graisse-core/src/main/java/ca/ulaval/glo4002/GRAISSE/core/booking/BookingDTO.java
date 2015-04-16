@@ -1,16 +1,14 @@
 package ca.ulaval.glo4002.GRAISSE.core.booking;
 
-
-
 public class BookingDTO {
-	public final String ID;
-	public final int numberOfSeats;
-	public final String promoterEmail;
-	public final BookingState bookingState;
-	public final String boardroomName;
-	
-	public BookingDTO(String ID, int numberOfSeats, String promoterEmail, BookingState bookingState, String boardroomName) {
-		this.ID = ID;
+	private final BookingID bookingID;
+	private final int numberOfSeats;
+	private final String promoterEmail;
+	private final BookingState bookingState;
+	private final String boardroomName;
+
+	public BookingDTO(BookingID bookingID, int numberOfSeats, String promoterEmail, BookingState bookingState, String boardroomName) {
+		this.bookingID = bookingID;
 		this.numberOfSeats = numberOfSeats;
 		this.promoterEmail = promoterEmail;
 		this.bookingState = bookingState;
@@ -31,5 +29,9 @@ public class BookingDTO {
 
 	public BookingState getBookingState() {
 		return bookingState;
+	}
+
+	public BookingID getID() {
+		return bookingID;
 	}
 }
