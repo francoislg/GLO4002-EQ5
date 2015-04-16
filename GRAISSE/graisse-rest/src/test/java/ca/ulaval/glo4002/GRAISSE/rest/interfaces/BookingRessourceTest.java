@@ -60,7 +60,7 @@ public class BookingRessourceTest {
 	}
 	
 	private void setUpBookerMock(){
-		when(booker.retrieveBooking(new Email(PROMOTER_EMAIL), A_BOOKING_NAME)).thenReturn(bookingDTO);
-		when(booker.retrieveBooking(new Email(PROMOTER_EMAIL), A_NON_EXISTING_BOOKING_NAME)).thenThrow(new ReservationNotFoundException());
+		when(booker.retrieveReservation(new Email(PROMOTER_EMAIL), A_BOOKING_NAME)).thenReturn(bookingDTO);
+		when(booker.retrieveReservation(new Email(PROMOTER_EMAIL), A_NON_EXISTING_BOOKING_NAME)).thenThrow(new ReservationNotFoundException());
 	}
 }
