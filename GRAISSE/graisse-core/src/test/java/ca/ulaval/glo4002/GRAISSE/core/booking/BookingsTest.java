@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -105,6 +106,24 @@ public class BookingsTest {
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
 		verify(bookingRepository).persist(assignableBooking);
+	}
+
+	@Ignore
+	@Test
+	public void cancelBookingShouldCancelTheBooking() {
+
+	}
+
+	@Ignore
+	@Test
+	public void cancelBookingShouldPersistTheBooking() {
+
+	}
+
+	@Ignore
+	@Test
+	public void cancelBookingShouldCancelTheReservationOfTheBooking() {
+
 	}
 
 	private void setUpEmptyBookings() {
