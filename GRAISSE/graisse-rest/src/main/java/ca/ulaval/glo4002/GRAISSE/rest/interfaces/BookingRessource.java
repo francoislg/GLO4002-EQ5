@@ -22,7 +22,7 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.shared.InvalidEmailException;
 import ca.ulaval.glo4002.GRAISSE.persistence.BoardroomInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.persistence.BookingInMemoryRepository;
-import ca.ulaval.glo4002.GRAISSE.persistence.ReservationsInMemoryRepository;
+import ca.ulaval.glo4002.GRAISSE.persistence.ReservationInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.rest.contexts.BookingRepositoryFiller;
 import ca.ulaval.glo4002.GRAISSE.rest.contexts.DemoFillerConfig;
 import ca.ulaval.glo4002.GRAISSE.rest.contexts.FillerConfig;
@@ -39,7 +39,7 @@ public class BookingRessource {
 	public BookingRessource() {
 		BookingRepository bookingRepository = new BookingInMemoryRepository();
 		BoardroomRepository boardroomRepository = new BoardroomInMemoryRepository();
-		ReservationsRepository reservationsRepository = new ReservationsInMemoryRepository();
+		ReservationsRepository reservationsRepository = new ReservationInMemoryRepository();
 		this.reservations = new Reservations(reservationsRepository);
 		Boardrooms boardrooms = new Boardrooms(boardroomRepository, reservations);
 		this.bookings = new Bookings(bookingRepository, reservations);

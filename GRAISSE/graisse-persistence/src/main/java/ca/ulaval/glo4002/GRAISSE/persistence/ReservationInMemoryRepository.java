@@ -12,7 +12,7 @@ import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationNotFoundExcep
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationsRepository;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
-public class ReservationsInMemoryRepository implements ReservationsRepository {
+public class ReservationInMemoryRepository implements ReservationsRepository {
 
 	private List<Reservation> reservations = new ArrayList<Reservation>();
 
