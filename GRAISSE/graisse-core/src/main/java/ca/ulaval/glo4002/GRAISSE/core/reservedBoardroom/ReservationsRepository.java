@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 
 public interface ReservationsRepository {
+	
 	public void persist(Reservation assignedBooking);
 
 	public void remove(Reservation assignedBooking);
@@ -16,3 +17,4 @@ public interface ReservationsRepository {
 
 	public boolean existsWithBoardroom(Boardroom boardroom);
 }
+

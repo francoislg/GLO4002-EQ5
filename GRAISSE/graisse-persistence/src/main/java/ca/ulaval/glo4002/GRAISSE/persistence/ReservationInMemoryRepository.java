@@ -10,28 +10,27 @@ import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservation;
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationNotFoundException;
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationsRepository;
 
-public class ReservationsInMemoryRepository implements ReservationsRepository {
+public class ReservationInMemoryRepository implements ReservationsRepository {
 
-	private List<Reservation> completedBookingRequests = new ArrayList<Reservation>();
+	private List<Reservation> reservations = new ArrayList<Reservation>();
 
 	@Override
-	public void persist(Reservation completedBookingRequest) {
-		if (!completedBookingRequests.contains(completedBookingRequest)) {
-			completedBookingRequests.add(completedBookingRequest);
+	public void persist(Reservation reservation) {
+		if (!reservations.contains(reservation)) {
+			reservations.add(reservation);
 		}
-
 	}
 
 	@Override
 	public Collection<Reservation> retrieveAll() {
-		return completedBookingRequests;
+		return reservations;
 	}
 
 	@Override
 	public Reservation retrieve(AssignedBooking assignedBooking) throws ReservationNotFoundException {
-		for (Reservation completedBookingRequest : completedBookingRequests) {
-			if (completedBookingRequest.containsBooking(assignedBooking)) {
-				return completedBookingRequest;
+		for (Reservation reservation : reservations) {
+			if (reservation.containsBooking(assignedBooking)) {
+				return reservation;
 			}
 		}
 		throw new ReservationNotFoundException();
@@ -39,7 +38,7 @@ public class ReservationsInMemoryRepository implements ReservationsRepository {
 
 	@Override
 	public boolean existsWithBoardroom(Boardroom boardroom) {
-		for (Reservation completedBookingRequest : completedBookingRequests) {
+		for (Reservation completedBookingRequest : reservations) {
 			if (completedBookingRequest.containsBoardroom(boardroom)) {
 				return true;
 			}
@@ -48,8 +47,7 @@ public class ReservationsInMemoryRepository implements ReservationsRepository {
 	}
 
 	@Override
-	public void remove(Reservation completedBookingRequest) {
-		completedBookingRequests.remove(completedBookingRequest);
-
+	public void remove(Reservation reservation) {
+		reservations.remove(reservation);
 	}
 }

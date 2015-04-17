@@ -1,34 +1,46 @@
 package ca.ulaval.glo4002.GRAISSE.persistence;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
-public class BookingInMemoryRepository implements BookingRepository {
+public class HibernateBookingRepository implements BookingRepository {
 
-	private List<Booking> bookings;
+	private EntityManager entityManager;
 
-	public BookingInMemoryRepository() {
-		bookings = new ArrayList<Booking>();
+	public HibernateBookingRepository() {
+		entityManager = new EntityManagerProvider().getEntityManager();
+	}
+
+	public HibernateBookingRepository(EntityManager entityManager) {
+		this.entityManager = entityManager;
 	}
 
 	@Override
 	public void persist(Booking booking) {
-		if (!bookings.contains(booking)) {
-			bookings.add(booking);
+		if(!entityManager.contains(booking)) {
+			entityManager.persist(booking);
 		}
 	}
 
 	@Override
 	public Collection<Booking> retrieveAll() {
-		return bookings;
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Booking> criteriaQuery = criteriaBuilder.createQuery(Booking.class);
+		Root<Booking> booking = criteriaQuery.from(Booking.class);
+		criteriaQuery.select(booking);
+
+		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 
 	@Override
@@ -39,7 +51,7 @@ public class BookingInMemoryRepository implements BookingRepository {
 
 	@Override
 	public Collection<Booking> getAssignableBookings() {
-		Collection<Booking> bookings = this.retrieveAll();
+		Collection<Booking> bookings = retrieveAll();
 		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
 			Booking booking = bookingIter.next();
 			if (!booking.isAssignable()) {
@@ -51,6 +63,7 @@ public class BookingInMemoryRepository implements BookingRepository {
 
 	@Override
 	public Booking retrieve(Email promoter, String name) {
+		Collection<Booking> bookings = retrieveAll();
 		for(Booking booking : bookings){
 			if(booking.hasPromoter(promoter) && booking.hasName(name)){
 				return booking;
