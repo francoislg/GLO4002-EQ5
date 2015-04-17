@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.persistence;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -19,6 +19,9 @@ public class UserInMemoryRepositoryTest {
 
 	@Mock
 	User user;
+	
+	@Mock
+	User retrievedUser;
 
 	@Mock
 	Email email;
@@ -39,13 +42,13 @@ public class UserInMemoryRepositoryTest {
 	public void givenOneUserPersistedWhenRetrievingItShouldReturnSameUser() {
 		userInMemoryRepository.persist(user);
 
-		User retrievedUser = userInMemoryRepository.retrieve(email);
+		retrievedUser = userInMemoryRepository.retrieve(email);
 
 		assertEquals(user, retrievedUser);
 	}
-
+	
 	@Test(expected = UserNotFoundException.class)
 	public void givenEmptyRepositoryWhenRetrievingUserNotInMemoryShouldThrowException() {
-		userInMemoryRepository.retrieve(email);
+		retrievedUser = userInMemoryRepository.retrieve(email);
 	}
 }

@@ -104,7 +104,7 @@ public class ReservationInMemoryRepositoryTest {
 	@Test(expected = ReservationNotFoundException.class)
 	public void givenAnInexistentReservationWhenRetrievingItByAssignedBookingShouldThrowReservationNotFoundException() {
 		setUpOneReservation();
-		reservationInMemoryRepository.retrieve(assignedBooking1);
+		retrievedReservation = reservationInMemoryRepository.retrieve(assignedBooking1);
 	}
 	
 	@Test
@@ -119,7 +119,7 @@ public class ReservationInMemoryRepositoryTest {
 	
 	@Test(expected = ReservationNotFoundException.class)
 	public void givenAnInexistentReservationWhenRetrievingItByPromoterAndBookingIdShouldThrowReservationNotFoundException() {
-		reservationInMemoryRepository.retrieve(promoter, bookingID);
+		retrievedReservation = reservationInMemoryRepository.retrieve(promoter, bookingID);
 	}
 	
 	@Test
