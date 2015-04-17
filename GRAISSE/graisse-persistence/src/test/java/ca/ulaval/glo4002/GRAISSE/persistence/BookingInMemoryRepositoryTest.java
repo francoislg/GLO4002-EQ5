@@ -15,7 +15,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.BoardroomNotFoundException;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingState;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingInMemoryRepositoryTest {
@@ -24,6 +27,9 @@ public class BookingInMemoryRepositoryTest {
 	private static final int SMALLER = -1;
 	private static final int EQUAL = 0;
 
+	private static final String A_BOOKING_NAME = "Booking";
+	private static final String A_INEXISTENT_BOOKING_NAME = "Inexistent Booking";
+	
 	@Mock
 	Booking booking;
 
@@ -41,6 +47,9 @@ public class BookingInMemoryRepositoryTest {
 
 	@Mock
 	Booking bookingWithLowPriority;
+	
+	@Mock
+	Email promoter;
 
 	BookingInMemoryRepository bookingInMemoryRepository;
 
@@ -53,6 +62,24 @@ public class BookingInMemoryRepositoryTest {
 	public void newRepositoryShouldBeEmpty() {
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
 		assertTrue(result.isEmpty());
+	}
+	
+	@Test(expected = BookingNotFoundException.class)
+	public void givenAnInexistentBookingWhenRetrievingItShouldThrowBookingNotFoundException() {
+		bookingInMemoryRepository.retrieve(promoter, A_INEXISTENT_BOOKING_NAME);
+	}
+	
+	@Test
+	public void givenAnExistentBookingWhenRetrievingShouldReturnIt() {
+		setUpBookingWithPromoterAndName();
+		bookingInMemoryRepository.persist(booking);
+		
+		assertEquals(booking, bookingInMemoryRepository.retrieve(promoter, A_BOOKING_NAME));
+	}
+	
+	private void setUpBookingWithPromoterAndName() {
+		when(booking.hasName(A_BOOKING_NAME)).thenReturn(true);
+		when(booking.hasPromoter(promoter)).thenReturn(true);
 	}
 
 	@Test
@@ -79,7 +106,27 @@ public class BookingInMemoryRepositoryTest {
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
 		assertEquals(1, result.size());
 	}
-
+	
+	@Test
+	public void givenAListOfBookingsWhenSortingByDefaultShouldReturnSameList() {
+		setUpOrderedBookingsRepo();
+		assertEquals(orderedBookingList(), bookingInMemoryRepository.retrieveAll());
+	}
+	
+	@Test
+	public void givenAnUnorderedBookingsListWhenSortingByPriorityShouldReturnSorted() {
+		setUpMocksForMultipleBookings();
+		setUpUnorderedBookingsRepo();
+		assertEquals(orderedBookingList(), bookingInMemoryRepository.retrieveSortedByPriority());
+	}
+	
+	@Test
+	public void whenGettingAssignableBookingsShouldReturnOnlyBookingsWithStateWaiting() {
+		when(booking.isAssignable()).thenReturn(true);
+		bookingInMemoryRepository.persist(booking);
+		assertEquals(bookingInMemoryRepository.getAssignableBookings().size(), 1);
+	}
+	
 	private void setUpMocksForMultipleBookings() {
 		when(bookingWithLowPriority.comparePriorityToBooking(any())).thenReturn(SMALLER);
 
@@ -92,13 +139,11 @@ public class BookingInMemoryRepositoryTest {
 		when(secondBookingWithMediumPriority.comparePriorityToBooking(bookingWithMediumPriority)).thenReturn(EQUAL);
 
 		when(bookingWithHighPriority.comparePriorityToBooking(any())).thenReturn(BIGGER);
-	}
-
-	@Test
-	public void givenAListOfBookingsWhenSortingByDefaultShouldReturnSameList() {
-
-		setUpOrderedBookingsRepo();
-		assertEquals(orderedBookingList(), bookingInMemoryRepository.retrieveAll());
+		
+		when(bookingWithLowPriority.isAssignable()).thenReturn(true);
+		when(bookingWithMediumPriority.isAssignable()).thenReturn(true);
+		when(secondBookingWithMediumPriority.isAssignable()).thenReturn(true);
+		when(bookingWithHighPriority.isAssignable()).thenReturn(true);
 	}
 
 	private void setUpUnorderedBookingsRepo() {
@@ -113,12 +158,6 @@ public class BookingInMemoryRepositoryTest {
 		bookingInMemoryRepository.persist(bookingWithMediumPriority);
 		bookingInMemoryRepository.persist(secondBookingWithMediumPriority);
 		bookingInMemoryRepository.persist(bookingWithHighPriority);
-	}
-
-	@Ignore
-	@Test
-	public void givenAnUnorderedBookingsListWhenSortingByPriorityShouldReturnSorted() {
-		assertTrue(false);
 	}
 
 	private Collection<Booking> orderedBookingList() {

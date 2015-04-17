@@ -50,7 +50,7 @@ public class BookingInMemoryRepository implements BookingRepository {
 	}
 
 	@Override
-	public Booking retrieveBooking(Email promoter, String name) {
+	public Booking retrieve(Email promoter, String name) {
 		for(Booking booking : bookings){
 			if(booking.hasPromoter(promoter) && booking.hasName(name)){
 				return booking;

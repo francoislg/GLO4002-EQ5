@@ -32,7 +32,7 @@ public class BookingRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public RetrievedBookingResponse getBooking(@PathParam("COURRIEL") String promoter, @PathParam("NUMERO_DEMANDE") String ID) {
 		try {
-			Booking foundBooking = bookingRepository.retrieveBooking(new Email(promoter), ID);
+			Booking foundBooking = bookingRepository.retrieve(new Email(promoter), ID);
 			return new RetrievedBookingResponse(foundBooking);
 		} catch (BookingNotFoundException exception) {
 			throw new BookingNotFoundWebException("Il n'existe pas de demande \"" + ID + "\" pour l'organisateur \"" + promoter + "\"");

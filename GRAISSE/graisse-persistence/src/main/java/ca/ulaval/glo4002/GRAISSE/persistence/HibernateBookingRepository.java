@@ -62,7 +62,7 @@ public class HibernateBookingRepository implements BookingRepository {
 	}
 
 	@Override
-	public Booking retrieveBooking(Email promoter, String name) {
+	public Booking retrieve(Email promoter, String name) {
 		Collection<Booking> bookings = retrieveAll();
 		for(Booking booking : bookings){
 			if(booking.hasPromoter(promoter) && booking.hasName(name)){
