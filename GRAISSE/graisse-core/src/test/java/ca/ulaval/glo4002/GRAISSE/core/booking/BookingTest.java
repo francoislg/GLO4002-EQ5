@@ -10,7 +10,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -26,6 +25,7 @@ public class BookingTest {
 	private static final Priority PRIORITY_VALUE_OF_BOOKING = Priority.LOW;
 	private static final Priority PRIORITY_VALUE_OF_BOOKING_BIGGER = Priority.HIGH;
 	private static final Priority PRIORITY_VALUE_OF_BOOKING_SMALLER = Priority.VERY_LOW;
+	private static final Priority DEFAULT_PRIORITY_VALUE = Priority.MEDIUM;
 	private static final int NUMBER_OF_SEATS_IN_BOOKING = 10;
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_SMALLER_THAN_THE_BOOKING = 9;
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_EQUAL_TO_THE_BOOKING = 10;
@@ -38,6 +38,8 @@ public class BookingTest {
 	User user;
 
 	Booking booking;
+	Booking bookingWithDefaultPriority;
+	Booking bookingWithMediumPriority;
 
 	@Before
 	public void setUp() {
@@ -46,12 +48,15 @@ public class BookingTest {
 		booking = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
 	}
 
-	@Ignore
 	@Test
 	public void whenBookingIsInstantiateWithoutPriorityTheBookingShouldHaveAMediumPriority() {
-
+		bookingWithMediumPriority = new Booking (user, NUMBER_OF_SEATS_IN_BOOKING, DEFAULT_PRIORITY_VALUE);
+		bookingWithDefaultPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING);
+		int result = bookingWithDefaultPriority.comparePriorityToBooking(bookingWithMediumPriority);
+		
+		assertEquals(result, 0);
 	}
-
+	
 	@Test
 	public void assignShouldAssignTheBooking() {
 		booking.assign();
@@ -78,6 +83,17 @@ public class BookingTest {
 	public void whenAssignedIsAssignableShouldReturnFalse() {
 		booking.assign();
 		assertFalse(booking.isAssignable());
+	}
+	
+	@Test
+	public void whenBookingIsNotYetAssignedStateShouldNotBeAssigned() {
+		assertFalse(booking.isAssigned());
+	}
+	
+	@Test
+	public void whenAssigningBookingStateShouldBeAssigned() {
+		booking.assign();
+		assertTrue(booking.isAssigned());
 	}
 
 	@Test
@@ -127,16 +143,30 @@ public class BookingTest {
 
 		assertEquals(0, result);
 	}
-
-	@Ignore
+	
+	@Test
+	public void whenRefusingBookingStateShouldBeRefused() {
+		booking.refuse();
+		assertEquals(BookingState.REFUSED, booking.getState());
+	}
+	
+	@Test
+	public void whenCancellingBookingStateShouldBeCancelled() {
+		booking.cancel();
+		assertEquals(BookingState.CANCELLED, booking.getState());
+	}
+	
 	@Test
 	public void addingAParticipantShouldBePresentInList() {
-
+		booking.addParticipant(email);
+		assertTrue(booking.getParticipantsEmail().contains(email));
 	}
 
-	@Ignore
 	@Test
 	public void addingTheSameParticipantTwiceShouldAddOnceInList() {
-
+		booking.addParticipant(email);
+		booking.addParticipant(email);
+		
+		assertEquals(booking.getParticipantsEmail().size(), 1);
 	}
 }

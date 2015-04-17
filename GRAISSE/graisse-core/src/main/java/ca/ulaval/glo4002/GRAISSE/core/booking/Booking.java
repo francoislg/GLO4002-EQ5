@@ -71,7 +71,9 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	}
 
 	public void addParticipant(Email email) {
-		participants.add(email);
+		if(!participants.contains(email)) {
+			participants.add(email);
+		}
 	}
 
 	@Override
