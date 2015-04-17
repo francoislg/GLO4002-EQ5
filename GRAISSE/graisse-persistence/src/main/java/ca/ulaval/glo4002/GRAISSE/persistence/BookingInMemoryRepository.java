@@ -58,5 +58,4 @@ public class BookingInMemoryRepository implements BookingRepository {
 		}
 		throw new BookingNotFoundException();
 	}
-
 }

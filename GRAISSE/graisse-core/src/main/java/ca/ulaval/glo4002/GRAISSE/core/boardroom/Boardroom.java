@@ -6,8 +6,9 @@ import javax.persistence.Id;
 @Entity
 public class Boardroom implements AssignedBoardroom {
 
-	private int numberOfSeats;
+	@Id
 	private String name;
+	private int numberOfSeats;
 
 	public Boardroom(String name, int numberOfSeats) {
 		this.name = name;
@@ -26,7 +27,6 @@ public class Boardroom implements AssignedBoardroom {
 		return numberOfSeats;
 	}
 	
-	@Id
 	public String getName() {
 		return name;
 	}

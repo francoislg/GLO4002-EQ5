@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.GRAISSE.persistence;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -44,12 +46,7 @@ public class HibernateBoardroomRepository implements BoardroomRepository {
 
 	@Override
 	public Collection<Boardroom> retrieveBoardroomsOrderedByNumberOfSeats() {
-		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Boardroom> criteriaQuery = criteriaBuilder.createQuery(Boardroom.class);
-		Root<Boardroom> boardroom = criteriaQuery.from(Boardroom.class);
-		criteriaQuery.select(boardroom);
-		criteriaQuery.orderBy(criteriaBuilder.asc(boardroom.get("numberOfSeats")));
-	
-		return entityManager.createQuery(criteriaQuery).getResultList();
+		Comparator<Boardroom> byNumberOfSeats = (boardroom1, boardroom2) -> boardroom1.compareByNumberOfSeats(boardroom2);
+		return retrieveAll().stream().sorted(byNumberOfSeats).collect(Collectors.toList());
 	}
 }

@@ -1,6 +1,9 @@
 package ca.ulaval.glo4002.GRAISSE.persistence;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -42,19 +45,30 @@ public class HibernateBookingRepository implements BookingRepository {
 
 	@Override
 	public Collection<Booking> retrieveSortedByPriority() {
-		// TODO Auto-generated method stub
-		return null;
+		Comparator<Booking> byPriorityValue = (booking1, booking2) -> booking1.comparePriorityToBooking(booking2);
+		return getAssignableBookings().stream().sorted(byPriorityValue).collect(Collectors.toList());
 	}
 
 	@Override
 	public Collection<Booking> getAssignableBookings() {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<Booking> bookings = retrieveAll();
+		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
+			Booking booking = bookingIter.next();
+			if (!booking.isAssignable()) {
+				bookingIter.remove();
+			}
+		}
+		return bookings;
 	}
 
 	@Override
 	public Booking retrieveBooking(Email promoter, String name) {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<Booking> bookings = retrieveAll();
+		for(Booking booking : bookings){
+			if(booking.hasPromoter(promoter) && booking.hasName(name)){
+				return booking;
+			}
+		}
+		throw new BookingNotFoundException();
 	}
 }

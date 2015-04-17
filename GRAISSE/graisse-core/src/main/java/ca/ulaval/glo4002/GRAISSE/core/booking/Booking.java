@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE.core.booking;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +16,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
 
+	@Id
 	private String name;
 	private int numberOfSeatsNeeded;
 	private BookingState state;

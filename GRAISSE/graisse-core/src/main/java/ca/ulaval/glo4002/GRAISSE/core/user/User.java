@@ -8,6 +8,7 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 @Entity
 public class User {
 
+	@Id
 	private Email email;
 
 	public User(Email email) {
@@ -18,7 +19,6 @@ public class User {
 		return this.email.equals(email);
 	}
 
-	@Id
 	public Email getEmail() {
 		return email;
 	}
