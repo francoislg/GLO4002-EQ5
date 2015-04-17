@@ -49,6 +49,11 @@ public class BoardroomTest {
 	public void getNumberOfSeatsShouldReturnTheNumberOfSeats() {
 		assertEquals(boardroom.getNumberOfSeats(), NUMBER_OF_SEATS_IN_BOARDROOM);
 	}
+	
+	@Test
+	public void getNameShouldReturnTheName() {
+		assertEquals(boardroom.getName(), A_BOARDROOM_NAME);
+	}
 
 	@Test
 	public void givenInsufficentSeatsWhenVerifyingNumberOfSeatsShouldReturnFalse() {

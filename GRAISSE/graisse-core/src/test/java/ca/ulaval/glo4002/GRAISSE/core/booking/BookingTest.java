@@ -49,7 +49,7 @@ public class BookingTest {
 	}
 
 	@Test
-	public void whenBookingIsInstantiateWithoutPriorityTheBookingShouldHaveAMediumPriority() {
+	public void whenBookingIsInstantiatedWithoutPriorityTheBookingShouldHaveAMediumPriority() {
 		bookingWithMediumPriority = new Booking (user, NUMBER_OF_SEATS_IN_BOOKING, DEFAULT_PRIORITY_VALUE);
 		bookingWithDefaultPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING);
 		int result = bookingWithDefaultPriority.comparePriorityToBooking(bookingWithMediumPriority);
@@ -67,7 +67,7 @@ public class BookingTest {
 	public void givenSameUserAsBookingHasPromoterShouldReturnTrue() {
 		assertTrue(booking.hasPromoter(email));
 	}
-
+	
 	@Test
 	public void whenNotCanceledAndNotAssignedIsAssignableShouldReturnTrue() {
 		assertTrue(booking.isAssignable());
