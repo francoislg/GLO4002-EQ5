@@ -81,7 +81,10 @@ public class ReservationInMemoryRepository implements ReservationRepository {
 				return true;
 			}
 		}
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/dev
 		return false;
 	}
 }
