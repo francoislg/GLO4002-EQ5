@@ -6,11 +6,11 @@ public class Boardrooms {
 
 	private BoardroomRepository boardroomsRepository;
 
-	public Boardrooms(BoardroomRepository boardroomsRepo, ReservationAssigner reservationAssigner) {
+	public Boardrooms(BoardroomRepository boardroomsRepo) {
 		this.boardroomsRepository = boardroomsRepo;
 	}
 
-	public Collection<Boardroom> getBoardroomWithStrategy(BoardroomsSortingStrategy boardroomsSortingStrategy) {
+	public Collection<Boardroom> getBoardroomsWithStrategy(BoardroomsSortingStrategy boardroomsSortingStrategy) {
 		return boardroomsSortingStrategy.sort(boardroomsRepository);
 
 	}

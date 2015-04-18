@@ -4,5 +4,4 @@ public interface ReservationAssigner {
 
 	public boolean isAvailable(Boardroom boardroom);
 
-	void assign(AssignedBoardroom boardroomToAssign, BookingAssignable bookingToAssign);
 }
