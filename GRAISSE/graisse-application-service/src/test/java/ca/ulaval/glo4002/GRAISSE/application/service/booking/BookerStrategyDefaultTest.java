@@ -8,10 +8,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
-import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategy;
+import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservations;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookerStrategyDefaultTest {
@@ -23,10 +22,7 @@ public class BookerStrategyDefaultTest {
 	BoardroomsSortingStrategy boardroomsSortingStrategy;
 
 	@Mock
-	Bookings bookings;
-
-	@Mock
-	Boardrooms boardrooms;
+	Reservations reservations;
 
 	BookerStrategyDefault bookerStrategyBasic;
 
@@ -37,7 +33,7 @@ public class BookerStrategyDefaultTest {
 
 	@Test
 	public void assignBookingsShouldCallAssignBookingsToBoardrooms() {
-		bookerStrategyBasic.assignBookings(boardrooms, bookings);
-		verify(bookings).assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
+		bookerStrategyBasic.assignBookings(reservations);
+		verify(reservations).assignBookingsToBoardrooms(bookingsSortingStrategy, boardroomsSortingStrategy);
 	}
 }

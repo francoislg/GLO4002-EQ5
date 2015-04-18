@@ -1,9 +1,8 @@
 package ca.ulaval.glo4002.GRAISSE.application.service.booking;
 
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
+import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservations;
 
 public interface BookerStrategy {
 
-	public void assignBookings(Boardrooms boardrooms, Bookings bookings);
+	public void assignBookings(Reservations reservations);
 }

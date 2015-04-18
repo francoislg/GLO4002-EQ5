@@ -6,9 +6,9 @@ import java.util.List;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategyDefault;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
-import ca.ulaval.glo4002.GRAISSE.core.booking.BookingCanceller;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategyDefault;
+import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservations;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Observer;
 
 public class Booker {
@@ -16,22 +16,19 @@ public class Booker {
 	private Bookings bookings;
 	private Boardrooms boardrooms;
 	private BookerStrategy bookerStrategy;
-	private BookingCanceller bookingCanceller;
+	private Reservations reservations;
 	private List<Observer<Booker>> observers;
 
-	public Booker(Bookings bookings, Boardrooms boardrooms,
-			BookingCanceller bookingCanceller) {
-		this.bookerStrategy = new BookerStrategyDefault(
-				new BookingsSortingStrategyDefault(),
-				new BoardroomsSortingStrategyDefault());
+	public Booker(Bookings bookings, Boardrooms boardrooms, Reservations reservations) {
+		this.bookerStrategy = new BookerStrategyDefault(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyDefault());
 		this.bookings = bookings;
 		this.boardrooms = boardrooms;
-		this.bookingCanceller = bookingCanceller;
+		this.reservations = reservations;
 		observers = new ArrayList<Observer<Booker>>();
 	}
 
 	public void assignBookings() {
-		bookerStrategy.assignBookings(boardrooms, bookings);
+		bookerStrategy.assignBookings(reservations);
 		notifyTriggers();
 	}
 
@@ -41,7 +38,7 @@ public class Booker {
 	}
 
 	public void cancelBooking(Booking booking) {
-		bookingCanceller.cancelBooking(booking);
+		reservations.cancelBooking(booking);
 	}
 
 	public void setBookerStrategy(BookerStrategy bookerStrategy) {

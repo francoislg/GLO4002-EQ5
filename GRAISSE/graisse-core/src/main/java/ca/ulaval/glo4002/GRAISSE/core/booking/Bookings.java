@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class Bookings {
@@ -30,19 +28,19 @@ public class Bookings {
 		return bookingRepository.getAssignableBookings().size();
 	}
 
-	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsSortingStrategy bookingsSortingStrategy,
-			BoardroomsSortingStrategy boardroomsSortingStrategy) {
-		Collection<Booking> formatedBookingList = bookingsSortingStrategy.sort(bookingRepository);
-		for (Booking booking : formatedBookingList) {
-			boardrooms.assignBookingToBoardroom(booking, boardroomsSortingStrategy);
-			bookingRepository.persist(booking);
-		}
+	public Collection<Booking> getBookingsWithStrategy(BookingsSortingStrategy bookingsSortingStrategy) {
+		return bookingsSortingStrategy.sort(bookingRepository);
 	}
 
 	public void cancelBooking(Booking booking) {
 		booking.cancel();
 		bookingRepository.persist(booking);
 		bookingCanceller.cancelBooking(booking);
+	}
+
+	public void assignBooking(Booking booking) {
+		booking.assign();
+		bookingRepository.persist(booking);
 	}
 
 	public List<BookingDTO> getBookingsWithEmail(Email email) {
@@ -58,4 +56,5 @@ public class Bookings {
 	private BookingDTO convertToDTO(Booking booking) {
 		return new BookingDTO(booking.getID(), booking.getNumberOfSeats(), booking.getPromoterEmail(), booking.getState(), "");
 	}
+
 }

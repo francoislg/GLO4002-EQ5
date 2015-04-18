@@ -15,7 +15,6 @@ public class Reservation {
 	public Reservation(AssignedBoardroom assignedBoardroom, BookingAssignable bookingToAssign) {
 		this.assignedBoardroom = assignedBoardroom;
 		this.assignedBooking = bookingToAssign;
-		this.assignedBooking.assign();
 	}
 
 	public boolean containsBooking(AssignedBooking assignedBooking) {

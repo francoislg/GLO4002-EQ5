@@ -1,9 +1,8 @@
 package ca.ulaval.glo4002.GRAISSE.application.service.booking;
 
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
-import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategy;
+import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservations;
 
 public class BookerStrategyDefault implements BookerStrategy {
 
@@ -15,7 +14,7 @@ public class BookerStrategyDefault implements BookerStrategy {
 		this.boardroomsSortingStrategy = boardroomsSortingStrategy;
 	}
 
-	public void assignBookings(Boardrooms boardrooms, Bookings bookings) {
-		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
+	public void assignBookings(Reservations reservations) {
+		reservations.assignBookingsToBoardrooms(bookingsSortingStrategy, boardroomsSortingStrategy);
 	}
 }

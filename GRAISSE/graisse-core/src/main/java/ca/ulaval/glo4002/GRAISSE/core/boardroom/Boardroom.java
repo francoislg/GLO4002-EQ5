@@ -26,10 +26,6 @@ public class Boardroom implements AssignedBoardroom {
 		return name;
 	}
 
-	public void assign(BookingAssignable bookingToAssign, ReservationAssigner reservationAssigner) {
-		reservationAssigner.assign(this, bookingToAssign);
-	}
-
 	public int compareByNumberOfSeats(Boardroom boardrooomToCompare) {
 		return Integer.compare(numberOfSeats, boardrooomToCompare.numberOfSeats);
 	}
