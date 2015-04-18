@@ -32,7 +32,7 @@ public class BookingsTest {
 
 	@Mock
 	Booking booking;
-	
+
 	@Mock
 	Booking booking2;
 
@@ -47,7 +47,7 @@ public class BookingsTest {
 
 	@Mock
 	BoardroomsSortingStrategy boardroomsSortingStrategy;
-	
+
 	Collection<Booking> bookingsWithoutAssignableBookings;
 
 	Bookings bookings;
@@ -68,7 +68,7 @@ public class BookingsTest {
 		setUpEmptyBookings();
 		assertFalse(bookings.hasAssignableBookings());
 	}
-	
+
 	@Test
 	public void givenZeroUnassignedBookingGetNumberOfUnassignedBookingShouldReturnZero() {
 		setUpEmptyBookings();
@@ -80,7 +80,7 @@ public class BookingsTest {
 		setUpEmptyBookings();
 		assertFalse(bookings.hasAssignableBookings());
 	}
-	
+
 	private void setUpEmptyBookings() {
 		Collection<Booking> emptyBookingCollection = new ArrayList<Booking>();
 		doReturn(emptyBookingCollection).when(bookingRepository).getAssignableBookings();
@@ -99,14 +99,6 @@ public class BookingsTest {
 		assertEquals(1, bookings.getNumberOfAssignableBookings());
 	}
 
-	@Test
-	public void givenOneAssignableBookingAssignBookingsToBoardroomsShouldPersistAssignableBooking() {
-		setUpOneAssignableBookingInBookings();
-
-		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
-		verify(bookingRepository).persist(assignableBooking);
-	}
-	
 	private void setUpOneAssignableBookingInBookings() {
 		Collection<Booking> bookingsWithOneAssignableBookings = new ArrayList<Booking>();
 		bookingsWithOneAssignableBookings.add(assignableBooking);
@@ -120,17 +112,17 @@ public class BookingsTest {
 		bookings.cancelBooking(booking);
 		verify(bookingRepository).persist(booking);
 	}
-	
+
 	@Test
 	public void givenOneBookingWhenCancellingShouldCancelTheReservationWithTheBooking() {
 		bookings.cancelBooking(booking);
 		verify(bookingCanceller).cancelBooking(booking);
 	}
-	
+
 	@Ignore
 	@Test
 	public void givenAnEmailWhenRetrievingBookingsWithEmailShouldReturnAllBookingsWithTheEmail() {
-		
+
 	}
 
 	@Ignore

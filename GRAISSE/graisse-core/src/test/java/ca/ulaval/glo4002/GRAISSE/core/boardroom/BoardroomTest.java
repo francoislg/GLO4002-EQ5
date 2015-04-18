@@ -49,7 +49,7 @@ public class BoardroomTest {
 	public void getNumberOfSeatsShouldReturnTheNumberOfSeats() {
 		assertEquals(boardroom.getNumberOfSeats(), NUMBER_OF_SEATS_IN_BOARDROOM);
 	}
-	
+
 	@Test
 	public void getNameShouldReturnTheName() {
 		assertEquals(boardroom.getName(), A_BOARDROOM_NAME);
@@ -82,15 +82,6 @@ public class BoardroomTest {
 		when(reservationAssigner.isAvailable(boardroom)).thenReturn(true);
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
 		assertTrue(boardroom.canAssign(booking, reservationAssigner));
-	}
-
-	@Test
-	public void whenBoadroomIsNotAvailableAndHasEnoughSeatsForTheBookingAssignShouldReturnFalse() {
-		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
-
-		boardroom.assign(booking, reservationAssigner);
-
-		assertFalse(boardroom.canAssign(booking, reservationAssigner));
 	}
 
 	@Test
