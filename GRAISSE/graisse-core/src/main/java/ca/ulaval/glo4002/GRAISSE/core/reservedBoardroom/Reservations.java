@@ -61,20 +61,23 @@ public class Reservations implements ReservationAssigner, BookingCanceller {
 		Collection<Booking> formatedBookingList = bookings.getBookingsWithStrategy(bookingsSortingStrategy);
 
 		for (Booking booking : formatedBookingList) {
-
-			Collection<Boardroom> formatedBoardroomList = boardrooms.getBoardroomWithStrategy(boardroomsSortingStrategy);
-			for (Boardroom boardroom : formatedBoardroomList) {
-				if (boardroom.canAssign(booking, this)) {
-					assign(boardroom, booking);
-					bookings.assignBooking(booking);
-					notifyTriggers(booking);
-					return;
-				}
-			}
-			notifyTriggers(booking);
-			throw new UnableToAssignBookingException();
+			assignBookingToBoardrooms(booking, boardroomsSortingStrategy);
 
 		}
+	}
+
+	public void assignBookingToBoardrooms(Booking booking, BoardroomsSortingStrategy boardroomsSortingStrategy) {
+		Collection<Boardroom> formatedBoardroomList = boardrooms.getBoardroomWithStrategy(boardroomsSortingStrategy);
+		for (Boardroom boardroom : formatedBoardroomList) {
+			if (boardroom.canAssign(booking, this)) {
+				assign(boardroom, booking);
+				bookings.assignBooking(booking);
+				notifyTriggers(booking);
+				return;
+			}
+		}
+		notifyTriggers(booking);
+		throw new UnableToAssignBookingException();
 	}
 
 	@Override
