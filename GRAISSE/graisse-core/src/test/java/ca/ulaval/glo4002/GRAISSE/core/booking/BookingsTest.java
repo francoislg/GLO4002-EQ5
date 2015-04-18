@@ -113,14 +113,12 @@ public class BookingsTest {
 
 		doReturn(bookingsWithOneAssignableBookings).when(bookingRepository).getAssignableBookings();
 		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneAssignableBookings);
-
 	}
 
 	@Test
 	public void givenOneBookingWhenCancellingShoulPersistTheBooking() {
 		bookings.cancelBooking(booking);
 		verify(bookingRepository).persist(booking);
-		
 	}
 	
 	@Test

@@ -73,4 +73,10 @@ public class ReservationInMemoryRepository implements ReservationRepository {
 		}
 		throw new ReservationNotFoundException();
 	}
+
+	@Override
+	public boolean exists(AssignedBooking assignedBooking) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
