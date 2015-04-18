@@ -56,8 +56,7 @@ public class Reservations implements ReservationAssigner, BookingCanceller {
 		reservationRepository.persist(reservation);
 	}
 
-	public void assignBookingToBoardroom(BookingAssignable bookingToAssign, BookingsSortingStrategy bookingsSortingStrategy,
-			BoardroomsSortingStrategy boardroomsSortingStrategy) {
+	public void assignBookingsToBoardrooms(BookingsSortingStrategy bookingsSortingStrategy, BoardroomsSortingStrategy boardroomsSortingStrategy) {
 
 		Collection<Booking> formatedBookingList = bookings.getBookingsWithStrategy(bookingsSortingStrategy);
 
@@ -65,14 +64,14 @@ public class Reservations implements ReservationAssigner, BookingCanceller {
 
 			Collection<Boardroom> formatedBoardroomList = boardrooms.getBoardroomWithStrategy(boardroomsSortingStrategy);
 			for (Boardroom boardroom : formatedBoardroomList) {
-				if (boardroom.canAssign(bookingToAssign, this)) {
+				if (boardroom.canAssign(booking, this)) {
 					assign(boardroom, booking);
 					bookings.assignBooking(booking);
-					notifyTriggers(bookingToAssign);
+					notifyTriggers(booking);
 					return;
 				}
 			}
-			notifyTriggers(bookingToAssign);
+			notifyTriggers(booking);
 			throw new UnableToAssignBookingException();
 
 		}

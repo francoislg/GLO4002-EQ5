@@ -76,15 +76,12 @@ public class ReservationInMemoryRepository implements ReservationRepository {
 
 	@Override
 	public boolean exists(AssignedBooking assignedBooking) {
-<<<<<<< HEAD
 		for (Reservation reservation : reservations) {
 			if (reservation.containsBooking(assignedBooking)) {
 				return true;
 			}
 		}
-=======
-		// TODO Auto-generated method stub
->>>>>>> bb977820b3380ba909a85925a663e6c577bccffd
+
 		return false;
 	}
 }
