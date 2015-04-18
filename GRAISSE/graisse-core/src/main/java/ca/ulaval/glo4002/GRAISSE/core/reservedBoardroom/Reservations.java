@@ -44,7 +44,7 @@ public class Reservations implements BookingCanceller {
 	}
 
 	private boolean isAvailable(Boardroom boardroom) {
-		return reservationRepository.exists(boardroom);
+		return !reservationRepository.exists(boardroom);
 	}
 
 	public void assign(Boardroom boardroom, Booking booking) {

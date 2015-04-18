@@ -65,6 +65,7 @@ public class ReservationsTest {
 		boardroomsCollection.add(boardroom);
 		when(boardrooms.getBoardroomsWithStrategy(boardroomsSortingStrategy)).thenReturn(boardroomsCollection);
 		when(boardroom.canAssign(booking)).thenReturn(true);
+		when(reservationRepository.exists(boardroom)).thenReturn(false);
 
 		reservations.assignBookingsToBoardrooms(bookingsSortingStrategy, boardroomsSortingStrategy);
 
