@@ -25,47 +25,53 @@ public class ReservationsTest {
 	private final static String A_BOARDROOM_NAME = "Boardroom";
 	@Mock
 	ReservationRepository reservationRepository;
-	
+
+	@Mock
+	Boardrooms boardroom;
+
+	@Mock
+	Bookings bookings;
+
 	@Mock
 	Reservation reservation;
-	
+
 	@Mock
 	Boardroom boardroom;
-	
+
 	@Mock
 	AssignedBooking assignedBooking;
-	
+
 	@Mock
 	AssignedBooking unassignedBooking;
-	
+
 	@Mock
 	BookingAssignable assignableBooking;
-	
+
 	@Mock
 	AssignedBoardroom assignedBoardroom;
-	
+
 	@Mock
 	AssignedBoardroom unassignedBoardroom;
-	
+
 	Reservations reservations;
-	
+
 	Collection<Reservation> reservationRepositoryWithReservations;
 	Collection<Reservation> emptyReservationRepository;
-	
+
 	@Before
 	public void setUp() {
 		setUpReservationMock();
 		when(reservationRepository.retrieveAll()).thenReturn(Arrays.asList(reservation));
 		reservations = new Reservations(reservationRepository);
 	}
-	
+
 	@Ignore
 	@Test
 	public void givenOneBoardroomWhenIsAvailableShouldExistsInRepository() {
 		when(reservationRepository.exists(boardroom)).thenReturn(true);
 		assertTrue(reservations.isAvailable(boardroom));
 	}
-	
+
 	private void setUpReservationMock() {
 		when(boardroom.hasName(A_BOARDROOM_NAME)).thenReturn(true);
 		when(reservation.containsBoardroom(assignedBoardroom)).thenReturn(true);
