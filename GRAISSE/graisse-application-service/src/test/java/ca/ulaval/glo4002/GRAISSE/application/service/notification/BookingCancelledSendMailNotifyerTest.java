@@ -61,7 +61,8 @@ public class BookingCancelledSendMailNotifyerTest {
 	public void givenBookingCancelledWithUserAsCreatorWhenNotifiedShouldSendMailToUserAndResponsible() {
 		setUpBookingMock();
 		when(booking.isAssigned()).thenReturn(true);
-
+		when(booking.hasPromoter(any())).thenReturn(true);
+		
 		bookingCancelledNotifyer.notify(booking);
 
 		verify(mailSender).sendMail(any());
