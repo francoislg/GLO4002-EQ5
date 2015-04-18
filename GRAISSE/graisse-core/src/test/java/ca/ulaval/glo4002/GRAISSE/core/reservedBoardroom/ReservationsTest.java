@@ -15,6 +15,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
+import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.UnableToAssignBookingException;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategy;
@@ -65,6 +66,38 @@ public class ReservationsTest {
 		boardroomsCollection.add(boardroom);
 		when(boardrooms.getBoardroomsWithStrategy(boardroomsSortingStrategy)).thenReturn(boardroomsCollection);
 		when(boardroom.canAssign(booking)).thenReturn(true);
+		when(reservationRepository.exists(boardroom)).thenReturn(false);
+
+		reservations.assignBookingsToBoardrooms(bookingsSortingStrategy, boardroomsSortingStrategy);
+
+		verify(bookings).assignBooking(booking);
+	}
+
+	@Test(expected = UnableToAssignBookingException.class)
+	public void givenNoAvailableBoardroomAndOneAssignableBookingassignBookingsToBoardroomsShouldThrowUnableToAssignBookingException() {
+		Collection<Booking> bookingsCollection = new ArrayList<Booking>();
+		bookingsCollection.add(booking);
+		when(bookings.getBookingsWithStrategy(bookingsSortingStrategy)).thenReturn(bookingsCollection);
+		Collection<Boardroom> boardroomsCollection = new ArrayList<Boardroom>();
+		boardroomsCollection.add(boardroom);
+		when(boardrooms.getBoardroomsWithStrategy(boardroomsSortingStrategy)).thenReturn(boardroomsCollection);
+		when(boardroom.canAssign(booking)).thenReturn(true);
+		when(reservationRepository.exists(boardroom)).thenReturn(true);
+
+		reservations.assignBookingsToBoardrooms(bookingsSortingStrategy, boardroomsSortingStrategy);
+
+		verify(bookings).assignBooking(booking);
+	}
+
+	@Test(expected = UnableToAssignBookingException.class)
+	public void givenAnAvailableBoardroomThatCantAssignTheBookingAndOneAssignableBookingassignBookingsToBoardroomsShouldThrowUnableToAssignBookingException() {
+		Collection<Booking> bookingsCollection = new ArrayList<Booking>();
+		bookingsCollection.add(booking);
+		when(bookings.getBookingsWithStrategy(bookingsSortingStrategy)).thenReturn(bookingsCollection);
+		Collection<Boardroom> boardroomsCollection = new ArrayList<Boardroom>();
+		boardroomsCollection.add(boardroom);
+		when(boardrooms.getBoardroomsWithStrategy(boardroomsSortingStrategy)).thenReturn(boardroomsCollection);
+		when(boardroom.canAssign(booking)).thenReturn(false);
 		when(reservationRepository.exists(boardroom)).thenReturn(false);
 
 		reservations.assignBookingsToBoardrooms(bookingsSortingStrategy, boardroomsSortingStrategy);
