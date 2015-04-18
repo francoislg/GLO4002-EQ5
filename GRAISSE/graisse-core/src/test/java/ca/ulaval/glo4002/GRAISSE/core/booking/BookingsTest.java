@@ -53,8 +53,8 @@ public class BookingsTest {
 
 	Bookings bookings;
 	Collection<Booking> emptyBookingCollection;
-	Collection<Booking> bookingsWithOneAssignablBookings;
-	Collection<Booking> bookingsNoAssignabledBooking;
+	Collection<Booking> bookingsWithOneAssignableBookings;
+	Collection<Booking> bookingsWithoutAssignableBookings;
 
 	@Before
 	public void setUp() {
@@ -136,11 +136,11 @@ public class BookingsTest {
 	}
 
 	private void setUpOneAssignableBookingInBookings() {
-		bookingsWithOneAssignablBookings = new ArrayList<Booking>();
-		bookingsWithOneAssignablBookings.add(assignableBooking);
+		bookingsWithOneAssignableBookings = new ArrayList<Booking>();
+		bookingsWithOneAssignableBookings.add(assignableBooking);
 
-		doReturn(bookingsWithOneAssignablBookings).when(bookingRepository).getAssignableBookings();
-		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneAssignablBookings);
+		doReturn(bookingsWithOneAssignableBookings).when(bookingRepository).getAssignableBookings();
+		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneAssignableBookings);
 
 	}
 }

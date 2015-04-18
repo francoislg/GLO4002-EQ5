@@ -19,9 +19,6 @@ public class UserInMemoryRepositoryTest {
 
 	@Mock
 	User user;
-	
-	@Mock
-	User retrievedUser;
 
 	@Mock
 	Email email;
@@ -42,13 +39,13 @@ public class UserInMemoryRepositoryTest {
 	public void givenOneUserPersistedWhenRetrievingItShouldReturnSameUser() {
 		userInMemoryRepository.persist(user);
 
-		retrievedUser = userInMemoryRepository.retrieve(email);
+		User retrievedUser = userInMemoryRepository.retrieve(email);
 
 		assertEquals(user, retrievedUser);
 	}
 	
 	@Test(expected = UserNotFoundException.class)
 	public void givenEmptyRepositoryWhenRetrievingUserNotInMemoryShouldThrowException() {
-		retrievedUser = userInMemoryRepository.retrieve(email);
+		userInMemoryRepository.retrieve(email);
 	}
 }

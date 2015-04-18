@@ -11,39 +11,40 @@ import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class Reservations implements ReservationAssigner, BookingCanceller {
-	private ReservationsRepository reservationsRepository;
+	
+	private ReservationRepository reservationRepository;
 
-	public Reservations(ReservationsRepository reservationsRepository) {
-		this.reservationsRepository = reservationsRepository;
+	public Reservations(ReservationRepository reservationRepository) {
+		this.reservationRepository = reservationRepository;
 	}
 
 	@Override
 	public void cancelBooking(AssignedBooking assignedBooking) {
-		Reservation reservationToCancel = reservationsRepository.retrieve(assignedBooking);
+		Reservation reservationToCancel = reservationRepository.retrieve(assignedBooking);
 		reservationToCancel.cancel();
-		reservationsRepository.remove(reservationToCancel);
+		reservationRepository.remove(reservationToCancel);
 	}
 
 	@Override
 	public boolean isAvailable(Boardroom boardroom) {
-		return reservationsRepository.exists(boardroom);
+		return reservationRepository.exists(boardroom);
 	}
 
 	@Override
 	public void assign(AssignedBoardroom boardroomToAssign, BookingAssignable bookingToAssign) {
 		Reservation reservation = new Reservation(boardroomToAssign, bookingToAssign);
-		reservationsRepository.persist(reservation);
+		reservationRepository.persist(reservation);
 	}
 
 	@Override
 	public BookingDTO retrieveReservation(Email email, BookingID bookingID) {
-		Reservation reservation = reservationsRepository.retrieve(email, bookingID);
+		Reservation reservation = reservationRepository.retrieve(email, bookingID);
 		return convertToBookingDTO(reservation);
 	}
 
 	@Override
 	public boolean hasReservation(Email email, BookingID bookingID) {
-		return reservationsRepository.exists(email, bookingID);
+		return reservationRepository.exists(email, bookingID);
 	}
 
 	private BookingDTO convertToBookingDTO(Reservation reservation) {

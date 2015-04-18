@@ -7,10 +7,11 @@ import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
-public interface ReservationsRepository {
-	public void persist(Reservation assignedBooking);
+public interface ReservationRepository {
+	
+	public void persist(Reservation reservation);
 
-	public void remove(Reservation assignedBooking);
+	public void remove(Reservation reservation);
 
 	public Reservation retrieve(AssignedBooking assignedBooking) throws ReservationNotFoundException;
 

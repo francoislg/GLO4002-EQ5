@@ -34,9 +34,6 @@ public class ReservationInMemoryRepositoryTest {
 	Reservation reservation3;
 	
 	@Mock
-	Reservation retrievedReservation;
-	
-	@Mock
 	AssignedBoardroom assignedBoardroom1;
 	
 	@Mock
@@ -95,7 +92,7 @@ public class ReservationInMemoryRepositoryTest {
 	@Test
 	public void givenMultipleReservationsWhenRetrievingByAssignedBookingReservationShouldReturnTheReservation() {
 		setUpRepoWithMultipleReservations();
-		retrievedReservation = reservationInMemoryRepository.retrieve(assignedBooking2);
+		Reservation retrievedReservation = reservationInMemoryRepository.retrieve(assignedBooking2);
 		
 		assertTrue(retrievedReservation.containsBoardroom(assignedBoardroom2));
 		assertTrue(retrievedReservation.containsBooking(assignedBooking2));	
@@ -104,14 +101,14 @@ public class ReservationInMemoryRepositoryTest {
 	@Test(expected = ReservationNotFoundException.class)
 	public void givenAnInexistentReservationWhenRetrievingItByAssignedBookingShouldThrowReservationNotFoundException() {
 		setUpOneReservation();
-		retrievedReservation = reservationInMemoryRepository.retrieve(assignedBooking1);
+		reservationInMemoryRepository.retrieve(assignedBooking1);
 	}
 	
 	@Test
 	public void givenOneReservationWhenRetrievingByPromoterAndBookingIdShoultReturnTheReservation() {
 		setUpOneReservation();
 		reservationInMemoryRepository.persist(reservation1);
-		retrievedReservation = reservationInMemoryRepository.retrieve(promoter, bookingID);
+		Reservation retrievedReservation = reservationInMemoryRepository.retrieve(promoter, bookingID);
 		
 		assertTrue(retrievedReservation.hasBookingID(bookingID));
 		assertTrue(retrievedReservation.hasPromoter(promoter));
@@ -119,7 +116,7 @@ public class ReservationInMemoryRepositoryTest {
 	
 	@Test(expected = ReservationNotFoundException.class)
 	public void givenAnInexistentReservationWhenRetrievingItByPromoterAndBookingIdShouldThrowReservationNotFoundException() {
-		retrievedReservation = reservationInMemoryRepository.retrieve(promoter, bookingID);
+		reservationInMemoryRepository.retrieve(promoter, bookingID);
 	}
 	
 	@Test
