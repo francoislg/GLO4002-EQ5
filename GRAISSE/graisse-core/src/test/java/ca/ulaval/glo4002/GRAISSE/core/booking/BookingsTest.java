@@ -119,6 +119,21 @@ public class BookingsTest {
 		verify(bookingCanceller).cancelBooking(booking);
 	}
 
+	@Test
+	public void bookingAssignedShouldPersitInRepository() {
+		bookings.assignBooking(booking);
+		verify(bookingRepository).persist(booking);
+	}
+
+	@Test
+	public void gettingSomeBookingsWithStrategyShouldGiveSortedBookings() {
+		setUpEmptyBookings() ;
+		bookings.getBookingsWithStrategy(bookingsSortingStrategy) ;
+		verify(bookingsSortingStrategy).sort(any());
+	}
+
+	
+	
 	@Ignore
 	@Test
 	public void givenAnEmailWhenRetrievingBookingsWithEmailShouldReturnAllBookingsWithTheEmail() {
