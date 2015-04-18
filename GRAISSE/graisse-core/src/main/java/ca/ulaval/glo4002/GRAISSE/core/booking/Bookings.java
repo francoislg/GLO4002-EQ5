@@ -41,7 +41,6 @@ public class Bookings {
 	public void assignBooking(Booking booking) {
 		booking.assign();
 		bookingRepository.persist(booking);
-
 	}
 
 	public List<BookingDTO> getBookingsWithEmail(Email email) {

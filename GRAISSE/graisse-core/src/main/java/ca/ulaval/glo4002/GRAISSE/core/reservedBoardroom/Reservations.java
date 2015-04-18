@@ -57,12 +57,9 @@ public class Reservations implements ReservationAssigner, BookingCanceller {
 	}
 
 	public void assignBookingsToBoardrooms(BookingsSortingStrategy bookingsSortingStrategy, BoardroomsSortingStrategy boardroomsSortingStrategy) {
-
 		Collection<Booking> formatedBookingList = bookings.getBookingsWithStrategy(bookingsSortingStrategy);
-
 		for (Booking booking : formatedBookingList) {
 			assignBookingToBoardrooms(booking, boardroomsSortingStrategy);
-
 		}
 	}
 
