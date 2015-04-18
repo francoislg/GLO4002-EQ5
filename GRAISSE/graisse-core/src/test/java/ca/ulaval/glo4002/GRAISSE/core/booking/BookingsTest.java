@@ -126,13 +126,12 @@ public class BookingsTest {
 	}
 
 	@Test
-	public void gettingSomeBookingsWithStrategyShouldGiveSortedBookings() {
+	public void givenABookingsSortingStrategygetBookingsWithStrategyShouldGiveSortedBookings() {
 		setUpEmptyBookings() ;
 		bookings.getBookingsWithStrategy(bookingsSortingStrategy) ;
-		verify(bookingsSortingStrategy).sort(any());
+		verify(bookingsSortingStrategy).sort(bookingRepository);
 	}
 
-	
 	
 	@Ignore
 	@Test

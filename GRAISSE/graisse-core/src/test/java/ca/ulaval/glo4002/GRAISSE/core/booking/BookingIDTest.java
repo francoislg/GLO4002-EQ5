@@ -11,24 +11,24 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BookingIDTest {
-	private final static String AN_ID = "AnID";
+	private final static String A_ID = "AnID";
 	private final static String A_DIFFERENT_ID = "ADifferentID";
 	
 	private BookingID bookingID;
 
 	@Before
 	public void setUp() {
-		bookingID = new BookingID(AN_ID);
+		bookingID = new BookingID(A_ID);
 	}
 
 	@Test
 	public void toStringShouldReturnSameString() {
-		assertEquals(AN_ID, bookingID.toString());
+		assertEquals(A_ID, bookingID.toString());
 	}
 
 	@Test
 	public void givenAnotherObjectWithSameIDShouldBeEquals() {
-		assertEquals(bookingID, new BookingID(AN_ID));
+		assertEquals(bookingID, new BookingID(A_ID));
 	}
 	
 	@Test
@@ -43,14 +43,8 @@ public class BookingIDTest {
 	}
 	
 	@Test
-	public void givenANullObjectShouldBeDifferents() {
+	public void givenANullObjectEqualsShouldReturnFalse() {
 		assertFalse(bookingID.equals(null));
 	}
-	
-	@Test
-	public void anHashCodeIsAlwaysAPositiveNumber() {
-		assertTrue(bookingID.hashCode() > 0);
-	}
-	
-	
+		
 }
