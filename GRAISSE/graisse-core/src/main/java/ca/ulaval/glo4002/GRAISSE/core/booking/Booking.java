@@ -12,20 +12,20 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	private static final Priority DEFAULT_PRIORITY = Priority.MEDIUM;
 
-	private String name;
+	private BookingID ID;
 	private int numberOfSeatsNeeded;
 	private BookingState state;
 	private Priority priority;
 	private User promoter;
 	private List<Email> participants;
 
-	public Booking(User promoter, String name, int numberOfSeatsNeeded) {
-		this(promoter, name, numberOfSeatsNeeded, DEFAULT_PRIORITY);
+	public Booking(User promoter, int numberOfSeatsNeeded) {
+		this(promoter, numberOfSeatsNeeded, DEFAULT_PRIORITY);
 	}
 
-	public Booking(User promoter, String name, int numberOfSeatsNeeded, Priority priority) {
+	public Booking(User promoter, int numberOfSeatsNeeded, Priority priority) {
+		this.ID = new BookingID();
 		this.promoter = promoter;
-		this.name = name;
 		this.numberOfSeatsNeeded = numberOfSeatsNeeded;
 		this.priority = priority;
 		this.state = BookingState.WAITING;
@@ -58,12 +58,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 
 	@Override
 	public boolean hasPromoter(Email email) {
-		return this.promoter.hasEmail(email);
-	}
-
-	@Override
-	public boolean hasName(String name) {
-		return this.name.equals(name);
+		return promoter.hasEmail(email);
 	}
 
 	@Override
@@ -76,7 +71,9 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	}
 
 	public void addParticipant(Email email) {
-		participants.add(email);
+		if(!participants.contains(email)) {
+			participants.add(email);
+		}
 	}
 
 	@Override
@@ -96,7 +93,13 @@ public class Booking implements BookingAssignable, AssignedBooking {
 		return state;
 	}
 
-	public String getName() {
-		return name;
+	@Override
+	public BookingID getID() {
+		return ID;
+	}
+
+	@Override
+	public boolean hasID(BookingID bookingID) {
+		return ID.equals(bookingID);
 	}
 }

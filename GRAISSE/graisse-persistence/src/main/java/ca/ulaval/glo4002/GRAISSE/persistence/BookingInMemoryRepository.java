@@ -50,13 +50,14 @@ public class BookingInMemoryRepository implements BookingRepository {
 	}
 
 	@Override
-	public Booking retrieveBooking(Email promoter, String name) {
-		for(Booking booking : bookings){
-			if(booking.hasPromoter(promoter) && booking.hasName(name)){
-				return booking;
+	public Collection<Booking> retrieveAllForEmail(Email email) {
+		Collection<Booking> bookings = this.retrieveAll();
+		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
+			Booking booking = bookingIter.next();
+			if (!booking.hasPromoter(email)) {
+				bookingIter.remove();
 			}
 		}
-		throw new BookingNotFoundException();
+		return bookings;
 	}
-
 }

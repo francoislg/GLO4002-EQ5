@@ -99,9 +99,7 @@ public class BoardroomsTest {
 	}
 
 	private void setUpBoardroomMock() {
-
 		when(boardroom.canAssign(assignableBooking, reservationAssigner)).thenReturn(true);
 		when(boardroom.canAssign(unassignableBooking, reservationAssigner)).thenReturn(false);
-
 	}
 }

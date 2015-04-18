@@ -1,9 +1,12 @@
 package ca.ulaval.glo4002.GRAISSE.core.booking;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class Bookings {
 
@@ -42,4 +45,17 @@ public class Bookings {
 		bookingCanceller.cancelBooking(booking);
 	}
 
+	public List<BookingDTO> getBookingsWithEmail(Email email) {
+		Collection<Booking> retrievedBookings = bookingRepository.retrieveAllForEmail(email);
+		List<BookingDTO> bookingDTOList = new ArrayList<BookingDTO>();
+
+		for (Booking booking : retrievedBookings) {
+			bookingDTOList.add(convertToDTO(booking));
+		}
+		return bookingDTOList;
+	}
+
+	private BookingDTO convertToDTO(Booking booking) {
+		return new BookingDTO(booking.getID(), booking.getNumberOfSeats(), booking.getPromoterEmail(), booking.getState(), "");
+	}
 }

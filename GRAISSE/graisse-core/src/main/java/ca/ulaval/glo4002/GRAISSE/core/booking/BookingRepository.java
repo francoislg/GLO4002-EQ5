@@ -14,5 +14,5 @@ public interface BookingRepository {
 
 	public Collection<Booking> getAssignableBookings();
 
-	public Booking retrieveBooking(Email promoter, String name);
+	public Collection<Booking> retrieveAllForEmail(Email email);
 }
