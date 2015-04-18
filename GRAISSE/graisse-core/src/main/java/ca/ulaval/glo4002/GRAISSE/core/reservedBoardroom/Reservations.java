@@ -11,7 +11,7 @@ import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class Reservations implements ReservationAssigner, BookingCanceller {
-	
+
 	private ReservationRepository reservationRepository;
 
 	public Reservations(ReservationRepository reservationRepository) {
@@ -20,9 +20,11 @@ public class Reservations implements ReservationAssigner, BookingCanceller {
 
 	@Override
 	public void cancelBooking(AssignedBooking assignedBooking) {
-		Reservation reservationToCancel = reservationRepository.retrieve(assignedBooking);
-		reservationToCancel.cancel();
-		reservationRepository.remove(reservationToCancel);
+		if (reservationRepository.exists(assignedBooking)) {
+			Reservation reservationToCancel = reservationRepository.retrieve(assignedBooking);
+			reservationToCancel.cancel();
+			reservationRepository.remove(reservationToCancel);
+		}
 	}
 
 	@Override

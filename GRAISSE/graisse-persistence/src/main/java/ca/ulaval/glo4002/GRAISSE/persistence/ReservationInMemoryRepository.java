@@ -73,4 +73,14 @@ public class ReservationInMemoryRepository implements ReservationRepository {
 		}
 		throw new ReservationNotFoundException();
 	}
+
+	@Override
+	public boolean exists(AssignedBooking assignedBooking) {
+		for (Reservation reservation : reservations) {
+			if (reservation.containsBooking(assignedBooking)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
