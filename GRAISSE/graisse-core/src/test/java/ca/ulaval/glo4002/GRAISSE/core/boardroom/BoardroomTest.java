@@ -26,9 +26,6 @@ public class BoardroomTest {
 	@Mock
 	BookingAssignable booking;
 
-	@Mock
-	ReservationAssigner reservationAssigner;
-
 	Boardroom boardroom;
 
 	Boardroom boardroomWithMoreSeats;
@@ -79,15 +76,14 @@ public class BoardroomTest {
 
 	@Test
 	public void whenBoardroomIsAvailableAndHasEnoughSeatsForTheBookingAssignShouldReturnTrue() {
-		when(reservationAssigner.isAvailable(boardroom)).thenReturn(true);
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(true);
-		assertTrue(boardroom.canAssign(booking, reservationAssigner));
+		assertTrue(boardroom.canAssign(booking));
 	}
 
 	@Test
 	public void givenBoardroomIsAvailableAndHasInsufficentSeatsForTheBookingWhenAssigningShouldReturnFalse() {
 		when(booking.verifyNumberOfSeats(NUMBER_OF_SEATS_IN_BOARDROOM)).thenReturn(false);
-		assertFalse(boardroom.canAssign(booking, reservationAssigner));
+		assertFalse(boardroom.canAssign(booking));
 	}
 
 	@Test

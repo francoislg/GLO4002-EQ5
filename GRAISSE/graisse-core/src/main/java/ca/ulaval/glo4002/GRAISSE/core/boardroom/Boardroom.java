@@ -30,8 +30,8 @@ public class Boardroom implements AssignedBoardroom {
 		return Integer.compare(numberOfSeats, boardrooomToCompare.numberOfSeats);
 	}
 
-	public boolean canAssign(BookingAssignable bookingToAssign, ReservationAssigner reservationAssigner) {
-		if (verifyNumberOfSeats(bookingToAssign) && reservationAssigner.isAvailable(this)) {
+	public boolean canAssign(BookingAssignable bookingToAssign) {
+		if (verifyNumberOfSeats(bookingToAssign)) {
 			return true;
 		}
 		return false;

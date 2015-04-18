@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.AssignedBoardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.ReservationAssigner;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.UnableToAssignBookingException;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
@@ -21,7 +19,7 @@ import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategy;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Notifyer;
 
-public class Reservations implements ReservationAssigner, BookingCanceller {
+public class Reservations implements BookingCanceller {
 
 	private ReservationRepository reservationRepository;
 	private Boardrooms boardrooms;
@@ -45,14 +43,13 @@ public class Reservations implements ReservationAssigner, BookingCanceller {
 		}
 	}
 
-	@Override
-	public boolean isAvailable(Boardroom boardroom) {
-		return reservationRepository.exists(boardroom);
+	private boolean isAvailable(Boardroom boardroom) {
+		return !reservationRepository.exists(boardroom);
 	}
 
-	@Override
-	public void assign(AssignedBoardroom boardroomToAssign, BookingAssignable bookingToAssign) {
-		Reservation reservation = new Reservation(boardroomToAssign, bookingToAssign);
+	public void assign(Boardroom boardroom, Booking booking) {
+		bookings.assignBooking(booking);
+		Reservation reservation = new Reservation(boardroom, booking);
 		reservationRepository.persist(reservation);
 	}
 
@@ -64,11 +61,10 @@ public class Reservations implements ReservationAssigner, BookingCanceller {
 	}
 
 	public void assignBookingToBoardrooms(Booking booking, BoardroomsSortingStrategy boardroomsSortingStrategy) {
-		Collection<Boardroom> formatedBoardroomList = boardrooms.getBoardroomWithStrategy(boardroomsSortingStrategy);
+		Collection<Boardroom> formatedBoardroomList = boardrooms.getBoardroomsWithStrategy(boardroomsSortingStrategy);
 		for (Boardroom boardroom : formatedBoardroomList) {
-			if (boardroom.canAssign(booking, this)) {
+			if (isAvailable(boardroom) && boardroom.canAssign(booking)) {
 				assign(boardroom, booking);
-				bookings.assignBooking(booking);
 				notifyTriggers(booking);
 				return;
 			}
