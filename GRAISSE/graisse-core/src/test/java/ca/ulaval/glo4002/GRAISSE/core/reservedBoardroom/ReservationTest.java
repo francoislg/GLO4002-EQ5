@@ -29,10 +29,13 @@ public class ReservationTest {
 	AssignedBoardroom assignedBoardroom;
 	
 	@Mock
-	AssignedBooking assignedBooking;
-
+	AssignedBoardroom boardroomNotAssignedToReservation;
+	
 	@Mock
 	BookingAssignable bookingToAssign;
+	
+	@Mock
+	AssignedBooking assignedBooking;
 	
 	@Mock
 	Email promoter;
@@ -50,6 +53,11 @@ public class ReservationTest {
 	@Test
 	public void givenBoardroomAssignedToReservationWhenCheckingIfAssignedShouldReturnTrue() {
 		assertTrue(reservation.containsBoardroom(assignedBoardroom));
+	}
+	
+	@Test
+	public void givenBoardroomNotAssignedToReservationWhenCheckingIfAssignedShouldReturnFalse() {
+		assertFalse(reservation.containsBoardroom(boardroomNotAssignedToReservation));
 	}
 	
 	@Test
@@ -105,11 +113,11 @@ public class ReservationTest {
 	public void givenAnAssignedBookingWhenAskingForBookingIDShouldReturnBookingIDOfAssignedBooking() {
 		when(bookingToAssign.getID()).thenReturn(bookingID);
 		assertEquals(reservation.getBookingID(), bookingID);
-;	}
+	}
 	
 	@Test
 	public void givenAnAssignedBookingWhenCheckingIfReservationHasBookingIDShouldReturnTrue() {
 		when(bookingToAssign.hasID(bookingID)).thenReturn(true);
 		assertTrue(reservation.hasBookingID(bookingID));
-;	}
+	}
 }

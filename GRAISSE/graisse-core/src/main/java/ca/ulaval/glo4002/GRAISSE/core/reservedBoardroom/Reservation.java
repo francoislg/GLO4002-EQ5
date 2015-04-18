@@ -23,7 +23,7 @@ public class Reservation {
 	}
 
 	public boolean containsBoardroom(AssignedBoardroom assignedBoardroom) {
-		return assignedBoardroom.equals(assignedBoardroom);
+		return this.assignedBoardroom.equals(assignedBoardroom);
 	}
 
 	public boolean hasPromoter(Email promoter) {

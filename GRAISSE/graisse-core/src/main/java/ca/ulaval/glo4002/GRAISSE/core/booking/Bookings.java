@@ -45,9 +45,10 @@ public class Bookings {
 		bookingCanceller.cancelBooking(booking);
 	}
 
-	public List<BookingDTO> getBookingsForEmail(Email email) {
+	public List<BookingDTO> getBookingsWithEmail(Email email) {
 		Collection<Booking> retrievedBookings = bookingRepository.retrieveAllForEmail(email);
 		List<BookingDTO> bookingDTOList = new ArrayList<BookingDTO>();
+
 		for (Booking booking : retrievedBookings) {
 			bookingDTOList.add(convertToDTO(booking));
 		}
