@@ -73,7 +73,7 @@ public class BookingRessource {
 	@Path("/{COURRIEL}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public BookingsForEmailResponse getBookingForEmail(@PathParam("COURRIEL") String promoter) {
-		List<BookingDTO> foundBookings = bookings.getBookingsForEmail(getEmail(promoter));
+		List<BookingDTO> foundBookings = bookings.getBookingsWithEmail(getEmail(promoter));
 		return new BookingsForEmailResponse(foundBookings);
 	}
 

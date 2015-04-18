@@ -32,12 +32,9 @@ public class BookingsTest {
 
 	@Mock
 	Booking booking;
-
+	
 	@Mock
-	Booking unassignableBooking1;
-
-	@Mock
-	Booking unassignableBooking2;
+	Booking booking2;
 
 	@Mock
 	Booking assignableBooking;
@@ -50,11 +47,10 @@ public class BookingsTest {
 
 	@Mock
 	BoardroomsSortingStrategy boardroomsSortingStrategy;
+	
+	Collection<Booking> bookingsWithoutAssignableBookings;
 
 	Bookings bookings;
-	Collection<Booking> emptyBookingCollection;
-	Collection<Booking> bookingsWithOneAssignableBookings;
-	Collection<Booking> bookingsWithoutAssignableBookings;
 
 	@Before
 	public void setUp() {
@@ -72,6 +68,24 @@ public class BookingsTest {
 		setUpEmptyBookings();
 		assertFalse(bookings.hasAssignableBookings());
 	}
+	
+	@Test
+	public void givenZeroUnassignedBookingGetNumberOfUnassignedBookingShouldReturnZero() {
+		setUpEmptyBookings();
+		assertEquals(0, bookings.getNumberOfAssignableBookings());
+	}
+
+	@Test
+	public void givenARepositoryWithAllUnassignableBookingBookingsShouldNotHaveAssignableBooking() {
+		setUpEmptyBookings();
+		assertFalse(bookings.hasAssignableBookings());
+	}
+	
+	private void setUpEmptyBookings() {
+		Collection<Booking> emptyBookingCollection = new ArrayList<Booking>();
+		doReturn(emptyBookingCollection).when(bookingRepository).getAssignableBookings();
+		when(bookingsSortingStrategy.sort(any())).thenReturn(emptyBookingCollection);
+	}
 
 	@Test
 	public void givenARepositoryWithOneUnassignedBookingBookingsShouldHaveUnassignedBookings() {
@@ -86,61 +100,42 @@ public class BookingsTest {
 	}
 
 	@Test
-	public void givenZeroUnassignedBookingGetNumberOfUnassignedBookingShouldReturnZero() {
-		setUpEmptyBookings();
-		assertEquals(0, bookings.getNumberOfAssignableBookings());
-	}
-
-	@Test
-	public void givenARepositoryWithAllUnassignableBookingBookingsShouldNotHaveAssignableBooking() {
-		setUpEmptyBookings();
-		assertFalse(bookings.hasAssignableBookings());
-	}
-
-	@Test
-	public void givenOneAssignableBookingassignBookingsToBoardroomsShouldPersistAssignableBooking() {
+	public void givenOneAssignableBookingAssignBookingsToBoardroomsShouldPersistAssignableBooking() {
 		setUpOneAssignableBookingInBookings();
 
 		bookings.assignBookingsToBoardrooms(boardrooms, bookingsSortingStrategy, boardroomsSortingStrategy);
 		verify(bookingRepository).persist(assignableBooking);
 	}
+	
+	private void setUpOneAssignableBookingInBookings() {
+		Collection<Booking> bookingsWithOneAssignableBookings = new ArrayList<Booking>();
+		bookingsWithOneAssignableBookings.add(assignableBooking);
 
-	@Ignore
-	@Test
-	public void cancelBookingShouldCancelTheBooking() {
-
+		doReturn(bookingsWithOneAssignableBookings).when(bookingRepository).getAssignableBookings();
+		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneAssignableBookings);
 	}
 
-	@Ignore
 	@Test
-	public void cancelBookingShouldPersistTheBooking() {
-
+	public void givenOneBookingWhenCancellingShoulPersistTheBooking() {
+		bookings.cancelBooking(booking);
+		verify(bookingRepository).persist(booking);
 	}
-
+	
+	@Test
+	public void givenOneBookingWhenCancellingShouldCancelTheReservationWithTheBooking() {
+		bookings.cancelBooking(booking);
+		verify(bookingCanceller).cancelBooking(booking);
+	}
+	
 	@Ignore
 	@Test
-	public void cancelBookingShouldCancelTheReservationOfTheBooking() {
-
+	public void givenAnEmailWhenRetrievingBookingsWithEmailShouldReturnAllBookingsWithTheEmail() {
+		
 	}
 
 	@Ignore
 	@Test
 	public void getBookingsForEmailShouldReturnAListOfBookingDTO() {
-
-	}
-
-	private void setUpEmptyBookings() {
-		emptyBookingCollection = new ArrayList<Booking>();
-		doReturn(emptyBookingCollection).when(bookingRepository).getAssignableBookings();
-		when(bookingsSortingStrategy.sort(any())).thenReturn(emptyBookingCollection);
-	}
-
-	private void setUpOneAssignableBookingInBookings() {
-		bookingsWithOneAssignableBookings = new ArrayList<Booking>();
-		bookingsWithOneAssignableBookings.add(assignableBooking);
-
-		doReturn(bookingsWithOneAssignableBookings).when(bookingRepository).getAssignableBookings();
-		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneAssignableBookings);
 
 	}
 }

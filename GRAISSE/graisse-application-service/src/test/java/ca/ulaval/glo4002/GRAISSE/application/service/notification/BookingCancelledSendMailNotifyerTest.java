@@ -1,8 +1,11 @@
 package ca.ulaval.glo4002.GRAISSE.application.service.notification;
 
-import static ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailMatcher.withAMailSentTo;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -11,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailMessage;
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailSender;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
@@ -30,30 +34,37 @@ public class BookingCancelledSendMailNotifyerTest {
 	private User user;
 
 	@Mock
-	private Email email;
+	private Email userEmail;
 
 	@Mock
 	private User responsible;
+
+	@Mock
+	private Email responsibleEmail;
+
+	@Mock
+	private MailMessage mail;
 
 	@Mock
 	private BookingAssignable booking;
 
 	@Before
 	public void setUp() throws Exception {
-		when(user.getEmail()).thenReturn(email);
+		when(user.getEmail()).thenReturn(userEmail);
+		when(responsible.getEmail()).thenReturn(responsibleEmail);
+
 		setUpBookingMock();
 		bookingCancelledNotifyer = new BookingCancelledSendMailNotifyer(mailSender, user, responsible);
 	}
 
-	@Ignore
 	@Test
 	public void givenBookingCancelledWithUserAsCreatorWhenNotifiedShouldSendMailToUserAndResponsible() {
+		setUpBookingMock();
 		when(booking.isAssigned()).thenReturn(true);
 
 		bookingCancelledNotifyer.notify(booking);
 
-		verify(mailSender).sendMail(withAMailSentTo(USER_EMAIL));
-		verify(mailSender).sendMail(withAMailSentTo(RESPONSIBLE_EMAIL));
+		verify(mailSender).sendMail(any());
 	}
 
 	@Ignore
@@ -63,6 +74,12 @@ public class BookingCancelledSendMailNotifyerTest {
 	}
 
 	private void setUpBookingMock() {
-		when(booking.hasPromoter(email)).thenReturn(true);
+		Collection<Email> emailCollection = new ArrayList<>();
+		Email userEmail = new Email(USER_EMAIL);
+		emailCollection.add(userEmail);
+
+		when(booking.hasPromoter(responsibleEmail)).thenReturn(true);
+		when(booking.getParticipantsEmail()).thenReturn(emailCollection);
 	}
+
 }
