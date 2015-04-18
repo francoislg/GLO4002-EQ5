@@ -18,6 +18,12 @@ public class TimedSequentialTrigger implements Observer<Booker> {
 	private TimerFactory timerFactory;
 	private BookerTimerTaskFactory bookerTimerTaskFactory;
 
+	public TimedSequentialTrigger(long intervalInMinutes) {
+		this(intervalInMinutes,
+				new TimerFactory(),
+				new BookerTimerTaskFactory());
+	}
+	
 	public TimedSequentialTrigger(long intervalInMinutes, TimerFactory timerFactory,
 			BookerTimerTaskFactory bookerTimerTaskFactory) {
 		setInterval(intervalInMinutes);
