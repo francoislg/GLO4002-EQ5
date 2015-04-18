@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,29 +15,48 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingTest {
 
+	private static final String USER_EMAIL = "RANDOM_EMAIL@test.ca";
 	private static final Priority PRIORITY_VALUE_OF_BOOKING = Priority.LOW;
 	private static final Priority PRIORITY_VALUE_OF_BOOKING_BIGGER = Priority.HIGH;
 	private static final Priority PRIORITY_VALUE_OF_BOOKING_SMALLER = Priority.VERY_LOW;
+	private static final Priority DEFAULT_PRIORITY_VALUE = Priority.MEDIUM;
 	private static final int NUMBER_OF_SEATS_IN_BOOKING = 10;
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_SMALLER_THAN_THE_BOOKING = 9;
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_EQUAL_TO_THE_BOOKING = 10;
 	private static final int A_NUMBER_OF_SEATS_THAT_IS_BIGGER_THAN_THE_BOOKING = 11;
 
 	@Mock
+	Email email;
+
+	@Mock
 	User user;
 
 	Booking booking;
+	Booking bookingWithDefaultPriority;
+	Booking bookingWithMediumPriority;
 
 	@Before
 	public void setUp() {
+		when(user.hasEmail(email)).thenReturn(true);
+		when(email.getValue()).thenReturn(USER_EMAIL);
 		booking = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, PRIORITY_VALUE_OF_BOOKING);
 	}
 
+	@Test
+	public void whenBookingIsInstantiatedWithoutPriorityTheBookingShouldHaveAMediumPriority() {
+		bookingWithMediumPriority = new Booking (user, NUMBER_OF_SEATS_IN_BOOKING, DEFAULT_PRIORITY_VALUE);
+		bookingWithDefaultPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING);
+		int result = bookingWithDefaultPriority.comparePriorityToBooking(bookingWithMediumPriority);
+		
+		assertEquals(result, 0);
+	}
+	
 	@Test
 	public void assignShouldAssignTheBooking() {
 		booking.assign();
@@ -44,14 +64,42 @@ public class BookingTest {
 	}
 
 	@Test
-	public void givenSameUserAsBookingHasCreatorShouldReturnTrue() {
-		assertTrue(booking.hasCreator(user));
+	public void givenSameUserAsBookingHasPromoterShouldReturnTrue() {
+		assertTrue(booking.hasPromoter(email));
+	}
+	
+	@Test
+	public void whenNotCanceledAndNotAssignedIsAssignableShouldReturnTrue() {
+		assertTrue(booking.isAssignable());
 	}
 
 	@Test
-	public void givenAnotherUserHasCreatorShouldReturnTrue() {
-		User another_user = mock(User.class);
-		assertFalse(booking.hasCreator(another_user));
+	public void whenCanceledIsAssignableShouldReturnFalse() {
+		booking.cancel();
+		assertFalse(booking.isAssignable());
+	}
+
+	@Test
+	public void whenAssignedIsAssignableShouldReturnFalse() {
+		booking.assign();
+		assertFalse(booking.isAssignable());
+	}
+	
+	@Test
+	public void whenBookingIsNotYetAssignedStateShouldNotBeAssigned() {
+		assertFalse(booking.isAssigned());
+	}
+	
+	@Test
+	public void whenAssigningBookingStateShouldBeAssigned() {
+		booking.assign();
+		assertTrue(booking.isAssigned());
+	}
+
+	@Test
+	public void givenAnotherEmailHasPromoterShouldReturnFalse() {
+		Email another_email = mock(Email.class);
+		assertFalse(booking.hasPromoter(another_email));
 	}
 
 	@Test
@@ -94,5 +142,31 @@ public class BookingTest {
 		int result = booking.comparePriorityToBooking(bookingWithEqualPriority);
 
 		assertEquals(0, result);
+	}
+	
+	@Test
+	public void whenRefusingBookingStateShouldBeRefused() {
+		booking.refuse();
+		assertEquals(BookingState.REFUSED, booking.getState());
+	}
+	
+	@Test
+	public void whenCancellingBookingStateShouldBeCancelled() {
+		booking.cancel();
+		assertEquals(BookingState.CANCELLED, booking.getState());
+	}
+	
+	@Test
+	public void addingAParticipantShouldBePresentInList() {
+		booking.addParticipant(email);
+		assertTrue(booking.getParticipantsEmail().contains(email));
+	}
+
+	@Test
+	public void addingTheSameParticipantTwiceShouldAddOnceInList() {
+		booking.addParticipant(email);
+		booking.addParticipant(email);
+		
+		assertEquals(booking.getParticipantsEmail().size(), 1);
 	}
 }

@@ -1,47 +1,38 @@
 package ca.ulaval.glo4002.GRAISSE.core.booking;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class Bookings {
 
 	private BookingRepository bookingRepository;
-	private InterfaceReservationBooking interfaceReservationBooking;
+	private BookingCanceller bookingCanceller;
 
-	public Bookings(BookingRepository bookingRepository, InterfaceReservationBooking interfaceReservationBooking) {
+	public Bookings(BookingRepository bookingRepository, BookingCanceller bookingCanceller) {
 		this.bookingRepository = bookingRepository;
-		this.interfaceReservationBooking = interfaceReservationBooking;
+		this.bookingCanceller = bookingCanceller;
 	}
 
 	public void add(Booking booking) {
 		bookingRepository.persist(booking);
 	}
 
-	public boolean hasUnassignedBookings() {
-		return getNumberOfUnassignedBookings() > 0;
+	public boolean hasAssignableBookings() {
+		return getNumberOfAssignableBookings() > 0;
 	}
 
-	public int getNumberOfUnassignedBookings() {
-		return getUnassignedBookings().size();
-	}
-
-	private Collection<Booking> getUnassignedBookings() {
-		Collection<Booking> bookings = bookingRepository.retrieveAll();
-		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
-			Booking booking = bookingIter.next();
-			if (booking.isAssigned()) {
-				bookingIter.remove();
-			}
-		}
-		return bookings;
+	public int getNumberOfAssignableBookings() {
+		return bookingRepository.getAssignableBookings().size();
 	}
 
 	public void assignBookingsToBoardrooms(Boardrooms boardrooms, BookingsSortingStrategy bookingsSortingStrategy,
 			BoardroomsSortingStrategy boardroomsSortingStrategy) {
-		Collection<Booking> formatedBookingList = bookingsSortingStrategy.sort(getUnassignedBookings());
+		Collection<Booking> formatedBookingList = bookingsSortingStrategy.sort(bookingRepository);
 		for (Booking booking : formatedBookingList) {
 			boardrooms.assignBookingToBoardroom(booking, boardroomsSortingStrategy);
 			bookingRepository.persist(booking);
@@ -51,6 +42,20 @@ public class Bookings {
 	public void cancelBooking(Booking booking) {
 		booking.cancel();
 		bookingRepository.persist(booking);
-		interfaceReservationBooking.cancelBooking(booking);
+		bookingCanceller.cancelBooking(booking);
+	}
+
+	public List<BookingDTO> getBookingsWithEmail(Email email) {
+		Collection<Booking> retrievedBookings = bookingRepository.retrieveAllForEmail(email);
+		List<BookingDTO> bookingDTOList = new ArrayList<BookingDTO>();
+
+		for (Booking booking : retrievedBookings) {
+			bookingDTOList.add(convertToDTO(booking));
+		}
+		return bookingDTOList;
+	}
+
+	private BookingDTO convertToDTO(Booking booking) {
+		return new BookingDTO(booking.getID(), booking.getNumberOfSeats(), booking.getPromoterEmail(), booking.getState(), "");
 	}
 }

@@ -26,16 +26,18 @@ public class Boardroom implements AssignedBoardroom {
 		return name;
 	}
 
-	public boolean assign(BookingAssignable bookingToAssign, InterfaceReservationBoardroom interfaceReservationBoardroom) {
-		if (verifyNumberOfSeats(bookingToAssign) && interfaceReservationBoardroom.isAvailable(this)) {
-			interfaceReservationBoardroom.assign(this, bookingToAssign);
-			bookingToAssign.assign();
-			return true;
-		}
-		return false;
+	public void assign(BookingAssignable bookingToAssign, ReservationAssigner reservationAssigner) {
+		reservationAssigner.assign(this, bookingToAssign);
 	}
 
 	public int compareByNumberOfSeats(Boardroom boardrooomToCompare) {
 		return Integer.compare(numberOfSeats, boardrooomToCompare.numberOfSeats);
+	}
+
+	public boolean canAssign(BookingAssignable bookingToAssign, ReservationAssigner reservationAssigner) {
+		if (verifyNumberOfSeats(bookingToAssign) && reservationAssigner.isAvailable(this)) {
+			return true;
+		}
+		return false;
 	}
 }

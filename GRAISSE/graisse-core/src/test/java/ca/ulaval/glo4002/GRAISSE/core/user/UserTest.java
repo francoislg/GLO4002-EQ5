@@ -13,7 +13,6 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserTest {
-
 	@Mock
 	Email email;
 
