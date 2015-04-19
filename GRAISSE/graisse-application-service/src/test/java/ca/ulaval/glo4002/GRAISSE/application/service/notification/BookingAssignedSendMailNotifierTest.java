@@ -16,7 +16,7 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookingAssignedSendMailNotifyerTest {
+public class BookingAssignedSendMailNotifierTest {
 
 	private static final String USER_EMAIL = "email@totalyanemail.ca";
 	private static final String RESPONSIBLE_EMAIL = "email@responsible.com";
