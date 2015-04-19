@@ -23,7 +23,6 @@ import ca.ulaval.glo4002.GRAISSE.core.user.User;
 @RunWith(MockitoJUnitRunner.class)
 public class BookingCancelledSendMailNotifierTest {
 	private static final String USER_EMAIL = "A_USER_EMAIL@email.ca";
-	private static final String RESPONSIBLE_EMAIL = "RESPONSIBLE@email.ca";
 
 	BookingCancelledSendMailNotifier bookingCancelledNotifyer;
 

@@ -27,6 +27,7 @@ public class FillerConfig {
 
 	public void addReservation(Booking booking, Boardroom boardroom) {
 		if (bookings.contains(booking) && boardrooms.contains(boardroom)) {
+			booking.assign();
 			reservations.add(new Reservation(boardroom, booking));
 		} else {
 			throw new CannotAddReservation();

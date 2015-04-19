@@ -77,7 +77,7 @@ public class ReservationTest {
 	@Test
 	public void givenAnAssignedBookingWhenCancellingReservationShouldCancelTheAssignedBooking() {
 		reservation.cancel();
-		assertTrue(reservation.isCancel());
+		assertTrue(reservation.isCancelled());
 	}
 
 	@Test

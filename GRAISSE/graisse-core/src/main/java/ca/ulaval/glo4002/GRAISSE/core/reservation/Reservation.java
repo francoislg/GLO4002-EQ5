@@ -10,12 +10,12 @@ public class Reservation {
 
 	private AssignedBoardroom assignedBoardroom;
 	private AssignedBooking assignedBooking;
-	private Boolean isCancel;
+	private Boolean cancelled;
 
-	public Reservation(AssignedBoardroom assignedBoardroom, AssignedBooking bookingToAssign) {
+	public Reservation(AssignedBoardroom assignedBoardroom, AssignedBooking assignedBooking) {
 		this.assignedBoardroom = assignedBoardroom;
-		this.assignedBooking = bookingToAssign;
-		this.isCancel = false;
+		this.assignedBooking = assignedBooking;
+		this.cancelled = false;
 	}
 
 	public boolean containsBooking(AssignedBooking booking) {
@@ -35,11 +35,11 @@ public class Reservation {
 	}
 
 	public void cancel() {
-		isCancel = true;
+		cancelled = true;
 	}
 
-	public boolean isCancel() {
-		return isCancel;
+	public boolean isCancelled() {
+		return cancelled;
 	}
 
 	public int getNumberOfSeats() {

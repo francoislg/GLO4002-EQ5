@@ -93,7 +93,7 @@ public class ReservationInMemoryRepository implements ReservationRepository {
 	private Collection<Reservation> retrieveActiveReservationForBoardroom(Boardroom boardroom) {
 		Collection<Reservation> reservations = new ArrayList<Reservation>();
 		for (Reservation reservation : reservations) {
-			if (!reservation.isCancel() && reservation.hasBoardroomName(boardroom.getName())) {
+			if (!reservation.isCancelled() && reservation.hasBoardroomName(boardroom.getName())) {
 				reservations.add(reservation);
 			}
 		}
