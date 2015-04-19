@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.GRAISSE.application.service.shared.ServiceLocator;
 import ca.ulaval.glo4002.GRAISSE.context.ContextBase;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomRepository;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationRepository;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
 import ca.ulaval.glo4002.GRAISSE.persistence.BoardroomInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.persistence.BookingInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.persistence.ReservationInMemoryRepository;
