@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.AssignedBoardroom;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingState;
@@ -33,9 +32,6 @@ public class ReservationTest {
 	AssignedBoardroom boardroomNotAssignedToReservation;
 
 	@Mock
-	BookingAssignable bookingToAssign;
-
-	@Mock
 	AssignedBooking assignedBooking;
 
 	@Mock
@@ -48,7 +44,7 @@ public class ReservationTest {
 
 	@Before
 	public void setUp() {
-		reservation = new Reservation(assignedBoardroom, bookingToAssign);
+		reservation = new Reservation(assignedBoardroom, assignedBooking);
 	}
 
 	@Test
@@ -68,7 +64,7 @@ public class ReservationTest {
 
 	@Test
 	public void givenAnAssignedBookingWhenCheckingIfReservationHasThePromoterhouldReturnTrue() {
-		when(bookingToAssign.hasPromoter(promoter)).thenReturn(true);
+		when(assignedBooking.hasPromoter(promoter)).thenReturn(true);
 		assertTrue(reservation.hasPromoter(promoter));
 	}
 
@@ -86,21 +82,21 @@ public class ReservationTest {
 
 	@Test
 	public void givenAnAssignedBookingWhenAskingForNumberOfSeatsShouldReturnNumberOfSeatsOfAssignedBooking() {
-		when(bookingToAssign.getNumberOfSeats()).thenReturn(NUMBER_OF_SEATS);
+		when(assignedBooking.getNumberOfSeats()).thenReturn(NUMBER_OF_SEATS);
 		int result = reservation.getNumberOfSeats();
 		assertEquals(result, NUMBER_OF_SEATS);
 	}
 
 	@Test
 	public void givenAnAssignedBookingWhenAskingForPromoterShouldReturnPromoterOfAssignedBooking() {
-		when(bookingToAssign.getPromoterEmail()).thenReturn(A_PROMOTER_EMAIL);
+		when(assignedBooking.getPromoterEmail()).thenReturn(A_PROMOTER_EMAIL);
 		String result = reservation.getPromoterEmail();
 		assertEquals(result, A_PROMOTER_EMAIL);
 	}
 
 	@Test
 	public void givenAnAssignedBookingWhenAskingForStateShouldReturnStateOfAssignedBooking() {
-		when(bookingToAssign.getState()).thenReturn(BookingState.WAITING);
+		when(assignedBooking.getState()).thenReturn(BookingState.WAITING);
 		assertEquals(reservation.getState(), BookingState.WAITING);
 	}
 
@@ -112,13 +108,13 @@ public class ReservationTest {
 
 	@Test
 	public void givenAnAssignedBookingWhenAskingForBookingIDShouldReturnBookingIDOfAssignedBooking() {
-		when(bookingToAssign.getID()).thenReturn(bookingID);
+		when(assignedBooking.getID()).thenReturn(bookingID);
 		assertEquals(reservation.getBookingID(), bookingID);
 	}
 
 	@Test
 	public void givenAnAssignedBookingWhenCheckingIfReservationHasBookingIDShouldReturnTrue() {
-		when(bookingToAssign.hasID(bookingID)).thenReturn(true);
+		when(assignedBooking.hasID(bookingID)).thenReturn(true);
 		assertTrue(reservation.hasBookingID(bookingID));
 	}
 }

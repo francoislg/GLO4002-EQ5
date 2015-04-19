@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.core.reservation;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.AssignedBoardroom;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingState;
@@ -10,21 +9,21 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 public class Reservation {
 
 	private AssignedBoardroom assignedBoardroom;
-	private BookingAssignable assignedBooking;
+	private AssignedBooking assignedBooking;
 	private Boolean isCancel;
 
-	public Reservation(AssignedBoardroom assignedBoardroom, BookingAssignable bookingToAssign) {
+	public Reservation(AssignedBoardroom assignedBoardroom, AssignedBooking bookingToAssign) {
 		this.assignedBoardroom = assignedBoardroom;
 		this.assignedBooking = bookingToAssign;
 		this.isCancel = false;
 	}
 
-	public boolean containsBooking(AssignedBooking assignedBooking) {
-		return this.assignedBooking.equals(assignedBooking);
+	public boolean containsBooking(AssignedBooking booking) {
+		return assignedBooking.equals(booking);
 	}
 
-	public boolean containsBoardroom(AssignedBoardroom assignedBoardroom) {
-		return this.assignedBoardroom.equals(assignedBoardroom);
+	public boolean containsBoardroom(AssignedBoardroom boardroom) {
+		return assignedBoardroom.equals(boardroom);
 	}
 
 	public boolean hasPromoter(Email promoter) {

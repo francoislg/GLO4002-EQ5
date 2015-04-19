@@ -16,7 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailMessage;
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailSender;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
+import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
@@ -46,7 +46,7 @@ public class BookingCancelledSendMailNotifyerTest {
 	private MailMessage mail;
 
 	@Mock
-	private BookingAssignable booking;
+	private AssignedBooking booking;
 
 	@Before
 	public void setUp() throws Exception {
@@ -62,7 +62,7 @@ public class BookingCancelledSendMailNotifyerTest {
 		setUpBookingMock();
 		when(booking.isAssigned()).thenReturn(true);
 		when(booking.hasPromoter(any())).thenReturn(true);
-		
+
 		bookingCancelledNotifyer.notify(booking);
 
 		verify(mailSender).sendMail(any());
