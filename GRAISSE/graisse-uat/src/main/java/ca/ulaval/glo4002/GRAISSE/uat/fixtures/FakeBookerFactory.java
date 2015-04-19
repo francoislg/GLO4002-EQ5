@@ -4,7 +4,6 @@ import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
 import ca.ulaval.glo4002.GRAISSE.application.service.shared.ServiceLocator;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomRepository;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
-import ca.ulaval.glo4002.GRAISSE.core.booking.BookingCanceller;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationRepository;
@@ -17,12 +16,7 @@ public class FakeBookerFactory {
 	}
 	
 	private static Bookings getBookings() {
-		return new Bookings(ServiceLocator.getInstance().resolve(BookingRepository.class),
-				getBookingCanceller());
-	}
-	
-	private static BookingCanceller getBookingCanceller() {
-		return null; //NEED BIG REFACTOR!! 
+		return new Bookings(ServiceLocator.getInstance().resolve(BookingRepository.class));
 	}
 	
 	private static Boardrooms getBoardrooms() {

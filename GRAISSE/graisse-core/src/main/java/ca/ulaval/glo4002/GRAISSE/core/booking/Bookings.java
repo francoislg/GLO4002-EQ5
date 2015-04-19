@@ -9,11 +9,9 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 public class Bookings {
 
 	private BookingRepository bookingRepository;
-	private BookingCanceller bookingCanceller;
 
-	public Bookings(BookingRepository bookingRepository, BookingCanceller bookingCanceller) {
+	public Bookings(BookingRepository bookingRepository) {
 		this.bookingRepository = bookingRepository;
-		this.bookingCanceller = bookingCanceller;
 	}
 
 	public void add(Booking booking) {
@@ -30,12 +28,6 @@ public class Bookings {
 
 	public Collection<Booking> getBookingsWithStrategy(BookingsSortingStrategy bookingsSortingStrategy) {
 		return bookingsSortingStrategy.sort(bookingRepository);
-	}
-
-	public void cancelBooking(Booking booking) {
-		booking.cancel();
-		bookingRepository.persist(booking);
-		bookingCanceller.cancelBooking(booking);
 	}
 
 	public void assignBooking(Booking booking) {
