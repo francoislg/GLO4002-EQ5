@@ -33,10 +33,6 @@ public class Reservation {
 		return assignedBoardroom.hasName(boardroomName);
 	}
 
-	public void cancel() {
-		assignedBooking.cancel();
-	}
-
 	public int getNumberOfSeats() {
 		return assignedBooking.getNumberOfSeats();
 	}
