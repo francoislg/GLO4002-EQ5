@@ -37,6 +37,4 @@ public class Canceler {
 			reservationRepository.remove(reservationToCancel);
 		}
 	}
-	
-
 }

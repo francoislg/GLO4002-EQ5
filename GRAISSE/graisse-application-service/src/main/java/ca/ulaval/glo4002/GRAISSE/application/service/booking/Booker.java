@@ -37,10 +37,6 @@ public class Booker {
 		notifyTriggers();
 	}
 
-	public void cancelBooking(Booking booking) {
-		reservations.cancelBooking(booking);
-	}
-
 	public void setBookerStrategy(BookerStrategy bookerStrategy) {
 		this.bookerStrategy = bookerStrategy;
 	}
