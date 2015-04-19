@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.application.service.booking;
 
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservations;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservations;
 
 public interface BookerStrategy {
 

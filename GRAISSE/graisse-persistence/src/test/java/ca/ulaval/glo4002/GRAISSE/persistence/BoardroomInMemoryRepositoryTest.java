@@ -75,7 +75,6 @@ public class BoardroomInMemoryRepositoryTest {
 	@Test
 	public void givenMultipleBoardroomsRetrievingEachBoardroomShouldReturnEachBoardroom() {
 		addThreeBoardroomtoBoardroomsRespository();
-
 		Boardroom boardroom1 = repoBoardrooms.retrieve(A_BOARDROOM_NAME);
 		Boardroom boardroom2 = repoBoardrooms.retrieve(A_BOARDROOM_NAME_2);
 		Boardroom boardroom3 = repoBoardrooms.retrieve(A_BOARDROOM_NAME_3);

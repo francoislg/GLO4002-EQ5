@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom;
+package ca.ulaval.glo4002.GRAISSE.core.reservation;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,6 +19,9 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.UnableToAssignBookingE
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategy;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservations;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReservationsTest {

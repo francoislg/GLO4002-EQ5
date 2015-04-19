@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom;
+package ca.ulaval.glo4002.GRAISSE.core.reservation;
 
 import java.util.ArrayList;
 import java.util.Collection;

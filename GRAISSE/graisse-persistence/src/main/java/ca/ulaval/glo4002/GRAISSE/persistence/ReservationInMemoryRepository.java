@@ -7,9 +7,9 @@ import java.util.List;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservation;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationNotFoundException;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationRepository;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationNotFoundException;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class ReservationInMemoryRepository implements ReservationRepository {
