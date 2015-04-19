@@ -40,8 +40,11 @@ public class BookingRessource {
 		BookingRepository bookingRepository = new BookingInMemoryRepository();
 		BoardroomRepository boardroomRepository = new BoardroomInMemoryRepository();
 		ReservationRepository reservationsRepository = new ReservationInMemoryRepository();
-		this.reservations = new Reservations(reservationsRepository);
-		Boardrooms boardrooms = new Boardrooms(boardroomRepository, reservations);
+		Boardrooms boardrooms = new Boardrooms(boardroomRepository);
+		
+		//null pour l'instant... need refactoring
+		this.reservations = new Reservations(reservationsRepository, boardrooms, null);
+		
 		this.bookings = new Bookings(bookingRepository, reservations);
 		this.booker = new Booker(bookings, boardrooms, reservations);
 

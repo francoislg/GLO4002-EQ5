@@ -26,7 +26,7 @@ public class GraisseStories extends JUnitStories {
 
     private Format[] formats = new Format[]{CONSOLE};
     private StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
-            .withCodeLocation(codeLocationFromClass(GraisseStories.class)).withFailureTrace(true).withFailureTraceCompression(false)
+            .withCodeLocation(codeLocationFromClass(GraisseStories.class)).withFailureTrace(true).withFailureTraceCompression(true)
             .withDefaultFormats().withFormats(formats);
 
     public static void main(String[] args) {
