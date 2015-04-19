@@ -25,4 +25,6 @@ public interface ReservationRepository {
 
 	public Reservation retrieve(Email email, BookingID bookingID) throws ReservationNotFoundException;
 
+	boolean activeReservationWithBoardroomExist(Boardroom boardroom);
+
 }
