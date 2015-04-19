@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom;
+package ca.ulaval.glo4002.GRAISSE.core.reservation;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
@@ -15,6 +15,7 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingState;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 @RunWith(MockitoJUnitRunner.class)
