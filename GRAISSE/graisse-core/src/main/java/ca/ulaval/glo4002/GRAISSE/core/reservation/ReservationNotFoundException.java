@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom;
+package ca.ulaval.glo4002.GRAISSE.core.reservation;
 
 public class ReservationNotFoundException extends RuntimeException {
 

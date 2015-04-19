@@ -15,8 +15,8 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.AssignedBoardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservation;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationNotFoundException;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationNotFoundException;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 @RunWith(MockitoJUnitRunner.class)

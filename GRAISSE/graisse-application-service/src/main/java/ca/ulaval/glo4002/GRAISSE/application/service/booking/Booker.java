@@ -8,7 +8,7 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategyDefault
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategyDefault;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservations;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservations;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Observer;
 
 public class Booker {

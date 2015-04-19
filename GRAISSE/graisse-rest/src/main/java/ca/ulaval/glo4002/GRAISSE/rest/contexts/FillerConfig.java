@@ -5,7 +5,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservation;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
 public class FillerConfig {

@@ -3,8 +3,8 @@ package ca.ulaval.glo4002.GRAISSE.application.service.canceling;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservation;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationRepository;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public class Canceler {

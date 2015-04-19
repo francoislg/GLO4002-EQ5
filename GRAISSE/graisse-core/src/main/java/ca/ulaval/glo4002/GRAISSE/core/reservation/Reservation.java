@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom;
+package ca.ulaval.glo4002.GRAISSE.core.reservation;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.AssignedBoardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;

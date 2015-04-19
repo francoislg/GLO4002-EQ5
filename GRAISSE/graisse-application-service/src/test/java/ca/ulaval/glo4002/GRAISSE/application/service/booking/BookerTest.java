@@ -14,7 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservations;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservations;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Observer;
 
 @RunWith(MockitoJUnitRunner.class)
