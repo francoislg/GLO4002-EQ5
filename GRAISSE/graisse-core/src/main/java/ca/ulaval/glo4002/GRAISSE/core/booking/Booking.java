@@ -71,7 +71,7 @@ public class Booking implements BookingAssignable, AssignedBooking {
 	}
 
 	public void addParticipant(Email email) {
-		if(!participants.contains(email)) {
+		if (!participants.contains(email)) {
 			participants.add(email);
 		}
 	}
@@ -85,8 +85,8 @@ public class Booking implements BookingAssignable, AssignedBooking {
 		return numberOfSeatsNeeded;
 	}
 
-	public String getPromoterEmail() {
-		return promoter.getEmail().getValue();
+	public Email getPromoterEmail() {
+		return promoter.getEmail();
 	}
 
 	public BookingState getState() {

@@ -89,8 +89,8 @@ public class ReservationTest {
 
 	@Test
 	public void givenAnAssignedBookingWhenAskingForPromoterShouldReturnPromoterOfAssignedBooking() {
-		when(assignedBooking.getPromoterEmail()).thenReturn(A_PROMOTER_EMAIL);
-		String result = reservation.getPromoterEmail();
+		when(assignedBooking.getPromoterEmail()).thenReturn(new Email(A_PROMOTER_EMAIL));
+		String result = reservation.getPromoterEmail().getValue();
 		assertEquals(result, A_PROMOTER_EMAIL);
 	}
 

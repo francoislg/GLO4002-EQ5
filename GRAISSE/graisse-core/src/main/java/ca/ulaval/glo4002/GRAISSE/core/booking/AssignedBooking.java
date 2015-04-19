@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 public interface AssignedBooking {
 
-	public String getPromoterEmail();
+	public Email getPromoterEmail();
 
 	public BookingState getState();
 

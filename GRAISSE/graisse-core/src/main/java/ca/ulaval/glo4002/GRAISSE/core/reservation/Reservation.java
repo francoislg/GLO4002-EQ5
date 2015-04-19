@@ -46,7 +46,7 @@ public class Reservation {
 		return assignedBooking.getNumberOfSeats();
 	}
 
-	public String getPromoterEmail() {
+	public Email getPromoterEmail() {
 		return assignedBooking.getPromoterEmail();
 	}
 

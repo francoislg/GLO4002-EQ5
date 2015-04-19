@@ -46,7 +46,7 @@ public class Bookings {
 	}
 
 	private BookingDTO convertToDTO(Booking booking) {
-		return new BookingDTO(booking.getID(), booking.getNumberOfSeats(), booking.getPromoterEmail(), booking.getState(), "");
+		return new BookingDTO(booking.getID(), booking.getNumberOfSeats(), booking.getPromoterEmail().getValue(), booking.getState(), "");
 	}
 
 }
