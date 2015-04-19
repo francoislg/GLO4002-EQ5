@@ -7,7 +7,7 @@ import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Notifyer;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
-public class BookingAssignedSendMailNotifyer implements Notifyer<AssignedBooking> {
+public class BookingAssignationSendMailNotifier implements Notifyer<AssignedBooking> {
 
 	private static final String MAIL_SUBJECT = "Update on your booking";
 	private static final String BOOKING_IS_ASSIGNED_MESSAGE = "Congratulations ! Assignation succeeded !";
@@ -16,7 +16,7 @@ public class BookingAssignedSendMailNotifyer implements Notifyer<AssignedBooking
 	private MailSender mailSender;
 	private User responsible;
 
-	public BookingAssignedSendMailNotifyer(MailSender mailSender, User responsible) {
+	public BookingAssignationSendMailNotifier(MailSender mailSender, User responsible) {
 		this.mailSender = mailSender;
 		this.responsible = responsible;
 	}

@@ -25,7 +25,7 @@ public class BookingCancelledSendMailNotifyerTest {
 	private static final String USER_EMAIL = "A_USER_EMAIL@email.ca";
 	private static final String RESPONSIBLE_EMAIL = "RESPONSIBLE@email.ca";
 
-	BookingCancelledSendMailNotifyer bookingCancelledNotifyer;
+	BookingCancelledSendMailNotifier bookingCancelledNotifyer;
 
 	@Mock
 	private MailSender mailSender;
@@ -54,7 +54,7 @@ public class BookingCancelledSendMailNotifyerTest {
 		when(responsible.getEmail()).thenReturn(responsibleEmail);
 
 		setUpBookingMock();
-		bookingCancelledNotifyer = new BookingCancelledSendMailNotifyer(mailSender, user, responsible);
+		bookingCancelledNotifyer = new BookingCancelledSendMailNotifier(mailSender, user, responsible);
 	}
 
 	@Test

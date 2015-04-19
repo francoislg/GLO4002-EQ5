@@ -8,7 +8,7 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Notifyer;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
-public class BookingCancelledSendMailNotifyer implements Notifyer<AssignedBooking> {
+public class BookingCancelledSendMailNotifier implements Notifyer<AssignedBooking> {
 
 	private static final String MAIL_SUBJECT = "Reservation Anulation";
 	private static final String MAIL_MESSAGE = "Booking is cancelled";
@@ -17,7 +17,7 @@ public class BookingCancelledSendMailNotifyer implements Notifyer<AssignedBookin
 	private User user;
 	private User responsible;
 
-	public BookingCancelledSendMailNotifyer(MailSender mailSender, User user, User responsible) {
+	public BookingCancelledSendMailNotifier(MailSender mailSender, User user, User responsible) {
 		this.mailSender = mailSender;
 		this.user = user;
 		this.responsible = responsible;

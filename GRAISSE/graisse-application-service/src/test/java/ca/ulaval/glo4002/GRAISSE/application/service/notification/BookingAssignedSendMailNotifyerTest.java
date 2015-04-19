@@ -33,20 +33,20 @@ public class BookingAssignedSendMailNotifyerTest {
 	@Mock
 	MailSender mailSender;
 
-	BookingAssignedSendMailNotifyer bookingAssignedSendMailNotifyer;
+	BookingAssignationSendMailNotifier bookingAssignationSendMailNotifier;
 
 	@Before
 	public void setUp() throws Exception {
 		setUpUsersMocks();
 		setUpBookingMock();
-		bookingAssignedSendMailNotifyer = new BookingAssignedSendMailNotifyer(mailSender, responsible);
+		bookingAssignationSendMailNotifier = new BookingAssignationSendMailNotifier(mailSender, responsible);
 	}
 
 	@Test
 	public void givenBookingAssignedWithUserAsCreatorWhenNotifiedShouldSendMailToUserAndResponsible() {
 		when(booking.isAssigned()).thenReturn(true);
 
-		bookingAssignedSendMailNotifyer.notify(booking);
+		bookingAssignationSendMailNotifier.notify(booking);
 
 		verify(mailSender).sendMail(withAMailSentTo(USER_EMAIL));
 		verify(mailSender).sendMail(withAMailSentTo(RESPONSIBLE_EMAIL));
@@ -56,7 +56,7 @@ public class BookingAssignedSendMailNotifyerTest {
 	public void givenBookingNotAssignedWithUserAsCreatorWhenNotifiedShouldSendMailToUserAndResponsible() {
 		when(booking.isAssigned()).thenReturn(false);
 
-		bookingAssignedSendMailNotifyer.notify(booking);
+		bookingAssignationSendMailNotifier.notify(booking);
 
 		verify(mailSender).sendMail(withAMailSentTo(USER_EMAIL));
 		verify(mailSender).sendMail(withAMailSentTo(RESPONSIBLE_EMAIL));
