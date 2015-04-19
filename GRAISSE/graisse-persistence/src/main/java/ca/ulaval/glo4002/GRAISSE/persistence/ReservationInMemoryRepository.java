@@ -75,6 +75,12 @@ public class ReservationInMemoryRepository implements ReservationRepository {
 	}
 
 	@Override
+	public boolean activeReservationWithBoardroomExist(Boardroom boardroom) {
+		Collection<Reservation> reservations = retrieveActiveReservationForBoardroom(boardroom);
+		return !reservations.isEmpty();
+	}
+
+	@Override
 	public boolean exists(AssignedBooking assignedBooking) {
 		for (Reservation reservation : reservations) {
 			if (reservation.containsBooking(assignedBooking)) {
@@ -82,5 +88,15 @@ public class ReservationInMemoryRepository implements ReservationRepository {
 			}
 		}
 		return false;
+	}
+
+	private Collection<Reservation> retrieveActiveReservationForBoardroom(Boardroom boardroom) {
+		Collection<Reservation> reservations = new ArrayList<Reservation>();
+		for (Reservation reservation : reservations) {
+			if (!reservation.isCancel() && reservation.hasBoardroomName(boardroom.getName())) {
+				reservations.add(reservation);
+			}
+		}
+		return reservations;
 	}
 }

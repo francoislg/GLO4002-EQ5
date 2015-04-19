@@ -33,7 +33,7 @@ public class Reservations {
 	}
 
 	private boolean isAvailable(Boardroom boardroom) {
-		return !reservationRepository.exists(boardroom);
+		return !reservationRepository.activeReservationWithBoardroomExist(boardroom);
 	}
 
 	public void assign(Boardroom boardroom, Booking booking) {

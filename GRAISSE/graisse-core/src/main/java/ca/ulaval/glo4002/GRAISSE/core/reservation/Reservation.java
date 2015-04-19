@@ -11,10 +11,12 @@ public class Reservation {
 
 	private AssignedBoardroom assignedBoardroom;
 	private BookingAssignable assignedBooking;
+	private Boolean isCancel;
 
 	public Reservation(AssignedBoardroom assignedBoardroom, BookingAssignable bookingToAssign) {
 		this.assignedBoardroom = assignedBoardroom;
 		this.assignedBooking = bookingToAssign;
+		this.isCancel = false;
 	}
 
 	public boolean containsBooking(AssignedBooking assignedBooking) {
@@ -31,6 +33,14 @@ public class Reservation {
 
 	public boolean hasBoardroomName(String boardroomName) {
 		return assignedBoardroom.hasName(boardroomName);
+	}
+
+	public void cancel() {
+		isCancel = true;
+	}
+
+	public boolean isCancel() {
+		return isCancel;
 	}
 
 	public int getNumberOfSeats() {
