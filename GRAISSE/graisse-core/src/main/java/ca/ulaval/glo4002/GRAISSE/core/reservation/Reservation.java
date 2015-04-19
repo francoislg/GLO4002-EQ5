@@ -18,7 +18,7 @@ public class Reservation {
 	}
 
 	public boolean containsBooking(AssignedBooking assignedBooking) {
-		return assignedBooking.equals(assignedBooking);
+		return this.assignedBooking.equals(assignedBooking);
 	}
 
 	public boolean containsBoardroom(AssignedBoardroom assignedBoardroom) {
