@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
@@ -59,5 +60,29 @@ public class BookingInMemoryRepository implements BookingRepository {
 			}
 		}
 		return bookings;
+	}
+
+	@Override
+	public boolean exists(Email email, BookingID bookingID) {
+		Collection<Booking> bookings = this.retrieveAll();
+		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
+			Booking booking = bookingIter.next();
+			if (booking.hasPromoter(email) && booking.hasID(bookingID)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public Booking retrieve(Email email, BookingID bookingID) {
+		Collection<Booking> bookings = this.retrieveAll();
+		for (Iterator<Booking> bookingIter = bookings.iterator(); bookingIter.hasNext();) {
+			Booking booking = bookingIter.next();
+			if (booking.hasPromoter(email) && booking.hasID(bookingID)) {
+				return booking;
+			}
+		}
+		throw new BookingNotFoundException();
 	}
 }
