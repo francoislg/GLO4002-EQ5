@@ -16,7 +16,7 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookingAssignedSendMailNotifyerTest {
+public class BookingAssignedSendMailNotifierTest {
 
 	private static final String USER_EMAIL = "email@totalyanemail.ca";
 	private static final String RESPONSIBLE_EMAIL = "email@responsible.com";
@@ -29,27 +29,24 @@ public class BookingAssignedSendMailNotifyerTest {
 
 	@Mock
 	User responsible;
-	
-	@Mock
-	Email email;
 
 	@Mock
 	MailSender mailSender;
 
-	BookingAssignedSendMailNotifyer bookingAssignedSendMailNotifyer;
+	BookingAssignationSendMailNotifier bookingAssignationSendMailNotifier;
 
 	@Before
 	public void setUp() throws Exception {
 		setUpUsersMocks();
 		setUpBookingMock();
-		bookingAssignedSendMailNotifyer = new BookingAssignedSendMailNotifyer(mailSender, user, responsible);
+		bookingAssignationSendMailNotifier = new BookingAssignationSendMailNotifier(mailSender, responsible);
 	}
 
 	@Test
 	public void givenBookingAssignedWithUserAsCreatorWhenNotifiedShouldSendMailToUserAndResponsible() {
 		when(booking.isAssigned()).thenReturn(true);
 
-		bookingAssignedSendMailNotifyer.notify(booking);
+		bookingAssignationSendMailNotifier.notify(booking);
 
 		verify(mailSender).sendMail(withAMailSentTo(USER_EMAIL));
 		verify(mailSender).sendMail(withAMailSentTo(RESPONSIBLE_EMAIL));
@@ -59,19 +56,18 @@ public class BookingAssignedSendMailNotifyerTest {
 	public void givenBookingNotAssignedWithUserAsCreatorWhenNotifiedShouldSendMailToUserAndResponsible() {
 		when(booking.isAssigned()).thenReturn(false);
 
-		bookingAssignedSendMailNotifyer.notify(booking);
+		bookingAssignationSendMailNotifier.notify(booking);
 
 		verify(mailSender).sendMail(withAMailSentTo(USER_EMAIL));
 		verify(mailSender).sendMail(withAMailSentTo(RESPONSIBLE_EMAIL));
 	}
 
 	private void setUpBookingMock() {
-		when(booking.hasPromoter(email)).thenReturn(true);
+		when(booking.hasPromoter(new Email(USER_EMAIL))).thenReturn(true);
+		when(booking.getPromoterEmail()).thenReturn(new Email(USER_EMAIL));
 	}
 
 	private void setUpUsersMocks() {
-		when(email.getValue()).thenReturn(USER_EMAIL);
-		when(user.getEmail()).thenReturn(email);
 		when(responsible.getEmail()).thenReturn(new Email(RESPONSIBLE_EMAIL));
 	}
 }

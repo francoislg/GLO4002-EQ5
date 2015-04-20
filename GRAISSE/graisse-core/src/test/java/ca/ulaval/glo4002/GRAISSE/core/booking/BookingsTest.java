@@ -28,9 +28,6 @@ public class BookingsTest {
 	BookingRepository bookingRepository;
 
 	@Mock
-	BookingCanceller bookingCanceller;
-
-	@Mock
 	Booking booking;
 
 	@Mock
@@ -54,7 +51,7 @@ public class BookingsTest {
 
 	@Before
 	public void setUp() {
-		bookings = new Bookings(bookingRepository, bookingCanceller);
+		bookings = new Bookings(bookingRepository);
 	}
 
 	@Test
@@ -105,18 +102,6 @@ public class BookingsTest {
 
 		doReturn(bookingsWithOneAssignableBookings).when(bookingRepository).getAssignableBookings();
 		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneAssignableBookings);
-	}
-
-	@Test
-	public void givenOneBookingWhenCancellingShoulPersistTheBooking() {
-		bookings.cancelBooking(booking);
-		verify(bookingRepository).persist(booking);
-	}
-
-	@Test
-	public void givenOneBookingWhenCancellingShouldCancelTheReservationWithTheBooking() {
-		bookings.cancelBooking(booking);
-		verify(bookingCanceller).cancelBooking(booking);
 	}
 
 	@Ignore

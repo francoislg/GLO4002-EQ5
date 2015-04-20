@@ -16,16 +16,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailMessage;
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailSender;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
+import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookingCancelledSendMailNotifyerTest {
+public class BookingCancelledSendMailNotifierTest {
 	private static final String USER_EMAIL = "A_USER_EMAIL@email.ca";
-	private static final String RESPONSIBLE_EMAIL = "RESPONSIBLE@email.ca";
 
-	BookingCancelledSendMailNotifyer bookingCancelledNotifyer;
+	BookingCancelledSendMailNotifier bookingCancelledNotifyer;
 
 	@Mock
 	private MailSender mailSender;
@@ -46,7 +45,7 @@ public class BookingCancelledSendMailNotifyerTest {
 	private MailMessage mail;
 
 	@Mock
-	private BookingAssignable booking;
+	private AssignedBooking booking;
 
 	@Before
 	public void setUp() throws Exception {
@@ -54,7 +53,7 @@ public class BookingCancelledSendMailNotifyerTest {
 		when(responsible.getEmail()).thenReturn(responsibleEmail);
 
 		setUpBookingMock();
-		bookingCancelledNotifyer = new BookingCancelledSendMailNotifyer(mailSender, user, responsible);
+		bookingCancelledNotifyer = new BookingCancelledSendMailNotifier(mailSender, user, responsible);
 	}
 
 	@Test
@@ -62,7 +61,7 @@ public class BookingCancelledSendMailNotifyerTest {
 		setUpBookingMock();
 		when(booking.isAssigned()).thenReturn(true);
 		when(booking.hasPromoter(any())).thenReturn(true);
-		
+
 		bookingCancelledNotifyer.notify(booking);
 
 		verify(mailSender).sendMail(any());

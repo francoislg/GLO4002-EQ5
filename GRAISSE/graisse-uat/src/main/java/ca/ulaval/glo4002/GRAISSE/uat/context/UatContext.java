@@ -4,10 +4,10 @@ import ca.ulaval.glo4002.GRAISSE.application.service.shared.ServiceLocator;
 import ca.ulaval.glo4002.GRAISSE.context.ContextBase;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomRepository;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationRepository;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
 import ca.ulaval.glo4002.GRAISSE.persistence.BoardroomInMemoryRepository;
 import ca.ulaval.glo4002.GRAISSE.persistence.BookingInMemoryRepository;
-import ca.ulaval.glo4002.GRAISSE.persistence.CompletedBookingRequestInMemoryRepository;
+import ca.ulaval.glo4002.GRAISSE.persistence.ReservationInMemoryRepository;
 
 public class UatContext extends ContextBase {
 
@@ -20,7 +20,7 @@ public class UatContext extends ContextBase {
 	protected void registerServices() {
 		ServiceLocator.getInstance().register(BoardroomRepository.class, new BoardroomInMemoryRepository());
 		ServiceLocator.getInstance().register(BookingRepository.class, new BookingInMemoryRepository());
-		ServiceLocator.getInstance().register(ReservationRepository.class, new CompletedBookingRequestInMemoryRepository());
+		ServiceLocator.getInstance().register(ReservationRepository.class, new ReservationInMemoryRepository());
 	}
 
 	@Override

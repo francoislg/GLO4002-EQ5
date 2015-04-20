@@ -19,9 +19,6 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.UnableToAssignBookingE
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategy;
-import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
-import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
-import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservations;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReservationsTest {
@@ -85,7 +82,7 @@ public class ReservationsTest {
 		boardroomsCollection.add(boardroom);
 		when(boardrooms.getBoardroomsWithStrategy(boardroomsSortingStrategy)).thenReturn(boardroomsCollection);
 		when(boardroom.canAssign(booking)).thenReturn(true);
-		when(reservationRepository.exists(boardroom)).thenReturn(true);
+		when(reservationRepository.activeReservationWithBoardroomExist(boardroom)).thenReturn(true);
 
 		reservations.assignBookingsToBoardrooms(bookingsSortingStrategy, boardroomsSortingStrategy);
 

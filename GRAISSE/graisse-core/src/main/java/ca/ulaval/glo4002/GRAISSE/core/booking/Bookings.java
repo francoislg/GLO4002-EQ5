@@ -9,11 +9,9 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 public class Bookings {
 
 	private BookingRepository bookingRepository;
-	private BookingCanceller bookingCanceller;
 
-	public Bookings(BookingRepository bookingRepository, BookingCanceller bookingCanceller) {
+	public Bookings(BookingRepository bookingRepository) {
 		this.bookingRepository = bookingRepository;
-		this.bookingCanceller = bookingCanceller;
 	}
 
 	public void add(Booking booking) {
@@ -32,12 +30,6 @@ public class Bookings {
 		return bookingsSortingStrategy.sort(bookingRepository);
 	}
 
-	public void cancelBooking(Booking booking) {
-		booking.cancel();
-		bookingRepository.persist(booking);
-		bookingCanceller.cancelBooking(booking);
-	}
-
 	public void assignBooking(Booking booking) {
 		booking.assign();
 		bookingRepository.persist(booking);
@@ -54,7 +46,7 @@ public class Bookings {
 	}
 
 	private BookingDTO convertToDTO(Booking booking) {
-		return new BookingDTO(booking.getID(), booking.getNumberOfSeats(), booking.getPromoterEmail(), booking.getState(), "");
+		return new BookingDTO(booking.getID(), booking.getNumberOfSeats(), booking.getPromoterEmail().getValue(), booking.getState(), "");
 	}
 
 }

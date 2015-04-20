@@ -15,9 +15,9 @@ import ca.ulaval.glo4002.GRAISSE.core.booking.BookingDTO;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationNotFoundException;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservations;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationRepository;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationNotFoundException;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservations;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.shared.InvalidEmailException;
 import ca.ulaval.glo4002.GRAISSE.persistence.BoardroomInMemoryRepository;
@@ -40,11 +40,12 @@ public class BookingRessource {
 		BookingRepository bookingRepository = new BookingInMemoryRepository();
 		BoardroomRepository boardroomRepository = new BoardroomInMemoryRepository();
 		ReservationRepository reservationsRepository = new ReservationInMemoryRepository();
-		this.reservations = new Reservations(reservationsRepository);
-		Boardrooms boardrooms = new Boardrooms(boardroomRepository, reservations);
-		this.bookings = new Bookings(bookingRepository, reservations);
-		this.booker = new Booker(bookings, boardrooms, reservations);
-
+		Boardrooms boardrooms = new Boardrooms(boardroomRepository);
+		
+		bookings = new Bookings(bookingRepository);
+		reservations = new Reservations(reservationsRepository, boardrooms, bookings);
+		
+		booker = new Booker(bookings, boardrooms, reservations);
 		FillerConfig config = DemoFillerConfig.get();
 
 		new BookingRepositoryFiller(config).fill(bookingRepository);

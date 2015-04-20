@@ -15,8 +15,8 @@ import ca.ulaval.glo4002.GRAISSE.core.booking.BookingDTO;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingState;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationNotFoundException;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservations;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationNotFoundException;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservations;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.rest.interfaces.form.RetrievedBookingResponse;
 

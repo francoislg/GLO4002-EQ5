@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.GRAISSE.rest.contexts;
 
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservation;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationRepository;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
 
 public class ReservationsRepositoryFiller {
 	private FillerConfig config;

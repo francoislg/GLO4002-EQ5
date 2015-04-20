@@ -23,8 +23,8 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomRepository;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.Reservation;
-import ca.ulaval.glo4002.GRAISSE.core.reservedBoardroom.ReservationRepository;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
+import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
 import ca.ulaval.glo4002.GRAISSE.uat.fixtures.FakeBookerFactory;
 import ca.ulaval.glo4002.GRAISSE.uat.fixtures.FakeBookingFactory;
 import ca.ulaval.glo4002.GRAISSE.uat.steps.ReservationsSteps.ReservationStepState;
@@ -97,14 +97,12 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		ReservationRepository reservationRepository = getReservationRepository();
 		Reservation reservation = reservationRepository.retrieve(state().booking);
 
-		assertTrue("The reservation should be associated with the first available boardroom", 
-				reservation.containsBoardroom(state().firstAvailableBoardroom));
+		assertTrue("The reservation should be associated with the first available boardroom", reservation.containsBoardroom(state().firstAvailableBoardroom));
 	}
 
 	@Then("two applications are to be processed")
 	public void thenTwoApplicationsAreToBeProcessed() {
-		assertEquals("The reservation should be associated with the first available boardroom", 2, 
-				state().booker.numberOfBookingsToAssign());
+		assertEquals("The reservation should be associated with the first available boardroom", 2, state().booker.numberOfBookingsToAssign());
 	}
 
 	@Then("the applications are processed at the end of the interval")
