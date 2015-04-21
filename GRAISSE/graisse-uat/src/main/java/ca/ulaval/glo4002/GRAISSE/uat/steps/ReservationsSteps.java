@@ -56,7 +56,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	}
 
 	@Given("a room with $numberOfSeats seats")
-	public void givenARoomWith10Seats(int numberOfSeats) {
+	public void givenARoomWithANumberOfSeats(int numberOfSeats) {
 		state().lastRoom = new Boardroom("room with " + numberOfSeats + " seats", numberOfSeats);
 
 		BoardroomRepository boardroomRepository = getBoardroomRepository();
@@ -147,7 +147,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		ReservationRepository reservationRepository = getReservationRepository();
 		Reservation reservation = reservationRepository.retrieve(state().booking);
 
-		assertTrue("The reservation should be associated with the best fitting boardroom", reservation.containsBoardroom(state().lastRoom));
+		assertTrue("The reservation should be associated with the last boardroom", reservation.containsBoardroom(state().lastRoom));
 	}
 
 	private void ensureThatMockedTimerDoesNotStartANewThread() {
