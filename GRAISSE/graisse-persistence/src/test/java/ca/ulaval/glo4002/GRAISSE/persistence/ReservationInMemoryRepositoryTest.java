@@ -23,6 +23,7 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 public class ReservationInMemoryRepositoryTest {
 	
 	private static final int NUMBER_OF_RESERVATIONS = 3;
+	private static final String A_BOARDROOM_NAME = "Trylz";
 	
 	@Mock
 	Reservation reservation1;
@@ -154,6 +155,33 @@ public class ReservationInMemoryRepositoryTest {
 	public void givenAnInexistentReservationWhenCheckingIfItExistsByPromoterAndBookingIdShouldReturnFalse() {
 		setUpRepoWithMultipleReservations();
 		assertFalse(reservationInMemoryRepository.exists(promoter, bookingID));
+	}
+	
+	@Test
+	public void givenAnExistentBookingCheckingIfExistShouldReturnTrue() {
+		when(reservation1.containsBooking(assignedBooking1)).thenReturn(true);
+		reservationInMemoryRepository.persist(reservation1);
+		
+		assertTrue(reservationInMemoryRepository.exists(assignedBooking1));
+	}
+	
+	@Test
+	public void givenAnInexistentBookingCheckingIfExistShouldReturnTrue() {
+		when(reservation1.containsBooking(assignedBooking1)).thenReturn(false);
+		reservationInMemoryRepository.persist(reservation1);
+		
+		assertFalse(reservationInMemoryRepository.exists(assignedBooking1));
+	}
+	
+	@Test
+	public void givenAnExistentBoardroomCheckingIfReservationIsActiveShouldReturnTrue() {
+		when(boardroom.getName() ).thenReturn(A_BOARDROOM_NAME);
+		when(reservation1.containsBoardroom(boardroom)).thenReturn(true);
+		when(reservation1.hasBoardroomName(boardroom.getName())).thenReturn(true);
+		
+		reservationInMemoryRepository.persist(reservation1);
+		
+		assertTrue(reservationInMemoryRepository.activeReservationWithBoardroomExist(boardroom));
 	}
 	
 	private void setUpRepoWithMultipleReservations() {
