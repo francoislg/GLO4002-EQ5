@@ -117,7 +117,13 @@ public class BookingInMemoryRepositoryTest {
 	@Ignore
 	@Test
 	public void givenAnUnorderedBookingsListWhenSortingByPriorityShouldReturnSorted() {
-		
+		setUp();
+		setUpMocksForMultipleBookings();
+		setUpUnorderedBookingsRepo();
+
+		Collection<Booking> listOfBookings = bookingInMemoryRepository.retrieveSortedByPriority(); 
+
+		assertTrue(listOfBookings == orderedBookingList() );
 	}
 
 	@Ignore
