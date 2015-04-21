@@ -17,7 +17,7 @@ And an application to be processed
 When an other application to be processed is added
 Then two applications are to be processed
 
-Scenario: queued bookings are to be processed at a specfified interval
+Scenario: queued bookings are to be processed at a specified interval
 Given some rooms
 And some applications
 And an interval
