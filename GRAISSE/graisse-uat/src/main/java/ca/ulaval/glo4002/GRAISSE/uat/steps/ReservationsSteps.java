@@ -14,6 +14,9 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
+import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategiesFactory;
+import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategiesFactory.StrategyType;
+import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategy;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTask;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTaskFactory;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.TimedSequentialTrigger;
@@ -25,6 +28,8 @@ import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
 import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
 import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
+import ca.ulaval.glo4002.GRAISSE.core.user.User;
 import ca.ulaval.glo4002.GRAISSE.uat.fixtures.FakeBookerFactory;
 import ca.ulaval.glo4002.GRAISSE.uat.fixtures.FakeBookingFactory;
 import ca.ulaval.glo4002.GRAISSE.uat.steps.ReservationsSteps.ReservationStepState;
@@ -50,11 +55,32 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		boardroomRepository.persist(state().secondAvailableBoardroom);
 	}
 
+	@Given("a room with $numberOfSeats seats")
+	public void givenARoomWithANumberOfSeats(int numberOfSeats) {
+		state().lastRoom = new Boardroom("room with " + numberOfSeats + " seats", numberOfSeats);
+
+		BoardroomRepository boardroomRepository = getBoardroomRepository();
+		boardroomRepository.persist(state().lastRoom);
+	}
+
+	@Given("a sort by seats strategy")
+	public void givenSortBySeatsStrategy() {
+		state().bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.PRIORITY);
+	}
+
+	@Given("an application with $numberOfSeats seats")
+	public void givenAnApplicationWithSeatsToBeProcessed(int numberOfSeats) {
+		state().booking = new Booking(state().user, numberOfSeats);
+
+		state().booker.setBookerStrategy(state().bookerSortingStrategy);
+		state().booker.addBooking(state().booking);
+	}
+
 	@Given("an application to be processed")
 	public void givenAnApplicationToBeProcessed() {
 		state().booking = FakeBookingFactory.create();
 
-		state().booker = FakeBookerFactory.create();
+		state().booker.setBookerStrategy(state().bookerSortingStrategy);
 		state().booker.addBooking(state().booking);
 	}
 
@@ -66,8 +92,6 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 	@Given("an interval")
 	public void givenAnInterval() {
-		state().booker = FakeBookerFactory.create();
-
 		ensureThatMockedTimerDoesNotStartANewThread();
 		doReturn(state().bookerTimerTask).when(state().bookerTimerTaskFactory).createBookerTimerTask(state().booker);
 		doReturn(state().timer).when(state().timerFactory).createTimer();
@@ -110,6 +134,22 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		verify(state().timer).schedule(state().bookerTimerTask, AN_INTERVAL_IN_MILLISECOND);
 	}
 
+	@Then("the reservation should be associated with the first fitting room")
+	public void thenTheReservationShouldBeAssociatedWithTheFirstFittingRoom() {
+		ReservationRepository reservationRepository = getReservationRepository();
+		Reservation reservation = reservationRepository.retrieve(state().booking);
+
+		assertTrue("The reservation should be associated with the first fitting boardroom", reservation.containsBoardroom(state().firstAvailableBoardroom));
+	}
+
+	@Then("the reservation should be associated with the last room")
+	public void thenTheReservationShouldBeAssociatedWithTheLastRoom() {
+		ReservationRepository reservationRepository = getReservationRepository();
+		Reservation reservation = reservationRepository.retrieve(state().booking);
+
+		assertTrue("The reservation should be associated with the last boardroom", reservation.containsBoardroom(state().lastRoom));
+	}
+
 	private void ensureThatMockedTimerDoesNotStartANewThread() {
 		doNothing().when(state().timer).schedule(state().bookerTimerTask, AN_INTERVAL_IN_MILLISECOND);
 	}
@@ -127,11 +167,14 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	}
 
 	public class ReservationStepState extends StepState {
+		Boardroom lastRoom;
+		User user = new User(new Email("random@email.ca"));
+		BookerStrategy bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.BASIC);
 		Boardroom firstAvailableBoardroom;
 		Boardroom secondAvailableBoardroom;
 		Booking booking;
 		Booking secondBooking;
-		Booker booker;
+		Booker booker = FakeBookerFactory.create();
 		TimedSequentialTrigger timedTrigger;
 
 		BookerTimerTaskFactory bookerTimerTaskFactory = mock(BookerTimerTaskFactory.class);
