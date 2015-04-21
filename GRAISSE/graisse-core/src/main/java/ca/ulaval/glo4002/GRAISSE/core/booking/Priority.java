@@ -12,4 +12,13 @@ public enum Priority {
 	public int compare(Priority priorityToCompare) {
 		return Integer.compare(value, priorityToCompare.value);
 	}
+
+	public static Priority integerToPriority(int priority) {
+		Priority[] list = Priority.values();
+		if (priority < 0 || priority > list.length) {
+			return Priority.MEDIUM;
+		} else {
+			return list[priority];
+		}
+	}
 }
