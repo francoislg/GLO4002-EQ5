@@ -126,21 +126,13 @@ public class BookingInMemoryRepositoryTest {
 
 	@Test(expected = BookingNotFoundException.class)
 	public void givenBookingWithDifferentIdWhenRetrievingShouldThrowBookingNotFoundException() {
-		when(booking.hasPromoter(promoter)).thenReturn(true);
-		when(booking.hasID(bookingID)).thenReturn(false);
-
-		bookingInMemoryRepository.persist(booking);
-
+		setUpMockBooking(true, false);
 		bookingInMemoryRepository.retrieve(promoter, bookingID);
 	}
 
 	@Test(expected = BookingNotFoundException.class)
 	public void givenBookingWithDifferentEmailWhenRetrievingShouldThrowBookingNotFoundException() {
-		when(booking.hasPromoter(promoter)).thenReturn(false);
-		when(booking.hasID(bookingID)).thenReturn(true);
-
-		bookingInMemoryRepository.persist(booking);
-
+		setUpMockBooking(false, true);
 		bookingInMemoryRepository.retrieve(promoter, bookingID);
 	}
 	
@@ -152,31 +144,19 @@ public class BookingInMemoryRepositoryTest {
 	
 	@Test
 	public void givenInexistentBookingWithEmailAndIdWhenCheckingIfExistsShouldReturnFalse() {
-		when(booking.hasPromoter(promoter)).thenReturn(false);
-		when(booking.hasID(bookingID)).thenReturn(false);
-		
-		bookingInMemoryRepository.persist(booking);
-		
+		setUpMockBooking(false, false);
 		assertFalse(bookingInMemoryRepository.exists(promoter, bookingID));
 	}
 	
 	@Test
 	public void givenInexistentBookingWithEmailWhenCheckingIfExistsShouldReturnFalse() {
-		when(booking.hasPromoter(promoter)).thenReturn(false);
-		when(booking.hasID(bookingID)).thenReturn(true);
-		
-		bookingInMemoryRepository.persist(booking);
-		
+		setUpMockBooking(false, true);
 		assertFalse(bookingInMemoryRepository.exists(promoter, bookingID));
 	}
 	
 	@Test
 	public void givenInexistentBookingWithIdWhenCheckingIfExistsShouldReturnFalse() {
-		when(booking.hasPromoter(promoter)).thenReturn(true);
-		when(booking.hasID(bookingID)).thenReturn(false);
-		
-		bookingInMemoryRepository.persist(booking);
-		
+		setUpMockBooking(true, false);
 		assertFalse(bookingInMemoryRepository.exists(promoter, bookingID));
 	}
 
@@ -189,6 +169,13 @@ public class BookingInMemoryRepositoryTest {
 
 		bookingInMemoryRepository.persist(booking);
 		bookingInMemoryRepository.persist(anotherBooking);
+	}
+	
+	private void setUpMockBooking(boolean hasPromoter, boolean hasBookingID) {
+		when(booking.hasPromoter(promoter)).thenReturn(hasPromoter);
+		when(booking.hasID(bookingID)).thenReturn(hasBookingID);
+		
+		bookingInMemoryRepository.persist(booking);
 	}
 
 	private void setUpMocksForMultipleBookings() {
