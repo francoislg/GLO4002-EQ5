@@ -69,21 +69,24 @@ public class BookingRessource {
 		new UserRepositoryFiller(config).fill(userRepository);
 	}
 
-	public BookingRessource(Booker booker, Bookings bookings, Reservations reservations) {
+	public BookingRessource(Booker booker, Bookings bookings, Reservations reservations, UserRepository userRepository) {
 		this.booker = booker;
 		this.bookings = bookings;
 		this.reservations = reservations;
+		this.userRepository = userRepository;
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addNewBooking(AddBookingForm form) throws URISyntaxException {
-		System.out.println(form.courrielOrganisateur);
-		System.out.println(form.nombrePersonne);
+	public Response addNewBooking(AddBookingForm form) {
 		Booking booking = new Booking(getUser(form.courrielOrganisateur), form.nombrePersonne, Priority.integerToPriority(form.priorite));
 		booker.addBooking(booking);
-		System.out.println(booking.getID());
-		URI targetURIForRedirection = new URI("/demandes/" + form.courrielOrganisateur + "/" + booking.getID());
+		URI targetURIForRedirection;
+		try {
+			targetURIForRedirection = new URI("/demandes/" + form.courrielOrganisateur + "/" + booking.getID());
+		} catch (URISyntaxException e) {
+			return Response.serverError().build();
+		}
 		return Response.seeOther(targetURIForRedirection).build();
 	}
 
