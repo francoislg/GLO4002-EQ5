@@ -50,16 +50,16 @@ public class BoardroomInMemoryRepositoryTest {
 	@Mock
 	Boardroom boardroomWithMostNumberOfSeats;
 
-	BoardroomInMemoryRepository repoBoardrooms;
+	BoardroomInMemoryRepository boardroomInMemoryRepository;
 
 	@Before
 	public void setUp() {
-		repoBoardrooms = new BoardroomInMemoryRepository();
+		boardroomInMemoryRepository = new BoardroomInMemoryRepository();
 	}
 
 	@Test
 	public void newRepositoryShouldBeEmpty() {
-		Collection<Boardroom> result = repoBoardrooms.retrieveAll();
+		Collection<Boardroom> result = boardroomInMemoryRepository.retrieveAll();
 		assertTrue(result.isEmpty());
 	}
 
@@ -67,7 +67,7 @@ public class BoardroomInMemoryRepositoryTest {
 	public void givenOneBoardroomRetrievingBoardroomShouldReturnTheBoardroom() {
 		addOneBoardroomtoBoardrooms();
 
-		Boardroom boardroom = repoBoardrooms.retrieve(A_BOARDROOM_NAME);
+		Boardroom boardroom = boardroomInMemoryRepository.retrieve(A_BOARDROOM_NAME);
 
 		assertTrue(boardroom.hasName(A_BOARDROOM_NAME));
 	}
@@ -75,9 +75,9 @@ public class BoardroomInMemoryRepositoryTest {
 	@Test
 	public void givenMultipleBoardroomsRetrievingEachBoardroomShouldReturnEachBoardroom() {
 		addThreeBoardroomtoBoardroomsRespository();
-		Boardroom boardroom1 = repoBoardrooms.retrieve(A_BOARDROOM_NAME);
-		Boardroom boardroom2 = repoBoardrooms.retrieve(A_BOARDROOM_NAME_2);
-		Boardroom boardroom3 = repoBoardrooms.retrieve(A_BOARDROOM_NAME_3);
+		Boardroom boardroom1 = boardroomInMemoryRepository.retrieve(A_BOARDROOM_NAME);
+		Boardroom boardroom2 = boardroomInMemoryRepository.retrieve(A_BOARDROOM_NAME_2);
+		Boardroom boardroom3 = boardroomInMemoryRepository.retrieve(A_BOARDROOM_NAME_3);
 
 		assertTrue(boardroom1.hasName(A_BOARDROOM_NAME));
 		assertTrue(boardroom2.hasName(A_BOARDROOM_NAME_2));
@@ -86,15 +86,15 @@ public class BoardroomInMemoryRepositoryTest {
 
 	@Test(expected = BoardroomNotFoundException.class)
 	public void givenNoExistingBoardroomRetrivingShouldThrowBoardroomNotFoundExeption() {
-		repoBoardrooms.retrieve(NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST);
+		boardroomInMemoryRepository.retrieve(NAME_OF_BOARDROOM_THAT_DOES_NOT_EXIST);
 	}
 
 	@Test
 	public void whenPersistingTwiceTheSameBoardroomTheRepositoryShouldContainOneBoardroom() {
-		repoBoardrooms.persist(boardroom);
-		repoBoardrooms.persist(boardroom);
+		boardroomInMemoryRepository.persist(boardroom);
+		boardroomInMemoryRepository.persist(boardroom);
 
-		int resultSize = repoBoardrooms.retrieveAll().size();
+		int resultSize = boardroomInMemoryRepository.retrieveAll().size();
 		assertEquals(1, resultSize);
 	}
 
@@ -104,7 +104,7 @@ public class BoardroomInMemoryRepositoryTest {
 		setUpRepositoryWithUnorderedListOfBoardrooms();
 		Collection<Boardroom> expectedBoardroomList = orderedListOfBoardroomsByNumberOfSeats();
 
-		Collection<Boardroom> result = repoBoardrooms.retrieveBoardroomsOrderedByNumberOfSeats();
+		Collection<Boardroom> result = boardroomInMemoryRepository.retrieveBoardroomsOrderedByNumberOfSeats();
 
 		assertEquals(expectedBoardroomList, result);
 	}
@@ -113,7 +113,7 @@ public class BoardroomInMemoryRepositoryTest {
 	public void givenAListOfBoardroomWhenSortingDefaultShouldReturnSameList() {
 		Collection<Boardroom> boardroomCollection = orderedListOfBoardroomsByNumberOfSeats();
 		setUpRepositoryWithOrderedListOfBoardrooms();
-		assertEquals(boardroomCollection, repoBoardrooms.retrieveAll());
+		assertEquals(boardroomCollection, boardroomInMemoryRepository.retrieveAll());
 	}
 
 	private void addThreeBoardroomtoBoardroomsRespository() {
@@ -121,9 +121,9 @@ public class BoardroomInMemoryRepositoryTest {
 		setBoardroomHasNameMock(boardroom2, A_BOARDROOM_NAME_2);
 		setBoardroomHasNameMock(boardroom3, A_BOARDROOM_NAME_3);
 
-		repoBoardrooms.persist(boardroom);
-		repoBoardrooms.persist(boardroom2);
-		repoBoardrooms.persist(boardroom3);
+		boardroomInMemoryRepository.persist(boardroom);
+		boardroomInMemoryRepository.persist(boardroom2);
+		boardroomInMemoryRepository.persist(boardroom3);
 	}
 
 	private void setBoardroomHasNameMock(Boardroom boardroom, String name) {
@@ -133,7 +133,7 @@ public class BoardroomInMemoryRepositoryTest {
 
 	private void addOneBoardroomtoBoardrooms() {
 		setBoardroomHasNameMock(boardroom, A_BOARDROOM_NAME);
-		repoBoardrooms.persist(boardroom);
+		boardroomInMemoryRepository.persist(boardroom);
 	}
 
 	private void setUpMocksForMultipleBoardroomsWithSeats() {
@@ -151,17 +151,17 @@ public class BoardroomInMemoryRepositoryTest {
 	}
 
 	private void setUpRepositoryWithUnorderedListOfBoardrooms() {
-		repoBoardrooms.persist(boardroomWithSecondLeastNumberOfSeats);
-		repoBoardrooms.persist(boardroomWithMostNumberOfSeats);
-		repoBoardrooms.persist(boardroomWithThirdLeastNumberOfSeats);
-		repoBoardrooms.persist(boardroomWithLeastNumberOfSeats);
+		boardroomInMemoryRepository.persist(boardroomWithSecondLeastNumberOfSeats);
+		boardroomInMemoryRepository.persist(boardroomWithMostNumberOfSeats);
+		boardroomInMemoryRepository.persist(boardroomWithThirdLeastNumberOfSeats);
+		boardroomInMemoryRepository.persist(boardroomWithLeastNumberOfSeats);
 	}
 
 	private void setUpRepositoryWithOrderedListOfBoardrooms() {
-		repoBoardrooms.persist(boardroomWithLeastNumberOfSeats);
-		repoBoardrooms.persist(boardroomWithSecondLeastNumberOfSeats);
-		repoBoardrooms.persist(boardroomWithThirdLeastNumberOfSeats);
-		repoBoardrooms.persist(boardroomWithMostNumberOfSeats);
+		boardroomInMemoryRepository.persist(boardroomWithLeastNumberOfSeats);
+		boardroomInMemoryRepository.persist(boardroomWithSecondLeastNumberOfSeats);
+		boardroomInMemoryRepository.persist(boardroomWithThirdLeastNumberOfSeats);
+		boardroomInMemoryRepository.persist(boardroomWithMostNumberOfSeats);
 	}
 
 	private Collection<Boardroom> orderedListOfBoardroomsByNumberOfSeats() {
