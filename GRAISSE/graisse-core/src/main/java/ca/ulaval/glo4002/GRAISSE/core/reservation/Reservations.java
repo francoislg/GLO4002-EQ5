@@ -81,4 +81,8 @@ public class Reservations {
 	public void registerObserver(Notifyer<BookingAssignable> observer) {
 		notifiers.add(observer);
 	}
+
+	public boolean hasReservation(Email email, BookingID bookingID) {
+		return reservationRepository.exists(email, bookingID);
+	}
 }

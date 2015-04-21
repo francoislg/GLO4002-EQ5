@@ -45,8 +45,16 @@ public class Bookings {
 		return bookingDTOList;
 	}
 
+	public BookingDTO retrieve(Email email, BookingID bookingID) {
+		Booking retrievedBooking = bookingRepository.retrieve(email, bookingID);
+		return convertToDTO(retrievedBooking);
+	}
+
+	public boolean hasBooking(Email email, BookingID bookingID) {
+		return bookingRepository.exists(email, bookingID);
+	}
+
 	private BookingDTO convertToDTO(Booking booking) {
 		return new BookingDTO(booking.getID(), booking.getNumberOfSeats(), booking.getPromoterEmail().getValue(), booking.getState(), "");
 	}
-
 }
