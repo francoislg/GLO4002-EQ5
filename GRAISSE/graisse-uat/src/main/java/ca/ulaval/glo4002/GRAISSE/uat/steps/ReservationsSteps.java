@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.GRAISSE.uat.steps;
 
+import static ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailMatcher.withAMailSentTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doNothing;
@@ -12,11 +13,14 @@ import java.util.Timer;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.mockito.Mock;
 
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategiesFactory;
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategiesFactory.StrategyType;
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategy;
+import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailSender;
+import ca.ulaval.glo4002.GRAISSE.application.service.notification.BookingAssignationSendMailNotifier;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTask;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTaskFactory;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.TimedSequentialTrigger;
@@ -40,6 +44,9 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 	private static final long AN_INTERVAL = 1;
 	private static final long AN_INTERVAL_IN_MILLISECOND = 60000;
+
+	@Mock
+	MailSender mailSender;
 
 	protected ReservationStepState getInitialState() {
 		return new ReservationStepState();
@@ -100,6 +107,11 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		state().booker.registerTrigger(state().timedTrigger);
 	}
 
+	@Given("Given an application notification system")
+	public void givenAnApplicationNotification() {
+		state().bookingAssignationSendMailNotifier = new BookingAssignationSendMailNotifier(mailSender, state().responsible);
+	}
+
 	@When("the application is processed")
 	public void whenTheApplicationIsProcessed() {
 		state().booker.assignBookings();
@@ -150,6 +162,14 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		assertTrue("The reservation should be associated with the last boardroom", reservation.containsBoardroom(state().lastRoom));
 	}
 
+	@Then("notify the organizer and responsible by email")
+	public void notifyOrganizerAndReponsibleByEmail() {
+		state().bookingAssignationSendMailNotifier.notify(state().booking);
+		verify(mailSender).sendMail(withAMailSentTo(state().booking.getPromoterEmail().getValue()));
+		verify(mailSender).sendMail(withAMailSentTo(state().responsible.getEmail().getValue()));
+
+	}
+
 	private void ensureThatMockedTimerDoesNotStartANewThread() {
 		doNothing().when(state().timer).schedule(state().bookerTimerTask, AN_INTERVAL_IN_MILLISECOND);
 	}
@@ -169,10 +189,12 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	public class ReservationStepState extends StepState {
 		Boardroom lastRoom;
 		User user = new User(new Email("random@email.ca"));
+		User responsible = new User(new Email("responsible@email.ca"));
 		BookerStrategy bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.BASIC);
 		Boardroom firstAvailableBoardroom;
 		Boardroom secondAvailableBoardroom;
 		Booking booking;
+		BookingAssignationSendMailNotifier bookingAssignationSendMailNotifier;
 		Booking secondBooking;
 		Booker booker = FakeBookerFactory.create();
 		TimedSequentialTrigger timedTrigger;
