@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE.uat.steps;
 
-import static ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailMatcher.withAMailSentTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doNothing;
@@ -13,13 +12,14 @@ import java.util.Timer;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.mockito.Mock;
 
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategiesFactory;
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategiesFactory.StrategyType;
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategy;
+import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailMessage;
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailSender;
+import ca.ulaval.glo4002.GRAISSE.application.service.mailling.SimpleMailMessage;
 import ca.ulaval.glo4002.GRAISSE.application.service.notification.BookingAssignationSendMailNotifier;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTask;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTaskFactory;
@@ -48,8 +48,9 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 	private static final int A_NUMBER_OF_SEATS = 15;
 	
-	@Mock
-	MailSender mailSender;
+	private static final String MAIL_SUBJECT = "Update on your booking";
+	private static final String BOOKING_IS_ASSIGNED_MESSAGE = "Congratulations ! Assignation succeeded !";
+	private static final String BOOKING_IS_NOT_ASSIGNED_MESSAGE = "Assignation failed !";
 
 	protected ReservationStepState getInitialState() {
 		return new ReservationStepState();
@@ -75,8 +76,8 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		boardroomRepository.persist(state().secondRoom);
 	}
 	
-	@Given("two applications to be processed with different priority")
-	public void givenTwoApplicationsToBeProcessedWithDifferentPriority() {
+	@Given("two applications to be processed with differents priorities")
+	public void givenTwoApplicationsToBeProcessedWithDifferentsPriorities() {
 		state().bookingWithVeryHighPriority = new Booking(state().user, A_NUMBER_OF_SEATS, Priority.VERY_HIGH);
 		state().bookingWithLowPriority = new Booking(state().user, A_NUMBER_OF_SEATS, Priority.LOW);
 		
@@ -86,6 +87,16 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		
 		state().booker.addBooking(state().bookingWithVeryHighPriority);
 		state().booker.addBooking(state().bookingWithLowPriority);
+	}
+	
+	@Given("an application to be processed with a priority 3")
+	public void givenAnApplicationToBeProcessedWithAPriority3() {
+		state().booking = new Booking(state().user, A_NUMBER_OF_SEATS, Priority.MEDIUM);
+		
+		BookingRepository bookingRepository = getBookingRepository();
+		bookingRepository.persist(state().booking);
+		
+		state().booker.addBooking(state().booking);
 	}
 	
 	@Given("a room with $numberOfSeats seats")
@@ -138,9 +149,9 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		state().booker.registerTrigger(state().timedTrigger);
 	}
 
-	@Given("Given an application notification system")
+	@Given("an application notification system")
 	public void givenAnApplicationNotification() {
-		state().bookingAssignationSendMailNotifier = new BookingAssignationSendMailNotifier(mailSender, state().responsible);
+		state().bookingAssignationSendMailNotifier = new BookingAssignationSendMailNotifier(state().mailSender, state().responsible);
 	}
 
 	@When("the application is processed")
@@ -161,6 +172,17 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	
 	@When("the applications are processed")
 	public void whenTheApplicationsAreProcessed() {
+		state().booker.assignBookings();
+	}
+	
+	@When("another application to be processed with the same priority is added and the applications are processed")
+	public void whenAnotherApplicationToBeProcessedWithTheSamePriorityIsAddedAndTheApplicationsAreProcessed() {
+		state().secondBooking = new Booking(state().user, A_NUMBER_OF_SEATS, Priority.MEDIUM);
+		
+		BookingRepository bookingRepository = getBookingRepository();
+		bookingRepository.persist(state().secondBooking);
+		
+		state().booker.addBooking(state().secondBooking);
 		state().booker.assignBookings();
 	}
 
@@ -197,21 +219,30 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		assertTrue("The reservation should be associated with the last boardroom", reservation.containsBoardroom(state().lastRoom));
 	}
 	
-	@Then("the reservation should be associated with the booking with the highest priority")
-	public void thenTheReservationShouldBeAssociatedWithTheBookingWithTheHighestPriority() {
+	@Then("the reservation with the application with the highest priority should be associated with the first room available")
+	public void thenTheReservationWithTheApplicationWithTheHighestPriorityShouldBeAssociatedWithTheFirstRoomAvailable() {
 		ReservationRepository reservationRepository = getReservationRepository();
 		Reservation reservation = reservationRepository.retrieve(state().bookingWithVeryHighPriority);
 		
-		assertTrue("The reservation should be associated with the booking with the very high priority", 
+		assertTrue("The reservation with the application with the highest priority should be associated with the first room available", 
+				reservation.containsBoardroom(state().firstRoom));
+	}
+	
+	@Then("the reservation with the first application should be associated with the first room available")
+	public void thenTheReservationWithTheFirstApplicationShouldBeAssociatedWithTheFirstRoomAvailable() {
+		ReservationRepository reservationRepository = getReservationRepository();
+		Reservation reservation = reservationRepository.retrieve(state().booking);
+		
+		assertTrue("The reservation with the first application should be associated with the first room available",
 				reservation.containsBoardroom(state().firstRoom));
 	}
 
-	@Then("notify the organizer and responsible by email")
-	public void notifyOrganizerAndReponsibleByEmail() {
+	@Then("the promoter is notified by email")
+	public void thePromoterIsNotifiedByEmail() {
 		state().bookingAssignationSendMailNotifier.notify(state().booking);
-		verify(mailSender).sendMail(withAMailSentTo(state().booking.getPromoterEmail().getValue()));
-		verify(mailSender).sendMail(withAMailSentTo(state().responsible.getEmail().getValue()));
-
+		state().mailMessageToPromoter = new SimpleMailMessage(state().booking.getPromoterEmail(), MAIL_SUBJECT, BOOKING_IS_ASSIGNED_MESSAGE);
+		state().mailMessageToPromoter.addCarbonCopyRecipient(state().responsible.getEmail());
+		verify(state().mailSender).sendMail(state().mailMessageToPromoter);
 	}
 
 	private void ensureThatMockedTimerDoesNotStartANewThread() {
@@ -231,25 +262,26 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	}
 
 	public class ReservationStepState extends StepState {
-		Boardroom lastRoom;
 		User user = new User(new Email("random@email.ca"));
 		User responsible = new User(new Email("responsible@email.ca"));
 		BookerStrategy bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.BASIC);
+		Boardroom lastRoom;
 		Boardroom firstAvailableBoardroom;
 		Boardroom secondAvailableBoardroom;
 		Boardroom firstRoom;
 		Boardroom secondRoom;
 		Booking booking;
-		BookingAssignationSendMailNotifier bookingAssignationSendMailNotifier;
 		Booking secondBooking;
 		Booking bookingWithVeryHighPriority;
 		Booking bookingWithLowPriority;
+		BookingAssignationSendMailNotifier bookingAssignationSendMailNotifier;
 		Booker booker = FakeBookerFactory.create();
 		TimedSequentialTrigger timedTrigger;
-
 		BookerTimerTaskFactory bookerTimerTaskFactory = mock(BookerTimerTaskFactory.class);
 		BookerTimerTask bookerTimerTask = mock(BookerTimerTask.class);
 		Timer timer = mock(Timer.class);
 		TimerFactory timerFactory = mock(TimerFactory.class);
+		MailSender mailSender = mock(MailSender.class);
+		MailMessage mailMessageToPromoter;
 	}
 }
