@@ -32,6 +32,7 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomRepository;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingState;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Priority;
 import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
 import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
@@ -168,7 +169,6 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		BookingRepository bookingRepository = getBookingRepository();
 		bookingRepository.persist(state().booking);
 		
-		state().bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.PRIORITY);
 		state().booker.addBooking(state().booking);
 		state().booker.assignBookings();
 		
@@ -176,6 +176,19 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		state().aReservation = reservationRepository.retrieve(state().booking);
 		
 		state().canceler = new Canceler(bookingRepository, reservationRepository);
+	}
+	
+	@Given("a reservation awaiting treatement")
+	public void givenAReservationAwaitingTreatment() {
+		state().firstRoom = new Boardroom(BOARDROOM_NAME_FIRST, FIFTEEN_SEATS);
+		BoardroomRepository boardroomRepository = getBoardroomRepository();
+		boardroomRepository.persist(state().firstRoom);
+		
+		state().booking = new Booking(state().user, FIFTEEN_SEATS);
+		BookingRepository bookingRepository = getBookingRepository();
+		bookingRepository.persist(state().booking);
+		
+		state().booker.addBooking(state().booking);
 	}
 
 	@When("the application is processed")
@@ -213,6 +226,11 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	@When("the reservation is cancelled")
 	public void whenTheReservationIsCancelled() {
 		state().canceler.cancel(state().aReservation.getPromoterEmail(), state().aReservation.getBookingID());
+	}
+	
+	@When("the reservation awaiting treatment is cancelled")
+	public void whenTheReservationAwaitingTreatmentIsCancelled() {
+		state().booking.cancel();
 	}
 
 	@Then("the reservation should be associated with the first available room")
@@ -276,11 +294,16 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	}
 	
 	@Then("the reservation should be cancelled and the room should be available")
-	public void test() {
+	public void thenTheReservationShouldBeCancelledAndTheRoomShouldBeAvailable() {
 		assertTrue(state().aReservation.isCancelled());
 		
 		ReservationRepository reservationRepository = getReservationRepository();
 		assertFalse(reservationRepository.activeReservationWithBoardroomExist(state().firstRoom));
+	}
+	
+	@Then("the reservation should be cancelled")
+	public void thenTheReservationShouldBeCancelled() {
+		assertEquals(state().booking.getState(), BookingState.CANCELLED);
 	}
 	
 	private void ensureThatMockedTimerDoesNotStartANewThread() {

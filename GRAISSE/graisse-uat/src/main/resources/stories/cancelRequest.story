@@ -9,3 +9,8 @@ Scenario: Cancel a reservation already assigned
 Given a reservation assigned to a room
 When the reservation is cancelled
 Then the reservation should be cancelled and the room should be available
+
+Scenario: Cancel a pending reservation
+Given a reservation awaiting treatement
+When the reservation awaiting treatment is cancelled
+Then the reservation should be cancelled
