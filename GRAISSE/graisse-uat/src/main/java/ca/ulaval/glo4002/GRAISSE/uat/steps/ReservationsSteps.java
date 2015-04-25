@@ -26,6 +26,7 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomRepository;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
+import ca.ulaval.glo4002.GRAISSE.core.booking.Priority;
 import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
 import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
@@ -41,6 +42,8 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	private static final long AN_INTERVAL = 1;
 	private static final long AN_INTERVAL_IN_MILLISECOND = 60000;
 
+	private static final int A_NUMBER_OF_SEATS = 15;
+	
 	protected ReservationStepState getInitialState() {
 		return new ReservationStepState();
 	}
@@ -54,7 +57,30 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		boardroomRepository.persist(state().firstAvailableBoardroom);
 		boardroomRepository.persist(state().secondAvailableBoardroom);
 	}
-
+	
+	@Given("two rooms with the same number of seats")
+	public void givenTwoRoomsWithTheSameNumberOfSeats() {
+		state().firstRoom = new Boardroom("first room", A_NUMBER_OF_SEATS);
+		state().secondRoom = new Boardroom("second room", A_NUMBER_OF_SEATS);
+		
+		BoardroomRepository boardroomRepository = getBoardroomRepository();
+		boardroomRepository.persist(state().firstRoom);
+		boardroomRepository.persist(state().secondRoom);
+	}
+	
+	@Given("two applications to be processed with different priority")
+	public void givenTwoApplicationsToBeProcessedWithDifferentPriority() {
+		state().bookingWithVeryHighPriority = new Booking(state().user, A_NUMBER_OF_SEATS, Priority.VERY_HIGH);
+		state().bookingWithLowPriority = new Booking(state().user, A_NUMBER_OF_SEATS, Priority.LOW);
+		
+		BookingRepository bookingRepository = getBookingRepository();
+		bookingRepository.persist(state().bookingWithVeryHighPriority);
+		bookingRepository.persist(state().bookingWithLowPriority);	
+		
+		state().booker.addBooking(state().bookingWithVeryHighPriority);
+		state().booker.addBooking(state().bookingWithLowPriority);
+	}
+	
 	@Given("a room with $numberOfSeats seats")
 	public void givenARoomWithANumberOfSeats(int numberOfSeats) {
 		state().lastRoom = new Boardroom("room with " + numberOfSeats + " seats", numberOfSeats);
@@ -65,6 +91,11 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 	@Given("a sort by seats strategy")
 	public void givenSortBySeatsStrategy() {
+		state().bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.PRIORITY);
+	}
+	
+	@Given("a sort by priority strategy")
+	public void givenSortByPriorityStrategy() {
 		state().bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.PRIORITY);
 	}
 
@@ -115,12 +146,16 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	public void whenTheFirstApplicationHasBeenQueuedForProcess() {
 		state().booker.addBooking(state().booking);
 	}
+	
+	@When("the applications are processed")
+	public void whenTheApplicationsAreProcessed() {
+		state().booker.assignBookings();
+	}
 
 	@Then("the reservation should be associated with the first available room")
 	public void thenTheReservationShouldBeAssociatedWithTheFirstAvailableRoom() {
 		ReservationRepository reservationRepository = getReservationRepository();
 		Reservation reservation = reservationRepository.retrieve(state().booking);
-
 		assertTrue("The reservation should be associated with the first available boardroom", reservation.containsBoardroom(state().firstAvailableBoardroom));
 	}
 
@@ -149,6 +184,15 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 		assertTrue("The reservation should be associated with the last boardroom", reservation.containsBoardroom(state().lastRoom));
 	}
+	
+	@Then("the reservation should be associated with the booking with the highest priority")
+	public void thenTheReservationShouldBeAssociatedWithTheBookingWithTheHighestPriority() {
+		ReservationRepository reservationRepository = getReservationRepository();
+		Reservation reservation = reservationRepository.retrieve(state().bookingWithVeryHighPriority);
+		
+		assertTrue("The reservation should be associated with the booking with the very high priority", 
+				reservation.containsBoardroom(state().firstRoom));
+	}
 
 	private void ensureThatMockedTimerDoesNotStartANewThread() {
 		doNothing().when(state().timer).schedule(state().bookerTimerTask, AN_INTERVAL_IN_MILLISECOND);
@@ -172,8 +216,12 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		BookerStrategy bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.BASIC);
 		Boardroom firstAvailableBoardroom;
 		Boardroom secondAvailableBoardroom;
+		Boardroom firstRoom;
+		Boardroom secondRoom;
 		Booking booking;
 		Booking secondBooking;
+		Booking bookingWithVeryHighPriority;
+		Booking bookingWithLowPriority;
 		Booker booker = FakeBookerFactory.create();
 		TimedSequentialTrigger timedTrigger;
 
