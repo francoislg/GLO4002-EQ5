@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.GRAISSE.uat.steps;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -17,6 +18,7 @@ import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategiesFactory;
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategiesFactory.StrategyType;
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategy;
+import ca.ulaval.glo4002.GRAISSE.application.service.canceling.Canceler;
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailMessage;
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailSender;
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.SimpleMailMessage;
@@ -46,11 +48,13 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	private static final long AN_INTERVAL = 1;
 	private static final long AN_INTERVAL_IN_MILLISECOND = 60000;
 
-	private static final int A_NUMBER_OF_SEATS = 15;
+	private static final int FIFTEEN_SEATS = 15;
+	private static final int TEN_SEATS = 10;
 	
+	private static final String BOARDROOM_NAME_FIRST = "first available boardroom";
+	private static final String BOARDROOM_NAME_SECOND = "second available boardroom";
 	private static final String MAIL_SUBJECT = "Update on your booking";
 	private static final String BOOKING_IS_ASSIGNED_MESSAGE = "Congratulations ! Assignation succeeded !";
-	private static final String BOOKING_IS_NOT_ASSIGNED_MESSAGE = "Assignation failed !";
 
 	protected ReservationStepState getInitialState() {
 		return new ReservationStepState();
@@ -58,8 +62,8 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 	@Given("some rooms")
 	public void givenSomeRooms() {
-		state().firstAvailableBoardroom = new Boardroom("first available boardroom", 10);
-		state().secondAvailableBoardroom = new Boardroom("second available boardroom", 10);
+		state().firstAvailableBoardroom = new Boardroom(BOARDROOM_NAME_FIRST, TEN_SEATS);
+		state().secondAvailableBoardroom = new Boardroom(BOARDROOM_NAME_SECOND, TEN_SEATS);
 
 		BoardroomRepository boardroomRepository = getBoardroomRepository();
 		boardroomRepository.persist(state().firstAvailableBoardroom);
@@ -68,8 +72,8 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	
 	@Given("two rooms with the same number of seats")
 	public void givenTwoRoomsWithTheSameNumberOfSeats() {
-		state().firstRoom = new Boardroom("first room", A_NUMBER_OF_SEATS);
-		state().secondRoom = new Boardroom("second room", A_NUMBER_OF_SEATS);
+		state().firstRoom = new Boardroom("first room", FIFTEEN_SEATS);
+		state().secondRoom = new Boardroom("second room", FIFTEEN_SEATS);
 		
 		BoardroomRepository boardroomRepository = getBoardroomRepository();
 		boardroomRepository.persist(state().firstRoom);
@@ -78,8 +82,8 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	
 	@Given("two applications to be processed with differents priorities")
 	public void givenTwoApplicationsToBeProcessedWithDifferentsPriorities() {
-		state().bookingWithVeryHighPriority = new Booking(state().user, A_NUMBER_OF_SEATS, Priority.VERY_HIGH);
-		state().bookingWithLowPriority = new Booking(state().user, A_NUMBER_OF_SEATS, Priority.LOW);
+		state().bookingWithVeryHighPriority = new Booking(state().user, FIFTEEN_SEATS, Priority.VERY_HIGH);
+		state().bookingWithLowPriority = new Booking(state().user, FIFTEEN_SEATS, Priority.LOW);
 		
 		BookingRepository bookingRepository = getBookingRepository();
 		bookingRepository.persist(state().bookingWithVeryHighPriority);
@@ -91,7 +95,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	
 	@Given("an application to be processed with a priority 3")
 	public void givenAnApplicationToBeProcessedWithAPriority3() {
-		state().booking = new Booking(state().user, A_NUMBER_OF_SEATS, Priority.MEDIUM);
+		state().booking = new Booking(state().user, FIFTEEN_SEATS, Priority.MEDIUM);
 		
 		BookingRepository bookingRepository = getBookingRepository();
 		bookingRepository.persist(state().booking);
@@ -153,6 +157,26 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	public void givenAnApplicationNotification() {
 		state().bookingAssignationSendMailNotifier = new BookingAssignationSendMailNotifier(state().mailSender, state().responsible);
 	}
+	
+	@Given("a reservation assigned to a room")
+	public void givenAReservationAssignedToARoom() {
+		state().firstRoom = new Boardroom(BOARDROOM_NAME_FIRST, FIFTEEN_SEATS);
+		BoardroomRepository boardroomRepository = getBoardroomRepository();
+		boardroomRepository.persist(state().firstRoom);
+
+		state().booking = new Booking(state().user, FIFTEEN_SEATS);
+		BookingRepository bookingRepository = getBookingRepository();
+		bookingRepository.persist(state().booking);
+		
+		state().bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.PRIORITY);
+		state().booker.addBooking(state().booking);
+		state().booker.assignBookings();
+		
+		ReservationRepository reservationRepository = getReservationRepository();
+		state().aReservation = reservationRepository.retrieve(state().booking);
+		
+		state().canceler = new Canceler(bookingRepository, reservationRepository);
+	}
 
 	@When("the application is processed")
 	public void whenTheApplicationIsProcessed() {
@@ -160,7 +184,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	}
 
 	@When("an other application to be processed is added")
-	public void whenAnOtherApplicationToBeProcessedIsAdded() {
+	public void whenAnotherApplicationToBeProcessedIsAdded() {
 		state().secondBooking = FakeBookingFactory.create();
 		state().booker.addBooking(state().secondBooking);
 	}
@@ -177,13 +201,18 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	
 	@When("another application to be processed with the same priority is added and the applications are processed")
 	public void whenAnotherApplicationToBeProcessedWithTheSamePriorityIsAddedAndTheApplicationsAreProcessed() {
-		state().secondBooking = new Booking(state().user, A_NUMBER_OF_SEATS, Priority.MEDIUM);
+		state().secondBooking = new Booking(state().user, FIFTEEN_SEATS, Priority.MEDIUM);
 		
 		BookingRepository bookingRepository = getBookingRepository();
 		bookingRepository.persist(state().secondBooking);
 		
 		state().booker.addBooking(state().secondBooking);
 		state().booker.assignBookings();
+	}
+	
+	@When("the reservation is cancelled")
+	public void whenTheReservationIsCancelled() {
+		state().canceler.cancel(state().aReservation.getPromoterEmail(), state().aReservation.getBookingID());
 	}
 
 	@Then("the reservation should be associated with the first available room")
@@ -238,13 +267,22 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	}
 
 	@Then("the promoter is notified by email")
-	public void thePromoterIsNotifiedByEmail() {
+	public void thenThePromoterIsNotifiedByEmail() {
 		state().bookingAssignationSendMailNotifier.notify(state().booking);
-		state().mailMessageToPromoter = new SimpleMailMessage(state().booking.getPromoterEmail(), MAIL_SUBJECT, BOOKING_IS_ASSIGNED_MESSAGE);
+		state().mailMessageToPromoter = new SimpleMailMessage(state().booking.getPromoterEmail(), MAIL_SUBJECT, 
+				BOOKING_IS_ASSIGNED_MESSAGE);
 		state().mailMessageToPromoter.addCarbonCopyRecipient(state().responsible.getEmail());
 		verify(state().mailSender).sendMail(state().mailMessageToPromoter);
 	}
-
+	
+	@Then("the reservation should be cancelled and the room should be available")
+	public void test() {
+		assertTrue(state().aReservation.isCancelled());
+		
+		ReservationRepository reservationRepository = getReservationRepository();
+		assertFalse(reservationRepository.activeReservationWithBoardroomExist(state().firstRoom));
+	}
+	
 	private void ensureThatMockedTimerDoesNotStartANewThread() {
 		doNothing().when(state().timer).schedule(state().bookerTimerTask, AN_INTERVAL_IN_MILLISECOND);
 	}
@@ -283,5 +321,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		TimerFactory timerFactory = mock(TimerFactory.class);
 		MailSender mailSender = mock(MailSender.class);
 		MailMessage mailMessageToPromoter;
+		Reservation aReservation;
+		Canceler canceler;
 	}
 }
