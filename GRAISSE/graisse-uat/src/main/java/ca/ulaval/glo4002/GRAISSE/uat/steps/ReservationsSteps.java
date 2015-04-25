@@ -293,16 +293,16 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		verify(state().mailSender).sendMail(state().mailMessageToPromoter);
 	}
 	
-	@Then("the reservation should be cancelled and the room should be available")
-	public void thenTheReservationShouldBeCancelledAndTheRoomShouldBeAvailable() {
+	@Then("the reservation should have a cancelled state and the room should be available")
+	public void thenTheReservationShouldHaveACancelledStateAndTheRoomShouldBeAvailable() {
 		assertTrue(state().aReservation.isCancelled());
 		
 		ReservationRepository reservationRepository = getReservationRepository();
 		assertFalse(reservationRepository.activeReservationWithBoardroomExist(state().firstRoom));
 	}
 	
-	@Then("the reservation should be cancelled")
-	public void thenTheReservationShouldBeCancelled() {
+	@Then("the reservation should have a cancelled state")
+	public void thenTheReservationShouldHaveACancelledState() {
 		assertEquals(state().booking.getState(), BookingState.CANCELLED);
 	}
 	
