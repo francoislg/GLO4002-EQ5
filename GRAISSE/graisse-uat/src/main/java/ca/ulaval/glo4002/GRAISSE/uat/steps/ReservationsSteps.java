@@ -128,11 +128,11 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 	@Given("an application with the same number of seats as the last")
 	public void givenAnApplicationWithSeatsToBeProcessed() {
-		state().booking = new Booking(state().user, TEN_SEATS);
-		
+		state().booking = new Booking(state().user, state().lastRoom.getNumberOfSeats());
+
 		BookingRepository bookingRepository = getBookingRepository();
 		bookingRepository.persist(state().booking);
-		
+
 		state().booker.setBookerStrategy(state().bookerSortingStrategy);
 		state().booker.addBooking(state().booking);
 	}
