@@ -11,6 +11,16 @@ When the reservation is cancelled
 Then the reservation should have a cancelled state and the room should be available
 
 Scenario: Cancel a pending reservation
-Given a reservation awaiting treatement
+Given a reservation awaiting treatment
 When the reservation awaiting treatment is cancelled
 Then the reservation should have a cancelled state
+
+Scenario : Cancel only one reservation already assigned
+Given two reservations assigned to a room
+When the first reservation is cancelled
+Then only the first reservation should have a cancelled
+
+Scenario : Cancel only one pending reservation
+Given two reservations awaiting treatment
+When the first reservation awaiting treatment is cancelled
+Then only the first reservation should have a cancelled
