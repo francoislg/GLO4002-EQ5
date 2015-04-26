@@ -75,6 +75,12 @@ booker.addBooking(booking3);
 Dans Eclipse, il suffit d'appuyer sur le Projet principal (GRAISSE), et de le lancer en tant que "Maven Install".
 Ceci construira tout le projet, lancera les tests unitaires, ainsi que les tests d'acceptation
 
+### Problèmes avec le test de performance
+
+Il est roulable à partir de l'UI JMeter, mais nous n'avons pas trouvé de façon d'exécuter notre serveur lorsque nous voulions exécuter les tests d'integrations dans Maven.
+
+Donc il suffit d'exécuter en tant qu'application Java "RestMain" dans le package "ca.ulaval.glo4002.GRAISSE.rest.service", lancer les tests à partir de l'UI JMeter, et les tests seront exécutés correctement.
+
 ## Notes aux correcteurs
 
 ### Décisions à communiquer
