@@ -217,26 +217,6 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 		state().booker.addBooking(state().booking);
 	}
-	
-	@Given("two reservations awaiting treatment")		
-	public void givenTwoReservationAwaitingTreatment() {		
-		state().firstRoom = new Boardroom(BOARDROOM_NAME_FIRST, FIFTEEN_SEATS);		
-		BoardroomRepository boardroomRepository = getBoardroomRepository();		
-		boardroomRepository.persist(state().firstRoom);		
-				
-		state().secondRoom = new Boardroom(BOARDROOM_NAME_SECOND, FIFTEEN_SEATS);			
-		boardroomRepository.persist(state().secondRoom);
-		
-		state().booking = new Booking(state().user, FIFTEEN_SEATS);		
-		BookingRepository bookingRepository = getBookingRepository();		
-		bookingRepository.persist(state().booking);		
-				
-		state().secondBooking = new Booking(state().user, FIFTEEN_SEATS);		
-		bookingRepository.persist(state().secondBooking);		
-				
-		state().booker.addBooking(state().booking);		
-		state().booker.addBooking(state().secondBooking);		
-	}
 
 	@When("the application is processed")
 	public void whenTheApplicationIsProcessed() {
@@ -283,11 +263,6 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	@When("the reservation awaiting treatment is cancelled")
 	public void whenTheReservationAwaitingTreatmentIsCancelled() {
 		state().booking.cancel();
-	}
-	
-	@When("the first reservation awaiting treatment is cancelled")		
-	public void whenTheFirstReservationAwaitingTreatmentIsCancelled() {		
-		state().booking.cancel();		
 	}
 
 	@Then("the reservation should be associated with the first available room")
@@ -363,13 +338,6 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	@Then("the reservation should be cancelled")
 	public void thenTheReservationShouldBeCancelled() {
 		assertEquals(state().booking.getState(), BookingState.CANCELLED);
-	}
-	
-	@Then("only the first pending reservation should be cancelled")		
-	public void thenOnlyTheFirstPendingReservationShouldBeCancelled() {		
-		assertTrue(state().firstReservation.isCancelled());		
-				
-		assertFalse(state().secondReservation.isCancelled());		
 	}
 
 	private void ensureThatMockedTimerDoesNotStartANewThread() {
