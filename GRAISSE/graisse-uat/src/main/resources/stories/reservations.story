@@ -10,7 +10,7 @@ Given some rooms
 And an application to be processed
 When the application is processed
 Then the reservation should be associated with the first available room
-					 
+
 Scenario: bookings are queued 
 Given some rooms
 And an application to be processed
