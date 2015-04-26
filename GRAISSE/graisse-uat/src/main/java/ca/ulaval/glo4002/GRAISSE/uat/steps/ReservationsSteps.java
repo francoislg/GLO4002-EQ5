@@ -246,11 +246,6 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		state().booker.assignBookings();
 	}
 
-	@When("the reservation is cancelled")
-	public void whenTheReservationIsCancelled() {
-		state().canceler.cancel(state().firstReservation.getPromoterEmail(), state().firstReservation.getBookingID());
-	}
-
 	@When("the first reservation is cancelled")
 	public void whenTheFirstReservationIsCancelled() {
 		state().canceler.cancel(state().firstReservation.getPromoterEmail(), state().firstReservation.getBookingID());
@@ -258,7 +253,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 	@When("the reservation awaiting treatment is cancelled")
 	public void whenTheReservationAwaitingTreatmentIsCancelled() {
-		state().booking.cancel();
+		state().canceler.cancel(state().booking.getPromoterEmail(), state().booking.getID());
 	}
 
 	@Then("the reservation should be associated with the first available room")
