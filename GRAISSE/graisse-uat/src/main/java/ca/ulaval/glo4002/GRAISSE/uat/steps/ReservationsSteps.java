@@ -178,30 +178,6 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		state().canceler = new Canceler(bookingRepository, reservationRepository);
 	}
 	
-	@Given("two reservations assigned to a room")
-	public void givenTwoReservationsAssignedToARoom() {
-		state().firstRoom = new Boardroom(BOARDROOM_NAME_FIRST, FIFTEEN_SEATS);
-		BoardroomRepository boardroomRepository = getBoardroomRepository();
-		boardroomRepository.persist(state().firstRoom);
-		
-		state().booking = new Booking(state().user, FIFTEEN_SEATS);
-		BookingRepository bookingRepository = getBookingRepository();
-		bookingRepository.persist(state().booking);
-		
-		state().secondBooking = new Booking(state().user, FIFTEEN_SEATS);
-		bookingRepository.persist(state().booking);
-		
-		state().booker.addBooking(state().booking);
-		state().booker.addBooking(state().secondBooking);
-		state().booker.assignBookings();
-		
-		ReservationRepository reservationRepository = getReservationRepository();
-		state().firstReservation = reservationRepository.retrieve(state().booking);
-		state().secondReservation = reservationRepository.retrieve(state().secondBooking);
-		
-		state().canceler = new Canceler(bookingRepository, reservationRepository);
-	}
-	
 	@Given("a reservation awaiting treatment")
 	public void givenAReservationAwaitingTreatment() {
 		state().firstRoom = new Boardroom(BOARDROOM_NAME_FIRST, FIFTEEN_SEATS);
@@ -213,23 +189,6 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		bookingRepository.persist(state().booking);
 		
 		state().booker.addBooking(state().booking);
-	}
-	
-	@Given("two reservations awaiting treatment")
-	public void givenTwoReservationAwaitingTreatment() {
-		state().firstRoom = new Boardroom(BOARDROOM_NAME_FIRST, FIFTEEN_SEATS);
-		BoardroomRepository boardroomRepository = getBoardroomRepository();
-		boardroomRepository.persist(state().firstRoom);
-		
-		state().booking = new Booking(state().user, FIFTEEN_SEATS);
-		BookingRepository bookingRepository = getBookingRepository();
-		bookingRepository.persist(state().booking);
-		
-		state().secondBooking = new Booking(state().user, FIFTEEN_SEATS);
-		bookingRepository.persist(state().booking);
-		
-		state().booker.addBooking(state().booking);
-		state().booker.addBooking(state().secondBooking);
 	}
 
 	@When("the application is processed")
@@ -269,18 +228,8 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		state().canceler.cancel(state().firstReservation.getPromoterEmail(), state().firstReservation.getBookingID());
 	}
 	
-	@When("the first reservation is cancelled")
-	public void whenTheFirstReservationIsCancelled() {
-		state().canceler.cancel(state().firstReservation.getPromoterEmail(), state().firstReservation.getBookingID());
-	}
-	
 	@When("the reservation awaiting treatment is cancelled")
 	public void whenTheReservationAwaitingTreatmentIsCancelled() {
-		state().booking.cancel();
-	}
-	
-	@When("the first reservation awaiting treatment is cancelled")
-	public void whenTheFirstReservationAwaitingTreatmentIsCancelled() {
 		state().booking.cancel();
 	}
 
@@ -350,13 +299,6 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		
 		ReservationRepository reservationRepository = getReservationRepository();
 		assertFalse(reservationRepository.activeReservationWithBoardroomExist(state().firstRoom));
-	}
-	
-	@Then("only the first reservation should be cancelled")
-	public void thenOnlyTheFirstReservationShouldBeCancelled() {
-		assertTrue(state().firstReservation.isCancelled());
-		
-		assertFalse(state().secondReservation.isCancelled());
 	}
 	
 	@Then("the reservation should be cancelled")
