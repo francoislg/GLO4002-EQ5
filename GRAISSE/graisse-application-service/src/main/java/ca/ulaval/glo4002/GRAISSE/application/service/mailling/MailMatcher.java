@@ -14,7 +14,7 @@ public class MailMatcher extends BaseMatcher<MailMessage> {
 
 	@Override
 	public boolean matches(Object argument) {
-		final MailMessage mail = (MailMessage) argument;
+		MailMessage mail = (MailMessage) argument;
 		return mail.getDestinationString().equals(email) || mail.getAllCarbonCopyRecipients().contains(email);
 	}
 
