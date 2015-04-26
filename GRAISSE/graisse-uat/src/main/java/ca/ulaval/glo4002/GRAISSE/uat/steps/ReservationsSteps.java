@@ -198,7 +198,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		bookingRepository.persist(state().booking);
 
 		state().secondBooking = new Booking(state().user, FIFTEEN_SEATS);
-		bookingRepository.persist(state().booking);
+		bookingRepository.persist(state().secondBooking);
 
 		state().booker.addBooking(state().booking);
 		state().booker.addBooking(state().secondBooking);
