@@ -7,8 +7,8 @@ import java.util.List;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.BookingAssignable;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.UnableToAssignBookingException;
+import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingDTO;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
@@ -23,13 +23,13 @@ public class Reservations {
 	private Boardrooms boardrooms;
 	private Bookings bookings;
 
-	private List<Notifyer<BookingAssignable>> notifiers;
+	private List<Notifyer<AssignedBooking>> notifiers;
 
 	public Reservations(ReservationRepository reservationRepository, Boardrooms boardrooms, Bookings bookings) {
 		this.reservationRepository = reservationRepository;
 		this.boardrooms = boardrooms;
 		this.bookings = bookings;
-		this.notifiers = new ArrayList<Notifyer<BookingAssignable>>();
+		this.notifiers = new ArrayList<Notifyer<AssignedBooking>>();
 	}
 
 	private boolean isAvailable(Boardroom boardroom) {
@@ -72,13 +72,13 @@ public class Reservations {
 				reservation.getBoardroomName());
 	}
 
-	private void notifyTriggers(BookingAssignable booking) {
-		for (Notifyer<BookingAssignable> notifyer : notifiers) {
+	private void notifyTriggers(AssignedBooking booking) {
+		for (Notifyer<AssignedBooking> notifyer : notifiers) {
 			notifyer.notify(booking);
 		}
 	}
 
-	public void registerObserver(Notifyer<BookingAssignable> observer) {
+	public void registerObserver(Notifyer<AssignedBooking> observer) {
 		notifiers.add(observer);
 	}
 }
