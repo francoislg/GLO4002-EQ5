@@ -50,6 +50,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	private static final long AN_INTERVAL = 1;
 	private static final long AN_INTERVAL_IN_MILLISECOND = 60000;
 
+	private static final int TWENTY_SEATS = 20;
 	private static final int FIFTEEN_SEATS = 15;
 	private static final int TEN_SEATS = 10;
 
@@ -103,17 +104,21 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		state().booker.addBooking(state().booking);
 	}
 
-	@Given("a room with $numberOfSeats seats")
-	public void givenARoomWithANumberOfSeats(int numberOfSeats) {
-		state().lastRoom = new Boardroom("room with " + numberOfSeats + " seats", numberOfSeats);
+	@Given("three rooms with differents numbers of seats")
+	public void givenARoomWithANumberOfSeats() {
+		state().firstRoom = new Boardroom("room with " + TWENTY_SEATS + " seats", TWENTY_SEATS);
+		state().secondRoom = new Boardroom("room with " + FIFTEEN_SEATS + " seats", FIFTEEN_SEATS);
+		state().lastRoom = new Boardroom("room with " + TEN_SEATS + " seats", TEN_SEATS);
 
 		BoardroomRepository boardroomRepository = getBoardroomRepository();
+		boardroomRepository.persist(state().firstRoom);
+		boardroomRepository.persist(state().secondRoom);
 		boardroomRepository.persist(state().lastRoom);
 	}
 
 	@Given("a sort by seats strategy")
 	public void givenSortBySeatsStrategy() {
-		state().bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.PRIORITY);
+		state().bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.BYSEATS);
 	}
 
 	@Given("a sort by priority strategy")
@@ -121,10 +126,13 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		state().bookerSortingStrategy = new BookerStrategiesFactory().create(StrategyType.PRIORITY);
 	}
 
-	@Given("an application with $numberOfSeats seats")
-	public void givenAnApplicationWithSeatsToBeProcessed(int numberOfSeats) {
-		state().booking = new Booking(state().user, numberOfSeats);
-
+	@Given("an application with the same number of seats as the last")
+	public void givenAnApplicationWithSeatsToBeProcessed() {
+		state().booking = new Booking(state().user, TEN_SEATS);
+		
+		BookingRepository bookingRepository = getBookingRepository();
+		bookingRepository.persist(state().booking);
+		
 		state().booker.setBookerStrategy(state().bookerSortingStrategy);
 		state().booker.addBooking(state().booking);
 	}
