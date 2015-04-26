@@ -352,8 +352,8 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		assertFalse(reservationRepository.activeReservationWithBoardroomExist(state().firstRoom));
 	}
 	
-	@Then("Then only the first reservation should have a cancelled")
-	public void thenOnlyTheFirstReservationShouldHaveACancelledStateAndTheRoomShouldBeAvailable() {
+	@Then("only the first reservation should be cancelled")
+	public void thenOnlyTheFirstReservationShouldHaveShouldBeCancelled() {
 		assertTrue(state().firstReservation.isCancelled());
 		
 		assertFalse(state().secondReservation.isCancelled());

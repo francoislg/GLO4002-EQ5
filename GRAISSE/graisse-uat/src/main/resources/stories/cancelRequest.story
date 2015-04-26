@@ -18,9 +18,9 @@ Then the reservation should have a cancelled state
 Scenario : Cancel only one reservation already assigned
 Given two reservations assigned to a room
 When the first reservation is cancelled
-Then only the first reservation should have a cancelled
+Then only the first reservation should be cancelled
 
 Scenario : Cancel only one pending reservation
 Given two reservations awaiting treatment
 When the first reservation awaiting treatment is cancelled
-Then only the first reservation should have a cancelled
+Then only the first reservation should be cancelled
