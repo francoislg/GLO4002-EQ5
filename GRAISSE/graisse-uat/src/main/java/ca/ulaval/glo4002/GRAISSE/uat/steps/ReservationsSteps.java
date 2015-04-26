@@ -73,8 +73,8 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	
 	@Given("two rooms with the same number of seats")
 	public void givenTwoRoomsWithTheSameNumberOfSeats() {
-		state().firstRoom = new Boardroom("first room", FIFTEEN_SEATS);
-		state().secondRoom = new Boardroom("second room", FIFTEEN_SEATS);
+		state().firstRoom = new Boardroom(BOARDROOM_NAME_FIRST, FIFTEEN_SEATS);
+		state().secondRoom = new Boardroom(BOARDROOM_NAME_SECOND, FIFTEEN_SEATS);
 		
 		BoardroomRepository boardroomRepository = getBoardroomRepository();
 		boardroomRepository.persist(state().firstRoom);
@@ -178,7 +178,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		state().canceler = new Canceler(bookingRepository, reservationRepository);
 	}
 	
-	@Given("a reservation awaiting treatement")
+	@Given("a reservation awaiting treatment")
 	public void givenAReservationAwaitingTreatment() {
 		state().firstRoom = new Boardroom(BOARDROOM_NAME_FIRST, FIFTEEN_SEATS);
 		BoardroomRepository boardroomRepository = getBoardroomRepository();
@@ -293,7 +293,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		verify(state().mailSender).sendMail(state().mailMessageToPromoter);
 	}
 	
-	@Then("the reservation should have a cancelled state and the room should be available")
+	@Then("the reservation should be cancelled and the first room should be available")
 	public void thenTheReservationShouldHaveACancelledStateAndTheRoomShouldBeAvailable() {
 		assertTrue(state().aReservation.isCancelled());
 		
@@ -301,7 +301,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		assertFalse(reservationRepository.activeReservationWithBoardroomExist(state().firstRoom));
 	}
 	
-	@Then("the reservation should have a cancelled state")
+	@Then("the reservation should be cancelled")
 	public void thenTheReservationShouldHaveACancelledState() {
 		assertEquals(state().booking.getState(), BookingState.CANCELLED);
 	}
