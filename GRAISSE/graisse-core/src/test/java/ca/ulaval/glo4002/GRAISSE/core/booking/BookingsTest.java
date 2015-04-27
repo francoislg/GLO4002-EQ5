@@ -13,7 +13,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -173,15 +172,4 @@ public class BookingsTest {
 		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneAssignableBookings);
 	}
 
-	@Ignore
-	@Test
-	public void givenAnEmailWhenRetrievingBookingsWithEmailShouldReturnAllBookingsWithTheEmail() {
-
-	}
-
-	@Ignore
-	@Test
-	public void getBookingsForEmailShouldReturnAListOfBookingDTO() {
-
-	}
 }
