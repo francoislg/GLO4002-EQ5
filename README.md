@@ -93,6 +93,11 @@ Tel que suggéré par Jean-Nicolas, cette classe n'est pas testée unitairement 
 
 Tenir rigueur du fait que nous avons eu quelques difficultés dans l'équipe, et que nous avons réussi à implémenter la plupart des fonctionnalités malgré cela.
 
+Ce qui a été fait depuis lundi le 13 avril : 
+-Test de performance (qui fonctionne presque)
+-Pratiquement tous les tests d'acceptation
+
+
 ### Tests non réalisés
 
 #### Test de la base de données
