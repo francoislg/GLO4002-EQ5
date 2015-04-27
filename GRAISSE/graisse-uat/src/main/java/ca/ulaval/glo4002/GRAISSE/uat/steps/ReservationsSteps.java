@@ -144,8 +144,6 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	@Given("an application to be processed")
 	public void givenAnApplicationToBeProcessed() {
 		state().booking = FakeBookingFactory.create();
-
-		state().booker.setBookerStrategy(state().bookerSortingStrategy);
 		state().booker.addBooking(state().booking);
 	}
 
@@ -365,6 +363,16 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	@Then("the reservation should be cancelled")
 	public void thenTheReservationShouldBeCancelled() {
 		assertEquals(state().booking.getState(), BookingState.CANCELLED);
+	}
+	
+	@Then("the applications are processed")
+	public void thenTheApplicationsAreProcessed() {
+		assertFalse("booker should have processed all the bookings", state().booker.hasBookingsToAssign());
+	}
+	
+	@Then("the interval is reset")
+	public void thenTheIntervalIsReset() {
+		verify(state().timer).cancel();
 	}
 
 	private void ensureThatMockedTimerDoesNotStartANewThread() {

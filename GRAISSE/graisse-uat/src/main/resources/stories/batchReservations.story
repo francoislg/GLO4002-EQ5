@@ -10,3 +10,10 @@ Given some rooms
 And a threshold number of applications
 When the number of application to be processed is equal to the threshold
 Then the applications are processed
+
+Scenario: threshold should reset the interval process
+Given some rooms
+And an interval
+And a threshold number of applications
+When the number of application to be processed is equal to the threshold
+Then the interval is reset
