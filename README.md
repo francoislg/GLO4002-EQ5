@@ -91,13 +91,13 @@ Tel que suggéré par Jean-Nicolas, cette classe n'est pas testée unitairement 
 
 #### Demandes spéciales
 
-Tenir rigueur du fait que nous avons eu quelques difficultés dans l'équipe, et que nous avons réussi à implémenter la plupart des fonctionnalités malgré cela.
+Tenir compte que nous avons eu quelques difficultés dans l'équipe, et que nous avons réussi à implémenter la plupart des fonctionnalités malgré cela.
 
 Ce qui a été fait depuis lundi le 13 avril : 
--Le service REST et les ID reliés
--Pratiquement tous les tests d'acceptation
--Test de performance (qui fonctionne presque)
--Notifier lors d'une annulation
+* Le service REST et les ID reliés
+* Pratiquement tous les tests d'acceptation
+* Test de performance (qui fonctionne presque)
+* Notifier lors d'une annulation
 
 ### Tests non réalisés
 
@@ -105,8 +105,5 @@ Ce qui a été fait depuis lundi le 13 avril :
 
 Ce test n'est pas implémenté puisque nous n'avons tout simplement pas de base de données
 
-#### Test de Flot
-
-Pas encore fait.
-
 ### Suggestions
+Fournir TOUTES les diapos avant le cours.
