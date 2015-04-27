@@ -70,8 +70,6 @@ public class workflowTest {
 	
 	@Test
 	public void givenANewReservationAddedInRepositoryShouldBeInRepository() {
-		setUp();
-		
 		booker.addBooking(booking);
 		verify(bookingRepository).persist(booking);
 	}
@@ -79,8 +77,6 @@ public class workflowTest {
 	@Ignore
 	@Test
 	public void givenANewReservationStatusShouldNotbeCancelled() {
-		setUp();
-		
 		booker.addBooking(booking);
 		booker.assignBookings();
 		
@@ -90,12 +86,10 @@ public class workflowTest {
 
 	@Test
 	public void givenAReservationInRepositoryCancelShouldCancelTheReservation() {
-		setUp();
-		
 		booker.addBooking(booking);
 		booker.assignBookings();
-		
-		canceler.cancel(user.getEmail(), booking.getID());;
+
+		canceler.cancel(booking);;
 		assertFalse(booking.isAssigned());
 	}
 	
