@@ -97,7 +97,7 @@ public class BookingRessource {
 		Email email = getEmail(promoter);
 		BookingID bookingID = new BookingID(ID);
 		if (reservations.hasReservation(email, bookingID)) {
-			BookingDTO foundBooking = reservations.retrieveReservation(email, bookingID);
+			BookingDTO foundBooking = reservations.retrieveReservationDTO(email, bookingID);
 			return new RetrievedBookingResponse(foundBooking);
 		} else if (bookings.hasBooking(email, bookingID)) {
 			BookingDTO foundBooking = bookings.retrieveDTO(email, bookingID);

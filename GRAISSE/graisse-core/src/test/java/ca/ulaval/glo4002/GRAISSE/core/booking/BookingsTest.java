@@ -24,7 +24,7 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
-	private final static String A_ID = "AID";
+
 	private final static BookingState ABOOKINGSTATE = BookingState.WAITING;
 	private final static int ANUMBEROFSEATS = 10;
 	private final static String AEMAIL = "EMAIL@DOMAIN.COM";
