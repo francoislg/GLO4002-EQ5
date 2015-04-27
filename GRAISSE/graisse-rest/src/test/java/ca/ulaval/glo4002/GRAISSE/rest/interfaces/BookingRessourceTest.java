@@ -125,7 +125,7 @@ public class BookingRessourceTest {
 	@Test
 	public void getBookingForEmailShouldReturnAListOfBookingForEmail() {
 		List<BookingDTO> bookingDTOs = getListOfBookingDTO();
-		when(bookings.getBookingsWithEmail(new Email(PROMOTER_EMAIL))).thenReturn(bookingDTOs);
+		when(bookings.getUnassignedBookingsWithEmail(new Email(PROMOTER_EMAIL))).thenReturn(bookingDTOs);
 		BookingsForEmailResponse expectedResponse = new BookingsForEmailResponse(bookingDTOs);
 
 		BookingsForEmailResponse result = bookingRessource.getBookingForEmail(PROMOTER_EMAIL);

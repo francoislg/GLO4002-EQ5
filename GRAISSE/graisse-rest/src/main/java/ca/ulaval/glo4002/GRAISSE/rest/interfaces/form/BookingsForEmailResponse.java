@@ -2,9 +2,12 @@ package ca.ulaval.glo4002.GRAISSE.rest.interfaces.form;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingDTO;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingState;
 
 public class BookingsForEmailResponse {
 	private class RetrievedBooking extends RetrievedBookingResponse {
@@ -20,16 +23,21 @@ public class BookingsForEmailResponse {
 		}
 	}
 
-	private List<RetrievedBookingResponse> bookings;
+	private Map<String, List<RetrievedBookingResponse>> bookings;
 
 	public BookingsForEmailResponse(Collection<BookingDTO> bookingDTOList) {
-		bookings = new ArrayList<RetrievedBookingResponse>();
+		bookings = new HashMap<String, List<RetrievedBookingResponse>>();
+		bookings.put("acceptees", new ArrayList<RetrievedBookingResponse>());
 		for (BookingDTO booking : bookingDTOList) {
-			bookings.add(new RetrievedBooking(booking));
+			if (booking.getBookingState().equals(BookingState.ASSIGNED)) {
+				bookings.get("acceptees").add(new RetrievedBooking(booking));
+			} else {
+				bookings.get("autres").add(new RetrievedBooking(booking));
+			}
 		}
 	}
 
-	public List<RetrievedBookingResponse> getBookings() {
+	public Map<String, List<RetrievedBookingResponse>> getBookings() {
 		return bookings;
 	}
 

@@ -92,12 +92,24 @@ public class ReservationInMemoryRepository implements ReservationRepository {
 
 	private Collection<Reservation> retrieveActiveReservationForBoardroom(Boardroom boardroom) {
 		Collection<Reservation> activeReservations = new ArrayList<Reservation>();
-		
+
 		for (Reservation reservation : reservations) {
 			if (!reservation.isCancelled() && reservation.hasBoardroomName(boardroom.getName())) {
 				activeReservations.add(reservation);
 			}
 		}
 		return activeReservations;
+	}
+
+	@Override
+	public Collection<Reservation> retrieveAllForEmail(Email email) {
+		Collection<Reservation> reservationsForEmail = new ArrayList<Reservation>();
+
+		for (Reservation reservation : reservations) {
+			if (reservation.hasPromoter(email)) {
+				reservationsForEmail.add(reservation);
+			}
+		}
+		return reservationsForEmail;
 	}
 }
