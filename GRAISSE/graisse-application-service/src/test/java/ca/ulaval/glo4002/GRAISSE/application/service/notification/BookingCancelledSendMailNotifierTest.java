@@ -53,7 +53,7 @@ public class BookingCancelledSendMailNotifierTest {
 		when(responsible.getEmail()).thenReturn(responsibleEmail);
 
 		setUpBookingMock();
-		bookingCancelledNotifyer = new BookingCancelledSendMailNotifier(mailSender, user, responsible);
+		bookingCancelledNotifyer = new BookingCancelledSendMailNotifier(mailSender, responsible);
 	}
 
 	@Test

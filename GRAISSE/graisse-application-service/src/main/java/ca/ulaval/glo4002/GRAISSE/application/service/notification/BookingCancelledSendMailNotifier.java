@@ -14,18 +14,17 @@ public class BookingCancelledSendMailNotifier implements Notifyer<AssignedBookin
 	private static final String MAIL_MESSAGE = "Booking is cancelled";
 
 	private MailSender mailSender;
-	private User user;
+
 	private User responsible;
 
-	public BookingCancelledSendMailNotifier(MailSender mailSender, User user, User responsible) {
+	public BookingCancelledSendMailNotifier(MailSender mailSender, User responsible) {
 		this.mailSender = mailSender;
-		this.user = user;
 		this.responsible = responsible;
 	}
 
 	@Override
 	public void notify(AssignedBooking booking) {
-		MailMessage mail = new SimpleMailMessage(user.getEmail(), MAIL_SUBJECT, MAIL_MESSAGE);
+		MailMessage mail = new SimpleMailMessage(booking.getPromoterEmail(), MAIL_SUBJECT, MAIL_MESSAGE);
 		for (Email email : booking.getParticipantsEmail())
 			mail.addCarbonCopyRecipient(email);
 		mail.addCarbonCopyRecipient(responsible.getEmail());

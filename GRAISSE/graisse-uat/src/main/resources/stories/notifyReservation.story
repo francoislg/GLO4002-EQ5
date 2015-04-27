@@ -11,3 +11,10 @@ And an application to be processed
 And an application notification system
 When the application is processed
 Then the promoter is notified by email
+
+
+Scenario: notify by email after the cancelling
+Given a reservation awaiting treatment
+And a cancelling notification system
+When the reservation awaiting treatment is cancelled
+Then the promoter is notified by email

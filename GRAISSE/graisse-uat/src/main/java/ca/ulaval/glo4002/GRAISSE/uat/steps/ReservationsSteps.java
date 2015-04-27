@@ -22,6 +22,7 @@ import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategy;
 import ca.ulaval.glo4002.GRAISSE.application.service.canceling.Canceler;
 import ca.ulaval.glo4002.GRAISSE.application.service.mailling.MailSender;
 import ca.ulaval.glo4002.GRAISSE.application.service.notification.BookingAssignationSendMailNotifier;
+import ca.ulaval.glo4002.GRAISSE.application.service.notification.BookingCancelledSendMailNotifier;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTask;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTaskFactory;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.TimedSequentialTrigger;
@@ -167,6 +168,13 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		state().reservations.registerObserver(state().bookingAssignationSendMailNotifier);
 	}
 
+	@Given("a cancelling notification system")
+	public void givenACancellingNotification() {
+		state().bookingCancelSendMailNotifier = new BookingCancelledSendMailNotifier(state().mailSender, state().responsible);
+		state().canceler.registerObserver(state().bookingCancelSendMailNotifier);
+
+	}
+
 	@Given("a reservation assigned to a room")
 	public void givenAReservationAssignedToARoom() {
 		state().firstRoom = new Boardroom(BOARDROOM_NAME_FIRST, FIFTEEN_SEATS);
@@ -256,12 +264,12 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 	@When("the first reservation is cancelled")
 	public void whenTheFirstReservationIsCancelled() {
-		state().canceler.cancel(state().firstReservation.getPromoterEmail(), state().firstReservation.getBookingID());
+		state().canceler.cancel(state().booking);
 	}
 
 	@When("the reservation awaiting treatment is cancelled")
 	public void whenTheReservationAwaitingTreatmentIsCancelled() {
-		state().canceler.cancel(state().booking.getPromoterEmail(), state().booking.getID());
+		state().canceler.cancel(state().booking);
 	}
 
 	@Then("the reservation should be associated with the first available room")
@@ -318,6 +326,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	@Then("the promoter is notified by email")
 	public void thenThePromoterIsNotifiedByEmail() {
 		verify(state().mailSender).sendMail(withAMailSentTo(state().booking.getPromoterEmail().getValue()));
+		verify(state().mailSender).sendMail(withAMailSentTo(state().responsible.getEmail().getValue()));
 	}
 
 	@Then("the reservation should be cancelled and the room should be available")
@@ -370,6 +379,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		Booking bookingWithVeryHighPriority;
 		Booking bookingWithLowPriority;
 		BookingAssignationSendMailNotifier bookingAssignationSendMailNotifier;
+		BookingCancelledSendMailNotifier bookingCancelSendMailNotifier;
 		Bookings bookings;
 		Boardrooms boardrooms;
 		Reservations reservations;
