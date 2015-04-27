@@ -10,9 +10,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -20,9 +20,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
+
+	private final static BookingState ABOOKINGSTATE = BookingState.WAITING;
+	private final static int ANUMBEROFSEATS = 10;
+	private final static String AEMAIL = "EMAIL@DOMAIN.COM";
 
 	@Mock
 	BookingRepository bookingRepository;
@@ -44,6 +49,12 @@ public class BookingsTest {
 
 	@Mock
 	BoardroomsSortingStrategy boardroomsSortingStrategy;
+
+	@Mock
+	Email email;
+
+	@Mock
+	BookingID bookingID;
 
 	Collection<Booking> bookingsWithoutAssignableBookings;
 
@@ -96,6 +107,63 @@ public class BookingsTest {
 		assertEquals(1, bookings.getNumberOfAssignableBookings());
 	}
 
+	@Test
+	public void givenAbookingsSortingStrategygetBookingsWithStrategyShouldCallTheStrategyWithTheRepository() {
+		bookings.getBookingsWithStrategy(bookingsSortingStrategy);
+		verify(bookingsSortingStrategy).sort(bookingRepository);
+	}
+
+	@Test
+	public void givenABookingassignBookingShouldAssignTheBooking() {
+		bookings.assignBooking(booking);
+		verify(booking).assign();
+	}
+
+	@Test
+	public void givenABookingassignBookingShouldpersistTheBooking() {
+		bookings.assignBooking(booking);
+		verify(bookingRepository).persist(booking);
+	}
+
+	@Test
+	public void givenAEmailgetBookingsWithEmailShouldReturnAllTheBookingAssociatedWithTheEmail() {
+		setUpBookingForDTO();
+		Collection<Booking> bookingCollection = new ArrayList<Booking>();
+		bookingCollection.add(booking);
+		when(bookingRepository.retrieveAllForEmail(email)).thenReturn(bookingCollection);
+		List<BookingDTO> result = bookings.getBookingsWithEmail(email);
+		assertEquals(1, result.size());
+	}
+
+	@Test
+	public void givenAEmailAndABookingIDretrieveDTOShouldReturnABookingDTOWithValidInformation() {
+		setUpBookingForDTO();
+		when(bookingRepository.retrieve(email, bookingID)).thenReturn(booking);
+		BookingDTO bookingDTO = bookings.retrieveDTO(email, bookingID);
+		assertEquals(email.getValue(), bookingDTO.getPromoterEmail());
+	}
+
+	@Test
+	public void givenABookingIDAndAEmailForABookingThatExisthasBookingShouldReturnTrue() {
+		when(bookingRepository.exists(email, bookingID)).thenReturn(true);
+		assertTrue(bookings.hasBooking(email, bookingID));
+	}
+
+	@Test
+	public void givenABookingIDAndAEmailForABookingThatDoesNotExisthasBookingShouldReturnFalse() {
+		when(bookingRepository.exists(email, bookingID)).thenReturn(false);
+		assertFalse(bookings.hasBooking(email, bookingID));
+	}
+
+	private void setUpBookingForDTO() {
+		when(booking.getID()).thenReturn(bookingID);
+		when(booking.getNumberOfSeats()).thenReturn(ANUMBEROFSEATS);
+		when(booking.getPromoterEmail()).thenReturn(email);
+		when(email.getValue()).thenReturn(AEMAIL);
+		when(booking.getState()).thenReturn(ABOOKINGSTATE);
+
+	}
+
 	private void setUpOneAssignableBookingInBookings() {
 		Collection<Booking> bookingsWithOneAssignableBookings = new ArrayList<Booking>();
 		bookingsWithOneAssignableBookings.add(assignableBooking);
@@ -104,15 +172,4 @@ public class BookingsTest {
 		when(bookingsSortingStrategy.sort(any())).thenReturn(bookingsWithOneAssignableBookings);
 	}
 
-	@Ignore
-	@Test
-	public void givenAnEmailWhenRetrievingBookingsWithEmailShouldReturnAllBookingsWithTheEmail() {
-
-	}
-
-	@Ignore
-	@Test
-	public void getBookingsForEmailShouldReturnAListOfBookingDTO() {
-
-	}
 }
