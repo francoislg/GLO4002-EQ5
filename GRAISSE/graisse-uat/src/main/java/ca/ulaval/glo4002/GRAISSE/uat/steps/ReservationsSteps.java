@@ -280,6 +280,15 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	public void whenTheReservationAwaitingTreatmentIsCancelled() {
 		state().canceler.cancel(state().booking);
 	}
+	
+	@When("the number of application to be processed is equal to the threshold")
+	public void whenTheNumberOfApplicaitonToBeProcessedIsEqualToTheThreshold() {
+		state().booking = FakeBookingFactory.create();
+		state().secondBooking = FakeBookingFactory.create();
+		
+		state().booker.addBooking(state().booking);
+		state().booker.addBooking(state().secondBooking);
+	}
 
 	@Then("the reservation should be associated with the first available room")
 	public void thenTheReservationShouldBeAssociatedWithTheFirstAvailableRoom() {
