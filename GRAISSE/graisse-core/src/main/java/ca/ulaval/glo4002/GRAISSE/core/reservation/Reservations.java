@@ -67,6 +67,17 @@ public class Reservations {
 		return convertToBookingDTO(reservation);
 	}
 
+	public List<BookingDTO> getAssignedBookingsWithEmail(Email email) {
+		Collection<Reservation> retrievedReservations = reservationRepository.retrieveAllForEmail(email);
+		List<BookingDTO> bookingDTOList = new ArrayList<BookingDTO>();
+
+		for (Reservation reservation : retrievedReservations) {
+			bookingDTOList.add(convertToBookingDTO(reservation));
+		}
+
+		return bookingDTOList;
+	}
+
 	private BookingDTO convertToBookingDTO(Reservation reservation) {
 		return new BookingDTO(reservation.getBookingID(), reservation.getNumberOfSeats(), reservation.getPromoterEmail().getValue(), reservation.getState(),
 				reservation.getBoardroomName());

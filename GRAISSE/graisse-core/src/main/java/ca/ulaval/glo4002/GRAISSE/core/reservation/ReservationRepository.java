@@ -27,4 +27,6 @@ public interface ReservationRepository {
 
 	boolean activeReservationWithBoardroomExist(Boardroom boardroom);
 
+	public Collection<Reservation> retrieveAllForEmail(Email email);
+
 }

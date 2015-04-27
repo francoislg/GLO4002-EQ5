@@ -35,12 +35,14 @@ public class Bookings {
 		bookingRepository.persist(booking);
 	}
 
-	public List<BookingDTO> getBookingsWithEmail(Email email) {
+	public List<BookingDTO> getUnassignedBookingsWithEmail(Email email) {
 		Collection<Booking> retrievedBookings = bookingRepository.retrieveAllForEmail(email);
 		List<BookingDTO> bookingDTOList = new ArrayList<BookingDTO>();
 
 		for (Booking booking : retrievedBookings) {
-			bookingDTOList.add(convertToDTO(booking));
+			if (!booking.isAssigned()) {
+				bookingDTOList.add(convertToDTO(booking));
+			}
 		}
 		return bookingDTOList;
 	}
