@@ -94,9 +94,10 @@ Tel que suggéré par Jean-Nicolas, cette classe n'est pas testée unitairement 
 Tenir rigueur du fait que nous avons eu quelques difficultés dans l'équipe, et que nous avons réussi à implémenter la plupart des fonctionnalités malgré cela.
 
 Ce qui a été fait depuis lundi le 13 avril : 
--Test de performance (qui fonctionne presque)
+-Le service REST et les ID reliés
 -Pratiquement tous les tests d'acceptation
-
+-Test de performance (qui fonctionne presque)
+-Notifier lors d'une annulation
 
 ### Tests non réalisés
 
