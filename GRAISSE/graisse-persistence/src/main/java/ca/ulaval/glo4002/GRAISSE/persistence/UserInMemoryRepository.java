@@ -32,4 +32,14 @@ public class UserInMemoryRepository implements UserRepository {
 		}
 		throw new UserNotFoundException();
 	}
+
+	@Override
+	public boolean exists(Email email) {
+		for (User user : users) {
+			if (user.hasEmail(email)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

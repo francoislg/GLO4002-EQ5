@@ -7,4 +7,6 @@ public interface UserRepository {
 	public void persist(User user);
 
 	public User retrieve(Email email);
+
+	public boolean exists(Email email);
 }

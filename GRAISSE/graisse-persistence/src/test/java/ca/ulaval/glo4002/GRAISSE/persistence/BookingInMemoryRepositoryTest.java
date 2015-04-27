@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.GRAISSE.persistence;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -10,13 +10,14 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
+import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingInMemoryRepositoryTest {
@@ -26,13 +27,10 @@ public class BookingInMemoryRepositoryTest {
 	private static final int EQUAL = 0;
 
 	@Mock
-	Booking booking1;
+	Booking booking;
 
 	@Mock
-	Booking booking2;
-	
-	@Mock
-	Booking bookingThatIsNotInTheRepository;
+	Booking anotherBooking;
 
 	@Mock
 	Booking bookingWithHighPriority;
@@ -45,6 +43,12 @@ public class BookingInMemoryRepositoryTest {
 
 	@Mock
 	Booking bookingWithLowPriority;
+
+	@Mock
+	Email promoter;
+
+	@Mock
+	BookingID bookingID;
 
 	BookingInMemoryRepository bookingInMemoryRepository;
 
@@ -61,15 +65,15 @@ public class BookingInMemoryRepositoryTest {
 
 	@Test
 	public void whenPersistingOneBookingRepositoryShouldContainTheBooking() {
-		bookingInMemoryRepository.persist(booking1);
+		bookingInMemoryRepository.persist(booking);
 
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
-		assertTrue(result.contains(booking1));
+		assertTrue(result.contains(booking));
 	}
 
 	@Test
 	public void whenPersistingOneBookingRepositoryShouldContainOnlyOneBooking() {
-		bookingInMemoryRepository.persist(booking1);
+		bookingInMemoryRepository.persist(booking);
 
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
 		assertEquals(1, result.size());
@@ -77,11 +81,103 @@ public class BookingInMemoryRepositoryTest {
 
 	@Test
 	public void whenPersistingTwiceTheSameBookingRepositoryShouldContainOneBooking() {
-		bookingInMemoryRepository.persist(booking1);
-		bookingInMemoryRepository.persist(booking1);
+		bookingInMemoryRepository.persist(booking);
+		bookingInMemoryRepository.persist(booking);
 
 		Collection<Booking> result = bookingInMemoryRepository.retrieveAll();
 		assertEquals(1, result.size());
+	}
+
+	@Test
+	public void givenAListOfBookingsWhenSortingByDefaultShouldReturnSameList() {
+		setUpOrderedBookingsRepo();
+		assertEquals(orderedBookingList(), bookingInMemoryRepository.retrieveAll());
+	}
+
+	@Test
+	public void givenAnUnorderedBookingsListWhenSortingByPriorityShouldReturnSorted() {
+		setUpMocksForMultipleBookings();
+		setUpBookingsAllAssignable();
+		setUpUnorderedBookingsRepo();
+		assertEquals(orderedBookingList(), bookingInMemoryRepository.retrieveSortedByPriority());
+	}
+
+	@Test
+	public void givenAssignablesBookingsWhenGettingThoseBookingsShouldOnlyReturnBookingsWhoAreAssignables() {
+		setUpBookingsAssignableAndNotAssignable();
+		setUpUnorderedBookingsRepo();
+		assertEquals(bookingInMemoryRepository.getAssignableBookings().size(), 2);
+	}
+
+	@Test
+	public void givenBookingsWhenGettingAllBookingsForEmailShouldOnlyReturnBookingsWithThisEmail() {
+		setUpMocksWithEmailAndBookingId();
+		assertEquals(bookingInMemoryRepository.retrieveAllForEmail(promoter), Arrays.asList(booking));
+	}
+
+	@Test
+	public void givenBookingWhenRetrievingWithEmailAndIdShouldReturnTheBooking() {
+		setUpMocksWithEmailAndBookingId();
+		assertEquals(bookingInMemoryRepository.retrieve(promoter, bookingID), booking);
+	}
+
+	@Test(expected = BookingNotFoundException.class)
+	public void givenBookingsWhenBookingDoesNotExistWithEmailAndIdShouldThrowBookingNotFoundException() {
+		bookingInMemoryRepository.retrieve(promoter, bookingID);
+	}
+
+	@Test(expected = BookingNotFoundException.class)
+	public void givenBookingWithDifferentIdWhenRetrievingShouldThrowBookingNotFoundException() {
+		setUpMockBooking(true, false);
+		bookingInMemoryRepository.retrieve(promoter, bookingID);
+	}
+
+	@Test(expected = BookingNotFoundException.class)
+	public void givenBookingWithDifferentEmailWhenRetrievingShouldThrowBookingNotFoundException() {
+		setUpMockBooking(false, true);
+		bookingInMemoryRepository.retrieve(promoter, bookingID);
+	}
+
+	@Test
+	public void givenBookingWithEmailAndIdWhenCheckingIfExistsShouldReturnTrue() {
+		setUpMocksWithEmailAndBookingId();
+		assertTrue(bookingInMemoryRepository.exists(promoter, bookingID));
+	}
+
+	@Test
+	public void givenInexistentBookingWithEmailAndIdWhenCheckingIfExistsShouldReturnFalse() {
+		setUpMockBooking(false, false);
+		assertFalse(bookingInMemoryRepository.exists(promoter, bookingID));
+	}
+
+	@Test
+	public void givenInexistentBookingWithEmailWhenCheckingIfExistsShouldReturnFalse() {
+		setUpMockBooking(false, true);
+		assertFalse(bookingInMemoryRepository.exists(promoter, bookingID));
+	}
+
+	@Test
+	public void givenInexistentBookingWithIdWhenCheckingIfExistsShouldReturnFalse() {
+		setUpMockBooking(true, false);
+		assertFalse(bookingInMemoryRepository.exists(promoter, bookingID));
+	}
+
+	private void setUpMocksWithEmailAndBookingId() {
+		when(booking.hasPromoter(promoter)).thenReturn(true);
+		when(booking.hasID(bookingID)).thenReturn(true);
+
+		when(anotherBooking.hasPromoter(promoter)).thenReturn(false);
+		when(anotherBooking.hasID(bookingID)).thenReturn(false);
+
+		bookingInMemoryRepository.persist(booking);
+		bookingInMemoryRepository.persist(anotherBooking);
+	}
+
+	private void setUpMockBooking(boolean hasPromoter, boolean hasBookingID) {
+		when(booking.hasPromoter(promoter)).thenReturn(hasPromoter);
+		when(booking.hasID(bookingID)).thenReturn(hasBookingID);
+
+		bookingInMemoryRepository.persist(booking);
 	}
 
 	private void setUpMocksForMultipleBookings() {
@@ -98,64 +194,20 @@ public class BookingInMemoryRepositoryTest {
 		when(bookingWithHighPriority.comparePriorityToBooking(any())).thenReturn(BIGGER);
 	}
 
-	@Test
-	public void givenAListOfBookingsWhenSortingByDefaultShouldReturnSameList() {
-		setUpOrderedBookingsRepo();
-		assertEquals(orderedBookingList(), bookingInMemoryRepository.retrieveAll());
+	private void setUpBookingsAllAssignable() {
+		when(bookingWithLowPriority.isAssignable()).thenReturn(true);
+		when(bookingWithMediumPriority.isAssignable()).thenReturn(true);
+		when(secondBookingWithMediumPriority.isAssignable()).thenReturn(true);
+		when(bookingWithHighPriority.isAssignable()).thenReturn(true);
 	}
 
-
-	@Test
-	public void givenAListOfBookingWhenGettingAllAssignedShouldOnlyReturnAssignedBookings() {
-		setUp();
-		
-		when(booking1.isAssignable()).thenReturn(true);
-		when(booking2.isAssignable()).thenReturn(true);
-		
-		bookingInMemoryRepository.persist(booking1);
-		bookingInMemoryRepository.persist(booking2);
-
-		Collection<Booking> assignableBookings = bookingInMemoryRepository.getAssignableBookings();
-		
-		assertTrue(assignableBookings.equals(Arrays.asList(booking1,booking2)));
-	}
-	
-	@Test
-	public void givenAListOfBookingNotAssignedGettingAssignedBookingsShouldReturnAnEmptyList() {
-		setUp();
-		
-		when(booking1.isAssignable()).thenReturn(false);
-		when(booking2.isAssignable()).thenReturn(false);
-		
-		bookingInMemoryRepository.persist(booking1);
-		bookingInMemoryRepository.persist(booking2);
-
-		Collection<Booking> assignableBookings = bookingInMemoryRepository.getAssignableBookings();
-		
-		assertTrue(assignableBookings.isEmpty());
-	}
-	
-	
-	@Ignore
-	@Test
-	public void givenAnUnorderedBookingsListWhenSortingByPriorityShouldReturnSorted() {
-		setUp();
-		setUpMocksForMultipleBookings();
-		setUpUnorderedBookingsRepo();
-
-		Collection<Booking> listOfBookings = bookingInMemoryRepository.retrieveSortedByPriority(); 
-
-		assertTrue(listOfBookings.equals(orderedBookingList() ));
+	private void setUpBookingsAssignableAndNotAssignable() {
+		when(bookingWithLowPriority.isAssignable()).thenReturn(false);
+		when(bookingWithMediumPriority.isAssignable()).thenReturn(false);
+		when(secondBookingWithMediumPriority.isAssignable()).thenReturn(true);
+		when(bookingWithHighPriority.isAssignable()).thenReturn(true);
 	}
 
-
-	@Ignore
-	@Test
-	public void givenAListOfBookingWhenGettingAllBookingsForEmailShouldOnlyReturnBookingsWithThisEmail() {
-
-	}
-
-	
 	private void setUpUnorderedBookingsRepo() {
 		bookingInMemoryRepository.persist(bookingWithMediumPriority);
 		bookingInMemoryRepository.persist(bookingWithHighPriority);
@@ -170,7 +222,6 @@ public class BookingInMemoryRepositoryTest {
 		bookingInMemoryRepository.persist(bookingWithHighPriority);
 	}
 
-	
 	private Collection<Booking> orderedBookingList() {
 		return Arrays.asList(bookingWithLowPriority, bookingWithMediumPriority, secondBookingWithMediumPriority, bookingWithHighPriority);
 	}

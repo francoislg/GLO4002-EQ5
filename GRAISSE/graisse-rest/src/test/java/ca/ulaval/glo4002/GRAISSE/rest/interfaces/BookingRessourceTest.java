@@ -1,11 +1,16 @@
 package ca.ulaval.glo4002.GRAISSE.rest.interfaces;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.ws.rs.core.Response;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,26 +19,30 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
+import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingDTO;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingID;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingState;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationNotFoundException;
 import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservations;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
+import ca.ulaval.glo4002.GRAISSE.core.user.UserRepository;
+import ca.ulaval.glo4002.GRAISSE.rest.interfaces.form.AddBookingForm;
 import ca.ulaval.glo4002.GRAISSE.rest.interfaces.form.BookingsForEmailResponse;
 import ca.ulaval.glo4002.GRAISSE.rest.interfaces.form.RetrievedBookingResponse;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookingRessourceTest {
 
-	private static final String A_RESERVATION_ID = "RandomBookingName";
-	private static final String A_NON_EXISTING_RESERVATION_ID = "DoesntExistSorryBro";
-	private static final String A_BOOKING_ID = "BookingName";
+	private static final String A_RESERVATION_ID = "RandomReservationName";
+	private static final String A_BOOKING_ID = "ItsABooking";
+	private static final String A_NON_EXISTING_ID = "DoesntExistSorryBro";
 	private static final int A_NUMBER_OF_SEATS = 1;
 	private static final String PROMOTER_EMAIL = "Email@something.ca";
 	private static final String INVALID_EMAIL = "INVALID";
 	private static final BookingState ANY_STATE = BookingState.ASSIGNED;
+	private static final int A_PRIORITY = 2;
+	private static final String AN_INVALID_EMAIL = "INVALID";
 
 	@Mock
 	Booker booker;
@@ -45,6 +54,9 @@ public class BookingRessourceTest {
 	Reservations reservations;
 
 	@Mock
+	UserRepository userRepository;
+
+	@Mock
 	BookingDTO bookingDTO;
 
 	BookingRessource bookingRessource;
@@ -53,11 +65,11 @@ public class BookingRessourceTest {
 	public void setUp() throws Exception {
 		setUpBookerMock();
 		setUpBookingMock();
-		bookingRessource = new BookingRessource(booker, bookings, reservations);
+		bookingRessource = new BookingRessource(booker, bookings, reservations, userRepository);
 	}
 
 	@Test
-	public void getBookingWithValidUserAndIDShouldReturnAValidObject() {
+	public void getBookingWithValidUserAndReservationIDShouldReturnAValidObject() {
 		RetrievedBookingResponse expectedResponse = new RetrievedBookingResponse(bookingDTO);
 
 		RetrievedBookingResponse response = bookingRessource.getBooking(PROMOTER_EMAIL, A_RESERVATION_ID);
@@ -65,9 +77,44 @@ public class BookingRessourceTest {
 		assertEquals(expectedResponse, response);
 	}
 
+	@Test
+	public void getBookingWithValidUserAndBookingIDShouldReturnAValidObject() {
+		RetrievedBookingResponse expectedResponse = new RetrievedBookingResponse(bookingDTO);
+
+		RetrievedBookingResponse response = bookingRessource.getBooking(PROMOTER_EMAIL, A_BOOKING_ID);
+
+		assertEquals(expectedResponse, response);
+	}
+
+	@Test
+	public void givenValidRequestAddNewBookingShouldAddTheBookingInBooker() {
+		AddBookingForm form = getAddBookingForm();
+
+		bookingRessource.addNewBooking(form);
+
+		verify(booker).addBooking(any(Booking.class));
+	}
+
+	@Test
+	public void givenValidRequestAddNewBookingShouldReturnAResponse() {
+		AddBookingForm form = getAddBookingForm();
+
+		Response response = bookingRessource.addNewBooking(form);
+
+		assertNotNull(response);
+	}
+
+	@Test(expected = InvalidEmailWebException.class)
+	public void givenInvalidRequestShouldThrowException() {
+		AddBookingForm form = getAddBookingForm();
+		form.courrielOrganisateur = AN_INVALID_EMAIL;
+
+		bookingRessource.addNewBooking(form);
+	}
+
 	@Test(expected = BookingNotFoundWebException.class)
-	public void getBookingWithInvalidBookingShouldThrowAnException() {
-		bookingRessource.getBooking(PROMOTER_EMAIL, A_NON_EXISTING_RESERVATION_ID);
+	public void getBookingWithInvalidBookingIDShouldThrowAnException() {
+		bookingRessource.getBooking(PROMOTER_EMAIL, A_NON_EXISTING_ID);
 	}
 
 	@Test(expected = InvalidEmailWebException.class)
@@ -77,7 +124,7 @@ public class BookingRessourceTest {
 
 	@Test
 	public void getBookingForEmailShouldReturnAListOfBookingForEmail() {
-		List<BookingDTO> bookingDTOs = new ArrayList<BookingDTO>(Arrays.asList(bookingDTO));
+		List<BookingDTO> bookingDTOs = getListOfBookingDTO();
 		when(bookings.getBookingsWithEmail(new Email(PROMOTER_EMAIL))).thenReturn(bookingDTOs);
 		BookingsForEmailResponse expectedResponse = new BookingsForEmailResponse(bookingDTOs);
 
@@ -94,8 +141,32 @@ public class BookingRessourceTest {
 	}
 
 	private void setUpBookerMock() {
-		when(reservations.retrieveReservation(new Email(PROMOTER_EMAIL), new BookingID(A_RESERVATION_ID))).thenReturn(bookingDTO);
-		when(reservations.retrieveReservation(new Email(PROMOTER_EMAIL), new BookingID(A_NON_EXISTING_RESERVATION_ID))).thenThrow(
-				new ReservationNotFoundException());
+		Email promoter_email = new Email(PROMOTER_EMAIL);
+		BookingID existingReservationID = new BookingID(A_RESERVATION_ID);
+		BookingID existingBookingID = new BookingID(A_BOOKING_ID);
+		BookingID nonExistingID = new BookingID(A_NON_EXISTING_ID);
+
+		when(reservations.hasReservation(promoter_email, existingReservationID)).thenReturn(true);
+		when(reservations.hasReservation(promoter_email, existingBookingID)).thenReturn(false);
+		when(reservations.hasReservation(promoter_email, nonExistingID)).thenReturn(false);
+
+		when(bookings.hasBooking(promoter_email, existingBookingID)).thenReturn(true);
+		when(bookings.hasBooking(promoter_email, nonExistingID)).thenReturn(false);
+
+		when(reservations.retrieveReservation(promoter_email, existingReservationID)).thenReturn(bookingDTO);
+		when(bookings.retrieve(promoter_email, existingBookingID)).thenReturn(bookingDTO);
+	}
+
+	private AddBookingForm getAddBookingForm() {
+		AddBookingForm addBookingForm = new AddBookingForm();
+		addBookingForm.courrielOrganisateur = PROMOTER_EMAIL;
+		addBookingForm.nombrePersonne = A_NUMBER_OF_SEATS;
+		addBookingForm.priorite = A_PRIORITY;
+		return addBookingForm;
+	}
+
+	private List<BookingDTO> getListOfBookingDTO() {
+		BookingDTO dto = new BookingDTO(new BookingID(A_BOOKING_ID), A_NUMBER_OF_SEATS, PROMOTER_EMAIL, ANY_STATE, "");
+		return new ArrayList<BookingDTO>(Arrays.asList(dto));
 	}
 }
