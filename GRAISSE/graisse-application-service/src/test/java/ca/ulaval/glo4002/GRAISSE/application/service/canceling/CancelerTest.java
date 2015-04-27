@@ -45,11 +45,12 @@ public class CancelerTest {
 	@Before
 	public void setUp() {
 		canceler = new Canceler(bookingRepository, reservationRepository);
+		setUpBookingMock();
 	}
 
 	@Test
 	public void shouldVerifyIfTheBookingToCancelIsStoredInTheBookingRepository() {
-		canceler.cancel(email, bookingID);
+		canceler.cancel(booking);
 		verify(bookingRepository).exists(email, bookingID);
 	}
 
@@ -57,7 +58,7 @@ public class CancelerTest {
 	public void whenBookingIsStoredInBookingRepositoryCancelerShouldAskRepositoryForTheBooking() {
 		setUpBookingsRepoMock();
 
-		canceler.cancel(email, bookingID);
+		canceler.cancel(booking);
 
 		verify(bookingRepository).retrieve(email, bookingID);
 	}
@@ -66,7 +67,7 @@ public class CancelerTest {
 	public void whenBookingIsStoredInBookingRepositoryCancelerShouldCancelTheBooking() {
 		setUpBookingsRepoMock();
 
-		canceler.cancel(email, bookingID);
+		canceler.cancel(booking);
 
 		verify(booking).cancel();
 	}
@@ -75,14 +76,14 @@ public class CancelerTest {
 	public void whenBookingIsStoredInBookingRepositoryCancelerShouldPersistTheCanceledBooking() {
 		setUpBookingsRepoMock();
 
-		canceler.cancel(email, bookingID);
+		canceler.cancel(booking);
 
 		verify(bookingRepository).persist(booking);
 	}
 
 	@Test
 	public void shouldVerifyIfTheBookingToCancelIsStoredInTheReservationRepository() {
-		canceler.cancel(email, bookingID);
+		canceler.cancel(booking);
 		verify(reservationRepository).exists(email, bookingID);
 	}
 
@@ -90,7 +91,7 @@ public class CancelerTest {
 	public void whenBookingIsStoredInReservationRepositoryCancelerShouldAskRepositoryForTheReservation() {
 		setUpReservationRepoMock();
 
-		canceler.cancel(email, bookingID);
+		canceler.cancel(booking);
 
 		verify(reservationRepository).retrieve(email, bookingID);
 	}
@@ -99,7 +100,7 @@ public class CancelerTest {
 	public void whenBookingIsStoredInReservationRepositoryCancelerShouldCancelTheReservation() {
 		setUpReservationRepoMock();
 
-		canceler.cancel(email, bookingID);
+		canceler.cancel(booking);
 
 		verify(reservation).cancel();
 	}
@@ -108,9 +109,14 @@ public class CancelerTest {
 	public void whenBookingIsStoredInReservationRepositoryCancelerShouldRemoveTheCanceledReservation() {
 		setUpReservationRepoMock();
 
-		canceler.cancel(email, bookingID);
+		canceler.cancel(booking);
 
 		verify(reservationRepository).remove(reservation);
+	}
+
+	private void setUpBookingMock() {
+		when(booking.getPromoterEmail()).thenReturn(email);
+		when(booking.getID()).thenReturn(bookingID);
 	}
 
 	private void setUpReservationRepoMock() {
