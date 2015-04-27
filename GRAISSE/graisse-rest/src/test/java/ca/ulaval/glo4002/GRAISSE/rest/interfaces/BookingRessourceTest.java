@@ -154,7 +154,7 @@ public class BookingRessourceTest {
 		when(bookings.hasBooking(promoter_email, nonExistingID)).thenReturn(false);
 
 		when(reservations.retrieveReservation(promoter_email, existingReservationID)).thenReturn(bookingDTO);
-		when(bookings.retrieve(promoter_email, existingBookingID)).thenReturn(bookingDTO);
+		when(bookings.retrieveDTO(promoter_email, existingBookingID)).thenReturn(bookingDTO);
 	}
 
 	private AddBookingForm getAddBookingForm() {

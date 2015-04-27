@@ -45,7 +45,7 @@ public class Bookings {
 		return bookingDTOList;
 	}
 
-	public BookingDTO retrieve(Email email, BookingID bookingID) {
+	public BookingDTO retrieveDTO(Email email, BookingID bookingID) {
 		Booking retrievedBooking = bookingRepository.retrieve(email, bookingID);
 		return convertToDTO(retrievedBooking);
 	}
