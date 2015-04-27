@@ -1,35 +1,25 @@
 package ca.ulaval.glo4002.GRAISSE.application.service.workflow;
 
-import static org.mockito.Mockito.verify;
+
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
-import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategiesFactory;
-import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategy;
-import ca.ulaval.glo4002.GRAISSE.application.service.booking.BookerStrategiesFactory.StrategyType;
 import ca.ulaval.glo4002.GRAISSE.application.service.canceling.Canceler;
-import ca.ulaval.glo4002.GRAISSE.application.service.notification.BookingAssignationSendMailNotifier;
-import ca.ulaval.glo4002.GRAISSE.application.service.queuing.TimedSequentialTrigger;
-import ca.ulaval.glo4002.GRAISSE.application.service.shared.ServiceLocator;
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomRepository;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingRepository;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
-import ca.ulaval.glo4002.GRAISSE.core.booking.Priority;
-import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservation;
 import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
 import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservations;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.junit.Test;
-import org.junit.Ignore;
+
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -69,30 +59,15 @@ public class workflowTest {
 	}
 	
 	@Test
-	public void givenANewReservationAddedInRepositoryShouldBeInRepository() {
-		booker.addBooking(booking);
-		verify(bookingRepository).persist(booking);
-	}
-
-	@Ignore
-	@Test
-	public void givenANewReservationStatusShouldNotbeCancelled() {
-		booker.addBooking(booking);
-		booker.assignBookings();
-		
-		assertTrue(booking.isAssigned());
-	}
-	
-
-	@Test
 	public void givenAReservationInRepositoryCancelShouldCancelTheReservation() {
 		booker.addBooking(booking);
 		booker.assignBookings();
 
-		canceler.cancel(booking);;
+		canceler.cancel(booking);
 		assertFalse(booking.isAssigned());
 	}
 	
+
 }
 
 
