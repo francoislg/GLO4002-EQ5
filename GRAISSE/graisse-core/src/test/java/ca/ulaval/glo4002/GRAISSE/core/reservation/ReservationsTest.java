@@ -32,10 +32,10 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Notifyer;
 @RunWith(MockitoJUnitRunner.class)
 public class ReservationsTest {
 
-	private final static BookingState ABOOKINGSTATE = BookingState.WAITING;
-	private final static int ANUMBEROFSEATS = 10;
-	private final static String AEMAIL = "EMAIL@DOMAIN.COM";
-	private final static String ABOARDROOMNAME = "ABOARDROOMNAME";
+	private final static BookingState A_BOOKING_STATE = BookingState.WAITING;
+	private final static int A_NUMBER_OF_SEATS = 10;
+	private final static String AN_EMAIL = "EMAIL@DOMAIN.COM";
+	private final static String A_BOARDROOM_NAME = "ABOARDROOMNAME";
 
 	@Mock
 	ReservationRepository reservationRepository;
@@ -135,7 +135,7 @@ public class ReservationsTest {
 		setUpReservationForDTO();
 		when(reservationRepository.retrieve(email, bookingID)).thenReturn(reservation);
 		BookingDTO bookingDTO = reservations.retrieveReservationDTO(email, bookingID);
-		assertEquals(ABOARDROOMNAME, bookingDTO.getBoardroomName());
+		assertEquals(A_BOARDROOM_NAME, bookingDTO.getBoardroomName());
 	}
 
 	@Test
@@ -154,11 +154,11 @@ public class ReservationsTest {
 
 	private void setUpReservationForDTO() {
 		when(reservation.getBookingID()).thenReturn(bookingID);
-		when(reservation.getNumberOfSeats()).thenReturn(ANUMBEROFSEATS);
+		when(reservation.getNumberOfSeats()).thenReturn(A_NUMBER_OF_SEATS);
 		when(reservation.getPromoterEmail()).thenReturn(email);
-		when(email.getValue()).thenReturn(AEMAIL);
-		when(reservation.getState()).thenReturn(ABOOKINGSTATE);
-		when(reservation.getBoardroomName()).thenReturn(ABOARDROOMNAME);
+		when(email.getValue()).thenReturn(AN_EMAIL);
+		when(reservation.getState()).thenReturn(A_BOOKING_STATE);
+		when(reservation.getBoardroomName()).thenReturn(A_BOARDROOM_NAME);
 
 	}
 

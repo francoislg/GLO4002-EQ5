@@ -25,9 +25,9 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 @RunWith(MockitoJUnitRunner.class)
 public class BookingsTest {
 
-	private final static BookingState ABOOKINGSTATE = BookingState.WAITING;
-	private final static int ANUMBEROFSEATS = 10;
-	private final static String AEMAIL = "EMAIL@DOMAIN.COM";
+	private final static BookingState A_BOOKING_STATE = BookingState.WAITING;
+	private final static int A_NUMBER_OF_SEATS = 10;
+	private final static String AN_EMAIL = "EMAIL@DOMAIN.COM";
 
 	@Mock
 	BookingRepository bookingRepository;
@@ -157,10 +157,10 @@ public class BookingsTest {
 
 	private void setUpBookingForDTO() {
 		when(booking.getID()).thenReturn(bookingID);
-		when(booking.getNumberOfSeats()).thenReturn(ANUMBEROFSEATS);
+		when(booking.getNumberOfSeats()).thenReturn(A_NUMBER_OF_SEATS);
 		when(booking.getPromoterEmail()).thenReturn(email);
-		when(email.getValue()).thenReturn(AEMAIL);
-		when(booking.getState()).thenReturn(ABOOKINGSTATE);
+		when(email.getValue()).thenReturn(AN_EMAIL);
+		when(booking.getState()).thenReturn(A_BOOKING_STATE);
 
 	}
 
