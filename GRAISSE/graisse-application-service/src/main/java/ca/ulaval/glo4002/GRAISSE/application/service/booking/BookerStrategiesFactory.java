@@ -9,14 +9,14 @@ import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategyDefault;
 public class BookerStrategiesFactory {
 
 	public enum StrategyType {
-		BASIC, OPTIMIZE, PRIORITY
+		BASIC, BYSEATS, PRIORITY
 	}
 
 	public BookerStrategy create(StrategyType strategyType) {
 		BookerStrategy bookerStrategy;
 		
 		switch (strategyType) {
-			case OPTIMIZE:
+			case BYSEATS:
 				bookerStrategy = new BookerStrategyDefault(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyBySeats());
 				break;
 			case PRIORITY:

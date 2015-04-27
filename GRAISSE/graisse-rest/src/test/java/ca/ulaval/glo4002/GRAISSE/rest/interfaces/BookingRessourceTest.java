@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.GRAISSE.rest.interfaces;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
@@ -40,6 +39,7 @@ public class BookingRessourceTest {
 	private static final String A_NON_EXISTING_ID = "DoesntExistSorryBro";
 	private static final int A_NUMBER_OF_SEATS = 1;
 	private static final String PROMOTER_EMAIL = "Email@something.ca";
+	private static final String INVALID_EMAIL = "INVALID";
 	private static final BookingState ANY_STATE = BookingState.ASSIGNED;
 	private static final int A_PRIORITY = 2;
 	private static final String AN_INVALID_EMAIL = "INVALID";
@@ -119,25 +119,25 @@ public class BookingRessourceTest {
 
 	@Test(expected = InvalidEmailWebException.class)
 	public void givenInvalidEmailgetBookingForEmailShouldThrowAnException() {
-		bookingRessource.getBooking(AN_INVALID_EMAIL, A_BOOKING_ID);
+		bookingRessource.getBookingForEmail(INVALID_EMAIL);
 	}
 
 	@Test
 	public void getBookingForEmailShouldReturnAListOfBookingForEmail() {
 		List<BookingDTO> bookingDTOs = getListOfBookingDTO();
 		when(bookings.getBookingsWithEmail(new Email(PROMOTER_EMAIL))).thenReturn(bookingDTOs);
-
 		BookingsForEmailResponse expectedResponse = new BookingsForEmailResponse(bookingDTOs);
 
-		BookingsForEmailResponse reponse = bookingRessource.getBookingForEmail(PROMOTER_EMAIL);
+		BookingsForEmailResponse result = bookingRessource.getBookingForEmail(PROMOTER_EMAIL);
 
-		assertArrayEquals(expectedResponse.getBookings().toArray(), reponse.getBookings().toArray());
+		assertEquals(expectedResponse, result);
 	}
 
 	private void setUpBookingMock() {
 		when(bookingDTO.getNumberOfSeats()).thenReturn(A_NUMBER_OF_SEATS);
 		when(bookingDTO.getPromoterEmail()).thenReturn(PROMOTER_EMAIL);
 		when(bookingDTO.getBookingState()).thenReturn(ANY_STATE);
+		when(bookingDTO.getID()).thenReturn(new BookingID(A_BOOKING_ID));
 	}
 
 	private void setUpBookerMock() {

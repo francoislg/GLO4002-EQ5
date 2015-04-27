@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.GRAISSE.persistence;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -135,25 +137,25 @@ public class BookingInMemoryRepositoryTest {
 		setUpMockBooking(false, true);
 		bookingInMemoryRepository.retrieve(promoter, bookingID);
 	}
-	
+
 	@Test
 	public void givenBookingWithEmailAndIdWhenCheckingIfExistsShouldReturnTrue() {
 		setUpMocksWithEmailAndBookingId();
 		assertTrue(bookingInMemoryRepository.exists(promoter, bookingID));
 	}
-	
+
 	@Test
 	public void givenInexistentBookingWithEmailAndIdWhenCheckingIfExistsShouldReturnFalse() {
 		setUpMockBooking(false, false);
 		assertFalse(bookingInMemoryRepository.exists(promoter, bookingID));
 	}
-	
+
 	@Test
 	public void givenInexistentBookingWithEmailWhenCheckingIfExistsShouldReturnFalse() {
 		setUpMockBooking(false, true);
 		assertFalse(bookingInMemoryRepository.exists(promoter, bookingID));
 	}
-	
+
 	@Test
 	public void givenInexistentBookingWithIdWhenCheckingIfExistsShouldReturnFalse() {
 		setUpMockBooking(true, false);
@@ -170,11 +172,11 @@ public class BookingInMemoryRepositoryTest {
 		bookingInMemoryRepository.persist(booking);
 		bookingInMemoryRepository.persist(anotherBooking);
 	}
-	
+
 	private void setUpMockBooking(boolean hasPromoter, boolean hasBookingID) {
 		when(booking.hasPromoter(promoter)).thenReturn(hasPromoter);
 		when(booking.hasID(bookingID)).thenReturn(hasBookingID);
-		
+
 		bookingInMemoryRepository.persist(booking);
 	}
 

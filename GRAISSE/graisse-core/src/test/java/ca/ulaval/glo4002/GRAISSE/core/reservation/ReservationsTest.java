@@ -16,9 +16,11 @@ import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardroom;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategy;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.exception.UnableToAssignBookingException;
+import ca.ulaval.glo4002.GRAISSE.core.booking.AssignedBooking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.booking.BookingsSortingStrategy;
+import ca.ulaval.glo4002.GRAISSE.core.shared.Notifyer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReservationsTest {
@@ -47,40 +49,38 @@ public class ReservationsTest {
 	@Mock
 	BoardroomsSortingStrategy boardroomsSortingStrategy;
 
+	@Mock
+	Notifyer<AssignedBooking> observer;
+
 	Reservations reservations;
 
 	Collection<Reservation> reservationRepositoryWithReservations;
 	Collection<Reservation> emptyReservationRepository;
+	Collection<Booking> bookingsCollection;
+	Collection<Boardroom> boardroomsCollection;
 
 	@Before
 	public void setUp() {
 		reservations = new Reservations(reservationRepository, boardrooms, bookings);
+		setUpBookingsCollection();
+		setUpBoardroomsCollection();
 	}
 
 	@Test
-	public void givenOneAvailableBoardroomAndOneAssignableBookingassignBookingsToBoardroomsShouldAssignTheBooking() {
-		Collection<Booking> bookingsCollection = new ArrayList<Booking>();
-		bookingsCollection.add(booking);
-		when(bookings.getBookingsWithStrategy(bookingsSortingStrategy)).thenReturn(bookingsCollection);
-		Collection<Boardroom> boardroomsCollection = new ArrayList<Boardroom>();
-		boardroomsCollection.add(boardroom);
-		when(boardrooms.getBoardroomsWithStrategy(boardroomsSortingStrategy)).thenReturn(boardroomsCollection);
+	public void givenOneAvailableBoardroomAndOneAssignableBookingassignBookingsToBoardroomsShouldAssign() {
+
 		when(boardroom.canAssign(booking)).thenReturn(true);
 		when(reservationRepository.exists(boardroom)).thenReturn(false);
 
 		reservations.assignBookingsToBoardrooms(bookingsSortingStrategy, boardroomsSortingStrategy);
 
 		verify(bookings).assignBooking(booking);
+
 	}
 
 	@Test(expected = UnableToAssignBookingException.class)
 	public void givenNoAvailableBoardroomAndOneAssignableBookingassignBookingsToBoardroomsShouldThrowUnableToAssignBookingException() {
-		Collection<Booking> bookingsCollection = new ArrayList<Booking>();
-		bookingsCollection.add(booking);
-		when(bookings.getBookingsWithStrategy(bookingsSortingStrategy)).thenReturn(bookingsCollection);
-		Collection<Boardroom> boardroomsCollection = new ArrayList<Boardroom>();
-		boardroomsCollection.add(boardroom);
-		when(boardrooms.getBoardroomsWithStrategy(boardroomsSortingStrategy)).thenReturn(boardroomsCollection);
+
 		when(boardroom.canAssign(booking)).thenReturn(true);
 		when(reservationRepository.activeReservationWithBoardroomExist(boardroom)).thenReturn(true);
 
@@ -91,17 +91,37 @@ public class ReservationsTest {
 
 	@Test(expected = UnableToAssignBookingException.class)
 	public void givenAnAvailableBoardroomThatCantAssignTheBookingAndOneAssignableBookingassignBookingsToBoardroomsShouldThrowUnableToAssignBookingException() {
-		Collection<Booking> bookingsCollection = new ArrayList<Booking>();
-		bookingsCollection.add(booking);
-		when(bookings.getBookingsWithStrategy(bookingsSortingStrategy)).thenReturn(bookingsCollection);
-		Collection<Boardroom> boardroomsCollection = new ArrayList<Boardroom>();
-		boardroomsCollection.add(boardroom);
-		when(boardrooms.getBoardroomsWithStrategy(boardroomsSortingStrategy)).thenReturn(boardroomsCollection);
+
 		when(boardroom.canAssign(booking)).thenReturn(false);
 		when(reservationRepository.exists(boardroom)).thenReturn(false);
 
 		reservations.assignBookingsToBoardrooms(bookingsSortingStrategy, boardroomsSortingStrategy);
 
 		verify(bookings).assignBooking(booking);
+	}
+
+	@Test
+	public void givenNoAvailableBoardroomAndOneAssignableBookingassignBookingsToBoardroomsShouldNotifiyAssignation() {
+		when(boardroom.canAssign(booking)).thenReturn(true);
+		when(reservationRepository.exists(boardroom)).thenReturn(false);
+
+		reservations.registerObserver(observer);
+		reservations.assignBookingsToBoardrooms(bookingsSortingStrategy, boardroomsSortingStrategy);
+
+		verify(observer).notify(booking);
+
+	}
+
+	private void setUpBookingsCollection() {
+		Collection<Booking> bookingsCollection = new ArrayList<Booking>();
+		bookingsCollection.add(booking);
+		when(bookings.getBookingsWithStrategy(bookingsSortingStrategy)).thenReturn(bookingsCollection);
+
+	}
+
+	private void setUpBoardroomsCollection() {
+		Collection<Boardroom> boardroomsCollection = new ArrayList<Boardroom>();
+		boardroomsCollection.add(boardroom);
+		when(boardrooms.getBoardroomsWithStrategy(boardroomsSortingStrategy)).thenReturn(boardroomsCollection);
 	}
 }
