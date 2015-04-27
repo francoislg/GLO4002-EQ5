@@ -25,6 +25,7 @@ import ca.ulaval.glo4002.GRAISSE.application.service.notification.BookingAssigna
 import ca.ulaval.glo4002.GRAISSE.application.service.notification.BookingCancelledSendMailNotifier;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTask;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTaskFactory;
+import ca.ulaval.glo4002.GRAISSE.application.service.queuing.ThresholdTrigger;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.TimedSequentialTrigger;
 import ca.ulaval.glo4002.GRAISSE.application.service.queuing.TimerFactory;
 import ca.ulaval.glo4002.GRAISSE.application.service.shared.ServiceLocator;
@@ -50,6 +51,8 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 	private static final long AN_INTERVAL = 1;
 	private static final long AN_INTERVAL_IN_MILLISECOND = 60000;
+	
+	private static final int THRESHOLD = 2;
 
 	private static final int TWENTY_SEATS = 20;
 	private static final int FIFTEEN_SEATS = 15;
@@ -229,6 +232,12 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 		state().booker.addBooking(state().booking);
 	}
+	
+	@Given("a threshold number of applications")
+	public void givenAThresholdNumberOfApplications() {
+		state().thresholdTrigger = new ThresholdTrigger(THRESHOLD);
+		state().booker.registerTrigger(state().thresholdTrigger);
+	}
 
 	@When("the application is processed")
 	public void whenTheApplicationIsProcessed() {
@@ -385,6 +394,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 		Reservations reservations;
 		Booker booker;
 		TimedSequentialTrigger timedTrigger;
+		ThresholdTrigger thresholdTrigger;
 		Reservation firstReservation;
 		Reservation secondReservation;
 		Canceler canceler;
