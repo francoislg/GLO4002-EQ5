@@ -1,6 +1,14 @@
 package ca.ulaval.glo4002.GRAISSE.application.service.workflow;
 
 
+import static org.junit.Assert.assertFalse;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
 import ca.ulaval.glo4002.GRAISSE.application.service.canceling.Canceler;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomRepository;
@@ -12,13 +20,6 @@ import ca.ulaval.glo4002.GRAISSE.core.reservation.ReservationRepository;
 import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservations;
 import ca.ulaval.glo4002.GRAISSE.core.shared.Email;
 import ca.ulaval.glo4002.GRAISSE.core.user.User;
-
-import static org.junit.Assert.assertFalse;
-import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.junit.Test;
 
 
 
@@ -54,7 +55,7 @@ public class workflowTest {
 		bookings = new Bookings(bookingRepository);
 		boardrooms = new Boardrooms(boardroomRepository);
 		reservations = new Reservations(reservationRepository, boardrooms, bookings);
-		booker = new Booker(bookings, boardrooms, reservations);
+		booker = new Booker(bookings, reservations);
 		canceler = new Canceler(bookingRepository, reservationRepository);
 	}
 	

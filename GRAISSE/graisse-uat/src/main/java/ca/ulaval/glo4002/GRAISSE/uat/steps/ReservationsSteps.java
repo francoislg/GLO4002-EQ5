@@ -431,7 +431,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 			bookings = new Bookings(bookingRepository);
 			boardrooms = new Boardrooms(boardroomRepository);
 			reservations = new Reservations(reservationRepository, boardrooms, bookings);
-			booker = new Booker(bookings, boardrooms, reservations);
+			booker = new Booker(bookings, reservations);
 			canceler = new Canceler(bookingRepository, reservationRepository);
 		}
 	}
