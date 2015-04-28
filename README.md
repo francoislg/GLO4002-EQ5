@@ -32,17 +32,14 @@ Conserver l'historique                            |pas fait
 
 ## Comment fonctionne notre API
 
-Tout d'abord, vous devez créer un booker. Voici un exemple utilisant 
-les répertoires en mémoire ainsi que la stratégie d'assignation des bookings par défaut:
+Tout d'abord, vous devez créer un booker. Voici comment faire:
 
 ```java
-BookerStrategiesFactory bookerStrategiesFactory = new BookerStrategiesFactory();
-BookerStrategy bookerStrategy = bookerStrategiesFactory.create(BookerStrategiesFactory.StrategyType.BASIC);
-
 Bookings bookings = new Bookings(new BookingInMemoryRepository());
 Boardrooms boardrooms = new Boardrooms(new BoardroomInMemoryRepository());
+Reservations reservations = new Reservations(reservationRepository, boardrooms, bookings);
 
-Booker booker = new Booker(bookerStrategy, bookings, boardrooms);
+booker = new Booker(bookings, reservations);
 ```
 
 Ensuite, enregistrer des triggers pour déclencher l'assignation des bookings selon différents critères.
