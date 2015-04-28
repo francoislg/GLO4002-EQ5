@@ -131,7 +131,7 @@ public class BookingsTest {
 		Collection<Booking> bookingCollection = new ArrayList<Booking>();
 		bookingCollection.add(booking);
 		when(bookingRepository.retrieveAllForEmail(email)).thenReturn(bookingCollection);
-		List<BookingDTO> result = bookings.getBookingsWithEmail(email);
+		List<BookingDTO> result = bookings.getUnassignedBookingsWithEmail(email);
 		assertEquals(1, result.size());
 	}
 
