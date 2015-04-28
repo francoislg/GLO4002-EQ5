@@ -22,36 +22,35 @@ import org.jbehave.core.steps.ScanningStepsFactory;
 
 public class GraisseStories extends JUnitStories {
 
-    private PendingStepStrategy pendingStepStrategy = new FailingUponPendingStep();
+	private PendingStepStrategy pendingStepStrategy = new FailingUponPendingStep();
 
-    private Format[] formats = new Format[]{CONSOLE};
-    private StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
-            .withCodeLocation(codeLocationFromClass(GraisseStories.class)).withFailureTrace(true).withFailureTraceCompression(true)
-            .withDefaultFormats().withFormats(formats);
+	private Format[] formats = new Format[] { CONSOLE };
+	private StoryReporterBuilder reporterBuilder = new StoryReporterBuilder().withCodeLocation(codeLocationFromClass(GraisseStories.class))
+			.withFailureTrace(true).withFailureTraceCompression(true).withDefaultFormats().withFormats(formats);
 
-    public static void main(String[] args) {
-        new GraisseStories().embedder.runAsEmbeddables(Arrays.asList(GraisseStories.class.getCanonicalName()));
-    }
+	public static void main(String[] args) {
+		new GraisseStories().embedder.runAsEmbeddables(Arrays.asList(GraisseStories.class.getCanonicalName()));
+	}
 
-    private Embedder embedder = new Embedder();
+	private Embedder embedder = new Embedder();
 
-    public GraisseStories() {
-        useEmbedder(embedder);
-    }
+	public GraisseStories() {
+		useEmbedder(embedder);
+	}
 
-    @Override
-    public Configuration configuration() {
-        return new MostUsefulConfiguration().usePendingStepStrategy(pendingStepStrategy)
-                .useStoryLoader(new LoadFromClasspath(getClass().getClassLoader())).useStoryReporterBuilder(reporterBuilder);
-    }
+	@Override
+	public Configuration configuration() {
+		return new MostUsefulConfiguration().usePendingStepStrategy(pendingStepStrategy).useStoryLoader(new LoadFromClasspath(getClass().getClassLoader()))
+				.useStoryReporterBuilder(reporterBuilder);
+	}
 
-    @Override
-    public InjectableStepsFactory stepsFactory() {
-        return new ScanningStepsFactory(configuration(), getClass());
-    }
+	@Override
+	public InjectableStepsFactory stepsFactory() {
+		return new ScanningStepsFactory(configuration(), getClass());
+	}
 
-    @Override
-    protected List<String> storyPaths() {
-        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/*.story", "*.story"), null);
-    }
+	@Override
+	protected List<String> storyPaths() {
+		return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/*.story", "*.story"), null);
+	}
 }

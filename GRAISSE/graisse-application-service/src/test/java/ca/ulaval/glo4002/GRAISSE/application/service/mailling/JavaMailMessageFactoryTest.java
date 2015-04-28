@@ -73,11 +73,11 @@ public class JavaMailMessageFactoryTest {
 		Message message = javaMailMessageFactory.create(mail, session);
 		assertEquals(message.getSubject(), A_MAIL_SUBJECT);
 	}
-	
+
 	@Test
 	public void createShouldAddCarbonCopyToMessage() throws MessagingException, IOException {
 		Address expectedAddress = new InternetAddress(ANOTHER_MAIL_DESTINATION);
-		
+
 		Message message = javaMailMessageFactory.create(mail, session);
 
 		assertThat(message.getAllRecipients(), hasItemInArray(expectedAddress));

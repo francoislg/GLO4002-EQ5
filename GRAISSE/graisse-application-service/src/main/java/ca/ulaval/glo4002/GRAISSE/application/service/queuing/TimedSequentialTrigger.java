@@ -12,26 +12,23 @@ public class TimedSequentialTrigger implements Observer<Booker> {
 	private static final long NB_OF_SECOND_IN_A_MINUTE = 60;
 	private static final long NB_OF_MILLISECOND_IN_A_SECOND = 1000;
 	private static final int MIN_VALID_NB_OF_MINUTES_INTERVAL = 1;
-	
+
 	private long minutesInterval = 0;
 	private HashMap<Booker, Timer> scheduledBookers;
 	private TimerFactory timerFactory;
 	private BookerTimerTaskFactory bookerTimerTaskFactory;
 
 	public TimedSequentialTrigger(long intervalInMinutes) {
-		this(intervalInMinutes,
-				new TimerFactory(),
-				new BookerTimerTaskFactory());
+		this(intervalInMinutes, new TimerFactory(), new BookerTimerTaskFactory());
 	}
-	
-	public TimedSequentialTrigger(long intervalInMinutes, TimerFactory timerFactory,
-			BookerTimerTaskFactory bookerTimerTaskFactory) {
+
+	public TimedSequentialTrigger(long intervalInMinutes, TimerFactory timerFactory, BookerTimerTaskFactory bookerTimerTaskFactory) {
 		setInterval(intervalInMinutes);
 		this.timerFactory = timerFactory;
 		this.bookerTimerTaskFactory = bookerTimerTaskFactory;
 		scheduledBookers = new HashMap<Booker, Timer>();
 	}
-	
+
 	private void setInterval(long minutes) {
 		if (minutes < MIN_VALID_NB_OF_MINUTES_INTERVAL) {
 			throw new InvalidIntervalException();
@@ -41,43 +38,42 @@ public class TimedSequentialTrigger implements Observer<Booker> {
 
 	@Override
 	public void update(Booker booker) {
-		if(booker.hasBookingsToAssign()) {
+		if (booker.hasBookingsToAssign()) {
 			scheduleBooker(booker);
-		}
-		else {
+		} else {
 			cancelScheduledBooker(booker);
 		}
 	}
-	
+
 	private void scheduleBooker(Booker booker) {
-		if(bookerIsNotScheduled(booker)) {
+		if (bookerIsNotScheduled(booker)) {
 			scheduledBookers.put(booker, createScheduleTimer(booker));
 		}
 	}
-	
+
 	private void cancelScheduledBooker(Booker booker) {
-		if(bookerIsScheduled(booker)) {
+		if (bookerIsScheduled(booker)) {
 			Timer timer = scheduledBookers.remove(booker);
 			timer.cancel();
 		}
 	}
-	
+
 	private Boolean bookerIsScheduled(Booker booker) {
 		return scheduledBookers.containsKey(booker);
 	}
-	
+
 	private Boolean bookerIsNotScheduled(Booker booker) {
 		return !bookerIsScheduled(booker);
 	}
-	
+
 	private Timer createScheduleTimer(Booker booker) {
 		BookerTimerTask bookerTimerTask = bookerTimerTaskFactory.createBookerTimerTask(booker);
 		Timer timer = timerFactory.createTimer();
-		
+
 		timer.schedule(bookerTimerTask, getMilliSecondInterval());
 		return timer;
 	}
-	
+
 	private long getMilliSecondInterval() {
 		return minutesInterval * NB_OF_SECOND_IN_A_MINUTE * NB_OF_MILLISECOND_IN_A_SECOND;
 	}

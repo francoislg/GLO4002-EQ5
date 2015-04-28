@@ -11,7 +11,7 @@ public class BookerTimerTask extends TimerTask {
 	public BookerTimerTask(Booker booker) {
 		this.booker = booker;
 	}
-	
+
 	@Override
 	public void run() {
 		booker.assignBookings();

@@ -7,7 +7,7 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Observer;
 public class ThresholdTrigger implements Observer<Booker> {
 
 	private static final int MINIMUM_THRESHOLD_VALUE = 1;
-	
+
 	private int threshold;
 
 	public ThresholdTrigger(int threshold) {

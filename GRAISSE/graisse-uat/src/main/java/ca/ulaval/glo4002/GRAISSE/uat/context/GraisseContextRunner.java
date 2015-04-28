@@ -5,16 +5,16 @@ import org.jbehave.core.annotations.BeforeStories;
 
 public class GraisseContextRunner {
 
-    private static UatContext context;
+	private static UatContext context;
 
-    @BeforeStories
-    public static void startServer() throws Exception {
-        context = new UatContext();
-        context.apply();
-    }
+	@BeforeStories
+	public static void startServer() throws Exception {
+		context = new UatContext();
+		context.apply();
+	}
 
-    @BeforeScenario
-    public void reinitializeData() {
-        context.reinitialize();
-    }
+	@BeforeScenario
+	public void reinitializeData() {
+		context.reinitialize();
+	}
 }

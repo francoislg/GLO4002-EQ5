@@ -50,13 +50,13 @@ public class BookingTest {
 
 	@Test
 	public void whenBookingIsInstantiatedWithoutPriorityTheBookingShouldHaveAMediumPriority() {
-		bookingWithMediumPriority = new Booking (user, NUMBER_OF_SEATS_IN_BOOKING, DEFAULT_PRIORITY_VALUE);
+		bookingWithMediumPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING, DEFAULT_PRIORITY_VALUE);
 		bookingWithDefaultPriority = new Booking(user, NUMBER_OF_SEATS_IN_BOOKING);
 		int result = bookingWithDefaultPriority.comparePriorityToBooking(bookingWithMediumPriority);
-		
+
 		assertEquals(result, 0);
 	}
-	
+
 	@Test
 	public void assignShouldAssignTheBooking() {
 		booking.assign();
@@ -67,7 +67,7 @@ public class BookingTest {
 	public void givenSameUserAsBookingHasPromoterShouldReturnTrue() {
 		assertTrue(booking.hasPromoter(email));
 	}
-	
+
 	@Test
 	public void whenNotCanceledAndNotAssignedIsAssignableShouldReturnTrue() {
 		assertTrue(booking.isAssignable());
@@ -84,12 +84,12 @@ public class BookingTest {
 		booking.assign();
 		assertFalse(booking.isAssignable());
 	}
-	
+
 	@Test
 	public void whenBookingIsNotYetAssignedStateShouldNotBeAssigned() {
 		assertFalse(booking.isAssigned());
 	}
-	
+
 	@Test
 	public void whenAssigningBookingStateShouldBeAssigned() {
 		booking.assign();
@@ -143,19 +143,19 @@ public class BookingTest {
 
 		assertEquals(0, result);
 	}
-	
+
 	@Test
 	public void whenRefusingBookingStateShouldBeRefused() {
 		booking.refuse();
 		assertEquals(BookingState.REFUSED, booking.getState());
 	}
-	
+
 	@Test
 	public void whenCancellingBookingStateShouldBeCancelled() {
 		booking.cancel();
 		assertEquals(BookingState.CANCELLED, booking.getState());
 	}
-	
+
 	@Test
 	public void addingAParticipantShouldBePresentInList() {
 		booking.addParticipant(email);
@@ -166,7 +166,7 @@ public class BookingTest {
 	public void addingTheSameParticipantTwiceShouldAddOnceInList() {
 		booking.addParticipant(email);
 		booking.addParticipant(email);
-		
+
 		assertEquals(booking.getParticipantsEmail().size(), 1);
 	}
 }

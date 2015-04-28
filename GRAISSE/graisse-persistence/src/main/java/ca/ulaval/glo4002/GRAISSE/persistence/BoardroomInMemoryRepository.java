@@ -38,8 +38,8 @@ public class BoardroomInMemoryRepository implements BoardroomRepository {
 	public Collection<Boardroom> retrieveAll() {
 		return boardrooms;
 	}
-	
-	public Collection<Boardroom>  retrieveBoardroomsOrderedByNumberOfSeats(){
+
+	public Collection<Boardroom> retrieveBoardroomsOrderedByNumberOfSeats() {
 		Comparator<Boardroom> byNumberOfSeats = (boardroom1, boardroom2) -> boardroom1.compareByNumberOfSeats(boardroom2);
 		return boardrooms.stream().sorted(byNumberOfSeats).collect(Collectors.toList());
 	}

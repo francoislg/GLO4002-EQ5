@@ -51,7 +51,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 	private static final long AN_INTERVAL = 1;
 	private static final long AN_INTERVAL_IN_MILLISECOND = 60000;
-	
+
 	private static final int THRESHOLD_NUMBER = 2;
 
 	private static final int TWENTY_SEATS = 20;
@@ -230,7 +230,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 
 		state().booker.addBooking(state().booking);
 	}
-	
+
 	@Given("a threshold number of applications")
 	public void givenAThresholdNumberOfApplications() {
 		state().thresholdTrigger = new ThresholdTrigger(THRESHOLD_NUMBER);
@@ -278,12 +278,12 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	public void whenTheReservationAwaitingTreatmentIsCancelled() {
 		state().canceler.cancel(state().booking);
 	}
-	
+
 	@When("the number of application to be processed is equal to the threshold")
 	public void whenTheNumberOfApplicationToBeProcessedIsEqualToTheThreshold() {
 		state().booking = FakeBookingFactory.create();
 		state().secondBooking = FakeBookingFactory.create();
-		
+
 		state().booker.addBooking(state().booking);
 		state().booker.addBooking(state().secondBooking);
 	}
@@ -364,12 +364,12 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	public void thenTheReservationShouldBeCancelled() {
 		assertEquals(state().booking.getState(), BookingState.CANCELLED);
 	}
-	
+
 	@Then("the applications are processed")
 	public void thenTheApplicationsAreProcessed() {
 		assertFalse("booker should have processed all the bookings", state().booker.hasBookingsToAssign());
 	}
-	
+
 	@Then("the interval is reset")
 	public void thenTheIntervalIsReset() {
 		verify(state().timer).cancel();

@@ -6,5 +6,5 @@ import com.jayway.restassured.specification.RequestSpecification;
 public class StepState {
 
 	public RequestSpecification request;
-    public Response response;
+	public Response response;
 }

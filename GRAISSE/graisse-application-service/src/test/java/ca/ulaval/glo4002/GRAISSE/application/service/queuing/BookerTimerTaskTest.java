@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4002.GRAISSE.application.service.booking.Booker;
-import ca.ulaval.glo4002.GRAISSE.application.service.queuing.BookerTimerTask;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookerTimerTaskTest {
