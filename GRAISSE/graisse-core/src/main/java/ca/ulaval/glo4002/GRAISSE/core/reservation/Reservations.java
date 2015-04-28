@@ -62,7 +62,7 @@ public class Reservations {
 		throw new UnableToAssignBookingException();
 	}
 
-	public BookingDTO retrieveReservation(Email email, BookingID bookingID) {
+	public BookingDTO retrieveReservationDTO(Email email, BookingID bookingID) {
 		Reservation reservation = reservationRepository.retrieve(email, bookingID);
 		return convertToBookingDTO(reservation);
 	}
