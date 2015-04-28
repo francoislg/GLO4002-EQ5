@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
 import ca.ulaval.glo4002.GRAISSE.core.reservation.Reservations;
@@ -30,9 +29,6 @@ public class BookerTest {
 	BookerStrategy bookerStrategy;
 
 	@Mock
-	Boardrooms boardrooms;
-
-	@Mock
 	Booking booking;
 
 	@Mock
@@ -45,7 +41,7 @@ public class BookerTest {
 
 	@Before
 	public void setUp() {
-		booker = new Booker(bookings, boardrooms, reservations);
+		booker = new Booker(bookings, reservations);
 	}
 
 	@Test

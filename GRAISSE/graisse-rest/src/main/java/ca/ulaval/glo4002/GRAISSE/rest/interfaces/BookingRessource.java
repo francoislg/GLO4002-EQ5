@@ -59,7 +59,7 @@ public class BookingRessource {
 		bookings = new Bookings(bookingRepository);
 		reservations = new Reservations(reservationsRepository, boardrooms, bookings);
 
-		booker = new Booker(bookings, boardrooms, reservations);
+		booker = new Booker(bookings, reservations);
 		userRepository = new UserInMemoryRepository();
 
 		FillerConfig config = DemoFillerConfig.get();

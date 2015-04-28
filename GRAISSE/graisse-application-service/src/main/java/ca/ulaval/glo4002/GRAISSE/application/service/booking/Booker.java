@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.GRAISSE.application.service.booking;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ulaval.glo4002.GRAISSE.core.boardroom.Boardrooms;
 import ca.ulaval.glo4002.GRAISSE.core.boardroom.BoardroomsSortingStrategyDefault;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Booking;
 import ca.ulaval.glo4002.GRAISSE.core.booking.Bookings;
@@ -14,15 +13,13 @@ import ca.ulaval.glo4002.GRAISSE.core.shared.Observer;
 public class Booker {
 
 	private Bookings bookings;
-	private Boardrooms boardrooms;
 	private BookerStrategy bookerStrategy;
 	private Reservations reservations;
 	private List<Observer<Booker>> observers;
 
-	public Booker(Bookings bookings, Boardrooms boardrooms, Reservations reservations) {
+	public Booker(Bookings bookings, Reservations reservations) {
 		this.bookerStrategy = new BookerStrategyDefault(new BookingsSortingStrategyDefault(), new BoardroomsSortingStrategyDefault());
 		this.bookings = bookings;
-		this.boardrooms = boardrooms;
 		this.reservations = reservations;
 		observers = new ArrayList<Observer<Booker>>();
 	}
