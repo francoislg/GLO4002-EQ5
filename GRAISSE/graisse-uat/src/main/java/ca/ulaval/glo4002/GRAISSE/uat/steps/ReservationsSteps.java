@@ -52,7 +52,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	private static final long AN_INTERVAL = 1;
 	private static final long AN_INTERVAL_IN_MILLISECOND = 60000;
 	
-	private static final int THRESHOLD = 2;
+	private static final int THRESHOLD_NUMBER = 2;
 
 	private static final int TWENTY_SEATS = 20;
 	private static final int FIFTEEN_SEATS = 15;
@@ -233,7 +233,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	
 	@Given("a threshold number of applications")
 	public void givenAThresholdNumberOfApplications() {
-		state().thresholdTrigger = new ThresholdTrigger(THRESHOLD);
+		state().thresholdTrigger = new ThresholdTrigger(THRESHOLD_NUMBER);
 		state().booker.registerTrigger(state().thresholdTrigger);
 	}
 
