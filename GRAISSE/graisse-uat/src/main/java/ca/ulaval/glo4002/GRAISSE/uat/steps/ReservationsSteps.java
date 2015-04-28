@@ -280,7 +280,7 @@ public class ReservationsSteps extends StatefulStep<ReservationStepState> {
 	}
 	
 	@When("the number of application to be processed is equal to the threshold")
-	public void whenTheNumberOfApplicaitonToBeProcessedIsEqualToTheThreshold() {
+	public void whenTheNumberOfApplicationToBeProcessedIsEqualToTheThreshold() {
 		state().booking = FakeBookingFactory.create();
 		state().secondBooking = FakeBookingFactory.create();
 		
