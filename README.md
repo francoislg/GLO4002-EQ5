@@ -37,7 +37,7 @@ Tout d'abord, vous devez créer un booker. Voici comment faire:
 ```java
 Bookings bookings = new Bookings(new BookingInMemoryRepository());
 Boardrooms boardrooms = new Boardrooms(new BoardroomInMemoryRepository());
-Reservations reservations = new Reservations(reservationRepository, boardrooms, bookings);
+Reservations reservations = new Reservations(new ReservationInMemoryRepository(), boardrooms, bookings);
 
 booker = new Booker(bookings, reservations);
 ```
